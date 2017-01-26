@@ -21,4 +21,4 @@ Coming soon
   
   OSX: ```open -a Google\ Chrome --args --disable-web-security --user-data-dir```
   
-  Windows: ```chrome.exe --disable-web-security```
+  Windows: ```chrome.exe --disable-web-security --user-data-dir```
