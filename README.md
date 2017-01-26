@@ -17,4 +17,8 @@ Coming soon
 ## Build requirements
 - Must have [Ionic 2 installed](https://ionicframework.com/getting-started/) ```npm install -g cordova ionic```
 - Install npm packages ```npm install```
-- When debugging with Chrome, CORS limitations must be disabled with Mac terminal command ```open -a Google\ Chrome --args --disable-web-security --user-data-dir```
+- When debugging with Chrome, CORS limitations must be disabled with Mac terminal command 
+  
+  OSX: ```open -a Google\ Chrome --args --disable-web-security --user-data-dir```
+  
+  Windows: ```chrome.exe --disable-web-security```
