@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptionsArgs, URLSearchParams, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { Storage } from '@ionic/storage';
 import { Myki } from '../models/myki';
 import { CustomURLEncoder } from '../models/customUrlEncoder';
 import * as $ from "jquery";
