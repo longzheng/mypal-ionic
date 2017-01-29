@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, PopoverController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { Myki } from '../../models/myki';
 
@@ -12,7 +12,6 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public mykiProvider: MykiProvider,
-    public popoverCtrl: PopoverController
   ) {
 
   }

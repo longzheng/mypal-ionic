@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PopoverController } from 'ionic-angular';
-import { CardsPopoverPage } from '../../pages/cards-popover/cards-popover';
+import { CardsPopoverComponent } from '../cards-popover/cards-popover';
 import { MykiProvider } from '../../providers/myki';
 
 @Component({
@@ -17,7 +17,7 @@ export class CardSelectorComponent {
   }
 
   cardsPopover(myEvent) {
-    let popover = this.popoverCtrl.create(CardsPopoverPage, {}, { cssClass: 'cardSelectorPopover' });
+    let popover = this.popoverCtrl.create(CardsPopoverComponent, {}, { cssClass: 'cardSelectorPopover' });
     popover.present({
       ev: myEvent
     });

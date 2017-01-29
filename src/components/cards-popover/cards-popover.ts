@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { ViewController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { Myki } from '../../models/myki';
 
@@ -7,11 +7,9 @@ import { Myki } from '../../models/myki';
   selector: 'page-cards-popover',
   templateUrl: 'cards-popover.html'
 })
-export class CardsPopoverPage {
+export class CardsPopoverComponent {
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
     public viewCtrl: ViewController,
     public mykiProvider: MykiProvider
   ) { }
