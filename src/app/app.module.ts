@@ -6,6 +6,8 @@ import { LoginPage } from '../pages/login/login';
 import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { CardsPopoverPage } from '../pages/cards-popover/cards-popover';
+import { CardSelectorComponent } from '../components/card-selector/card-selector';
 
 import { MykiProvider } from '../providers/myki';
 import { SavedLoginProvider } from '../providers/saved-login';
@@ -17,6 +19,8 @@ let pages = [
   TabsPage,
   HomePage,
   HistoryPage,
+  CardsPopoverPage,
+  CardSelectorComponent
 ]
 
 export function declarations() {
