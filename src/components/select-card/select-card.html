@@ -1,0 +1,16 @@
+<div [hidden]="!account().loading" text-center padding>
+    <ion-spinner></ion-spinner>
+    <p>Loading cards</p>
+</div>
+
+<ion-list no-lines>
+    <button ion-item clear *ngFor="let card of activeCards()" (click)="selectCard(card)">
+            <h2>{{card.id}}</h2>
+            <p>${{card.moneyBalance}}</p>
+            <p>{{card.passActive}}</p>
+        </button>
+
+    <button ion-item clear *ngFor="let card of inactiveCards()" (click)="selectCard(card)">
+            <h2>{{card.id}}</h2>
+        </button>
+</ion-list>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { Myki } from '../../models/myki';
 
@@ -12,21 +12,24 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public mykiProvider: MykiProvider,
+    public menuCtrl: MenuController,
   ) {
 
   }
 
   ionViewDidLoad() {
+    // enable menu
+    this.menuCtrl.enable(true);
+
     this.mykiProvider.getAccountDetails().then(
       () => {
-
       }).catch(error => {
       })
   }
 
   doRefresh(refresher) {
     // refresh active card
-    this.mykiProvider.getCardDetails(this.mykiProvider.activeCard()).then(
+    this.mykiProvider.getCardDetails(this.card(), true).then(
       () => {
         refresher.complete();
       }).catch(error => {
@@ -35,10 +38,6 @@ export class HomePage {
 
   gotoHistory() {
     this.navCtrl.parent.select(1)
-  }
-
-  account() {
-    return this.mykiProvider.mykiAccount;
   }
 
   card() {

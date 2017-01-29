@@ -7,8 +7,7 @@ import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { CardsPopoverComponent } from '../components/cards-popover/cards-popover';
-import { CardSelectorComponent } from '../components/card-selector/card-selector';
+import { SelectCardComponent } from '../components/select-card/select-card';
 
 import { MykiProvider } from '../providers/myki';
 import { SavedLoginProvider } from '../providers/saved-login';
@@ -20,9 +19,8 @@ let pages = [
   TabsPage,
   HomePage,
   HistoryPage,
-  
-  CardsPopoverComponent,
-  CardSelectorComponent
+
+  SelectCardComponent,
 ]
 
 export function declarations() {

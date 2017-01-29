@@ -1,25 +1,34 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import { MenuController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { Myki } from '../../models/myki';
 
+/*
+  Generated class for the SelectCard component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+*/
 @Component({
-  selector: 'page-cards-popover',
-  templateUrl: 'cards-popover.html'
+  selector: 'select-card',
+  templateUrl: 'select-card.html'
 })
-export class CardsPopoverComponent {
+export class SelectCardComponent {
 
   constructor(
-    public viewCtrl: ViewController,
-    public mykiProvider: MykiProvider
-  ) { }
+    public mykiProvider: MykiProvider,
+    public menuCtrl: MenuController,
+  ) {
 
-  ionViewDidLoad() {
+  }
+
+  account() {
+    return this.mykiProvider.mykiAccount;
   }
 
   selectCard(card: Myki.Card) {
     this.mykiProvider.activeCardId = card.id;
-    this.viewCtrl.dismiss();
+    this.menuCtrl.close()
   }
 
   isActiveCard(cardId: string) {

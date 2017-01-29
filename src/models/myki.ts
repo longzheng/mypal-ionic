@@ -11,6 +11,7 @@ export namespace Myki {
 
     export class Card {
         loading: boolean = false;
+        loadingTransactions: boolean = false;
         holder: string;
         id: string;
         type: CardType;

@@ -114,8 +114,6 @@ export class MykiProvider {
               // scrape webpage
               let scraperJquery = this.jQueryHTML(data)
 
-              let cardIds = []
-
               // scrape active cards
               let activeCards = scraperJquery.find("#tabs-1 table tr").not(":first")
 
@@ -123,7 +121,14 @@ export class MykiProvider {
               activeCards.each((index, elem) => {
                 var cardJquery = $(elem)
                 let cardId = cardJquery.find("td:nth-child(1)").text().trim();
-                cardIds.push(cardId)
+
+                // create or update card
+                let card = this.findOrInsertCardById(cardId)
+
+                card.status = Myki.CardStatus.Active;
+                card.holder = cardJquery.find("td:nth-child(2)").text().trim();
+                card.moneyBalance = parseFloat(cardJquery.find("td:nth-child(3)").text().trim().substr(1));
+                card.passActive = cardJquery.find("td:nth-child(4)").text().trim();
               })
 
               // scrape ianctive cards
@@ -133,17 +138,13 @@ export class MykiProvider {
               inactiveCards.each((index, elem) => {
                 var cardJquery = $(elem)
                 let cardId = cardJquery.find("td:nth-child(1)").text().trim();
-                cardIds.push(cardId)
-              })
-
-              // loop through card IDs
-              for (let cardId of cardIds) {
+                
+                // create or update card
                 let card = this.findOrInsertCardById(cardId)
-                this.getCardDetails(card);
-              }
 
-              // set active card to first active card
-              this.activeCardId = cardIds[0];
+                card.status = Myki.CardStatus.Replaced;
+                card.holder = cardJquery.find("td:nth-child(2)").text().trim();
+              })
 
               this.mykiAccount.loading = false;
 
@@ -160,7 +161,7 @@ export class MykiProvider {
     })
   }
 
-  getCardDetails(card: Myki.Card): Promise<Myki.Card> {
+  getCardDetails(card: Myki.Card, loadHistory: boolean = false) {
     // specify the login endpoint
     let cardUrl = `${this.apiRoot}Registered/ManageMyCard.aspx`;
 
@@ -206,10 +207,86 @@ export class MykiProvider {
 
               card.lastTransactionDate = moment(cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
 
+              // load card history?
+              if (loadHistory)
+                this.getCardHistory(card);
+
               // set loading state
               card.loading = false;
 
-              return resolve(card);
+              return resolve();
+            },
+            error => {
+              return reject();
+            }
+          )
+        },
+        error => {
+          return reject()
+        })
+    })
+  }
+
+  getCardHistory(card: Myki.Card) {
+    // specify the login endpoint
+    let historyUrl = `${this.apiRoot}Registered/MYTransactionsInfo.aspx`;
+
+    // set loading state
+    card.loadingTransactions = true;
+
+    return new Promise((resolve, reject) => {
+      // do a GET first to get the viewstate
+      this.httpGetAsp(historyUrl).then(
+        data => {
+          // check if we're redirected to error page
+          if (data.url === this.errorUrl)
+            return reject()
+
+          // set up form fields
+          const body = new URLSearchParams()
+          body.set('ctl00$uxContentPlaceHolder$uxCardList', card.id)
+          body.set('ctl00$uxContentPlaceHolder$uxPageSize', '40')
+          body.set('ctl00$uxContentPlaceHolder$uxFromDay', '0')
+          body.set('ctl00$uxContentPlaceHolder$uxFromMonth', '0')
+          body.set('ctl00$uxContentPlaceHolder$uxFromYear', '0')
+          body.set('ctl00$uxContentPlaceHolder$uxToDay', '0')
+          body.set('ctl00$uxContentPlaceHolder$uxToMonth', '0')
+          body.set('ctl00$uxContentPlaceHolder$uxToYear', '0')
+          body.set('ctl00$uxContentPlaceHolder$uxSelectNewCard', 'Go')
+
+          // post form fields
+          this.httpPostFormAsp(historyUrl, body).then(
+            data => {
+              // clear existing card history
+              card.transactions = [];
+
+              // scrape webpage
+              let scraperJquery = this.jQueryHTML(data)
+
+              let historyTable = scraperJquery.find("table#ctl00_uxContentPlaceHolder_uxMykiTxnHistory");
+
+              // set loading state
+              card.loadingTransactions = false;
+
+              // check if any transction records existing
+              // there is a table row with the CSS class "header"
+              if (historyTable.find("tr.Header").length === -1)
+                return resolve(); // no records exist, early exit
+
+              // loop over each transaction row
+              historyTable.find("tr").not(":first").each((index, elem) => {
+                var transJquery = $(elem)
+                let trans = new Myki.Transaction();
+
+                // process date & time
+                let date = transJquery.find("td:nth-child(1)").text().trim()
+                let time = transJquery.find("td:nth-child(2)").text().trim()
+                trans.dateTime = moment(`${date} ${time}`, "DD/MM/YYYY HH:mm:ss").toDate()
+
+                card.transactions.push(trans)
+              })
+
+              return resolve();
             },
             error => {
               return reject();

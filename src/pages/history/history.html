@@ -1,11 +1,31 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <ion-title>
+            History
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content>
+        </ion-refresher-content>
+    </ion-refresher>
 
+    <div [hidden]="!account().loading" text-center padding>
+        <ion-spinner></ion-spinner>
+        <p>Loading account</p>
+    </div>
+
+    <div [hidden]="account().loading || !cardInitialLoad()" text-center padding>
+        <ion-spinner></ion-spinner>
+        <p>Loading transactions</p>
+    </div>
+
+    <ion-list [hidden]="cardInitialLoad()">
+        <ion-item *ngFor="let trans of transactions()">
+            <p>{{trans.dateTime | date:'fullDate'}}</p>
+            <p>{{trans.dateTime | date:'shortTime'}}</p>
+        </ion-item>
+    </ion-list>
 </ion-content>

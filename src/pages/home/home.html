@@ -1,7 +1,12 @@
 <ion-header>
     <ion-navbar color="primary">
+        <ion-buttons start>
+            <button ion-button icon-only menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
         <ion-title>
-            <card-selector></card-selector>
+            Balance
         </ion-title>
     </ion-navbar>
 </ion-header>
@@ -12,17 +17,16 @@
         </ion-refresher-content>
     </ion-refresher>
 
-    <div [hidden]="!account().loading" text-center padding>
-        <ion-spinner></ion-spinner>
-        <p>Loading account</p>
-    </div>
-
-    <div [hidden]="account().loading || !cardInitialLoad()" text-center padding>
+    <div [hidden]="!cardInitialLoad()" text-center padding>
         <ion-spinner></ion-spinner>
         <p>Loading card</p>
     </div>
 
     <ion-list [hidden]="cardInitialLoad()">
+        <ion-list-header>
+            {{card().id}}
+        </ion-list-header>
+
         <ion-card text-center class="card-hero">
             <div class="replaced" [hidden]="!inactiveCard()">Card replaced</div>
             <p>myki money</p>
@@ -54,7 +58,7 @@
         </ion-list-header>
 
         <ion-item>
-            <p>Name</p>
+            <p>Holder</p>
             <h2>{{card().holder}}</h2>
         </ion-item>
 
