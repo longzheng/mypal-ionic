@@ -1,0 +1,38 @@
+<div class="date">
+    <p>{{transaction.dateTime | date:'fullDate'}}</p>
+    <p>{{transaction.dateTime | date:'shortTime'}}</p>
+</div>
+<div class="content">
+    <div class="type">
+        <ion-icon name="md-log-in" *ngIf="isTouchOn()"></ion-icon>
+        <ion-icon name="md-log-out" *ngIf="isTouchOff()"></ion-icon>
+        <ion-icon name="md-add-circle" *ngIf="isTopup()"></ion-icon>
+    </div>
+    <div class="detail">
+        <div class="title">
+            <div class="action">
+                <small>{{transaction.typeToString()}}</small>
+                <p>{{transactionDescription()}}</p>
+            </div>
+            <div class="meta" *ngIf="isTransport()">
+                <div class="method">
+
+                </div>
+                <div class="zone">
+                    {{transaction.zone}}
+                </div>
+            </div>
+        </div>
+        <div class="description">
+            <div class="info" *ngIf="isTopupMoney()">
+                <p>Credit: {{transaction.credit | currency:'USD':true}}</p>
+                <p>Balance: {{transaction.moneyBalance | currency:'USD':true}}</p>
+            </div>
+            <div class="info" *ngIf="isMoneyTransaction()">
+                <p>Cost: {{transaction.debit | currency:'USD':true}}</p>
+                <p>Balance: {{transaction.moneyBalance | currency:'USD':true}}</p>
+            </div>
+            <p *ngIf="isPassTransaction()">Used Myki pass</p>
+        </div>
+    </div>
+</div>

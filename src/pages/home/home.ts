@@ -40,4 +40,12 @@ export class HomePage {
     return this.card().status === Myki.CardStatus.Replaced
   }
 
+  hasTransactions() {
+    return this.card().transactions.length > 0
+  }
+
+  firstTransaction() {
+    return this.card().transactions[0]
+  }
+
 }

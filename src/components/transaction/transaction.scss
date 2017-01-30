@@ -1,0 +1,87 @@
+transaction {
+    .date {
+        display: flex;
+        p {
+            font-size: 0.7em;
+            &:nth-child(1) {
+                flex: 1 0;
+            }
+            &:nth-child(2) {
+                text-align: right;
+            }
+        }
+    }
+    .content {
+        display: flex;
+        .type {
+            width: 30px;
+            margin-top: 0.7em;
+            margin-right: 0.7em;
+            text-align: center;
+            ion-icon {
+                font-size: 1.5em;
+                &[name="md-log-in"] {
+                    color: green;
+                }
+                &[name="md-log-out"] {
+                    color: red;
+                }
+                &[name="md-add-circle"] {
+                    color: blue;
+                }
+            }
+        }
+        .detail {
+            display: flex;
+            flex: 1 0;
+            flex-direction: column;
+            .title {
+                align-items: center;
+                padding: 0.3em 0;
+                display: flex;
+                .action {
+                    flex: 1 0;
+                    small {
+                        font-size: 0.7em;
+                        color: #888;
+                    }
+                    p {
+                        font-size: 1em;
+                        color: color($colors, dark, base);
+                    }
+                }
+                .meta {
+                    .zone {
+                        width: 18px;
+                        height: 18px;
+                        border-radius: 50%;
+                        background: #ccc;
+                        color: white;
+                        font-size: 13px;
+                        font-weight: 500;
+                        text-align: center;
+                        padding-top: 1px;
+                    }
+                }
+            }
+            .description {
+                width: 100%;
+                margin-top: 0.3em;
+                p {
+                    font-size: 0.7em;
+                }
+                .info {
+                    display: flex;
+                    p {
+                        &:nth-child(1) {
+                            flex: 1 0;
+                        }
+                        &:nth-child(2) {
+                            text-align: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

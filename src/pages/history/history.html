@@ -22,10 +22,12 @@
         <p>Loading transactions</p>
     </div>
 
-    <ion-list [hidden]="!card().transactionLoaded">
-        <ion-item *ngFor="let trans of transactions()">
-            <p>{{trans.dateTime | date:'fullDate'}}</p>
-            <p>{{trans.dateTime | date:'shortTime'}}</p>
-        </ion-item>
-    </ion-list>
+    <div [hidden]="!card().transactionLoaded">
+        <ion-list>
+            <ion-item *ngFor="let trans of transactions()">
+                <transaction [transaction]="trans"></transaction>
+            </ion-item>
+        </ion-list>
+        <p text-center padding-bottom>Showing most recent {{transactions().length}} tranactions</p>
+    </div>
 </ion-content>

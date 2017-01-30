@@ -132,7 +132,7 @@ export class MykiProvider {
 
                 card.status = Myki.CardStatus.Active;
                 card.holder = cardJquery.find("td:nth-child(2)").text().trim();
-                card.moneyBalance = parseFloat(cardJquery.find("td:nth-child(3)").text().trim().substr(1));
+                card.moneyBalance = parseFloat(cardJquery.find("td:nth-child(3)").text().trim().replace("$", ""));
                 card.passActive = cardJquery.find("td:nth-child(4)").text().trim();
               })
 
@@ -192,9 +192,9 @@ export class MykiProvider {
               card.setType(cardTable.find("tr:nth-child(2) td:nth-child(2)").text().trim());
               card.expiry = moment(cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim(), "D MMM YYYY").toDate();
               card.status = Myki.CardStatus[cardTable.find("tr:nth-child(4) td:nth-child(2)").text().trim()];
-              card.moneyBalance = parseFloat(cardTable.find("tr:nth-child(5) td:nth-child(2)").text().trim().substr(1));
-              card.moneyTopupInProgress = parseFloat(cardTable.find("tr:nth-child(6) td:nth-child(2)").text().trim().substr(1));
-              card.moneyTotalBalance = parseFloat(cardTable.find("tr:nth-child(7) td:nth-child(2)").text().trim().substr(1));
+              card.moneyBalance = parseFloat(cardTable.find("tr:nth-child(5) td:nth-child(2)").text().trim().replace("$", ""));
+              card.moneyTopupInProgress = parseFloat(cardTable.find("tr:nth-child(6) td:nth-child(2)").text().trim().replace("$", ""));
+              card.moneyTotalBalance = parseFloat(cardTable.find("tr:nth-child(7) td:nth-child(2)").text().trim().replace("$", ""));
 
               // process pass
               let passActive = cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim();
@@ -279,6 +279,28 @@ export class MykiProvider {
                 let date = transJquery.find("td:nth-child(1)").text().trim()
                 let time = transJquery.find("td:nth-child(2)").text().trim()
                 trans.dateTime = moment(`${date} ${time}`, "DD/MM/YYYY HH:mm:ss").toDate()
+
+                // type
+                trans.setType(transJquery.find("td:nth-child(3)").text().trim().replace("*", "")) // remove * from transaction type
+
+                // service
+                trans.setService(transJquery.find("td:nth-child(4)").text().trim())
+
+                // zone
+                trans.zone = transJquery.find("td:nth-child(5)").text().trim()
+
+                // description
+                trans.description = transJquery.find("td:nth-child(6)").text().trim()
+
+
+                // credit
+                trans.credit = parseFloat(transJquery.find("td:nth-child(7)").text().trim().replace("-", "").replace("$", "")) // remove "-" for empty fields and "$"
+
+                // debit
+                trans.debit = parseFloat(transJquery.find("td:nth-child(8)").text().trim().replace("-", "").replace("$", ""))
+
+                // balance
+                trans.moneyBalance = parseFloat(transJquery.find("td:nth-child(9)").text().trim().replace("-", "").replace("$", ""))
 
                 card.transactions.push(trans)
               })

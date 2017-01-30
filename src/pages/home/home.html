@@ -30,8 +30,8 @@
         <ion-card text-center class="card-hero">
             <div class="replaced" [hidden]="!inactiveCard()">Card replaced</div>
             <p>myki money</p>
-            <h2>${{card().moneyBalance}}</h2>
-            <p [hidden]="card().moneyTopupInProgress === 0">${{card().moneyTopupInProgress}} top up in progress</p>
+            <h2>{{card().moneyBalance | currency:'USD':true}}</h2>
+            <p [hidden]="card().moneyTopupInProgress === 0">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</p>
             <p>Auto top up enabled</p>
             <hr>
             <p>myki pass</p>
@@ -47,9 +47,18 @@
         </ion-list-header>
 
         <ion-item>
-
+            <div [hidden]="card().transactionLoaded">
+                <ion-spinner></ion-spinner> Loading transactions
+            </div>
+            <div [hidden]="!card().transactionLoaded">
+                <transaction [transaction]="firstTransaction()" *ngIf="hasTransactions()"></transaction>
+                <div [hidden]="hasTransactions()">
+                    No transactions
+                </div>
+            </div>
         </ion-item>
-        <button ion-item (click)="gotoHistory()">
+
+        <button [hidden]="card().transactionLoaded && !hasTransactions()" ion-item (click)="gotoHistory()">
           See more transactions
         </button>
 

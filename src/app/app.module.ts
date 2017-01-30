@@ -9,6 +9,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoadCardsPage } from '../pages/load-cards/load-cards';
 
 import { SelectCardComponent } from '../components/select-card/select-card';
+import { TransactionComponent } from '../components/transaction/transaction';
 
 import { MykiProvider } from '../providers/myki';
 import { SavedLoginProvider } from '../providers/saved-login';
@@ -23,6 +24,7 @@ let pages = [
   LoadCardsPage,
 
   SelectCardComponent,
+  TransactionComponent,
 ]
 
 export function declarations() {

@@ -1,21 +1,19 @@
-<ion-content class="autologin" [hidden]="!autologin">
-  <div class="container">
-    <div>
-      <ion-spinner color="white"></ion-spinner>
-      <p color="white" text-center>Logging in</p>
+<ion-content padding>
+    <div class="autologin" text-center [hidden]="!autologin">
+        <ion-spinner color="white"></ion-spinner>
+        <p color="white" text-center>Logging in</p>
     </div>
-  </div>
-</ion-content>
 
-<ion-content padding [hidden]="autologin">
-  <p>Log in to your Myki account</p>
-  <ion-item>
-    <ion-label stacked>Username</ion-label>
-    <ion-input type="text" [(ngModel)]="username" name="username"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
-  </ion-item>
-  <button ion-button block color="white" [disabled]="!hasUsernamePassword()" (click)="logIn()">Log in</button>
+    <div class="login" [hidden]="autologin">
+        <p>Log in to your Myki account</p>
+        <ion-item>
+            <ion-label stacked>Username</ion-label>
+            <ion-input type="text" [(ngModel)]="username" name="username"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+        </ion-item>
+        <button ion-button block color="white" [disabled]="!hasUsernamePassword()" (click)="logIn()">Log in</button>
+    </div>
 </ion-content>
