@@ -1,0 +1,25 @@
+page-login {
+    //background: color($colors, primary, base) !important;
+
+    ion-content {
+        //background: none !important;
+    }
+    ion-item {
+        padding-left: 0 !important;
+    }
+    button {
+        margin-top: 2em !important;
+    }
+    ion-content.autologin {
+        .container {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            align-content: center;
+            >div {
+                text-align: center;
+                width: 100%;
+            }
+        }
+    }
+}

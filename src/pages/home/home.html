@@ -1,17 +1,76 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <ion-buttons start>
+            <button ion-button icon-only menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>
+            Balance
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content>
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <div [hidden]="!cardInitialLoad()" text-center padding>
+        <ion-spinner></ion-spinner>
+        <p>Loading card</p>
+    </div>
+
+    <ion-list [hidden]="cardInitialLoad()">
+        <ion-list-header>
+            {{card().id}}
+        </ion-list-header>
+
+        <ion-card text-center class="card-hero">
+            <div class="replaced" [hidden]="!inactiveCard()">Card replaced</div>
+            <p>myki money</p>
+            <h2>${{card().moneyBalance}}</h2>
+            <p [hidden]="card().moneyTopupInProgress === 0">${{card().moneyTopupInProgress}} top up in progress</p>
+            <p>Auto top up enabled</p>
+            <hr>
+            <p>myki pass</p>
+            <h2>{{card().passActive}}</h2>
+            <button ion-button icon-left [disabled]="inactiveCard()">
+              <ion-icon name="add"></ion-icon>
+              Top up
+            </button>
+        </ion-card>
+
+        <ion-list-header>
+            Recent transaction
+        </ion-list-header>
+
+        <ion-item>
+
+        </ion-item>
+        <button ion-item (click)="gotoHistory()">
+          See more transactions
+        </button>
+
+        <ion-list-header>
+            Card information
+        </ion-list-header>
+
+        <ion-item>
+            <p>Holder</p>
+            <h2>{{card().holder}}</h2>
+        </ion-item>
+
+        <ion-item>
+            <p>Card type</p>
+            <h2>{{card().typeToString()}}</h2>
+        </ion-item>
+
+        <ion-item>
+            <p>Expiry</p>
+            <h2>{{card().expiry | date:'fullDate'}}</h2>
+        </ion-item>
+
+    </ion-list>
 </ion-content>

@@ -1,3 +1,16 @@
 page-home {
-
+    ion-content {
+        background: color($colors, light, base) !important;
+    }
+    .card-hero {
+        background: white;
+        padding: $content-padding;
+        .replaced {
+            background: color($colors, danger, base);
+            color: white;
+            padding: $content-padding;
+            margin: -$content-padding;
+            margin-bottom: $content-padding;
+        }
+    }
 }

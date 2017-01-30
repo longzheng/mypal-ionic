@@ -1,30 +1,48 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
+
+import { LoginPage } from '../pages/login/login';
+import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { SelectCardComponent } from '../components/select-card/select-card';
+
+import { MykiProvider } from '../providers/myki';
+import { SavedLoginProvider } from '../providers/saved-login';
+import { Storage } from '@ionic/storage';
+
+let pages = [
+  MyApp,
+  LoginPage,
+  TabsPage,
+  HomePage,
+  HistoryPage,
+
+  SelectCardComponent,
+]
+
+export function declarations() {
+  return pages
+}
+
+export function entryComponents() {
+  return pages
+}
+
 @NgModule({
-  declarations: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
-  ],
+  declarations: declarations(),
   imports: [
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
-  ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  entryComponents: entryComponents(),
+  providers: [
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    MykiProvider,
+    SavedLoginProvider,
+    Storage
+  ]
 })
 export class AppModule {}
