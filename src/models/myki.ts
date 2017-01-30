@@ -29,6 +29,10 @@ export namespace Myki {
             this.transactions = []
         }
 
+        idFormatted(): string {
+            return `${this.id.substr(0,1)} ${this.id.substr(1,5)} ${this.id.substr(6,4)} ${this.id.substr(10,4)} ${this.id.substr(14,1)}`
+        }
+
         setType(type: string) {
             switch (type) {
                 case 'Full Fare':
