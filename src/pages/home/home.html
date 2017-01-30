@@ -17,12 +17,12 @@
         </ion-refresher-content>
     </ion-refresher>
 
-    <div [hidden]="!cardInitialLoad()" text-center padding>
+    <div [hidden]="card().loaded" text-center padding>
         <ion-spinner></ion-spinner>
         <p>Loading card</p>
     </div>
 
-    <ion-list [hidden]="cardInitialLoad()">
+    <ion-list [hidden]="!card().loaded">
         <ion-list-header>
             {{card().id}}
         </ion-list-header>

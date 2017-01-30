@@ -29,6 +29,14 @@ export class MykiProvider {
   ) {
   }
 
+  setActiveCard(id: string) {
+    this.activeCardId = id;
+
+    // if card isn't loaded yet, load it
+    if (!this.activeCard().loaded)
+      this.getCardDetails(this.activeCard(), true)
+  }
+
   activeCard() {
     if (this.activeCardId === '')
       return new Myki.Card;
@@ -92,9 +100,6 @@ export class MykiProvider {
     // specify the login endpoint
     let accountUrl = `${this.apiRoot}Registered/MyMykiAccount.aspx`;
 
-    // set loading
-    this.mykiAccount.loading = true;
-
     return new Promise((resolve, reject) => {
       // do a GET first to get the viewstate
       this.httpGetAsp(accountUrl).then(
@@ -138,15 +143,13 @@ export class MykiProvider {
               inactiveCards.each((index, elem) => {
                 var cardJquery = $(elem)
                 let cardId = cardJquery.find("td:nth-child(1)").text().trim();
-                
+
                 // create or update card
                 let card = this.findOrInsertCardById(cardId)
 
                 card.status = Myki.CardStatus.Replaced;
                 card.holder = cardJquery.find("td:nth-child(2)").text().trim();
               })
-
-              this.mykiAccount.loading = false;
 
               return resolve();
             },
@@ -164,9 +167,6 @@ export class MykiProvider {
   getCardDetails(card: Myki.Card, loadHistory: boolean = false) {
     // specify the login endpoint
     let cardUrl = `${this.apiRoot}Registered/ManageMyCard.aspx`;
-
-    // set loading state
-    card.loading = true;
 
     return new Promise((resolve, reject) => {
       // do a GET first to get the viewstate
@@ -212,7 +212,7 @@ export class MykiProvider {
                 this.getCardHistory(card);
 
               // set loading state
-              card.loading = false;
+              card.loaded = true;
 
               return resolve();
             },
@@ -230,9 +230,6 @@ export class MykiProvider {
   getCardHistory(card: Myki.Card) {
     // specify the login endpoint
     let historyUrl = `${this.apiRoot}Registered/MYTransactionsInfo.aspx`;
-
-    // set loading state
-    card.loadingTransactions = true;
 
     return new Promise((resolve, reject) => {
       // do a GET first to get the viewstate
@@ -266,7 +263,7 @@ export class MykiProvider {
               let historyTable = scraperJquery.find("table#ctl00_uxContentPlaceHolder_uxMykiTxnHistory");
 
               // set loading state
-              card.loadingTransactions = false;
+              card.transactionLoaded = true;
 
               // check if any transction records existing
               // there is a table row with the CSS class "header"

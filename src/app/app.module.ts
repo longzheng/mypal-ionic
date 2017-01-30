@@ -6,6 +6,7 @@ import { LoginPage } from '../pages/login/login';
 import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { LoadCardsPage } from '../pages/load-cards/load-cards';
 
 import { SelectCardComponent } from '../components/select-card/select-card';
 
@@ -19,6 +20,7 @@ let pages = [
   TabsPage,
   HomePage,
   HistoryPage,
+  LoadCardsPage,
 
   SelectCardComponent,
 ]

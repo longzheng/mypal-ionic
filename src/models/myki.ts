@@ -1,6 +1,5 @@
 export namespace Myki {
     export class Account {
-        loading: boolean = false;
         holder: string;
         cards: Array<Card>;
 
@@ -10,8 +9,8 @@ export namespace Myki {
     }
 
     export class Card {
-        loading: boolean = false;
-        loadingTransactions: boolean = false;
+        loaded: boolean = false;
+        transactionLoaded: boolean = false;
         holder: string;
         id: string;
         type: CardType;

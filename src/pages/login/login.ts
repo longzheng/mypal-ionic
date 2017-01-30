@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { App, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { SavedLoginProvider } from '../../providers/saved-login';
-import { TabsPage } from '../tabs/tabs';
+import { LoadCardsPage } from '../load-cards/load-cards';
 
 @Component({
   selector: 'page-login',
@@ -15,7 +15,6 @@ export class LoginPage {
   autologin = true;
 
   constructor(
-    public appCtrl: App,
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
@@ -44,7 +43,7 @@ export class LoginPage {
           result => {
             // login
             this.mykiProvider.login(result[0], result[1]).then(() =>
-              this.goToHome()
+              this.goToLoadCards()
             ).catch(() => {
               // show error
               let alert = this.alertCtrl.create({
@@ -80,8 +79,8 @@ export class LoginPage {
         // save login
         this.savedLoginProvider.save(this.username, this.password)
 
-        // go to home page
-        this.goToHome()
+        // go to load cards page
+        this.goToLoadCards()
       },
       error => {
         // show error
@@ -96,9 +95,9 @@ export class LoginPage {
       )
   }
 
-  goToHome() {
+  goToLoadCards() {
     // change nav root
-    this.appCtrl.getRootNav().setRoot(TabsPage, null, { animate: false, direction: 'forward' })
+    this.navCtrl.setRoot(LoadCardsPage, null, { animate: false, direction: 'forward' })
   }
 
 }

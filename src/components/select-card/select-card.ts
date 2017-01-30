@@ -27,7 +27,7 @@ export class SelectCardComponent {
   }
 
   selectCard(card: Myki.Card) {
-    this.mykiProvider.activeCardId = card.id;
+    this.mykiProvider.setActiveCard(card.id);
     this.menuCtrl.close()
   }
 

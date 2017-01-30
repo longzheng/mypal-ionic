@@ -1,5 +1,10 @@
 <ion-header>
     <ion-navbar color="primary">
+        <ion-buttons start>
+            <button ion-button icon-only menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
         <ion-title>
             History
         </ion-title>
@@ -12,17 +17,12 @@
         </ion-refresher-content>
     </ion-refresher>
 
-    <div [hidden]="!account().loading" text-center padding>
-        <ion-spinner></ion-spinner>
-        <p>Loading account</p>
-    </div>
-
-    <div [hidden]="account().loading || !cardInitialLoad()" text-center padding>
+    <div [hidden]="card().transactionLoaded" text-center padding>
         <ion-spinner></ion-spinner>
         <p>Loading transactions</p>
     </div>
 
-    <ion-list [hidden]="cardInitialLoad()">
+    <ion-list [hidden]="!card().transactionLoaded">
         <ion-item *ngFor="let trans of transactions()">
             <p>{{trans.dateTime | date:'fullDate'}}</p>
             <p>{{trans.dateTime | date:'shortTime'}}</p>

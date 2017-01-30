@@ -37,10 +37,6 @@ export class HistoryPage {
     return this.mykiProvider.activeCard();
   }
 
-  cardInitialLoad() {
-    return this.card().type === undefined;
-  }
-
   transactions() {
     return this.card().transactions;
   }
