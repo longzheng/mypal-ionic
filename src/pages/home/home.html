@@ -5,6 +5,11 @@
                 <ion-icon name="menu"></ion-icon>
             </button>
         </ion-buttons>
+        <ion-buttons right>
+            <button ion-button icon-only (click)="userOptions()">
+                <ion-icon name="person"></ion-icon>
+            </button>
+        </ion-buttons>
         <ion-title>
             Balance
         </ion-title>
@@ -32,14 +37,17 @@
             <p>myki money</p>
             <h2>{{card().moneyBalance | currency:'USD':true}}</h2>
             <p [hidden]="card().moneyTopupInProgress === 0">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</p>
-            <p>Auto top up enabled</p>
+            <!--<p>Auto top up enabled</p>-->
             <hr>
             <p>myki pass</p>
-            <h2>{{card().passActive}}</h2>
+            <h2 [hidden]="!card().passActive">{{card().passActive}}</h2>
+            <h2 [hidden]="card().passActive">No pass active</h2>
+            <!-- TODO: Top up button
             <button ion-button icon-left [disabled]="inactiveCard()">
               <ion-icon name="add"></ion-icon>
               Top up
             </button>
+            -->
         </ion-card>
 
         <ion-list-header>
