@@ -59,7 +59,7 @@ export class HomePage {
           text: 'Open myki site',
           handler: () => {
             // open myki site
-            window.open('https://www.mymyki.com.au/', '_system');
+            window.open('https://www.mymyki.com.au/NTSWebPortal/Login.aspx');
           }
         },
         {
