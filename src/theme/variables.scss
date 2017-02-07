@@ -17,6 +17,8 @@ $font-family-ios-base: 'Rubik';
 $font-family-md-base: 'Rubik';
 $font-family-wp-base: 'Rubik';
 
+$background-color: #ececec;
+
 
 // Named Color Variables
 // --------------------------------------------------
@@ -28,18 +30,16 @@ $font-family-wp-base: 'Rubik';
 
 $colors: (
   primary: (     
-    base: #6A8700,
-    contrast: #fff
-  ),
-  brand: (     
     base: #C4DB2D,
     contrast: #323740
-  ), 
+  ),
   brand-light:  #CFE257,
   brand-dark:   #9CAF24,
   brand-darkest:#6A8700,
   danger:       #f53d3d,
-  light:        #f4f4f4,
+  light:        #ebebeb,
+  light-blue:   #b9bec5,
+  gray:       #a0a0a0,
   dark:         #656A73,
   darker:       #3F4550,
   black:      #323740,
@@ -50,7 +50,9 @@ $colors: (
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-
+$toolbar-ios-border-color: transparent;
+$tabs-ios-tab-color-active: color($colors, black, base);
+$tabs-ios-tab-color-inactive: color($colors, gray, base);
 
 
 // App Material Design Variables

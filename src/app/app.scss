@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/v2/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,3 +13,56 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+$card-radius: 6px;
+$card-background: #fff;
+$card-margin-topbottom: 1.5em;
+
+.note {
+    margin: $content-margin;
+    color: color($colors, dark, base);
+    font-size: 13px;
+}
+
+.card {
+    background: $card-background;
+    margin: $card-margin-topbottom $content-padding;
+    border-radius: 6px;
+    overflow: hidden;
+
+    .card-inner {
+        padding: $content-padding;
+    }
+}
+
+.card-list {
+    background: $card-background;
+    margin: $card-margin-topbottom $content-padding;
+    padding: 0;
+    border-radius: 6px;
+    overflow: hidden;
+
+    > ion-item {
+        background: transparent;
+
+        & + ion-item {
+            border-top: 1px solid color($colors, light, base) !important;
+        }
+
+        > [item-left] {
+            color: color($colors, dark, base);
+        }
+
+        > [item-left] {
+            color: color($colors, black, base);
+        }
+    }
+}
+
+.tabs-ios {
+    .tabbar {
+        border-top: none;
+        background: white;
+        box-shadow: 0 -4px 10px rgba(0,0,0,0.02);
+    }
+}

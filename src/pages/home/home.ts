@@ -32,24 +32,12 @@ export class HomePage {
       })
   }
 
-  gotoHistory() {
-    this.navCtrl.parent.select(1)
-  }
-
   card() {
     return this.mykiProvider.activeCard();
   }
 
   inactiveCard() {
     return this.card().status === Myki.CardStatus.Replaced
-  }
-
-  hasTransactions() {
-    return this.card().transactions.length > 0
-  }
-
-  firstTransaction() {
-    return this.card().transactions[0]
   }
 
   userOptions() {

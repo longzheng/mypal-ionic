@@ -27,67 +27,62 @@
         <p>Loading card</p>
     </div>
 
-    <ion-list [hidden]="!card().loaded">
-        <ion-list-header>
-            {{card().idFormatted()}}
-        </ion-list-header>
+    <div [hidden]="!card().loaded">
+        <div class="card replaced" [hidden]="!inactiveCard()">
+            <div class="card-inner">Card replaced</div>
+        </div>
 
-        <ion-card text-center class="card-hero">
-            <div class="replaced" [hidden]="!inactiveCard()">Card replaced</div>
-            <p>myki money</p>
-            <h2>{{card().moneyBalance | currency:'USD':true}}</h2>
-            <p [hidden]="card().moneyTopupInProgress === 0">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</p>
-            <!--<p>Auto top up enabled</p>-->
-            <hr>
-            <p>myki pass</p>
-            <h2 [hidden]="!card().passActive">{{card().passActive}}</h2>
-            <h2 [hidden]="card().passActive">No pass active</h2>
-            <!-- TODO: Top up button
-            <button ion-button icon-left [disabled]="inactiveCard()">
-              <ion-icon name="add"></ion-icon>
-              Top up
-            </button>
-            -->
-        </ion-card>
+        <div class="note">
+            Balance may be delayed by up to 24 hours
+        </div>
 
-        <ion-list-header>
-            Recent transaction
-        </ion-list-header>
-
-        <ion-item>
-            <div [hidden]="card().transactionLoaded">
-                <ion-spinner></ion-spinner> Loading transactions
+        <div class="card balance">
+            <div class="balance-icon">
+                <ion-icon name="ios-clock"></ion-icon>
             </div>
-            <div [hidden]="!card().transactionLoaded">
-                <transaction [transaction]="firstTransaction()" *ngIf="hasTransactions()"></transaction>
-                <div [hidden]="hasTransactions()">
-                    No transactions
+            <div class="card-inner">
+                <p class="title">Myki money</p>
+                <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}</h2>
+                <div class="info">
+                    <p [hidden]="card().moneyTopupInProgress === 0">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</p>
                 </div>
             </div>
-        </ion-item>
+        </div>
 
-        <button [hidden]="card().transactionLoaded && !hasTransactions()" ion-item (click)="gotoHistory()">
-          See more transactions
-        </button>
+        <div class="card balance">
+            <div class="balance-icon">
+                <ion-icon name="ios-clock"></ion-icon>
+            </div>
+            <div class="card-inner">
+                <p class="title">Myki pass</p>
+                <h2 class="balance-hero inactive" [hidden]="card().passActive">No pass</h2>
+                <div [hidden]="!card().passActive">
+                    <h2 class="balance-hero"></h2>
+                    <div class="info"></div>
+                </div>
+            </div>
+        </div>
 
-        <ion-list-header>
-            Card information
-        </ion-list-header>
+        <ul class="card-list">
+            <ion-item no-lines>
+                <div item-left>Number</div>
+                <div item-right>{{card().idFormatted()}}</div>
+            </ion-item>
 
-        <ion-item>
-            <p>Holder</p>
-            <h2>{{card().holder}}</h2>
-        </ion-item>
+            <ion-item no-lines>
+                <div item-left>Name</div>
+                <div item-right>{{card().holder}}</div>
+            </ion-item>
 
-        <ion-item>
-            <p>Card type</p>
-            <h2>{{card().typeToString()}}</h2>
-        </ion-item>
+            <ion-item no-lines>
+                <div item-left>Type</div>
+                <div item-right>{{card().typeToString()}}</div>
+            </ion-item>
 
-        <ion-item>
-            <p>Expiry</p>
-            <h2>{{card().expiry | date:'fullDate'}}</h2>
-        </ion-item>
-
-    </ion-list>
+            <ion-item no-lines>
+                <div item-left>Expiry</div>
+                <div item-right>{{card().expiry | date:'fullDate'}}</div>
+            </ion-item>
+        </ul>
+    </div>
 </ion-content>

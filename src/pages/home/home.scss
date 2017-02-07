@@ -1,16 +1,40 @@
 page-home {
-    ion-content {
-        background: color($colors, light, base) !important;
+    .replaced {
+        background: color($colors, danger, base);
+        color: white;
+        text-align: center;
     }
-    .card-hero {
-        background: white;
-        padding: $content-padding;
-        .replaced {
-            background: color($colors, danger, base);
+    .card.balance {
+        display: flex;
+        
+        .balance-icon {
+            width: 90px;
             color: white;
-            padding: $content-padding;
-            margin: -$content-padding;
-            margin-bottom: $content-padding;
+            background: linear-gradient(#e0e1e4, #cdd0d6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            ion-icon {
+                font-size: 2em;
+            }
+        }
+        .card-inner {
+            flex: 1 0;
+            .title {
+                color: color($colors, dark, base);
+                font-size: 13px;
+                margin: 0;
+            }
+            .balance-hero {
+                font-size: 2.3em;
+                font-weight: 600;
+                margin: 0.1em 0;
+                line-height: 1.2;
+
+                &.inactive {
+                    color: color($colors, light-blue, base);
+                }
+            }
         }
     }
 }
