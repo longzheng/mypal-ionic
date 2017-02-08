@@ -1,5 +1,4 @@
 // http://ionicframework.com/docs/v2/theming/
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -13,11 +12,9 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
 $card-radius: 6px;
 $card-background: #fff;
 $card-margin-topbottom: 1.5em;
-
 .note {
     margin: $content-margin;
     color: color($colors, dark, base);
@@ -29,7 +26,6 @@ $card-margin-topbottom: 1.5em;
     margin: $card-margin-topbottom $content-padding;
     border-radius: 6px;
     overflow: hidden;
-
     .card-inner {
         padding: $content-padding;
     }
@@ -41,28 +37,58 @@ $card-margin-topbottom: 1.5em;
     padding: 0;
     border-radius: 6px;
     overflow: hidden;
-
-    > ion-item {
+    >ion-item {
         background: transparent;
-
-        & + ion-item {
+        &+ion-item {
             border-top: 1px solid color($colors, light, base) !important;
         }
-
-        > [item-left] {
+        >[item-left] {
             color: color($colors, dark, base);
         }
-
-        > [item-left] {
+        >[item-left] {
             color: color($colors, black, base);
         }
     }
 }
 
+// Custom icons
+// Overriding the ion-icon behavior
+ion-icon {
+    &[class*="mypal"] {
+        // Instead of using the font-based icons
+        // We're applying SVG masks
+        mask-size: contain;
+        mask-repeat: 50% 50%;
+        mask-repeat: no-repeat;
+        background: currentColor;
+    }
+    // custom icons
+    &[class*="mypal-tab-balance"] {
+        mask-image: url(../assets/img/tab-balance.svg);
+    }
+    &[class*="mypal-tab-history"] {
+        mask-image: url(../assets/img/tab-history.svg);
+    }
+}
+
 .tabs-ios {
+    // restyling the app tabbar
     .tabbar {
         border-top: none;
         background: white;
-        box-shadow: 0 -4px 10px rgba(0,0,0,0.02);
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02);
+    }
+    // hide tab text
+    .tab-button-text {
+        display: none !important;
+    }
+    // restyling icon
+    $tab-icon-size: 32px;
+    ion-icon {
+        min-width: $tab-icon-size !important;
+        width: $tab-icon-size !important;
+        height: $tab-icon-size !important;
+        margin: 0 !important; // removed tab text, don't need any margins
+        transition: color 0.1s ease-out;
     }
 }
