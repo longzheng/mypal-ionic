@@ -51,8 +51,8 @@ $colors: (
 // iOS only Sass variables can go here
 
 $toolbar-ios-border-color: transparent;
-$tabs-ios-tab-color-active: color($colors, black, base);
-$tabs-ios-tab-color-inactive: color($colors, gray, base);
+$tabs-ios-tab-color-active: color($colors, darker, base);
+$tabs-ios-tab-color-inactive: color($colors, light-blue, base);
 
 
 // App Material Design Variables
