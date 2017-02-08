@@ -1,3 +1,63 @@
 select-card {
-
+    display: block;
+    width: 100%;
+    height: 100%;
+    ion-content {
+        background: transparent !important; // background is set on the menu
+        .scroll-content {
+            padding: 2em;
+        }
+    }
+    // cards
+    .menu-card {
+        border-radius: $card-radius;
+        margin-bottom: 1.5em !important;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        padding: $content-padding;
+        height: 130px !important;
+        background: color($colors, darker, base);
+        color: white;
+        &.active {
+            background: color($colors, primary, base);
+            color: color($colors, black, base);
+        }
+        &.replaced {
+            opacity: 0.3;
+        }
+        .card-inner {
+            text-align: left;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            .balance {
+                ion-icon {
+                    vertical-align: middle;
+                }
+                .money {
+                    margin-bottom: 0.7em;
+                }
+                .pass {}
+            }
+            .replaced {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+            .info {
+                display: flex;
+                font-size: 13px;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                .number {
+                    font-weight: 600;
+                }
+                .type {
+                    text-align: right;
+                    flex: 1 0;
+                }
+            }
+        }
+    }
 }

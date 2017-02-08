@@ -15,12 +15,15 @@
 $card-radius: 6px;
 $card-background: #fff;
 $card-margin-topbottom: 1.5em;
+
+// note hint text
 .note {
     margin: $content-margin;
     color: color($colors, dark, base);
     font-size: 13px;
 }
 
+// card container
 .card {
     background: $card-background;
     margin: $card-margin-topbottom $content-padding;
@@ -31,6 +34,7 @@ $card-margin-topbottom: 1.5em;
     }
 }
 
+// card list container
 .card-list {
     background: $card-background;
     margin: $card-margin-topbottom $content-padding;
@@ -79,8 +83,8 @@ ion-icon {
     }
 }
 
+// restyling the app tabbar
 ion-tabs {
-    // restyling the app tabbar
     .tabbar {
         border-top: none !important;
         background: white;
@@ -98,5 +102,12 @@ ion-tabs {
             margin: 0 !important; // removed tab text, don't need any margins
             transition: color 0.1s ease-out;
         }
+    }
+}
+
+// restyling side menu
+ion-menu {
+    .menu-inner {
+        background: #86898e !important;
     }
 }
