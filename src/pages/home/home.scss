@@ -1,4 +1,10 @@
 page-home {
+    ion-content {
+        .scroll-content {
+            background: $background-color; // override so pull to refresh doesn't overlap page
+            border-top: none !important; // override so pull to refresh has no border
+        }
+    }
     .replaced {
         background: color($colors, danger, base);
         color: white;
@@ -6,7 +12,6 @@ page-home {
     }
     .card.balance {
         display: flex;
-        
         .balance-icon {
             width: 90px;
             color: white;
@@ -30,9 +35,19 @@ page-home {
                 font-weight: 600;
                 margin: 0.1em 0;
                 line-height: 1.2;
-
                 &.inactive {
                     color: color($colors, light-blue, base);
+                }
+            }
+            .info {
+                color: color($colors, dark, base);
+                >div {
+                    ion-icon {
+                        margin-right: 0.3em;
+                    }
+                    &+div {
+                        margin-top: 0.5em;
+                    }
                 }
             }
         }

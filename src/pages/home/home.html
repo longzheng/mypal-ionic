@@ -44,7 +44,8 @@
                 <p class="title">Myki money</p>
                 <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}</h2>
                 <div class="info">
-                    <p [hidden]="card().moneyTopupInProgress === 0">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</p>
+                    <div [hidden]="card().moneyTopupInProgress === 0">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</div>
+                    <div [hidden]="!card().autoTopup"><ion-icon name="md-refresh"></ion-icon> Auto top up enabled</div>
                 </div>
             </div>
         </div>
