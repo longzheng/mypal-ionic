@@ -58,9 +58,11 @@ ion-icon {
         // Instead of using the font-based icons
         // We're applying SVG masks
         mask-size: contain;
-        mask-repeat: 50% 50%;
+        mask-position: 50% 50%;
         mask-repeat: no-repeat;
         background: currentColor;
+        width: 1em;
+        height: 1em;
     }
     // custom icons
     &[class*="mypal-tab-balance"] {
@@ -69,26 +71,32 @@ ion-icon {
     &[class*="mypal-tab-history"] {
         mask-image: url(../assets/img/tab-history.svg);
     }
+    &[class*="mypal-money"] {
+        mask-image: url(../assets/img/money.svg);
+    }
+    &[class*="mypal-pass"] {
+        mask-image: url(../assets/img/pass.svg);
+    }
 }
 
-.tabs-ios {
+ion-tabs {
     // restyling the app tabbar
     .tabbar {
-        border-top: none;
+        border-top: none !important;
         background: white;
         box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02);
-    }
-    // hide tab text
-    .tab-button-text {
-        display: none !important;
-    }
-    // restyling icon
-    $tab-icon-size: 32px;
-    ion-icon {
-        min-width: $tab-icon-size !important;
-        width: $tab-icon-size !important;
-        height: $tab-icon-size !important;
-        margin: 0 !important; // removed tab text, don't need any margins
-        transition: color 0.1s ease-out;
+        // hide tab text
+        .tab-button-text {
+            display: none !important;
+        }
+        // restyling icon
+        $tab-icon-size: 32px;
+        ion-icon {
+            min-width: $tab-icon-size !important;
+            width: $tab-icon-size !important;
+            height: $tab-icon-size !important;
+            margin: 0 !important; // removed tab text, don't need any margins
+            transition: color 0.1s ease-out;
+        }
     }
 }
