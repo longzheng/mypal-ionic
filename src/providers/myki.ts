@@ -205,7 +205,9 @@ export class MykiProvider {
               if (passInactive !== '-')
                 card.passInactive = passInactive
 
-              card.lastTransactionDate = moment(cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
+              card.lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
+
+              card.autoTopup = cardTable.find("tr:nth-child(11) td:nth-child(2) li#ctl00_uxContentPlaceHolder_ModifyAutoload").length > 0;
 
               // load card history?
               if (loadHistory)
