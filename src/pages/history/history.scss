@@ -1,3 +1,8 @@
-page-about {
-
+page-history {
+    ion-content {
+        .scroll-content {
+            background: $background-color; // override so pull to refresh doesn't overlap page
+            border-top: none !important; // override so pull to refresh has no border
+        }
+    }
 }

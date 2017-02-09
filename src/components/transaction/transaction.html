@@ -1,38 +1,39 @@
-<div class="date">
-    <p>{{transaction.dateTime | date:'fullDate'}}</p>
-    <p>{{transaction.dateTime | date:'shortTime'}}</p>
-</div>
-<div class="content">
-    <div class="type">
-        <ion-icon name="md-log-in" *ngIf="isTouchOn()"></ion-icon>
-        <ion-icon name="md-log-out" *ngIf="isTouchOff()"></ion-icon>
-        <ion-icon name="md-add-circle" *ngIf="isTopup()"></ion-icon>
-    </div>
-    <div class="detail">
-        <div class="title">
-            <div class="action">
-                <small>{{transaction.typeToString()}}</small>
-                <p>{{transactionDescription()}}</p>
-            </div>
-            <div class="meta" *ngIf="isTransport()">
-                <div class="method">
-
+<div class="card">
+    <div class="card-inner">
+        <div class="date">
+            <div>{{transaction.dateTime | amDateFormat:'dddd ll'}}</div>
+            <div>{{transaction.dateTime | amDateFormat:'LT'}}</div>
+        </div>
+        <div class="content">
+            <div class="icon">
+                <div class="method"></div>
+                <div class="type">
+                    <ion-icon name="md-log-in" *ngIf="isTouchOn()"></ion-icon>
+                    <ion-icon name="md-log-out" *ngIf="isTouchOff()"></ion-icon>
+                    <ion-icon name="md-add-circle" *ngIf="isTopup()"></ion-icon>
                 </div>
-                <div class="zone">
-                    {{transaction.zone}}
+            </div>
+            <div class="detail">
+                <div class="title">
+                    <div class="action">
+                        <div class="type">{{transaction.typeToString()}}</div>
+                        <div class="description">{{transactionDescription()}} <span class="zone" *ngIf="isTransport()">{{transaction.zone}}</span></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="description">
+    </div>
+    <div class="meta" *ngIf="isTopupMoney() || isMoneyTransaction() || isPassTransaction()">
+        <div class="card-inner">
             <div class="info" *ngIf="isTopupMoney()">
-                <p>Credit: {{transaction.credit | currency:'USD':true}}</p>
-                <p>Balance: {{transaction.moneyBalance | currency:'USD':true}}</p>
+                <div><strong>Credit:</strong> {{transaction.credit | currency:'USD':true}}</div>
+                <div><strong>Balance:</strong> {{transaction.moneyBalance | currency:'USD':true}}</div>
             </div>
             <div class="info" *ngIf="isMoneyTransaction()">
-                <p>Cost: {{transaction.debit | currency:'USD':true}}</p>
-                <p>Balance: {{transaction.moneyBalance | currency:'USD':true}}</p>
+                <div><strong>Cost:</strong> {{transaction.debit | currency:'USD':true}}</div>
+                <div><strong>Balance:</strong> {{transaction.moneyBalance | currency:'USD':true}}</div>
             </div>
-            <p *ngIf="isPassTransaction()">Used Myki pass</p>
+            <div *ngIf="isPassTransaction()"><strong>Cost:</strong> Used myki pass</div>
         </div>
     </div>
 </div>

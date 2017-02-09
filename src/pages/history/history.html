@@ -24,13 +24,12 @@
 
     <div [hidden]="!card().transactionLoaded">
         <div class="note">
-            Transactions may be delayed by up to 24 hours
+            Transactions may be delayed by up to 24 hours<br> Showing most recent {{transactions().length}} tranactions
         </div>
         <ion-list>
-            <ion-item *ngFor="let trans of transactions()">
+            <div *ngFor="let trans of transactions()">
                 <transaction [transaction]="trans"></transaction>
-            </ion-item>
+            </div>
         </ion-list>
-        <p text-center padding-bottom>Showing most recent {{transactions().length}} tranactions</p>
     </div>
 </ion-content>

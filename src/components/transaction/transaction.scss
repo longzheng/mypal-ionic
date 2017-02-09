@@ -1,8 +1,9 @@
 transaction {
     .date {
         display: flex;
-        p {
-            font-size: 0.7em;
+        color: color($colors, light-blue, base);
+        div {
+            font-size: 13px;
             &:nth-child(1) {
                 flex: 1 0;
             }
@@ -13,10 +14,9 @@ transaction {
     }
     .content {
         display: flex;
-        .type {
+        margin: 1em 0 0;
+        .icon {
             width: 30px;
-            margin-top: 0.7em;
-            margin-right: 0.7em;
             text-align: center;
             ion-icon {
                 font-size: 1.5em;
@@ -41,45 +41,43 @@ transaction {
                 display: flex;
                 .action {
                     flex: 1 0;
-                    small {
-                        font-size: 0.7em;
+                    .type {
+                        font-size: 13px;
                         color: #888;
                     }
-                    p {
+                    .description {
                         font-size: 1em;
                         color: color($colors, dark, base);
-                    }
-                }
-                .meta {
-                    .zone {
-                        width: 18px;
-                        height: 18px;
-                        border-radius: 50%;
-                        background: #ccc;
-                        color: white;
-                        font-size: 13px;
-                        font-weight: 500;
-                        text-align: center;
-                        padding-top: 1px;
+                        .zone {
+                            margin-left: 0.3em;
+                            display: inline-block;
+                            width: 18px;
+                            height: 18px;
+                            border-radius: 50%;
+                            background: color($colors, light-blue, base);
+                            color: white;
+                            font-size: 13px;
+                            font-weight: 500;
+                            text-align: center;
+                            padding-top: 1px;
+                        }
                     }
                 }
             }
-            .description {
-                width: 100%;
-                margin-top: 0.3em;
-                p {
-                    font-size: 0.7em;
+        }
+    }
+    .meta {
+        background: #fcfcfc;
+        color: color($colors, dark, base);
+        font-size: 13px;
+        .info {
+            display: flex;
+            div {
+                &:nth-child(1) {
+                    flex: 1 0;
                 }
-                .info {
-                    display: flex;
-                    p {
-                        &:nth-child(1) {
-                            flex: 1 0;
-                        }
-                        &:nth-child(2) {
-                            text-align: right;
-                        }
-                    }
+                &:nth-child(2) {
+                    text-align: right;
                 }
             }
         }
