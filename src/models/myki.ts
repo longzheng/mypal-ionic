@@ -75,7 +75,7 @@ export namespace Myki {
             if (!this.passActiveExpiry)
                 return 'No pass'
 
-            let daysLeft = moment(this.passActiveExpiry).diff(moment(), 'days') + 1;
+            let daysLeft = moment(this.passActiveExpiry).startOf('day').diff(moment(), 'days') + 1;
             return `${daysLeft} days left`
         }
     }
