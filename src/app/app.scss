@@ -95,13 +95,12 @@ ion-tabs {
             display: none !important;
         }
         // restyling icon
-        $tab-icon-size: 32px;
+        $tab-icon-size: 26px;
         ion-icon {
             min-width: $tab-icon-size !important;
             width: $tab-icon-size !important;
             height: $tab-icon-size !important;
             margin: 0 !important; // removed tab text, don't need any margins
-            transition: color 0.1s ease-out;
         }
     }
 }
