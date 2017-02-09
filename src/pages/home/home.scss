@@ -41,6 +41,7 @@ page-home {
             }
             .info {
                 color: color($colors, dark, base);
+                line-height: 1.5;
                 >div {
                     ion-icon {
                         margin-right: 0.3em;

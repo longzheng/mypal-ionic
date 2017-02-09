@@ -32,10 +32,6 @@
             <div class="card-inner">Card replaced</div>
         </div>
 
-        <div class="note">
-            Balance may be delayed by up to 24 hours
-        </div>
-
         <div class="card balance">
             <div class="balance-icon">
                 <ion-icon name="mypal-money"></ion-icon>
@@ -62,6 +58,11 @@
                     <div class="info"></div>
                 </div>
             </div>
+        </div>
+
+        <div class="note">
+            Balance may be delayed by up to 24 hours<br>
+            Last processed transaction {{card().lastTransactionDate | amCalendar}}
         </div>
 
         <ul class="card-list">
