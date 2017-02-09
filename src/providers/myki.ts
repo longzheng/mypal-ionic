@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptionsArgs, URLSearchParams, RequestOptions } from '@angular/http';
+import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { Myki } from '../models/myki';
@@ -25,7 +26,8 @@ export class MykiProvider {
   activeCardId = '';
 
   constructor(
-    public http: Http
+    public http: Http,
+    public storage: Storage
   ) {
   }
 
@@ -35,6 +37,9 @@ export class MykiProvider {
     // if card isn't loaded yet, load it
     if (!this.activeCard().loaded)
       this.getCardDetails(this.activeCard(), true)
+
+    // store last active card ID
+    this.storage.set('activeCardId', id)
   }
 
   activeCard() {
