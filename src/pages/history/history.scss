@@ -5,4 +5,7 @@ page-history {
             border-top: none !important; // override so pull to refresh has no border
         }
     }
+    .loading {
+        padding: 3em 0 !important;
+    }
 }

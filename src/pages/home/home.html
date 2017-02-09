@@ -22,9 +22,9 @@
         </ion-refresher-content>
     </ion-refresher>
 
-    <div [hidden]="card().loaded" text-center padding>
-        <ion-spinner></ion-spinner>
-        <p>Loading card</p>
+    <div class="loading" [hidden]="card().loaded">
+        <ion-spinner name="ios-small"></ion-spinner>
+        <div class="text">Loading card</div>
     </div>
 
     <div [hidden]="!card().loaded">

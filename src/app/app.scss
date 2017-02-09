@@ -15,7 +15,6 @@
 $card-radius: 6px;
 $card-background: #fff;
 $card-margin-topbottom: 1.5em;
-
 // note hint text
 .note {
     margin: $content-margin;
@@ -122,5 +121,29 @@ ion-tabs {
 ion-menu {
     .menu-inner {
         background: #86898e !important;
+    }
+}
+
+// loading spinner
+.loading {
+    text-align: center;
+    padding: 1em;
+    .text {
+        margin-top: 0.5em;
+    }
+}
+
+// empty state
+.empty {
+    text-align: center;
+    padding: 1em;
+    opacity: 0.3;
+    ion-icon {
+        font-size: 6em;
+        opacity: 0.5;
+    }
+    .text {
+        margin-top: 0.7em;
+        font-size: 1.4em;
     }
 }

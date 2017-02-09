@@ -41,4 +41,8 @@ export class HistoryPage {
     return this.card().transactions;
   }
 
+  hasTransactions() {
+    return this.card().transactions.length > 0;
+  }
+
 }

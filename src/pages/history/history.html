@@ -17,19 +17,25 @@
         </ion-refresher-content>
     </ion-refresher>
 
-    <div [hidden]="card().transactionLoaded" text-center padding>
-        <ion-spinner></ion-spinner>
-        <p>Loading transactions</p>
+    <div class="loading" [hidden]="card().transactionLoaded">
+        <ion-spinner name="ios-small"></ion-spinner>
+        <div class="text">Loading transactions</div>
     </div>
 
     <div [hidden]="!card().transactionLoaded">
         <div class="note">
-            Transactions may be delayed by up to 24 hours<br> Showing most recent {{transactions().length}} tranactions
+            Transactions may be delayed by up to 24 hours
+            <span *ngIf="hasTransactions()"><br> Showing most recent {{transactions().length}} tranactions</span>
         </div>
         <ion-list>
             <div *ngFor="let trans of transactions()">
                 <transaction [transaction]="trans"></transaction>
             </div>
         </ion-list>
+
+        <div class="empty" *ngIf="!hasTransactions()">
+            <ion-icon name="mypal-tab-history"></ion-icon>
+            <div class="text">No transactions</div>
+        </div>
     </div>
 </ion-content>
