@@ -83,6 +83,18 @@ ion-icon {
     &[class*="mypal-pass"] {
         mask-image: url(../assets/img/pass.svg);
     }
+    &[class*="mypal-train"] {
+        mask-image: url(../assets/img/train.svg);
+    }
+    &[class*="mypal-bus"] {
+        mask-image: url(../assets/img/bus.svg);
+    }
+    &[class*="mypal-tram"] {
+        mask-image: url(../assets/img/tram.svg);
+    }
+    &[class*="mypal-vline"] {
+        mask-image: url(../assets/img/vline.svg);
+    }
 }
 
 // restyling the app tabbar

@@ -1,5 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { CurrencyPipe } from '@angular/common';
 import { MomentModule } from 'angular2-moment';
 import { MyApp } from './app.component';
 
@@ -48,7 +49,8 @@ export function entryComponents() {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MykiProvider,
     SavedLoginProvider,
-    Storage
+    Storage,
+    CurrencyPipe
   ]
 })
 export class AppModule {}

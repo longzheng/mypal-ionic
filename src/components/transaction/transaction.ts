@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
 import { Myki } from '../../models/myki';
 
 @Component({
@@ -9,7 +10,9 @@ export class TransactionComponent {
 
   @Input() transaction: Myki.Transaction
 
-  constructor() {
+  constructor(
+    public currencyPipe: CurrencyPipe
+  ) {
   }
 
   isTouchOn(): boolean {
@@ -45,6 +48,22 @@ export class TransactionComponent {
     return this.isTouchOn() || this.isTouchOff()
   }
 
+  isServiceTrain(): boolean {
+    return this.transaction.service === Myki.TransactionService.Train;
+  }
+
+  isServiceBus(): boolean {
+    return this.transaction.service === Myki.TransactionService.Bus;
+  }
+
+  isServiceTram(): boolean {
+    return this.transaction.service === Myki.TransactionService.Tram;
+  }
+
+  isServiceVLine(): boolean {
+    return this.transaction.service === Myki.TransactionService.VLine;
+  }
+
   isPassTransaction(): boolean {
     return isNaN(this.transaction.moneyBalance) && this.isTouchOff()
   }
@@ -62,20 +81,11 @@ export class TransactionComponent {
   }
 
   transactionDescription(): string {
-    if (this.transaction.type === Myki.TransactionType.TopUpPass || this.transaction.type === Myki.TransactionType.TopUpMoney) {
-      let topupType = this.transaction.type === Myki.TransactionType.TopUpPass ? "Myki pass" : "Myki money"
-      let topupMethod: string;
-
-      switch (this.transaction.service) {
-        case Myki.TransactionService.AutoTopUp:
-          topupMethod = "Auto top up";
-          break;
-        case Myki.TransactionService.Website:
-          topupMethod = "Website";
-          break;
-      }
-
-      return `${topupType} (${topupMethod})`
+    // different text for myki money top isTopup
+    if (this.isTopupMoney()){
+      let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
+      let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
+      return `${credit} (Balance ${balance})`
     }
 
     return this.transaction.description

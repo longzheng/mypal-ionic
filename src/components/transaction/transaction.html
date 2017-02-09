@@ -6,11 +6,18 @@
         </div>
         <div class="content">
             <div class="icon">
-                <div class="method"></div>
+                <div class="method">
+                    <ion-icon name="mypal-train" *ngIf="isServiceTrain()"></ion-icon>
+                    <ion-icon name="mypal-bus" *ngIf="isServiceBus()"></ion-icon>
+                    <ion-icon name="mypal-tram" *ngIf="isServiceTram()"></ion-icon>
+                    <ion-icon name="mypal-vline" *ngIf="isServiceVLine()"></ion-icon>
+                    <ion-icon name="mypal-money" *ngIf="isTopupMoney()"></ion-icon>
+                    <ion-icon name="mypal-pass" *ngIf="isTopupPass()"></ion-icon>
+                </div>
                 <div class="type">
-                    <ion-icon name="md-log-in" *ngIf="isTouchOn()"></ion-icon>
-                    <ion-icon name="md-log-out" *ngIf="isTouchOff()"></ion-icon>
-                    <ion-icon name="md-add-circle" *ngIf="isTopup()"></ion-icon>
+                    <img src="../assets/img/touch-on.svg" *ngIf="isTouchOn()" />
+                    <img src="../assets/img/touch-off.svg" *ngIf="isTouchOff()" />
+                    <img src="../assets/img/top-up.svg" *ngIf="isTopup()" />
                 </div>
             </div>
             <div class="detail">
@@ -23,11 +30,10 @@
             </div>
         </div>
     </div>
-    <div class="meta" *ngIf="isTopupMoney() || isMoneyTransaction() || isPassTransaction()">
+    <div class="meta" *ngIf="isTopup() || isMoneyTransaction() || isPassTransaction()">
         <div class="card-inner">
-            <div class="info" *ngIf="isTopupMoney()">
-                <div><strong>Credit:</strong> {{transaction.credit | currency:'USD':true}}</div>
-                <div><strong>Balance:</strong> {{transaction.moneyBalance | currency:'USD':true}}</div>
+            <div *ngIf="isTopup()">
+                {{transaction.serviceToString()}}
             </div>
             <div class="info" *ngIf="isMoneyTransaction()">
                 <div><strong>Cost:</strong> {{transaction.debit | currency:'USD':true}}</div>

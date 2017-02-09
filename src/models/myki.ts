@@ -75,7 +75,7 @@ export namespace Myki {
             if (!this.passActiveExpiry)
                 return 'No pass'
 
-            let daysLeft = moment(this.passActiveExpiry).diff(moment(), 'days');
+            let daysLeft = moment(this.passActiveExpiry).diff(moment(), 'days') + 1;
             return `${daysLeft} days left`
         }
     }
@@ -121,8 +121,9 @@ export namespace Myki {
                 case TransactionType.TouchOffDefaultFare:
                     return "Touch off (default fare)";
                 case TransactionType.TopUpPass:
+                    return "Top up myki pass"
                 case TransactionType.TopUpMoney:
-                    return "Top up";
+                    return "Top up myki money";
                 default:
                     return '';
             }
@@ -138,6 +139,9 @@ export namespace Myki {
                     break;
                 case 'Tram':
                     this.service = TransactionService.Tram;
+                    break;
+                case 'V/Line':
+                    this.service = TransactionService.VLine;
                     break;
                 case 'Auto top up':
                     this.service = TransactionService.AutoTopUp;
@@ -158,6 +162,8 @@ export namespace Myki {
                     return 'Train';
                 case TransactionService.Tram:
                     return 'Tram';
+                case TransactionService.VLine:
+                    return 'V/Line';
                 case TransactionService.AutoTopUp:
                     return 'Auto top up';
                 case TransactionService.Website:
@@ -192,6 +198,7 @@ export namespace Myki {
         Bus,
         Train,
         Tram,
+        VLine,
 
         AutoTopUp,
         Website,

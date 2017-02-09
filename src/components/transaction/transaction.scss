@@ -15,20 +15,25 @@ transaction {
     .content {
         display: flex;
         margin: 1em 0 0;
-        .icon {
-            width: 30px;
+        >.icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 1em;
+            position: relative;
             text-align: center;
-            ion-icon {
-                font-size: 1.5em;
-                &[name="md-log-in"] {
-                    color: green;
+            .method {
+                color: #DDE2E9;
+                width: 100%;
+                height: 100%;
+                ion-icon {
+                    width: 100%;
+                    height: 100%;
                 }
-                &[name="md-log-out"] {
-                    color: red;
-                }
-                &[name="md-add-circle"] {
-                    color: blue;
-                }
+            }
+            .type {
+                position: absolute;
+                bottom: -6px;
+                right: -2px;
             }
         }
         .detail {
@@ -37,29 +42,30 @@ transaction {
             flex-direction: column;
             .title {
                 align-items: center;
-                padding: 0.3em 0;
                 display: flex;
                 .action {
                     flex: 1 0;
                     .type {
                         font-size: 13px;
-                        color: #888;
+                        color: color($colors, dark, bas);
+                        line-height: 1.2;
                     }
                     .description {
                         font-size: 1em;
-                        color: color($colors, dark, base);
+                        color: color($colors, black, base);
+                        line-height: 1.5;
                         .zone {
                             margin-left: 0.3em;
+                            line-height: 16px;
                             display: inline-block;
-                            width: 18px;
-                            height: 18px;
+                            width: 16px;
+                            height: 16px;
                             border-radius: 50%;
                             background: color($colors, light-blue, base);
                             color: white;
-                            font-size: 13px;
+                            font-size: 12px;
                             font-weight: 500;
                             text-align: center;
-                            padding-top: 1px;
                         }
                     }
                 }
@@ -67,7 +73,7 @@ transaction {
         }
     }
     .meta {
-        background: #fcfcfc;
+        background: #F8F8F8;
         color: color($colors, dark, base);
         font-size: 13px;
         .info {
