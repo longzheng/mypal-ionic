@@ -9,16 +9,6 @@ export class SavedLoginProvider {
   ) {
   }
 
-  // check if stored username/password exists
-  has(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.storage.keys().then((keys) => {
-        let bool = (keys.indexOf('username') !== -1 && keys.indexOf('password') !== -1)
-        resolve(bool)
-      })
-    })
-  }
-
   // get the stored username/password
   get(): Promise<[string, string]> {
     return new Promise((resolve, reject) => {

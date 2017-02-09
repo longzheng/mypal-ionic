@@ -25,12 +25,12 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    // check if saved login exists
-    this.savedLoginProvider.has().then(
-      hasSavedLogin => {
+    // get saved login details
+    this.savedLoginProvider.get().then(
+      result => {
 
-        // no autologin
-        if (hasSavedLogin === false) {
+        // check if we have any stored login information
+        if (!result[0] || !result[1]) {
           // show login
           this.autologin = false;
 
@@ -38,25 +38,21 @@ export class LoginPage {
           return;
         }
 
-        // get saved login details
-        this.savedLoginProvider.get().then(
-          result => {
-            // login
-            this.mykiProvider.login(result[0], result[1]).then(() =>
-              this.goToLoadCards()
-            ).catch(() => {
-              // show error
-              let alert = this.alertCtrl.create({
-                title: 'Saved login invalid',
-                subTitle: 'Could not log in with your saved login details. Please re-enter your username and password.',
-                buttons: ['OK']
-              })
-              alert.present()
-
-              // show login form
-              this.autologin = false
-            })
+        // login
+        this.mykiProvider.login(result[0], result[1]).then(() =>
+          this.goToLoadCards()
+        ).catch(() => {
+          // show error
+          let alert = this.alertCtrl.create({
+            title: 'Saved login invalid',
+            subTitle: 'Could not log in with your saved login details. Please re-enter your username and password.',
+            buttons: ['OK']
           })
+          alert.present()
+
+          // show login form
+          this.autologin = false
+        })
       })
   }
 
