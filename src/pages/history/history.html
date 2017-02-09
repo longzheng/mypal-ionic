@@ -23,6 +23,10 @@
     </div>
 
     <div [hidden]="!card().transactionLoaded">
+        <div class="note">
+            Transactions may be delayed by up to 24 hours<br>
+            Last processed transaction {{card().lastTransactionDate | amCalendar}}
+        </div>
         <ion-list>
             <ion-item *ngFor="let trans of transactions()">
                 <transaction [transaction]="trans"></transaction>
