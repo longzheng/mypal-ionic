@@ -57,8 +57,9 @@ $card-margin-topbottom: 1.5em;
 
 // Custom icons
 // Overriding the ion-icon behavior
+// All custom icons will start with "mypal-" prefix
 ion-icon {
-    &[class*="mypal"] {
+    &[class*="mypal-"] {
         // Instead of using the font-based icons
         // We're applying SVG masks
         mask-size: contain;
