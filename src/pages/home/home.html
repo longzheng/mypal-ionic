@@ -52,10 +52,9 @@
             </div>
             <div class="card-inner">
                 <p class="title">Myki pass</p>
-                <h2 class="balance-hero inactive" [hidden]="card().passActive">No pass</h2>
-                <div [hidden]="!card().passActive">
-                    <h2 class="balance-hero"></h2>
-                    <div class="info"></div>
+                <h2 class="balance-hero" [ngClass]="{'inactive': !card().passActive}">{{card().passActiveFriendlyText()}}</h2>
+                <div class="info" [hidden]="!card().passActive">
+                    {{card().passActive}}
                 </div>
             </div>
         </div>

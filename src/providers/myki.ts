@@ -132,8 +132,17 @@ export class MykiProvider {
 
                 card.status = Myki.CardStatus.Active;
                 card.holder = cardJquery.find("td:nth-child(2)").text().trim();
+
+                // process money
                 card.moneyBalance = parseFloat(cardJquery.find("td:nth-child(3)").text().trim().replace("$", ""));
-                card.passActive = cardJquery.find("td:nth-child(4)").text().trim();
+
+                // process pass
+                let passActive = cardJquery.find("td:nth-child(4)").text().trim();
+                if (passActive !== '') {
+                  card.passActive = passActive
+                  card.passActiveEnabled = true
+                  card.passActiveExpiry = moment(passActive.split('valid until ')[1], "D MMM YY").toDate()
+                }
               })
 
               // scrape ianctive cards
@@ -198,8 +207,11 @@ export class MykiProvider {
 
               // process pass
               let passActive = cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim();
-              if (passActive !== '-')
+              if (passActive !== '-') {
                 card.passActive = passActive
+                card.passActiveEnabled = true
+                card.passActiveExpiry = moment(passActive.split('Valid to ')[1], "D MMM YYYY").toDate()
+              }
 
               let passInactive = cardTable.find("tr:nth-child(9) td:nth-child(2)").text().trim();
               if (passInactive !== '-')

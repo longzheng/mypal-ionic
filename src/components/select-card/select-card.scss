@@ -32,11 +32,17 @@ select-card {
             .balance {
                 ion-icon {
                     vertical-align: middle;
+                    margin-right: 0.1em;
+                    margin-top: -4px;
                 }
                 .money {
-                    margin-bottom: 0.7em;
+                    margin-bottom: 1em;
                 }
-                .pass {}
+                .pass {
+                    &.inactive {
+                        opacity: 0.2;
+                    }
+                }
             }
             .replaced {
                 position: absolute;

@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 export namespace Myki {
     export class Account {
         holder: string;
@@ -20,6 +22,8 @@ export namespace Myki {
         moneyTopupInProgress: number;
         moneyTotalBalance: number;
         passActive: string;
+        passActiveEnabled: boolean;
+        passActiveExpiry: Date;
         passInactive: string;
         lastTransactionDate: Date;
         autoTopup: boolean;
@@ -65,6 +69,14 @@ export namespace Myki {
                 default:
                     return '';
             }
+        }
+
+        passActiveFriendlyText(): string {
+            if (!this.passActiveExpiry)
+                return 'No pass'
+
+            let daysLeft = moment(this.passActiveExpiry).diff(moment(), 'days');
+            return `${daysLeft} days left`
         }
     }
 
