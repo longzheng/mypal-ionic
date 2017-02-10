@@ -17,7 +17,7 @@ $card-background: #fff;
 $card-margin-topbottom: 1.5em;
 // note hint text
 .note {
-    margin: $content-margin;
+    margin: 0 0 $content-margin 0;
     color: color($colors, dark, base);
     font-size: 13px;
     line-height: 1.5;
@@ -26,7 +26,7 @@ $card-margin-topbottom: 1.5em;
 // card container
 .card {
     background: $card-background;
-    margin: $card-margin-topbottom $content-padding;
+    margin: 0 0 $card-margin-topbottom 0;
     border-radius: 6px;
     overflow: hidden;
     .card-inner {
