@@ -99,4 +99,9 @@ export class LoginPage {
     this.navCtrl.setRoot(LoadCardsPage, null, { animate: false, direction: 'forward' })
   }
 
+  register() {
+    // open myki register page
+    window.open('https://www.mymyki.com.au/NTSWebPortal/Common/register/SetupWebAccess.aspx?menu=Set%20up%20web%20access', '_system');
+  }
+
 }
