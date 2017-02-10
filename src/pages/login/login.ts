@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController, LoadingController } from 'io
 import { MykiProvider } from '../../providers/myki';
 import { SavedLoginProvider } from '../../providers/saved-login';
 import { LoadCardsPage } from '../load-cards/load-cards';
+import * as $ from "jquery";
 
 @Component({
   selector: 'page-login',
@@ -54,6 +55,22 @@ export class LoginPage {
           this.autologin = false
         })
       })
+
+    // handle login username ENTER behavior
+    $("input[name=username]").on('keydown', (e) => {
+      if (e.which == 13) {
+        // focus to password
+        $("input[name=password]").focus()
+      }
+    })
+
+    // handle login password ENTER behavior
+    $("input[name=password]").on('keydown', (e) => {
+      if (e.which == 13) {
+        // submit log in
+        this.logIn()
+      }
+    })
   }
 
   logIn() {
