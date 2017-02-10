@@ -56,11 +56,12 @@ export class LoadCardsPage {
           })
 
         } else {
-          // show no cards error
-          this.errorNoCards = true;
+          // somehow we don't have any cards in this account
+          // TODO: show error alert
         }
       }).catch(error => {
         // error
+        // TODO: show error alert
       }).then(() => {
         this.loadingAccount = false;
       })
