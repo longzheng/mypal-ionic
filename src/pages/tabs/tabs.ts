@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { HistoryPage } from '../history/history';
 
@@ -13,13 +13,10 @@ export class TabsPage {
   tab2Root = HistoryPage;
 
   constructor(
-    public menuCtrl: MenuController,
   ) {
 
   }
 
   ionViewDidLoad() {
-    // enable menu
-    this.menuCtrl.enable(true);
   }
 }

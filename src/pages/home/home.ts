@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ActionSheetController } from 'ionic-angular';
+import { App, NavController, ActionSheetController, MenuController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { SavedLoginProvider } from '../../providers/saved-login';
 import { Myki } from '../../models/myki';
@@ -12,15 +12,19 @@ import { LoginPage } from '../login/login';
 export class HomePage {
 
   constructor(
+    public app: App,
     public navCtrl: NavController,
     public mykiProvider: MykiProvider,
     public actionSheetCtrl: ActionSheetController,
     public savedLoginProvider: SavedLoginProvider,
+    public menuCtrl: MenuController,
   ) {
 
   }
 
   ionViewDidLoad() {
+    // enable menu
+    this.menuCtrl.enable(true);
   }
 
   doRefresh(refresher) {
@@ -58,8 +62,11 @@ export class HomePage {
             // clear saved login
             this.savedLoginProvider.forget()
 
+            // disable menu
+            this.menuCtrl.enable(false);
+
             // go to log in page
-            this.navCtrl.setRoot(LoginPage, null, { animate: true, direction: 'back' })
+            this.app.getRootNav().setRoot(LoginPage, null, { animate: true, direction: 'back' })
           }
         },
 
