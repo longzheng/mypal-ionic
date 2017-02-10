@@ -11,9 +11,6 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class LoadCardsPage {
 
-  errorNoCards: boolean = false;
-  loadingAccount: boolean = false;
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -26,8 +23,6 @@ export class LoadCardsPage {
   }
 
   loadAccount() {
-    this.loadingAccount = true;
-
     // load the account and get the myki cards
     this.mykiProvider.getAccountDetails().then(
       () => {
@@ -54,7 +49,6 @@ export class LoadCardsPage {
             // go to tabs page
             this.navCtrl.setRoot(TabsPage, null, { animate: false, direction: 'forward' })
           })
-
         } else {
           // somehow we don't have any cards in this account
           // TODO: show error alert
@@ -62,8 +56,6 @@ export class LoadCardsPage {
       }).catch(error => {
         // error
         // TODO: show error alert
-      }).then(() => {
-        this.loadingAccount = false;
       })
   }
 

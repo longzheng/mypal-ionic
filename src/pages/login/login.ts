@@ -56,14 +56,17 @@ export class LoginPage {
       })
   }
 
-  hasUsernamePassword() {
-    if (this.username && this.password)
-      return true;
-
-    return false;
-  }
-
   logIn() {
+    // check if username and password filled
+    if (!this.username || !this.password) {
+      let alert = this.alertCtrl.create({
+        title: 'Username and password required',
+        buttons: ['OK']
+      })
+      alert.present()
+      return;
+    }
+
     let loading = this.loadingCtrl.create({
       content: 'Logging in...'
     });

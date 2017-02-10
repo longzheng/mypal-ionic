@@ -1,25 +1,50 @@
 page-login {
-    //background: color($colors, primary, base) !important;
-
+    background: color($colors, primary, base) !important;
     ion-content {
-        //background: none !important;
+        background: color($colors, primary, base) !important;
     }
-    ion-item {
-        padding-left: 0 !important;
-    }
-    button {
-        margin-top: 2em !important;
-    }
-    ion-content.autologin {
-        .container {
-            display: flex;
-            height: 100%;
-            align-items: center;
-            align-content: center;
-            >div {
+    .login {
+        display: flex;
+        flex-direction: column;
+        .form {
+            flex: 1 0;
+            padding-top: 3em;
+            h2 {
+                color: color($colors, darker, base);
                 text-align: center;
-                width: 100%;
+                font-size: 1.4em;
+                font-weight: 600;
+            }
+            p {
+                color: color($colors, darker, base);
+                text-align: center;
+                font-size: 13px;
+                max-width: 80%;
+                margin: 0 auto 2em;
+                line-height: 1.5;
+            }
+            ion-item {
+                padding-left: 0 !important;
+            }
+            button {
+                margin-top: 1em !important;
+                background: white;
+                color: color($colors, brand-darkest, base);
+                border-radius: $card-radius;
+                &.activated {
+                    background: color($colors, brand-darkest, base);
+                    color: white;
+                }
+            }
+            ion-input {
+                padding: 0 $content-padding;
+                input {
+                    &::placeholder {
+                        color: #c4c4c4;
+                    }
+                }
             }
         }
+        .register {}
     }
 }

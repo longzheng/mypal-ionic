@@ -1,19 +1,25 @@
-<ion-content padding>
-    <div class="autologin" text-center [hidden]="!autologin">
-        <ion-spinner color="white"></ion-spinner>
-        <p color="white" text-center>Logging in</p>
+<div class="container-full" [hidden]="!autologin">
+    <div class="loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <div class="text">Logging in</div>
     </div>
+</div>
 
-    <div class="login" [hidden]="autologin">
-        <p>Log in to your Myki account</p>
-        <ion-item>
-            <ion-label stacked>Username</ion-label>
-            <ion-input type="text" [(ngModel)]="username" name="username"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Password</ion-label>
-            <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
-        </ion-item>
-        <button ion-button block color="white" [disabled]="!hasUsernamePassword()" (click)="logIn()">Log in</button>
+<div class="login" padding [hidden]="autologin">
+    <div class="form">
+        <h2>Log in to your Myki account</h2>
+        <p>You must have a registered myki online account with a username or password</p>
+        <ul class="card-list">
+            <ion-item no-lines>
+                <ion-input type="text" [(ngModel)]="username" name="username" placeholder="Username"></ion-input>
+            </ion-item>
+            <ion-item no-lines>
+                <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Password"></ion-input>
+            </ion-item>
+        </ul>
+        <button ion-button block (click)="logIn()">Log in</button>
     </div>
-</ion-content>
+    <div class="register">
+         <button ion-button block outline color="brand-darkest" (click)="logIn()">Register a myki online account</button>
+    </div>
+</div>
