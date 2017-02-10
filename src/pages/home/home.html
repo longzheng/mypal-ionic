@@ -41,7 +41,7 @@
                 <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}</h2>
                 <div class="info">
                     <div [hidden]="card().moneyTopupInProgress === 0">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</div>
-                    <div [hidden]="!card().autoTopup">
+                    <div class="autotopup" [hidden]="!card().autoTopup">
                         <ion-icon name="md-refresh"></ion-icon> Auto top up enabled</div>
                 </div>
             </div>
