@@ -7,6 +7,7 @@ page-login {
         display: flex;
         flex-direction: column;
         height: 100%;
+        min-height: 500px;
         .form {
             flex: 1 0;
             padding-top: 3em;
@@ -26,6 +27,11 @@ page-login {
             }
             ion-item {
                 padding-left: 0 !important;
+                // disable Android input bottom border
+                &.item-md .item-inner {
+                    border-bottom: none !important;
+                    box-shadow: none !important;
+                }
             }
             button {
                 margin-top: 1em !important;
