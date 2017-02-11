@@ -36,3 +36,7 @@ UserInterfaceState.xcuserstate
 # Ionic
 .io-config.json
 www.zip
+
+# Firebase configs
+GoogleService-Info.plist
+google-services.json
