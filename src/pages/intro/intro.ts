@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config';
 import { LoginPage } from '../login/login'
+import { Firebase } from 'ionic-native';
+
 
 /*
   Generated class for the Intro page.
@@ -25,6 +27,9 @@ export class IntroPage {
   }
 
   goToLogin() {
+    // ask for push permission
+    Firebase.grantPermission();
+
     // set intro as seen
     this.configProvider.introSetSeen();
 
