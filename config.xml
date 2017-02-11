@@ -73,7 +73,8 @@
   <preference name="FadeSplashScreenDuration" value="300"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
-  <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
+  <preference name="KeyboardDisplayRequiresUserAction" value="false"/> <!-- show keyboard on input focus -->
+  <preference name="orientation" value="portrait" />  <!-- portrait mode only -->
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
