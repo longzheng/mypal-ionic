@@ -103,7 +103,27 @@ export class LoginPage {
         let alert = this.alertCtrl.create({
           title: 'Username or password incorrect',
           subTitle: 'Could not log in. Verify your username and password.',
-          buttons: ['OK']
+          enableBackdropDismiss: false,
+          buttons: [
+            {
+              text: 'Forget username',
+              handler: () => {
+                window.open('https://www.mymyki.com.au/NTSWebPortal/common/Auxillary/ForgottenUsername.aspx', '_system');
+              }
+            },
+            {
+              text: 'Forget password',
+              handler: () => {
+                window.open('https://www.mymyki.com.au/NTSWebPortal/common/Auxillary/ForgotPassword.aspx', '_system');
+              }
+            },
+            {
+              text: 'OK',
+              role: 'cancel',
+              handler: () => {
+              }
+            }
+          ]
         })
         alert.present()
       }).then(() =>
