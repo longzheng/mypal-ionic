@@ -4,12 +4,8 @@ page-login {
         background: color($colors, primary, base) !important;
     }
     .login {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
         min-height: 500px;
         .form {
-            flex: 1 0;
             padding-top: 3em;
             h2 {
                 color: color($colors, darker, base);
@@ -52,6 +48,11 @@ page-login {
                 }
             }
         }
-        .register {}
+        .register {
+            position: absolute;
+            bottom: $content-padding;
+            left: $content-padding;
+            right: $content-padding;
+        }
     }
 }
