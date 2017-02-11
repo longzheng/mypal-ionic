@@ -9,12 +9,13 @@ import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoadCardsPage } from '../pages/load-cards/load-cards';
+import { IntroPage } from '../pages/intro/intro';
 
 import { SelectCardComponent } from '../components/select-card/select-card';
 import { TransactionComponent } from '../components/transaction/transaction';
 
 import { MykiProvider } from '../providers/myki';
-import { SavedLoginProvider } from '../providers/saved-login';
+import { ConfigProvider } from '../providers/config';
 import { Storage } from '@ionic/storage';
 
 let pages = [
@@ -24,6 +25,7 @@ let pages = [
   HomePage,
   HistoryPage,
   LoadCardsPage,
+  IntroPage,
 
   SelectCardComponent,
   TransactionComponent,
@@ -48,7 +50,7 @@ export function entryComponents() {
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MykiProvider,
-    SavedLoginProvider,
+    ConfigProvider,
     Storage,
     CurrencyPipe
   ]

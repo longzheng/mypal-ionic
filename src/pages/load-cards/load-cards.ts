@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import { ConfigProvider } from '../../providers/config';
 import { MykiProvider } from '../../providers/myki';
 import { Myki } from '../../models/myki';
 import { TabsPage } from '../tabs/tabs';
@@ -15,7 +15,7 @@ export class LoadCardsPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public mykiProvider: MykiProvider,
-    public storage: Storage,
+    public configProvider: ConfigProvider,
   ) { }
 
   ionViewDidLoad() {
@@ -30,25 +30,26 @@ export class LoadCardsPage {
         if (this.mykiProvider.mykiAccount.cards.length >= 1) {
 
           // get stored active card id
-          this.storage.get('activeCardId').then(result => {
-            let activeCardId = result
-            let activeCardFound = false
+          this.configProvider.activeCardGet().then(
+            cardId => {
+              let activeCardFound = false
+              // if there is an active card id stored, see if it exists in the current account
+              activeCardFound = this.mykiProvider.mykiAccount.cards.findIndex(x => x.id === cardId) !== -1
 
-            // if there is an active card id stored, see if it exists in the current account
-            if (activeCardId)
-              activeCardFound = this.mykiProvider.mykiAccount.cards.findIndex(x => x.id === activeCardId) !== -1
-
-            if (activeCardFound) {
-              // set active card to stored active card
-              this.mykiProvider.setActiveCard(activeCardId)
-            } else {
+              if (activeCardFound) {
+                // set active card to stored active card
+                this.mykiProvider.setActiveCard(cardId)
+              } else {
+                // set active card to first card
+                this.mykiProvider.setActiveCard(this.mykiProvider.mykiAccount.cards[0].id)
+              }
+            }, error => {
               // set active card to first card
               this.mykiProvider.setActiveCard(this.mykiProvider.mykiAccount.cards[0].id)
-            }
-
-            // go to tabs page
-            this.navCtrl.setRoot(TabsPage, null, { animate: false, direction: 'forward' })
-          })
+            }).then(() => {
+              // go to tabs page
+              this.navCtrl.setRoot(TabsPage, null, { animate: false, direction: 'forward' })
+            })
         } else {
           // somehow we don't have any cards in this account
           // TODO: show error alert

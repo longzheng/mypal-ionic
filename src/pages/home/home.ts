@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { App, NavController, ActionSheetController, MenuController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
-import { SavedLoginProvider } from '../../providers/saved-login';
+import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
 import { LoginPage } from '../login/login';
 
@@ -16,7 +16,7 @@ export class HomePage {
     public navCtrl: NavController,
     public mykiProvider: MykiProvider,
     public actionSheetCtrl: ActionSheetController,
-    public savedLoginProvider: SavedLoginProvider,
+    public configProvider: ConfigProvider,
     public menuCtrl: MenuController,
   ) {
 
@@ -60,7 +60,7 @@ export class HomePage {
           handler: () => {
             // log out
             // clear saved login
-            this.savedLoginProvider.forget()
+            this.configProvider.loginForget()
 
             // disable menu
             this.menuCtrl.enable(false);

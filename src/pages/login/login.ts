@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
-import { SavedLoginProvider } from '../../providers/saved-login';
+import { ConfigProvider } from '../../providers/config';
 import { LoadCardsPage } from '../load-cards/load-cards';
 import * as $ from "jquery";
 
@@ -20,16 +20,15 @@ export class LoginPage {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public mykiProvider: MykiProvider,
-    public savedLoginProvider: SavedLoginProvider,
+    public configProvider: ConfigProvider,
     public loadingCtrl: LoadingController
   ) {
   }
 
   ionViewDidLoad() {
     // get saved login details
-    this.savedLoginProvider.get().then(
+    this.configProvider.loginGet().then(
       result => {
-
         // check if we have any stored login information
         if (!result[0] || !result[1]) {
           // show login
@@ -54,6 +53,9 @@ export class LoginPage {
           // show login form
           this.autologin = false
         })
+      }, error => {
+        // show login form
+        this.autologin = false
       })
 
     // handle login username ENTER behavior
@@ -93,7 +95,7 @@ export class LoginPage {
     this.mykiProvider.login(this.username, this.password).then(
       success => {
         // save login
-        this.savedLoginProvider.save(this.username, this.password)
+        this.configProvider.loginSave(this.username, this.password)
 
         // go to load cards page
         this.goToLoadCards()
