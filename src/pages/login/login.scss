@@ -4,7 +4,6 @@ page-login {
         background: color($colors, primary, base) !important;
     }
     .login {
-        min-height: 500px;
         .form {
             padding-top: 3em;
             padding-bottom: 50px;
@@ -32,13 +31,7 @@ page-login {
             }
             button {
                 margin-top: 1em !important;
-                background: white;
-                color: color($colors, brand-darkest, base);
-                border-radius: $card-radius;
-                &.activated {
-                    background: color($colors, brand-darkest, base);
-                    color: white;
-                }
+                border-radius: $card-radius !important;
             }
             ion-input {
                 padding: 0 $content-padding;

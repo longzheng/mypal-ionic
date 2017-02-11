@@ -1,0 +1,81 @@
+page-intro {
+    background: color($colors, primary, base) !important;
+    ion-slides {
+        .swiper-pagination-bullets {
+            bottom: 70px !important;
+            .swiper-pagination-bullet-active {
+                background: white !important;
+            }
+        }
+        ion-slide {
+            color: color($colors, darker, base);
+            img {
+                height: 90px;
+            }
+            h1 {
+                font-size: 1.375em;
+                font-weight: 600;
+            }
+            p {
+                font-size: 13px;
+                margin: 0 auto;
+                max-width: 270px;
+            }
+            &.started {
+                .slide-zoom {
+                    position: relative;
+                }
+                button {
+                    margin-top: 2em !important;
+                    border-radius: $card-radius !important;
+                    position: absolute !important;
+                }
+            }
+        }
+    }
+    .footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #A9C012;
+        .city {
+            position: absolute;
+            transform: translateY(-99%);
+            width: 100%;
+        }
+        .terms {
+            color: color($colors, brand-light, base);
+            font-size: 9px;
+            text-align: center;
+            padding: $content-padding;
+            margin: 0 auto;
+            max-width: 370px;
+        }
+        .train {
+            transform: translateX(-100%);
+            margin-bottom: -4px;
+            animation: train-animation;
+            animation-duration: 10s;
+            animation-delay: 3s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            position: relative;
+        }
+    }
+}
+
+@keyframes train-animation {
+    0% {
+        transform: translateX(-100%);
+    }
+    20% {
+        transform: translateX(-100%);
+    }
+    80% {
+        transform: translateX(110%);
+    }
+    100% {
+        transform: translateX(110%);
+    }
+}
