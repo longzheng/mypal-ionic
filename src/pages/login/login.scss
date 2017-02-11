@@ -2,11 +2,16 @@ page-login {
     background: color($colors, primary, base) !important;
     ion-content {
         background: color($colors, primary, base) !important;
+
+        .scroll-content {
+            // fixes keyboard opening scrolling view
+            overflow-y: hidden !important;
+            padding-bottom: 0 !important;
+        }
     }
     .login {
         .form {
-            padding-top: 3em;
-            padding-bottom: 50px;
+            margin-top: 3em;
             h2 {
                 color: color($colors, darker, base);
                 text-align: center;
@@ -30,7 +35,7 @@ page-login {
                 }
             }
             button {
-                margin-top: 1em !important;
+                margin: 0 !important;
                 border-radius: $card-radius !important;
             }
             ion-input {
@@ -43,10 +48,7 @@ page-login {
             }
         }
         .register {
-            position: absolute;
-            bottom: $content-padding;
-            left: $content-padding;
-            right: $content-padding;
+            margin: 3em 0;
         }
     }
 }
