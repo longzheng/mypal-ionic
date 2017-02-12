@@ -6,19 +6,25 @@ I'm making this app because the [Myki site](https://www.mymyki.com.au/NTSWebPort
 ## Design mockup
 Coming soon
 
-## Planned features
+## Current features
 - Log in to Myki online account with username & password
 - Show current/archived myki cards
 - Shows myki money & myki pass balance
 - Shows card information
 - Shows recent transactions
-- Top up
+
+## Planned features
+- Top up with credit card
+- Show top up locations
 
 ## Build requirements
-- Must have [Ionic 2 installed](https://ionicframework.com/getting-started/) ```npm install -g cordova ionic```
-- Install npm packages ```npm install```
-- When debugging with Chrome, CORS limitations must be disable
+Must have Cordova and [Ionic 2 installed](https://ionicframework.com/getting-started/) ```npm install -g cordova ionic```
+Install npm packages ```npm install```
+When debugging with Chrome, security limitations must be disabled since we're accessing a third-party site without CORS headers
+```
+OSX from terminal
+open -a Google\ Chrome --args --disable-web-security --user-data-dir
   
-  OSX: ```open -a Google\ Chrome --args --disable-web-security --user-data-dir```
-  
-  Windows: ```chrome.exe --disable-web-security --user-data-dir```
+Windows from cmd
+chrome.exe --disable-web-security --user-data-dir
+```
