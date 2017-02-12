@@ -1,3 +1,5 @@
+Generate notification icons from http://romannurik.github.io/AndroidAssetStudio/icons-notification.html
+
 Copy directory/files to ```/platforms/android/res/```
 
 Add to ```/platforms/android/AndroidManifest.xml```
