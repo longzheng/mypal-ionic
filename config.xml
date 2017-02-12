@@ -2,7 +2,7 @@
 <widget id="com.longzheng.mypalionic" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>mypal</name>
     <description>Manage myki on the go</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <author email="long.zheng@gmail.com" href="https://github.com/longzheng/mypal-ionic">Long Zheng</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
