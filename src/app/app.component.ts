@@ -20,6 +20,10 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
 
+      if (platform.is('android')) {
+        StatusBar.backgroundColorByHexString("#C4DB2D");
+      }
+
       // check if we've seen intro
       this.configProvider.introHasSeen().then(
         result => {
