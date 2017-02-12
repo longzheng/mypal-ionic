@@ -38,10 +38,11 @@
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
     "cordova-plugin-statusbar",
-    "cordova-plugin-console",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard"
+    "cordova-plugin-inappbrowser",
+    "ionic-plugin-keyboard",
+    "cordova-plugin-firebase"
   ],
   "cordovaPlatforms": [
     "ios",
@@ -49,6 +50,11 @@
       "platform": "ios",
       "version": "",
       "locator": "ios"
+    },
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
     }
   ],
   "description": "mypal-ionic: An Ionic project"
