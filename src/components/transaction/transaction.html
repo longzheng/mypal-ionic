@@ -33,7 +33,7 @@
     <div class="meta" *ngIf="isTopup() || isMoneyTransaction() || isPassTransaction()">
         <div class="card-inner">
             <div *ngIf="isTopup()">
-                {{transaction.serviceToString()}}
+                Via {{transaction.serviceToString()}}
             </div>
             <div class="info" *ngIf="isMoneyTransaction()">
                 <div><strong>Cost:</strong> {{transaction.debit | currency:'USD':true}}</div>

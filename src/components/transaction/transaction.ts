@@ -65,11 +65,11 @@ export class TransactionComponent {
   }
 
   isPassTransaction(): boolean {
-    return isNaN(this.transaction.moneyBalance) && this.isTouchOff()
+    return this.transaction.moneyBalance == null && this.isTouchOff()
   }
 
   isMoneyTransaction(): boolean {
-    return this.transaction.debit && this.isTouchOff()
+    return this.transaction.debit != null && this.isTouchOff()
   }
 
   isTopupMoney(): boolean {

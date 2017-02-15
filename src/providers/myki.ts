@@ -347,19 +347,22 @@ export class MykiProvider {
                 // description
                 trans.description = transJquery.find("td:nth-child(6)").text().trim()
 
-
                 // credit
-                trans.credit = parseFloat(transJquery.find("td:nth-child(7)").text().trim().replace("-", "").replace("$", "")) // remove "-" for empty fields and "$"
+                let credit = transJquery.find("td:nth-child(7)").text().trim().replace("-", "").replace("$", "") // remove "-" for empty fields and "$"
+                trans.credit = credit != "" ? parseFloat(credit) : null
 
                 // debit
-                trans.debit = parseFloat(transJquery.find("td:nth-child(8)").text().trim().replace("-", "").replace("$", ""))
+                let debit = transJquery.find("td:nth-child(8)").text().trim().replace("-", "").replace("$", "")
+                trans.debit = debit != "" ? parseFloat(debit) : null
 
                 // balance
-                trans.moneyBalance = parseFloat(transJquery.find("td:nth-child(9)").text().trim().replace("-", "").replace("$", ""))
+                let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("-", "").replace("$", "")
+                trans.moneyBalance = moneyBalance != "" ? parseFloat(moneyBalance) : null
 
                 card.transactions.push(trans)
-              })
 
+              })
+              
               return resolve();
             },
             error => {
