@@ -476,9 +476,9 @@ export class MykiProvider {
     card1.status = 0
     card1.holder = this.mykiAccount.holder
     card1.moneyBalance = 70.18
-    card1.passActive = "7 days, \n                                                                                Zone 1-Zone 2,\n                                                                                valid until 16 Feb 17 03:00:00 AM"
+    card1.passActive = "7 days, \n Zone 1-Zone 2,\n valid until " + moment().add(2,'days').format("D MMM YY") + " 03:00:00 AM"
     card1.passActiveEnabled = true
-    card1.passActiveExpiry = new Date("2017-02-15T14:00:00.000Z")
+    card1.passActiveExpiry = moment().add(2,'days').hours(3).toDate()
 
     let card2 = this.findOrInsertCardById('308412345678902')
     card2.status = 0
@@ -494,7 +494,7 @@ export class MykiProvider {
     switch (card.id) {
       case '308412345678901':
         card.loaded = true
-        card.passActive = "7 days , Zone 1-Zone 2.Valid to 16 Feb 2017 03:00:00 AM"
+        card.passActive = "7 days , Zone 1-Zone 2.Valid to " + moment().add(2,'days').format("D MMM YYYY") + " 03:00:00 AM"
         card.type = 0
         card.expiry = new Date("2020-01-04T14:00:00.000Z")
         card.moneyTopupInProgress = 0
