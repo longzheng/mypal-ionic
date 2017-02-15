@@ -62,7 +62,7 @@
 
         <div class="note">
             Balance may be delayed by up to 24 hours<br>
-            Last processed transaction {{card().lastTransactionDate | amCalendar}}
+            Last processed transaction {{card().lastTransactionDate | amCalendar:null:{sameElse: 'DD/MM/YYYY'} }}
         </div>
 
         <ul class="card-list">
