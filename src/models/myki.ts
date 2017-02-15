@@ -44,6 +44,7 @@ export namespace Myki {
                     this.type = CardType.Concession;
                     break;
                 case 'Children':
+                case 'Child - aged 4 to 16 years of age':
                     this.type = CardType.Children;
                     break;
                 case 'Seniors':
