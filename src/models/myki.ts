@@ -26,12 +26,7 @@ export namespace Myki {
         transactions: Array<Transaction> = [];
 
         idFormatted(): string {
-            // production: use real card ID
             let cardId = this.id
-
-            // development: override card ID to be random number
-            //let cardId = this.id.substr(0, 5) + "1234567890"
-
             return `${cardId.substr(0, 1)} ${cardId.substr(1, 5)} ${cardId.substr(6, 4)} ${cardId.substr(10, 4)} ${cardId.substr(14, 1)}`
         }
 
