@@ -65,7 +65,9 @@ export class HomePage {
             this.menuCtrl.enable(false);
 
             // go to log in page
-            this.app.getRootNav().setRoot(LoginPage, null, { animate: true, direction: 'back' })
+            this.app.getRootNav().setRoot(LoginPage, null, { animate: true, direction: 'back' }).then(result => {
+              this.mykiProvider.reset()
+            })
           }
         },
 

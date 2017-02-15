@@ -52,7 +52,9 @@ export class MykiProvider {
   logout() {
     // clear saved login
     this.configProvider.loginForget()
+  }
 
+  reset() {
     // clear current state
     this.mykiAccount = new Myki.Account()
   }
