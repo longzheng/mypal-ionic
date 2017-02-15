@@ -7,10 +7,10 @@
         <div class="content">
             <div class="icon">
                 <div class="method">
-                    <ion-icon name="mypal-train" *ngIf="isServiceTrain()"></ion-icon>
-                    <ion-icon name="mypal-bus" *ngIf="isServiceBus()"></ion-icon>
-                    <ion-icon name="mypal-tram" *ngIf="isServiceTram()"></ion-icon>
-                    <ion-icon name="mypal-vline" *ngIf="isServiceVLine()"></ion-icon>
+                    <ion-icon name="mypal-train" *ngIf="!isTopup() && isServiceTrain()"></ion-icon>
+                    <ion-icon name="mypal-bus" *ngIf="!isTopup() && isServiceBus()"></ion-icon>
+                    <ion-icon name="mypal-tram" *ngIf="!isTopup() && isServiceTram()"></ion-icon>
+                    <ion-icon name="mypal-vline" *ngIf="!isTopup() && isServiceVLine()"></ion-icon>
                     <ion-icon name="mypal-money" *ngIf="isTopupMoney()"></ion-icon>
                     <ion-icon name="mypal-pass" *ngIf="isTopupPass()"></ion-icon>
                 </div>
