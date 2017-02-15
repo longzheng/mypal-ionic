@@ -49,6 +49,14 @@ export class MykiProvider {
     return this.mykiAccount.cards.find(x => x.id === this.activeCardId)
   }
 
+  logout() {
+    // clear saved login
+    this.configProvider.loginForget()
+
+    // clear current state
+    this.mykiAccount = new Myki.Account()
+  }
+
   // log in to myki account
   login(username: string, password: string): Promise<Response> {
     // specify the login endpoint

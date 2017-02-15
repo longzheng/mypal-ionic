@@ -59,8 +59,7 @@ export class HomePage {
           role: 'destructive',
           handler: () => {
             // log out
-            // clear saved login
-            this.configProvider.loginForget()
+            this.mykiProvider.logout()
 
             // disable menu
             this.menuCtrl.enable(false);
