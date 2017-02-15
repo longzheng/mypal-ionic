@@ -20,6 +20,7 @@ export class MykiProvider {
   private lastEventValidation = "";
   private username = "";
   private password = "";
+  private demoMode = false;
 
   // initialize new myki account
   mykiAccount = new Myki.Account();
@@ -36,7 +37,11 @@ export class MykiProvider {
 
     // if card isn't loaded yet, load it
     if (!this.activeCard().loaded)
-      this.getCardDetails(this.activeCard(), true)
+      this.getCardDetails(this.activeCard())
+
+    // if the history isn't loaded yet, load it
+    if (!this.activeCard().transactionLoaded)
+      this.getCardHistory(this.activeCard())
 
     // store last active card ID
     this.configProvider.activeCardSet(id)
@@ -61,6 +66,12 @@ export class MykiProvider {
 
   // log in to myki account
   login(username: string, password: string): Promise<Response> {
+    // determine if we're in mock demo models
+    if (username === 'demo' && password === 'demo') {
+      this.demoMode = true;
+      return this.mockHttpDelay(() => { this.mockLogin() })
+    }
+
     // specify the login endpoint
     let loginUrl = `${this.apiRoot}login.aspx`;
 
@@ -112,6 +123,11 @@ export class MykiProvider {
   }
 
   getAccountDetails() {
+    // determine if we're in mock demo models
+    if (this.demoMode) {
+      return this.mockHttpDelay(() => { this.mockAccountDetails() })
+    }
+
     // specify the login endpoint
     let accountUrl = `${this.apiRoot}Registered/MyMykiAccount.aspx`;
 
@@ -189,6 +205,11 @@ export class MykiProvider {
   }
 
   getCardDetails(card: Myki.Card, loadHistory: boolean = false) {
+    // determine if we're in mock demo models
+    if (this.demoMode) {
+      return this.mockHttpDelay(() => { this.mockCardDetails(card) })
+    }
+
     // specify the login endpoint
     let cardUrl = `${this.apiRoot}Registered/ManageMyCard.aspx`;
 
@@ -257,6 +278,11 @@ export class MykiProvider {
   }
 
   getCardHistory(card: Myki.Card) {
+    // determine if we're in mock demo models
+    if (this.demoMode) {
+      return this.mockHttpDelay(() => { this.mockCardHistory(card) })
+    }
+
     // specify the login endpoint
     let historyUrl = `${this.apiRoot}Registered/MYTransactionsInfo.aspx`;
 
@@ -429,4 +455,84 @@ export class MykiProvider {
     return cards[oldCard]
   }
 
+  private mockHttpDelay(func) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        func()
+        resolve()
+      }, 1000)
+    })
+  }
+
+  private mockLogin() {
+    this.mykiAccount.holder = "Demo account"
+  }
+
+  private mockAccountDetails() {
+    let card1 = this.findOrInsertCardById('308412345678901')
+    card1.status = 0
+    card1.holder = this.mykiAccount.holder
+    card1.moneyBalance = 70.18
+    card1.passActive = "7 days, \n                                                                                Zone 1-Zone 2,\n                                                                                valid until 16 Feb 17 03:00:00 AM"
+    card1.passActiveEnabled = true
+    card1.passActiveExpiry = new Date("2017-02-15T14:00:00.000Z")
+
+    let card2 = this.findOrInsertCardById('308412345678902')
+    card2.status = 0
+    card2.holder = this.mykiAccount.holder
+    card2.moneyBalance = 0.5
+
+    let card3 = this.findOrInsertCardById('308412345678903')
+    card3.status = 1
+    card3.holder = this.mykiAccount.holder
+  }
+
+  private mockCardDetails(card: Myki.Card) {
+    switch (card.id) {
+      case '308412345678901':
+        card.loaded = true
+        card.passActive = "7 days , Zone 1-Zone 2.Valid to 16 Feb 2017 03:00:00 AM"
+        card.type = 0
+        card.expiry = new Date("2020-01-04T14:00:00.000Z")
+        card.moneyTopupInProgress = 0
+        card.moneyTotalBalance = 70.18
+        card.passInactive = ""
+        card.lastTransactionDate = new Date("2017-02-14T00:25:47.000Z")
+        card.autoTopup = true
+        break;
+      case '308412345678902':
+        card.loaded = true
+        card.type = 2
+        card.expiry = new Date("2018-12-21T14:00:00.000Z")
+        card.moneyTopupInProgress = 10
+        card.moneyTotalBalance = 0.5
+        card.lastTransactionDate = new Date("2017-01-02T23:11:24.000Z")
+        break;
+      case '308412345678903':
+        card.loaded = true
+        card.type = 0
+        card.lastTransactionDate = new Date("2016-01-01T16:12:02.000Z")
+        break;
+      default:
+        throw new Error('Invalid card')
+    }
+  }
+
+  private mockCardHistory(card: Myki.Card) {
+    card.transactionLoaded = true
+
+    let stubTransactions: Array<Myki.Transaction> = JSON.parse('[{"dateTime":"2017-02-14T09:12:29.000Z","type":4,"service":1,"zone":"1","description":"Southern Cross Station","credit":2,"debit":null,"moneyBalance":70.18},{"dateTime":"2017-02-14T00:25:47.000Z","type":1,"service":1,"zone":"1/2","description":"Flinders Street Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:43:17.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:43:17.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:31:47.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:31:47.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T09:12:43.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T00:26:39.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:42:42.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:42:42.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:30:17.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:30:17.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T09:13:35.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T00:46:31.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T00:02:37.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T00:02:37.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-09T08:25:09.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-09T00:34:45.000Z","type":1,"service":1,"zone":"1","description":"Flinders Street Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:41:01.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:41:01.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:30:36.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":4.1,"moneyBalance":70.18},{"dateTime":"2017-02-08T23:30:36.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:30:36.000Z","type":3,"service":5,"zone":"-","description":"7 Days  Zone 1-2 ($41.00)","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T09:05:41.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T00:33:26.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":1.3,"moneyBalance":74.28},{"dateTime":"2017-02-07T23:40:12.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T23:40:12.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":2.8,"moneyBalance":75.58},{"dateTime":"2017-02-07T23:28:41.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T23:28:41.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T09:28:47.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T00:26:07.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:37:58.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:37:58.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:29:04.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:29:04.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T08:35:46.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T00:29:18.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-05T23:43:38.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-05T23:43:38.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-05T23:25:19.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null}]')
+
+    for (let stubTransaction of stubTransactions) {
+      let transaction = new Myki.Transaction()
+      for (let prop in stubTransaction) {
+        if (prop === 'dateTime') {
+          transaction.dateTime = new Date(stubTransaction.dateTime)
+        }
+
+        transaction[prop] = stubTransaction[prop];
+      }
+      card.transactions.push(transaction)
+    }
+  }
 }
