@@ -20,8 +20,9 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
 
+      // Android status bar coloring
       if (platform.is('android')) {
-        StatusBar.backgroundColorByHexString("#C4DB2D");
+        StatusBar.backgroundColorByHexString("#9CAF24");
       }
 
       // check if we've seen intro
