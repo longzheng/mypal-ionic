@@ -3,11 +3,7 @@ import * as moment from 'moment';
 export namespace Myki {
     export class Account {
         holder: string;
-        cards: Array<Card>;
-
-        constructor() {
-            this.cards = []
-        }
+        cards: Array<Card> = [];
     }
 
     export class Card {
@@ -27,11 +23,7 @@ export namespace Myki {
         passInactive: string;
         lastTransactionDate: Date;
         autoTopup: boolean;
-        transactions: Array<Transaction>;
-
-        constructor() {
-            this.transactions = []
-        }
+        transactions: Array<Transaction> = [];
 
         idFormatted(): string {
             // production: use real card ID
