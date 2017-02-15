@@ -54,13 +54,19 @@ page-intro {
         }
         .train {
             transform: translateX(-100%);
-            margin-bottom: -4px;
             animation: train-animation;
             animation-duration: 10s;
             animation-delay: 1s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
             position: relative;
+            img {
+                animation: train-bobbing;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                margin-bottom: -4px;
+            }
         }
     }
 }
@@ -77,5 +83,17 @@ page-intro {
     }
     100% {
         transform: translateX(110%);
+    }
+}
+
+@keyframes train-bobbing {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(1px);
+    }
+    100% {
+        transform: translateY(0);
     }
 }
