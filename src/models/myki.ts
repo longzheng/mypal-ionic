@@ -50,6 +50,9 @@ export namespace Myki {
                 case 'Seniors':
                     this.type = CardType.Seniors;
                     break;
+                case 'Commuter Club':
+                    this.type = CardType.CommuterClub;
+                    break;
                 default:
                     throw new Error('Invalid card type')
             }
@@ -65,6 +68,8 @@ export namespace Myki {
                     return "Children";
                 case CardType.Seniors:
                     return "Seniors";
+                case CardType.CommuterClub:
+                    return "Commuter Club"
                 default:
                     return '';
             }
@@ -177,7 +182,8 @@ export namespace Myki {
         FullFare,
         Concession,
         Children,
-        Seniors
+        Seniors,
+        CommuterClub
     }
 
     export enum CardStatus {
