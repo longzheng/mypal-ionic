@@ -25,7 +25,7 @@
     <div [hidden]="!card().transactionLoaded">
         <div class="note">
             Transactions may be delayed by up to 24 hours
-            <span *ngIf="hasTransactions()"><br> Showing most recent {{transactions().length}} tranactions</span>
+            <span *ngIf="hasTransactions()"><br> Showing most recent {{transactions().length}} transactions</span>
         </div>
         <ion-list>
             <div *ngFor="let trans of transactions()">
