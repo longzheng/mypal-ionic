@@ -1,4 +1,8 @@
 transaction {
+    .card {
+        margin: 0;
+    }
+
     .date {
         display: flex;
         color: color($colors, light-blue, base);

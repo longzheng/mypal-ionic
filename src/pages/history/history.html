@@ -28,7 +28,7 @@
             <span *ngIf="hasTransactions()"><br> Showing most recent {{transactions().length}} transactions</span>
         </div>
         <ion-list>
-            <div *ngFor="let trans of transactions()">
+            <div class="transaction-item" *ngFor="let trans of transactions()">
                 <transaction [transaction]="trans"></transaction>
             </div>
         </ion-list>

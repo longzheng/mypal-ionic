@@ -4,6 +4,13 @@ page-history {
             background: $background-color; // override so pull to refresh doesn't overlap page
             border-top: none !important; // override so pull to refresh has no border
         }
+
+        ion-list {
+            .transaction-item {
+                width: 100%;
+                margin-bottom: 1.5em;
+            }
+        }
     }
     .loading {
         padding: 3em 0 !important;
