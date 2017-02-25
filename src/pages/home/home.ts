@@ -4,6 +4,7 @@ import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
 import { LoginPage } from '../login/login';
+import { Calendar } from 'ionic-native';
 
 @Component({
   selector: 'page-home',
@@ -87,6 +88,34 @@ export class HomePage {
     });
 
     actionSheet.present();
+  }
+
+  addReminder() {
+    Calendar.hasWritePermission().then(
+      result => {
+        // has permission
+      }, error => {
+        // ask for permission
+        return Calendar.requestWritePermission()
+      })
+      .then(
+        result => {
+          Calendar.createEventInteractively(
+            "Myki card expires",
+            null,
+            `Myki card number ${this.card().idFormatted()}`,
+            this.card().expiry,
+            this.card().expiry
+          )
+        }, error => {
+          let toast = this.toastCtrl.create({
+          position: 'top',
+          message: 'This app does not have calendar permissions. Please go to settings and enable calendar permissions for this app.',
+          duration: 3000
+        });
+        toast.present();
+        }
+      )
   }
 
 }

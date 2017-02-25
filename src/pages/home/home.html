@@ -84,6 +84,7 @@
             <ion-item no-lines>
                 <div item-left>Expiry</div>
                 <div item-right>{{card().expiry | amDateFormat:'LL'}}</div>
+                <ion-icon item-right name="ios-alarm-outline" (click)="addReminder()"></ion-icon>
             </ion-item>
         </ul>
     </div>
