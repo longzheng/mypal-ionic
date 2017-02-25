@@ -5,6 +5,7 @@ import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
 import { LoginPage } from '../login/login';
 import { Calendar } from 'ionic-native';
+import moment from 'moment';
 
 @Component({
   selector: 'page-home',
@@ -93,29 +94,40 @@ export class HomePage {
   addReminder() {
     Calendar.hasWritePermission().then(
       result => {
-        // has permission
-      }, error => {
-        // ask for permission
-        return Calendar.requestWritePermission()
+        if (!result)
+          // if we don't have calendar permissions, ask for it
+          Calendar.requestWritePermission().then(
+            () => {
+              // when we have permissions (or think we have permission), move on
+              return Promise.resolve()
+            }
+          )
       })
       .then(
-        result => {
-          Calendar.createEventInteractively(
-            "Myki card expires",
-            null,
-            `Myki card number ${this.card().idFormatted()}`,
-            this.card().expiry,
-            this.card().expiry
-          )
-        }, error => {
+      result => {
+        // get card ID
+        let cardId = this.card().idFormatted()
+
+        // get the last 5 digits of the card (with space)
+        let cardLastDigits = cardId.substring(cardId.length - 6)
+
+        // create the calendar event
+        Calendar.createEventInteractively(
+          `Myki card ${cardLastDigits} expires`,
+          null,
+          `Card number ${cardId}`,
+          this.card().expiry,
+          moment(this.card().expiry).add(1, 'days').toDate() // the calendar end date needs to be the "end of day"
+        ).catch(() => {
+          // there was an error creating event, we probably don't have permission
           let toast = this.toastCtrl.create({
-          position: 'top',
-          message: 'This app does not have calendar permissions. Please go to settings and enable calendar permissions for this app.',
-          duration: 3000
-        });
-        toast.present();
-        }
-      )
+            position: 'top',
+            message: 'This app does not have calendar permissions. Please go to settings and enable calendar permissions for this app.',
+            duration: 3000
+          });
+          toast.present();
+        })
+      })
   }
 
 }
