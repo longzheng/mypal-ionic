@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, NavController, ActionSheetController, MenuController } from 'ionic-angular';
+import { App, NavController, ActionSheetController, MenuController, ToastController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
@@ -18,6 +18,7 @@ export class HomePage {
     public actionSheetCtrl: ActionSheetController,
     public configProvider: ConfigProvider,
     public menuCtrl: MenuController,
+    public toastCtrl: ToastController,
   ) {
 
   }
@@ -31,8 +32,15 @@ export class HomePage {
     // refresh active card
     this.mykiProvider.getCardDetails(this.card(), true).then(
       () => {
-        refresher.complete();
       }).catch(error => {
+        let toast = this.toastCtrl.create({
+          position: 'top',
+          message: 'There was a problem refreshing your card details',
+          duration: 3000
+        });
+        toast.present();
+      }).then(() => {
+        refresher.complete();
       })
   }
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MykiProvider } from '../../providers/myki';
 import { Myki } from '../../models/myki';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 @Component({
   selector: 'page-history',
@@ -12,16 +12,24 @@ export class HistoryPage {
   constructor(
     public navCtrl: NavController,
     public mykiProvider: MykiProvider,
+    public toastCtrl: ToastController,
   ) {
 
   }
 
   doRefresh(refresher) {
     // refresh active card transactions
-    this.mykiProvider.getCardDetails(this.mykiProvider.activeCard(), true).then(
+    this.mykiProvider.getCardDetails(this.card(), true).then(
       () => {
-        refresher.complete();
       }).catch(error => {
+        let toast = this.toastCtrl.create({
+          position: 'top',
+          message: 'There was a problem refreshing your card details',
+          duration: 3000
+        });
+        toast.present();
+      }).then(() => {
+        refresher.complete();
       })
   }
 
