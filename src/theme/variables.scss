@@ -38,8 +38,14 @@ $colors: (
     contrast: #6A8700,
   ),
   brand-light:  #CFE257,
-  brand-dark:   #9CAF24,
-  brand-darkest:#6A8700,
+  brand-dark:   (
+    base: #9CAF24,
+    contrast: #ffffff
+  ),
+  brand-darkest: (
+    base: #6A8700,
+    contrast: #ffffff
+  ),
   danger:       #f53d3d,
   light:        #ebebeb,
   light-blue:   #b9bec5,
