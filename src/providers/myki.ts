@@ -157,7 +157,6 @@ export class MykiProvider {
           // set up form fields
           const body = new URLSearchParams()
           body.set('ctl00$uxContentPlaceHolder$uxTimer', '')
-          body.set('__ASYNCPOST', 'true')
 
           // post form fields
           this.httpPostFormAsp(accountUrl, body).then(
@@ -391,6 +390,61 @@ export class MykiProvider {
     })
   }
 
+  topupCardLoad(card: Myki.Card, topupType: Myki.TopupType) {
+    // determine if we're in mock demo models
+    if (this.demoMode) {
+      return this.mockHttpDelay(() => { return Promise.resolve() })
+    }
+
+    // specify the topup endpoint
+    let topupUrl = `${this.apiRoot}Registered/TopUp/ChooseTopUp.aspx`;
+
+    return new Promise((resolve, reject) => {
+      // do a GET first to get the viewstate
+      this.httpGetAspWithRetry(topupUrl).then(
+        data => {
+          // check if we're redirected to error page
+          if (data.url === this.errorUrl)
+            return reject()
+
+          // set up form fields
+          const body = new URLSearchParams()
+          body.set('__EVENTTARGET', 'ctl00$uxContentPlaceHolder$uxTimer')
+          body.set('ctl00$uxContentPlaceHolder$uxTopup', topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
+          body.set('__EVENTARGUMENT', '')
+
+          // post form fields
+          this.httpPostFormAsp(topupUrl, body).then(
+            data => {
+              // set up form fields
+               const body = new URLSearchParams()
+                  body.set('ctl00$uxContentPlaceHolder$uxCardlist', card.id)
+                  body.set('ctl00$uxContentPlaceHolder$uxTopup', topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
+                  body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
+                  body.set('__EVENTTARGET', '')
+                  body.set('__EVENTARGUMENT', '')
+
+              // post form fields
+              this.httpPostFormAsp(topupUrl, body).then(
+                data => {
+                  return resolve()
+                },
+                error => {
+                  return reject();
+                }
+              )
+            },
+            error => {
+              return reject();
+            }
+          )
+        },
+        error => {
+          return reject()
+        })
+    })
+  }
+
   private httpGetAspWithRetry(url: string): Promise<Response> {
     return new Promise((resolve, reject) => {
       // first try http get
@@ -491,8 +545,15 @@ export class MykiProvider {
 
   private storePageState(data: any) {
     let scraperJquery = this.jQueryHTML(data)
-    this.lastViewState = scraperJquery.find('#__VIEWSTATE').val()
-    this.lastEventValidation = scraperJquery.find('#__EVENTVALIDATION').val()
+    let viewState = scraperJquery.find('#__VIEWSTATE').val()
+    let eventValidation = scraperJquery.find('#__EVENTVALIDATION').val()
+
+    // only update viewState if there was a response
+    if (viewState)
+      this.lastViewState = viewState
+
+    this.lastEventValidation = eventValidation
+
   }
 
   private findOrInsertCardById(cardId: string): Myki.Card {
@@ -541,6 +602,7 @@ export class MykiProvider {
     let card3 = this.findOrInsertCardById('308412345678903')
     card3.status = 1
     card3.holder = this.mykiAccount.holder
+    card3.moneyBalance = 0
   }
 
   private mockCardDetails(card: Myki.Card) {
@@ -567,6 +629,7 @@ export class MykiProvider {
       case '308412345678903':
         card.loaded = true
         card.type = 0
+        card.moneyTopupInProgress = 0
         card.lastTransactionDate = new Date("2016-01-01T16:12:02.000Z")
         break;
       default:

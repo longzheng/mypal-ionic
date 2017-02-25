@@ -40,11 +40,11 @@
                 <p class="title">Myki money</p>
                 <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}</h2>
                 <div class="info">
-                    <div [hidden]="card().moneyTopupInProgress === 0">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</div>
+                    <div [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</div>
                     <div class="autotopup" [hidden]="!card().autoTopup">
                         <ion-icon name="md-refresh"></ion-icon> Auto top up enabled</div>
                 </div>
-                <button ion-button icon-left block><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
+                <button ion-button icon-left block (click)="topupMoney()" [disabled]="inactiveCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
             </div>
         </div>
 
@@ -58,7 +58,7 @@
                 <div class="info" [hidden]="!card().passActive">
                     {{card().passActive}}
                 </div>
-                <button ion-button icon-left block><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
+                <button ion-button icon-left block (click)="topupPass()" [disabled]="inactiveCard()"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
             </div>
         </div>
 

@@ -203,4 +203,17 @@ export namespace Myki {
         AutoTopUp,
         Website,
     }
+
+    export enum TopupType {
+        Money,
+        Pass
+    }
+
+    export class TopupOptions {
+        topupType: Myki.TopupType
+        moneyAmount: number
+        passDuration: number
+        zoneFrom: number
+        zoneTo: number
+    }
 }

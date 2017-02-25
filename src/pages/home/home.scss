@@ -17,12 +17,13 @@ page-home {
             top: $content-padding;
             right: $content-padding;
             ion-icon {
-                font-size: 4.5em;
+                font-size: 8em;
                 background: linear-gradient(#eef0f4, #f3f4f7);
             }
         }
         .card-inner {
             flex: 1 0;
+            position: relative;
             .title {
                 color: color($colors, dark, base);
                 font-size: 13px;

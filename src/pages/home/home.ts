@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { App, NavController, ActionSheetController, MenuController, ToastController } from 'ionic-angular';
+import { App, NavController, ActionSheetController, MenuController, ToastController, ModalController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
 import { LoginPage } from '../login/login';
 import { Calendar } from 'ionic-native';
+import { TopupPage } from '../topup/topup';
 import moment from 'moment';
 
 @Component({
@@ -21,6 +22,7 @@ export class HomePage {
     public configProvider: ConfigProvider,
     public menuCtrl: MenuController,
     public toastCtrl: ToastController,
+    public modalCtrl: ModalController,
   ) {
 
   }
@@ -89,6 +91,19 @@ export class HomePage {
     });
 
     actionSheet.present();
+  }
+
+  topupMoney() {
+    this.topupModal(Myki.TopupType.Money)
+  }
+
+  topupPass() {
+    this.topupModal(Myki.TopupType.Pass)
+  }
+
+  private topupModal(type: Myki.TopupType) {
+    let modal = this.modalCtrl.create(TopupPage, { type: type });
+    modal.present();
   }
 
   addReminder() {

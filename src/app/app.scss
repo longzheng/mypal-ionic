@@ -21,6 +21,10 @@ $card-margin-topbottom: 1.5em;
     color: color($colors, dark, base);
     font-size: 13px;
     line-height: 1.5;
+
+    a {
+        color: color($colors, brand-dark, base);
+    }
 }
 
 // card container
@@ -51,6 +55,9 @@ $card-margin-topbottom: 1.5em;
         }
         >[item-right] {
             color: color($colors, black, base);
+        }
+        ion-label {
+            color: color($colors, dark, base);
         }
     }
 }
