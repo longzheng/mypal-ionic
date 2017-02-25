@@ -118,11 +118,26 @@ export class MykiProvider {
 
   // re-login
   // the myki session might have expired
-  relogin() {
-    this.login(this.username, this.password)
+  relogin(): Promise<Response> {
+    return new Promise((resolve, reject) => {
+      // try logging in
+      this.login(this.username, this.password).then(
+        result => {
+          // for some reason we have to get the account details after logging in before we can do anything else
+          this.getAccountDetails().then(
+            result => {
+              return resolve()
+            }, error => {
+              return reject(error)
+            }
+          )
+        }, error => {
+          return reject(error)
+        })
+    })
   }
 
-  getAccountDetails() {
+  getAccountDetails(): Promise<Response> {
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { this.mockAccountDetails() })
@@ -215,7 +230,7 @@ export class MykiProvider {
 
     return new Promise((resolve, reject) => {
       // do a GET first to get the viewstate
-      this.httpGetAsp(cardUrl).then(
+      this.httpGetAspWithRetry(cardUrl).then(
         data => {
           // check if we're redirected to error page
           if (data.url === this.errorUrl)
@@ -288,7 +303,7 @@ export class MykiProvider {
 
     return new Promise((resolve, reject) => {
       // do a GET first to get the viewstate
-      this.httpGetAsp(historyUrl).then(
+      this.httpGetAspWithRetry(historyUrl).then(
         data => {
           // check if we're redirected to error page
           if (data.url === this.errorUrl)
@@ -362,7 +377,7 @@ export class MykiProvider {
                 card.transactions.push(trans)
 
               })
-              
+
               return resolve();
             },
             error => {
@@ -376,6 +391,40 @@ export class MykiProvider {
     })
   }
 
+  private httpGetAspWithRetry(url: string): Promise<Response> {
+    return new Promise((resolve, reject) => {
+      // first try http get
+      this.httpGetAsp(url).then(
+        result => {
+          // success
+          return resolve(result)
+        }
+      ).catch(error => {
+        if (error === "session") {
+          // session error
+          // we want to try logging in and then retrying
+          this.relogin().then(
+            result => {
+              // retry HTTP GET request
+              this.httpGetAsp(url).then(
+                result => {
+                  return resolve(result)
+                }, error => {
+                  return reject(error)
+                }
+              )
+            }, error => {
+              return reject(error)
+            }
+          )
+        } else {
+          // some other error
+          return reject(error)
+        }
+      })
+    })
+  }
+
   private httpGetAsp(url: string): Promise<Response> {
     // set up request options
     const options = new RequestOptions()
@@ -384,6 +433,10 @@ export class MykiProvider {
     return new Promise((resolve, reject) => {
       this.http.get(url, options).subscribe(
         data => {
+          // if the page we landed on is not the page we requested
+          if (data.url !== url)
+            return reject("session")
+
           // update the page state
           this.storePageState(data);
 
@@ -476,9 +529,9 @@ export class MykiProvider {
     card1.status = 0
     card1.holder = this.mykiAccount.holder
     card1.moneyBalance = 70.18
-    card1.passActive = "7 days, \n Zone 1-Zone 2,\n valid until " + moment().add(2,'days').format("D MMM YY") + " 03:00:00 AM"
+    card1.passActive = "7 days, \n Zone 1-Zone 2,\n valid until " + moment().add(2, 'days').format("D MMM YY") + " 03:00:00 AM"
     card1.passActiveEnabled = true
-    card1.passActiveExpiry = moment().add(2,'days').hours(3).toDate()
+    card1.passActiveExpiry = moment().add(2, 'days').hours(3).toDate()
 
     let card2 = this.findOrInsertCardById('308412345678902')
     card2.status = 0
@@ -494,7 +547,7 @@ export class MykiProvider {
     switch (card.id) {
       case '308412345678901':
         card.loaded = true
-        card.passActive = "7 days , Zone 1-Zone 2.Valid to " + moment().add(2,'days').format("D MMM YYYY") + " 03:00:00 AM"
+        card.passActive = "7 days , Zone 1-Zone 2.Valid to " + moment().add(2, 'days').format("D MMM YYYY") + " 03:00:00 AM"
         card.type = 0
         card.expiry = new Date("2020-01-04T14:00:00.000Z")
         card.moneyTopupInProgress = 0
