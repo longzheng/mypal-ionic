@@ -217,9 +217,10 @@ export namespace Myki {
         zoneTo: number
         cnToken: string
         ccNumber: string
-        ccExpiryMonth: string
-        ccExpiryYear: string
-        ccCCV: string
+        ccExpiry: string
+        ccExpiryMonth: number
+        ccExpiryYear: number
+        ccCVC: string
         reminderType: TopupReminderType
         reminderEmail: string
         reminderMobile: string

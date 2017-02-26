@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ViewController, NavParams, AlertController } from 'ionic-angular';
 import { Myki } from '../../models/myki';
 import { MykiProvider } from '../../providers/myki';
+import * as $ from "jquery";
+import Payment from "payment"
 
 @Component({
   selector: 'page-topup',
@@ -16,7 +18,8 @@ export class TopupPage {
   public loadingPay: boolean = false;
   public formTopupMoney: FormGroup;
   public formTopupPass: FormGroup;
-  public formTopupPay: FormGroup;
+  public formTopupPayCC: FormGroup;
+  public formTopupPayReminder: FormGroup;
   public topupOrder: Myki.TopupOrder = new Myki.TopupOrder()
 
   constructor(
@@ -31,49 +34,56 @@ export class TopupPage {
 
     // initialize form groups
     this.formTopupMoney = formBuilder.group({
-      moneyAmount: ['', Validators.compose([
+      moneyAmount: ['', [
         Validators.required,
         this.validateMoneyAmount
-      ])]
+      ]]
     })
 
     this.formTopupPass = formBuilder.group({
       // field validation
-      passDuration: ['', Validators.compose([
+      passDuration: ['', [
         Validators.required,
         this.validatePassDuration
-      ])],
-      zoneFrom: ['', Validators.compose([
+      ]],
+      zoneFrom: ['', [
         Validators.required
-      ])],
-      zoneTo: ['', Validators.compose([
+      ]],
+      zoneTo: ['', [
         Validators.required
-      ])],
+      ]],
     }, {
         // form validators
-        validator: this.validateZones('zoneFrom', 'zoneTo')
+        validator: this.validateZones()
       })
 
-    this.formTopupPay = formBuilder.group({
-      card: ['', Validators.compose([
+    this.formTopupPayCC = formBuilder.group({
+      card: ['', [
+        Validators.required,
+        this.validateCCNumber
+      ]],
+      expiry: ['', [
+        Validators.required,
+        this.validateCCExpiry
+      ]],
+      cvc: ['', [
         Validators.required
-      ])],
-      expiry: ['', Validators.compose([
+      ]],
+    }, {
+        validator: this.validateCreditCard()
+      })
+
+    this.formTopupPayReminder = formBuilder.group({
+      reminderType: ['', [
         Validators.required
-      ])],
-      ccv: ['', Validators.compose([
-        Validators.required
-      ])],
-      reminderType: ['', Validators.compose([
-        Validators.required
-      ])],
-      reminderEmail: ['', Validators.compose([
-        Validators.required
-      ])],
-      reminderMobile: ['', Validators.compose([
-        Validators.required
-      ])],
-    })
+      ]],
+      reminderEmail: ['', [
+        Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$')
+      ]],
+      reminderMobile: [''],
+    }, {
+        validator: this.validateReminder()
+      })
   }
 
   ionViewDidLoad() {
@@ -82,6 +92,7 @@ export class TopupPage {
     this.topupOptions.passDuration = 7
     this.topupOptions.zoneFrom = 1
     this.topupOptions.zoneTo = 2
+    this.topupOptions.reminderType = Myki.TopupReminderType.Email
 
     // initialize top up
     this.loadingTopUp = true;
@@ -100,6 +111,11 @@ export class TopupPage {
         this.viewCtrl.dismiss()
       }
     )
+
+    // set up payment fields
+    Payment.formatCardNumber(<any>document.querySelector('ion-input.ccNumber input'))
+    Payment.formatCardExpiry(<any>document.querySelector('ion-input.ccExpiry input'))
+    Payment.formatCardCVC(<any>document.querySelector('ion-input.ccCVC input'))
   }
 
   public close() {
@@ -174,8 +190,25 @@ export class TopupPage {
     return this.state === TopUpState.Pay
   }
 
-  public reminderTypes() {
-    return Object.keys(Myki.TopupReminderType)
+  public canPay() {
+    return (this.formTopupPayCC.valid && this.formTopupPayReminder.valid)
+  }
+
+  public pay() {
+    // parse the month/year from the credit card expiry
+    let expiry = Payment.fns.cardExpiryVal(this.topupOptions.ccExpiry)
+    this.topupOptions.ccExpiryMonth = expiry.month
+    this.topupOptions.ccExpiryYear = expiry.year
+
+    console.log(this.topupOptions)
+  }
+
+  public isReminderEmail() {
+    return this.topupOptions.reminderType === Myki.TopupReminderType.Email
+  }
+
+  public isReminderMobile() {
+    return this.topupOptions.reminderType === Myki.TopupReminderType.Mobile
   }
 
   private validatePassDuration(control: FormControl) {
@@ -199,16 +232,62 @@ export class TopupPage {
     return null
   }
 
-  private validateZones(from: string, to: string) {
+  private validateZones() {
     return (group: FormGroup): any => {
-      let zoneFrom = parseInt(group.controls[from].value)
-      let zoneTo = parseInt(group.controls[to].value)
+      let zoneFrom = parseInt(group.controls['zoneFrom'].value)
+      let zoneTo = parseInt(group.controls['zoneTo'].value)
 
       if (zoneFrom > zoneTo)
         return { invalidZones: true }
 
       if (zoneTo === 1)
         return { zoneToInvalid: true }
+
+      return null
+    }
+  }
+
+  private validateCCNumber(control: FormControl) {
+    if (!Payment.fns.validateCardNumber(control.value))
+      return { invalidNumber: true }
+
+    return null
+  }
+
+  private validateCCExpiry(control: FormControl) {
+    if (!Payment.fns.validateCardExpiry(control.value))
+      return { invalidExpiry: true }
+
+    return null
+  }
+
+  private validateCreditCard() {
+    return (group: FormGroup): any => {
+      let cardNumber = group.controls['card'].value
+      let cardCVC = group.controls['cvc'].value
+      let cardType = Payment.fns.cardType(cardNumber)
+
+      if (cardNumber && !(cardType === 'visa' || cardType === 'mastercard'))
+        return { invalidCardType: true }
+
+      if (!Payment.fns.validateCardCVC(cardCVC, cardType))
+        return { invalidCVC: true }
+
+      return null
+    }
+  }
+
+  private validateReminder() {
+    return (group: FormGroup): any => {
+      let reminderType = group.controls['reminderType'].value
+      let reminderEmail = group.controls['reminderEmail'].value
+      let reminderMobile = group.controls['reminderMobile'].value
+
+      if (reminderType === Myki.TopupReminderType.Email && !reminderEmail)
+        return { emailRequired: true }
+
+      if (reminderType === Myki.TopupReminderType.Mobile && !reminderMobile)
+        return { mobileRequired: true }
 
       return null
     }

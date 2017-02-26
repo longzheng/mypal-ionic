@@ -95,42 +95,66 @@
             <div>{{topupOrder.description}}</div>
             <div><strong>Total: {{topupOrder.amount | currency:'USD':true}}</strong> <span *ngIf="topupOrder.gstAmount">(includes {{topupOrder.gstAmount | currency:'USD':true}} GST)</span></div>
         </div>
-        <form [formGroup]="formTopupPay">
+        <form [formGroup]="formTopupPayCC">
             <div class="note">
                 Pay with credit card (Myki only accepts Mastercard and Visa). This app does not store any credit card details.
             </div>
             <ul class="card-list">
                 <ion-item no-lines>
                     <ion-label fixed>Card</ion-label>
-                    <ion-input type="tel" formControlName="card" placeholder="xxxx xxxx xxxx xxxx"></ion-input>
+                    <ion-input class="ccNumber" type="tel" formControlName="card" [(ngModel)]="topupOptions.ccNumber" placeholder="xxxx xxxx xxxx xxxx"></ion-input>
                 </ion-item>
                 <ion-item no-lines>
                     <ion-label fixed>Expiry</ion-label>
-                    <ion-input type="number" formControlName="expiry" placeholder="mm/yy"></ion-input>
+                    <ion-input class="ccExpiry" type="tel" formControlName="expiry" [(ngModel)]="topupOptions.ccExpiry" placeholder="mm/yy"></ion-input>
                 </ion-item>
                 <ion-item no-lines>
-                    <ion-label fixed>CCV</ion-label>
-                    <ion-input type="tel" formControlName="ccv" placeholder="xxx"></ion-input>
+                    <ion-label fixed>CVC</ion-label>
+                    <ion-input class="ccCVC" type="tel" formControlName="cvc" [(ngModel)]="topupOptions.ccCVC" placeholder="xxx"></ion-input>
                 </ion-item>
             </ul>
+            <div class="error" *ngIf="formTopupPayCC.controls.card.touched">
+                <div *ngIf="formTopupPayCC.controls.card.hasError('invalidNumber')">
+                    <ion-icon name="ios-alert-outline"></ion-icon> Invalid credit card number.</div>
+                <div *ngIf="formTopupPayCC.hasError('invalidCardType')">
+                    <ion-icon name="ios-alert-outline"></ion-icon> Invalid credit card type. Only Mastercard and Visa supported.</div>
+            </div>
+            <div class="error" *ngIf="formTopupPayCC.controls.expiry.touched">
+                <div *ngIf="formTopupPayCC.controls.expiry.hasError('invalidExpiry')">
+                    <ion-icon name="ios-alert-outline"></ion-icon> Invalid expiry.</div>
+            </div>
+            <div class="error" *ngIf="formTopupPayCC.controls.cvc.touched">
+                <div *ngIf="formTopupPayCC.hasError('invalidCVC')">
+                    <ion-icon name="ios-alert-outline"></ion-icon> Invalid CVC.</div>
+            </div>
+        </form>
+        <form [formGroup]="formTopupPayReminder">
             <ul class="card-list">
                 <ion-item no-lines>
                     <ion-label>Send receipt by</ion-label>
                     <ion-select formControlName="reminderType" [(ngModel)]="topupOptions.reminderType">
-                        <ion-option [value]="Email">Email</ion-option>
-                        <ion-option [value]="Mobile">Mobile</ion-option>
-                        <ion-option [value]="None">None</ion-option>
+                        <ion-option [value]="0">Email</ion-option>
+                        <ion-option [value]="1">Mobile</ion-option>
+                        <ion-option [value]="2">None</ion-option>
                     </ion-select>
                 </ion-item>
-                <ion-item no-lines>
+                <ion-item no-lines [hidden]="!isReminderEmail()">
                     <ion-label fixed>Email</ion-label>
                     <ion-input type="email" formControlName="reminderEmail" [(ngModel)]="topupOptions.reminderEmail" placeholder="john@doe.com"></ion-input>
                 </ion-item>
-                <ion-item no-lines>
+                <ion-item no-lines [hidden]="!isReminderMobile()">
                     <ion-label fixed>Mobile</ion-label>
-                    <ion-input type="phone" formControlName="reminderMobile" [(ngModel)]="topupOptions.reminderMobile" placeholder="04xxxxxxxx"></ion-input>
+                    <ion-input type="phone" formControlName="reminderMobile" [(ngModel)]="topupOptions.reminderMobile" [required]="isReminderMobile()" placeholder="04xxxxxxxx"></ion-input>
                 </ion-item>
             </ul>
+            <div class="error" *ngIf="formTopupPayReminder.touched">
+                <div *ngIf="formTopupPayReminder.hasError('emailRequired')">
+                    <ion-icon name="ios-alert-outline"></ion-icon> Email address required.</div>
+                <div *ngIf="formTopupPayReminder.controls.reminderEmail.errors?.pattern">
+                    <ion-icon name="ios-alert-outline"></ion-icon> Valid email address required.</div>
+                <div *ngIf="formTopupPayReminder.hasError('mobileRequired')">
+                    <ion-icon name="ios-alert-outline"></ion-icon> Mobile phone number required.</div>
+            </div>
         </form>
         <button ion-button block (click)="pay()" [disabled]="!canPay()">Pay</button>
     </div>
