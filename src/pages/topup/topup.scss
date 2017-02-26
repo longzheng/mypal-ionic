@@ -1,8 +1,8 @@
 page-topup {
-    input[name=moneyAmount] {
+    input[formcontrolname=moneyAmount] {
         text-align: right;
     }
-    input[name=passDuration] {
+    input[formcontrolname=passDuration] {
         text-align: right;
     }
 }

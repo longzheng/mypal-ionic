@@ -23,47 +23,60 @@
 
     <div [hidden]="loading">
         <div *ngIf="isTopupMoney()">
-            <div class="note">Add money to your myki card which will be automatically deducted when you touch on and touch off. <a href="https://www.ptv.vic.gov.au/tickets/myki/top-up-a-myki/myki-money/">Read more about myki money</a>.</div>
-            <ul class="card-list">
-                <ion-item no-lines>
-                    <ion-label>Top up amount ($)</ion-label>
-                    <ion-input type="number" [(ngModel)]="topupOptions.moneyAmount" name="moneyAmount" clearOnEdit></ion-input>
-                </ion-item>
-            </ul>
-            <div class="note">
-                Minimum amount $10, maximum $250
-            </div>
+            <form [formGroup]="formTopupMoney">
+                <div class="note">Add money to your myki card which will be automatically deducted when you touch on and touch off. <a href="https://www.ptv.vic.gov.au/tickets/myki/top-up-a-myki/myki-money/">Read more about myki money</a>.</div>
+                <ul class="card-list">
+                    <ion-item no-lines>
+                        <ion-label>Top up amount ($)</ion-label>
+                        <ion-input type="number" formControlName="moneyAmount" clearOnEdit></ion-input>
+                    </ion-item>
+                </ul>
+                <div class="error" *ngIf="formTopupMoney.controls.moneyAmount.touched">
+                    <div *ngIf="formTopupMoney.controls.moneyAmount.hasError('invalidMoneyAmount')"><ion-icon name="ios-alert-outline"></ion-icon> Invalid top up amount.</div>
+                </div>
+                <div class="note">
+                    Minimum amount $10, maximum $250
+                </div>
+            </form>
         </div>
         <div *ngIf="isTopupPass()">
-            <div class="note">Add a pass to your myki card which will be automatically activated the next time you touch on. You will need a positive myki money balance to activate a myki pass. <a href="https://www.ptv.vic.gov.au/tickets/myki/top-up-a-myki/myki-pass/">Read more about myki pass</a>.</div>
-            <ul class="card-list">
-                <ion-item no-lines>
-                    <ion-label>Pass duration</ion-label>
-                    <ion-input type="number" placeholder="Days" [(ngModel)]="topupOptions.passDuration" name="passDuration" clearOnEdit></ion-input>
-                </ion-item>
-            </ul>
-            <div class="note">
-                Pass available in either 7 days or between 28-365 days
-            </div>
-            <ul class="card-list">
-                <ion-item no-lines>
-                    <ion-label>From zone</ion-label>
-                    <ion-select [(ngModel)]="topupOptions.zoneFrom" name="zoneFrom" required>
-                        <ion-option *ngFor="let zone of zoneSelect()" [value]="zone">Zone {{zone}}</ion-option>
-                    </ion-select>
-                </ion-item>
-                <ion-item no-lines>
-                    <ion-label>To zone</ion-label>
-                    <ion-select [(ngModel)]="topupOptions.zoneTo" name="zoneTo" required>
-                        <ion-option *ngFor="let zone of zoneSelect()" [value]="zone">Zone {{zone}}</ion-option>
-                    </ion-select>
-                </ion-item>
-            </ul>
-            <div class="note">
-                <a href="https://ptv.vic.gov.au/tickets/zones/">View zone map here</a>.<br>
-                <br>Please note, customers travelling in Zone 1 only are provided with Zone 2 travel for free. Be sure to select Zone 1 to Zone 2.
-            </div>
+            <form [formGroup]="formTopupPass">
+                <div class="note">Add a pass to your myki card which will be automatically activated the next time you touch on. You will need a positive myki money balance to activate a myki pass. <a href="https://www.ptv.vic.gov.au/tickets/myki/top-up-a-myki/myki-pass/">Read more about myki pass</a>.</div>
+                <ul class="card-list">
+                    <ion-item no-lines>
+                        <ion-label>Pass duration</ion-label>
+                        <ion-input type="number" placeholder="Days" formControlName="passDuration" clearOnEdit></ion-input>
+                    </ion-item>
+                </ul>
+                <div class="error" *ngIf="formTopupPass.controls.passDuration.touched">
+                    <div *ngIf="formTopupPass.controls.passDuration.hasError('invalidPassDuration')"><ion-icon name="ios-alert-outline"></ion-icon> Invalid pass duration.</div>
+                </div>
+                <div class="note">
+                    Pass available in either 7 days or between 28-365 days
+                </div>
+                <ul class="card-list">
+                    <ion-item no-lines>
+                        <ion-label>From zone</ion-label>
+                        <ion-select formControlName="zoneFrom">
+                            <ion-option *ngFor="let zone of zoneSelect()" [value]="zone">Zone {{zone}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item no-lines>
+                        <ion-label>To zone</ion-label>
+                        <ion-select formControlName="zoneTo">
+                            <ion-option *ngFor="let zone of zoneSelect()" [value]="zone">Zone {{zone}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ul>
+                <div class="error" *ngIf="formTopupPass.touched">
+                    <div *ngIf="formTopupPass.hasError('invalidZones')"><ion-icon name="ios-alert-outline"></ion-icon> Invalid zones. The "to" zone must be greater than "from"" zone.</div>
+                </div>
+                <div class="note">
+                    <a href="https://ptv.vic.gov.au/tickets/zones/">View zone map here</a>.<br>
+                    <br>Please note, customers travelling in Zone 1 only are provided with Zone 2 travel for free. Be sure to select Zone 1 to Zone 2.
+                </div>
+            </form>
         </div>
-        <button ion-button block (click)="next()">Next</button>
+        <button ion-button block (click)="next()" [disabled]="!canNext()">Next</button>
     </div>
 </ion-content>

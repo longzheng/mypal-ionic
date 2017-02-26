@@ -21,10 +21,15 @@ $card-margin-topbottom: 1.5em;
     color: color($colors, dark, base);
     font-size: 13px;
     line-height: 1.5;
-
     a {
         color: color($colors, brand-dark, base);
     }
+}
+
+// error text
+.error {
+    color: color($colors, danger, base);
+    margin: 0 0 $content-margin 0;
 }
 
 // card container
@@ -161,5 +166,26 @@ ion-menu {
     align-items: center;
     .loading {
         flex: 1 0;
+    }
+}
+
+// input override
+ion-input {
+    input {
+        &::placeholder {
+            color: #c4c4c4;
+        }
+
+        &.ng-invalid {
+            color: color($colors, danger, base);
+        }
+    }
+}
+
+// disable Android item input validation bottom border
+ion-item {
+    &.item-md .item-inner {
+        border-bottom: none !important;
+        box-shadow: none !important;
     }
 }
