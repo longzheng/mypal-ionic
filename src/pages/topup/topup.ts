@@ -113,6 +113,9 @@ export class TopupPage {
       })
       alert.present()
     }
+
+    // go to next page
+    this.
   }
 
   private validatePassDuration(control: FormControl) {
@@ -137,12 +140,15 @@ export class TopupPage {
   }
 
   private validateZones(from: string, to: string) {
-    return (group: FormGroup) => {
+    return (group: FormGroup): any => {
       let zoneFrom = parseInt(group.controls[from].value)
       let zoneTo = parseInt(group.controls[to].value)
 
       if (zoneFrom > zoneTo)
         return { invalidZones: true }
+
+      if (zoneTo === 1)
+        return { zoneToInvalid: true }
 
       return null
     }

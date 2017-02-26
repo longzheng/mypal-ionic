@@ -13,7 +13,6 @@
 <ion-content padding>
     <div class="note">
         Top ups online may take <span style="font-weight:600">up to 24 hours to process</span>. If you plan to travel sooner, PTV recommends you top up at a myki machine, myki retail shop or ticket office.
-        <br><br><a href="https://www.mymyki.com.au/NTSWebPortal/Registered/TopUp/ModifyAutoTopUp.aspx">Click here to learn and set up auto top up</a>.
     </div>
 
     <div class="loading" [hidden]="!loading">
@@ -24,7 +23,6 @@
     <div [hidden]="loading">
         <div *ngIf="isTopupMoney()">
             <form [formGroup]="formTopupMoney">
-                <div class="note">Add money to your myki card which will be automatically deducted when you touch on and touch off. <a href="https://www.ptv.vic.gov.au/tickets/myki/top-up-a-myki/myki-money/">Read more about myki money</a>.</div>
                 <ul class="card-list">
                     <ion-item no-lines>
                         <ion-label>Top up amount ($)</ion-label>
@@ -32,16 +30,16 @@
                     </ion-item>
                 </ul>
                 <div class="error" *ngIf="formTopupMoney.controls.moneyAmount.touched">
-                    <div *ngIf="formTopupMoney.controls.moneyAmount.hasError('invalidMoneyAmount')"><ion-icon name="ios-alert-outline"></ion-icon> Invalid top up amount.</div>
+                    <div *ngIf="formTopupMoney.controls.moneyAmount.hasError('invalidMoneyAmount')">
+                        <ion-icon name="ios-alert-outline"></ion-icon> Invalid top up amount.</div>
                 </div>
                 <div class="note">
-                    Minimum amount $10, maximum $250
+                    Minimum top up amount $10, maximum $250. <a href="https://www.ptv.vic.gov.au/tickets/myki/top-up-a-myki/myki-money/">Learn more about myki money.</a>
                 </div>
             </form>
         </div>
         <div *ngIf="isTopupPass()">
             <form [formGroup]="formTopupPass">
-                <div class="note">Add a pass to your myki card which will be automatically activated the next time you touch on. You will need a positive myki money balance to activate a myki pass. <a href="https://www.ptv.vic.gov.au/tickets/myki/top-up-a-myki/myki-pass/">Read more about myki pass</a>.</div>
                 <ul class="card-list">
                     <ion-item no-lines>
                         <ion-label>Pass duration</ion-label>
@@ -49,10 +47,11 @@
                     </ion-item>
                 </ul>
                 <div class="error" *ngIf="formTopupPass.controls.passDuration.touched">
-                    <div *ngIf="formTopupPass.controls.passDuration.hasError('invalidPassDuration')"><ion-icon name="ios-alert-outline"></ion-icon> Invalid pass duration.</div>
+                    <div *ngIf="formTopupPass.controls.passDuration.hasError('invalidPassDuration')">
+                        <ion-icon name="ios-alert-outline"></ion-icon> Invalid pass duration.</div>
                 </div>
                 <div class="note">
-                    Pass available in either 7 days or between 28-365 days
+                    Pass available in either 7 days or between 28-365 days. Remember you will need a positive myki money balance to activate a myki pass. <a href="https://www.ptv.vic.gov.au/tickets/myki/top-up-a-myki/myki-pass/">Learn more about myki pass</a>.
                 </div>
                 <ul class="card-list">
                     <ion-item no-lines>
@@ -69,11 +68,13 @@
                     </ion-item>
                 </ul>
                 <div class="error" *ngIf="formTopupPass.touched">
-                    <div *ngIf="formTopupPass.hasError('invalidZones')"><ion-icon name="ios-alert-outline"></ion-icon> Invalid zones. The "to" zone must be greater than "from"" zone.</div>
+                    <div *ngIf="formTopupPass.hasError('invalidZones')">
+                        <ion-icon name="ios-alert-outline"></ion-icon> Invalid zones. The "to" zone must be greater than "from"" zone.</div>
+                    <div *ngIf="formTopupPass.hasError('zoneToInvalid')">
+                        <ion-icon name="ios-alert-outline"></ion-icon> "To" zone must be at least zone 2.</div>
                 </div>
                 <div class="note">
-                    <a href="https://ptv.vic.gov.au/tickets/zones/">View zone map here</a>.<br>
-                    <br>Please note, customers travelling in Zone 1 only are provided with Zone 2 travel for free. Be sure to select Zone 1 to Zone 2.
+                    Myki allows Zone 1 customers to travel in Zone 2 for free. <a href="https://ptv.vic.gov.au/tickets/zones/">View zone map here</a>.
                 </div>
             </form>
         </div>
