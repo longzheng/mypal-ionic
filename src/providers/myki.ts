@@ -407,6 +407,7 @@ export class MykiProvider {
           if (data.url === this.errorUrl)
             return reject()
 
+          // we need to first do a AJAX call to get the "list" of cards before we can select one
           // set up form fields
           const body = new URLSearchParams()
           body.set('__EVENTTARGET', 'ctl00$uxContentPlaceHolder$uxTimer')
@@ -416,18 +417,31 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(topupUrl, body).then(
             data => {
+
+              // select our desired card
               // set up form fields
-               const body = new URLSearchParams()
-                  body.set('ctl00$uxContentPlaceHolder$uxCardlist', card.id)
-                  body.set('ctl00$uxContentPlaceHolder$uxTopup', topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
-                  body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
-                  body.set('__EVENTTARGET', '')
-                  body.set('__EVENTARGUMENT', '')
+              const body = new URLSearchParams()
+              body.set('ctl00$uxContentPlaceHolder$uxCardlist', card.id)
+              body.set('ctl00$uxContentPlaceHolder$uxTopup', topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
+              body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
+              body.set('__EVENTTARGET', '')
+              body.set('__EVENTARGUMENT', '')
 
               // post form fields
               this.httpPostFormAsp(topupUrl, body).then(
                 data => {
-                  return resolve()
+
+                  // sanity check we've got the right card
+                  // scrape webpage
+                  let scraperJquery = this.jQueryHTML(data)
+
+                  let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardnumber").text();
+
+                  // make sure our card id match the one on the site we think we're topping up
+                  if (cardId === card.id)
+                    return resolve()
+                  else
+                    return reject()
                 },
                 error => {
                   return reject();
