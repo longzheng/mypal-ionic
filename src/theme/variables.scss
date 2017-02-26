@@ -64,13 +64,13 @@ $toolbar-ios-border-color: transparent;
 $tabs-ios-tab-color-active: color($colors, darker, base);
 $tabs-ios-tab-color-inactive: color($colors, light-blue, base);
 $alert-ios-button-text-color: color($colors, brand-dark, base);
+$alert-ios-button-main-font-weight: 600;
 
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
-
+$alert-md-button-text-color: color($colors, brand-dark, base);
 
 
 // App Windows Variables

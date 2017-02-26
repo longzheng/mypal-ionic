@@ -5,4 +5,10 @@ page-topup {
     input[formcontrolname=passDuration] {
         text-align: right;
     }
+    .topup-summary {
+        text-align: center;
+        strong {
+            font-weight: 600;
+        }
+    }
 }

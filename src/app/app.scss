@@ -172,6 +172,8 @@ ion-menu {
 // input override
 ion-input {
     input {
+        color: color($colors, brand-dark, base);
+
         &::placeholder {
             color: #c4c4c4;
         }
@@ -179,6 +181,13 @@ ion-input {
         &.ng-invalid {
             color: color($colors, danger, base);
         }
+    }
+}
+
+// select override
+ion-select {
+    .select-text {
+        color: color($colors, brand-dark, base);
     }
 }
 

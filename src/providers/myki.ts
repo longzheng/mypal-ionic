@@ -390,7 +390,7 @@ export class MykiProvider {
     })
   }
 
-  topupCardLoad(card: Myki.Card, topupType: Myki.TopupType) {
+  topupCardLoad(topupOptions: Myki.TopupOptions) {
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { return Promise.resolve() })
@@ -411,7 +411,7 @@ export class MykiProvider {
           // set up form fields
           const body = new URLSearchParams()
           body.set('__EVENTTARGET', 'ctl00$uxContentPlaceHolder$uxTimer')
-          body.set('ctl00$uxContentPlaceHolder$uxTopup', topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
+          body.set('ctl00$uxContentPlaceHolder$uxTopup', topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
           body.set('__EVENTARGUMENT', '')
 
           // post form fields
@@ -421,8 +421,8 @@ export class MykiProvider {
               // select our desired card
               // set up form fields
               const body = new URLSearchParams()
-              body.set('ctl00$uxContentPlaceHolder$uxCardlist', card.id)
-              body.set('ctl00$uxContentPlaceHolder$uxTopup', topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
+              body.set('ctl00$uxContentPlaceHolder$uxCardlist', this.activeCard().id)
+              body.set('ctl00$uxContentPlaceHolder$uxTopup', topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
               body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
               body.set('__EVENTTARGET', '')
               body.set('__EVENTARGUMENT', '')
@@ -434,14 +434,16 @@ export class MykiProvider {
                   // sanity check we've got the right card
                   // scrape webpage
                   let scraperJquery = this.jQueryHTML(data)
-
                   let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardnumber").text();
-
-                  // make sure our card id match the one on the site we think we're topping up
-                  if (cardId === card.id)
-                    return resolve()
-                  else
+                  if (cardId !== this.activeCard().id)
                     return reject()
+
+                  // extract "cn" token from URL, we need this later
+                  let cnToken = (<any>this.parseUrlQuery(data.url)).cn
+                  // store "cn" token in topup options
+                  topupOptions.cnToken = cnToken
+
+                  return resolve()
                 },
                 error => {
                   return reject();
@@ -456,6 +458,89 @@ export class MykiProvider {
         error => {
           return reject()
         })
+    })
+  }
+
+  topupCardOrder(options: Myki.TopupOptions): Promise<Myki.TopupOrder> {
+    // determine if we're in mock demo models
+    if (this.demoMode) {
+      return this.mockHttpDelay(() => { return Promise.resolve() })
+    }
+
+    // specify the topup endpoint
+    let topupUrl = options.topupType === Myki.TopupType.Money ? `${this.apiRoot}Registered/TopUp/ChooseMykiMoneyTopUp.aspx` : `${this.apiRoot}Registered/TopUp/ChooseMykiPassTopUp.aspx`;
+
+    // append the "cn" token which is important
+    topupUrl += `?cn=${options.cnToken}`
+
+    return new Promise((resolve, reject) => {
+
+      // set up form fields
+      const body = new URLSearchParams()
+
+      if (options.topupType === Myki.TopupType.Money) {
+        body.set('ctl00$uxContentPlaceHolder$uxSelectedamount', '')
+        body.set('ctl00$uxContentPlaceHolder$uxMaxtoopupAmount', '')
+        body.set('ctl00$uxContentPlaceHolder$uxAmounts', 'Other amount')
+        body.set('ctl00$uxContentPlaceHolder$uxAmountlist', options.moneyAmount.toString()) // the amount we're actually topping up
+        body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
+      }
+
+      if (options.topupType === Myki.TopupType.Pass) {
+        body.set('ctl00$uxContentPlaceHolder$uxMaxtoopupAmount', '250') // myki expects this value
+        body.set('ctl00$uxContentPlaceHolder$uxSelectedamount', '')
+        body.set('ctl00$uxContentPlaceHolder$uxdays', options.passDuration.toString()) // the pass duration we're topping up
+        body.set('ctl00$uxContentPlaceHolder$uxDurationtype', '2') // duration is in days (not weeks)
+        body.set('ctl00$uxContentPlaceHolder$uxNumberOfDays', '1043')
+        body.set('ctl00$uxContentPlaceHolder$uxExpiryDays', '')
+        body.set('ctl00$uxContentPlaceHolder$uxMinDays', '0')
+        body.set('ctl00$uxContentPlaceHolder$uxMaxDays', '0')
+        body.set('ctl00$uxContentPlaceHolder$uxZonelist', (options.zoneFrom + 1).toString()) // myki site wants zone with a N+1 index
+        body.set('ctl00$uxContentPlaceHolder$uxZonesTo', (options.zoneTo + 1).toString()) // myki site wants zone with a N+1 index
+        body.set('ctl00$uxContentPlaceHolder$uxAmounts', '')
+        body.set('ctl00$uxContentPlaceHolder$uxAmountlist', '')
+        body.set('ctl00$uxContentPlaceHolder$uxNext', 'Next')
+      }
+
+      // post form fields
+      this.httpPostFormAsp(topupUrl, body).then(
+        data => {
+
+          // sanity check we've got the right card
+          // scrape webpage
+          let scraperJquery = this.jQueryHTML(data)
+          let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_pnlCardDetails fieldset:nth-of-type(1) p:nth-of-type(1)").text().replace('myki card number', '').trim()
+          if (cardId !== this.activeCard().id)
+            return reject()
+
+          let order = new Myki.TopupOrder()
+
+          if (options.topupType === Myki.TopupType.Money) {
+            order.description = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykimoney td:nth-of-type(1)").text().trim()
+            order.amount = parseInt(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykimoney td:nth-of-type(2)").text().trim().replace('$', ''))
+          }
+
+          if (options.topupType === Myki.TopupType.Pass) {
+            order.description = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykiPass td:nth-of-type(1)").text().trim()
+            order.amount = parseInt(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykiPass td:nth-of-type(2)").text().trim().replace('$', ''))
+            order.gstAmount = parseInt(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxGSTAmount td:nth-of-type(2)").text().trim().replace('$', ''))
+          }
+          
+          // update top up reminder options from the page
+          options.reminderEmail = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxreminderemail").val().trim()
+          options.reminderMobile = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxreminderMobile").val().trim()
+
+          // extract "cn" token from URL, we need this later
+          let cnToken = (<any>this.parseUrlQuery(data.url)).cn
+          // store "cn" token in topup options
+          options.cnToken = cnToken
+
+          return resolve(order)
+        },
+        error => {
+          return reject();
+        }
+      )
     })
   }
 
@@ -549,6 +634,20 @@ export class MykiProvider {
         }
       )
     })
+  }
+
+  // parse URL querystrings
+  // adapted from http://stackoverflow.com/a/14368860
+  private parseUrlQuery(url) {
+    // remove any preceding url and split
+    url = url.substring(url.indexOf('?') + 1).split('&');
+    var params = {}, pair, d = decodeURIComponent;
+    // march and parse
+    for (var i = url.length - 1; i >= 0; i--) {
+      pair = url[i].split('=');
+      params[d(pair[0])] = d(pair[1] || '');
+    }
+    return params
   }
 
   private jQueryHTML(data: any): JQuery {

@@ -10,10 +10,14 @@ import { MykiProvider } from '../../providers/myki';
 })
 export class TopupPage {
 
+  public state: TopUpState = TopUpState.Form
   public topupOptions: Myki.TopupOptions = new Myki.TopupOptions()
-  public loading: boolean = false;
+  public loadingTopUp: boolean = false;
+  public loadingPay: boolean = false;
   public formTopupMoney: FormGroup;
   public formTopupPass: FormGroup;
+  public formTopupPay: FormGroup;
+  public topupOrder: Myki.TopupOrder = new Myki.TopupOrder()
 
   constructor(
     public viewCtrl: ViewController,
@@ -27,18 +31,49 @@ export class TopupPage {
 
     // initialize form groups
     this.formTopupMoney = formBuilder.group({
-      moneyAmount: ['10', Validators.compose([Validators.required, this.validateMoneyAmount])]
+      moneyAmount: ['', Validators.compose([
+        Validators.required,
+        this.validateMoneyAmount
+      ])]
     })
 
     this.formTopupPass = formBuilder.group({
       // field validation
-      passDuration: ['7', Validators.compose([Validators.required, this.validatePassDuration])],
-      zoneFrom: ['1', Validators.compose([Validators.required])],
-      zoneTo: ['2', Validators.compose([Validators.required])],
+      passDuration: ['', Validators.compose([
+        Validators.required,
+        this.validatePassDuration
+      ])],
+      zoneFrom: ['', Validators.compose([
+        Validators.required
+      ])],
+      zoneTo: ['', Validators.compose([
+        Validators.required
+      ])],
     }, {
         // form validators
         validator: this.validateZones('zoneFrom', 'zoneTo')
       })
+
+    this.formTopupPay = formBuilder.group({
+      card: ['', Validators.compose([
+        Validators.required
+      ])],
+      expiry: ['', Validators.compose([
+        Validators.required
+      ])],
+      ccv: ['', Validators.compose([
+        Validators.required
+      ])],
+      reminderType: ['', Validators.compose([
+        Validators.required
+      ])],
+      reminderEmail: ['', Validators.compose([
+        Validators.required
+      ])],
+      reminderMobile: ['', Validators.compose([
+        Validators.required
+      ])],
+    })
   }
 
   ionViewDidLoad() {
@@ -49,10 +84,10 @@ export class TopupPage {
     this.topupOptions.zoneTo = 2
 
     // initialize top up
-    this.loading = true;
-    this.mykiProvider.topupCardLoad(this.mykiProvider.activeCard(), this.topupOptions.topupType).then(
+    this.loadingTopUp = true;
+    this.mykiProvider.topupCardLoad(this.topupOptions).then(
       result => {
-        this.loading = false
+        this.loadingTopUp = false
       }, error => {
         // show error
         let alert = this.alertCtrl.create({
@@ -83,23 +118,18 @@ export class TopupPage {
     return this.topupOptions.topupType === Myki.TopupType.Pass
   }
 
-  public moneySelect() {
-    return Array.apply(null, { length: 25 }).map(function (value, index) {
-      return (index + 1) * 10;
-    });
-  }
-
   public zoneSelect() {
-    return Array.apply(null, { length: 81 }).map(function (value, index) {
+    // currently max zones 13 https://static.ptv.vic.gov.au/siteassets/PDFs/Maps/Network-maps/Regional-Network-Map_myki-zones_connections.pdf
+    return Array.apply(null, { length: 13 }).map(function (value, index) {
       return (index + 1);
     });
   }
 
-  public canNext() {
+  public canOrder() {
     return (this.isTopupMoney() && this.formTopupMoney.valid) || (this.isTopupPass() && this.formTopupPass.valid)
   }
 
-  public next() {
+  public order() {
     // if either of the forms are invalid
     if (
       (this.isTopupMoney() && !this.formTopupMoney.valid)
@@ -114,8 +144,38 @@ export class TopupPage {
       alert.present()
     }
 
-    // go to next page
-    this.
+    // go to pay state
+    this.loadingPay = true; // add loading
+    this.state = TopUpState.Pay // set the page state
+    // submit the order
+    this.mykiProvider.topupCardOrder(this.topupOptions).then(
+      result => {
+        this.loadingPay = false     // remove loading
+        this.topupOrder = result    // store the top up order we get back
+      }, error => {
+        // show error
+        let alert = this.alertCtrl.create({
+          title: 'Error ordering top up',
+          subTitle: 'Please check your top up options',
+          buttons: ['OK']
+        })
+        alert.present()
+        // reset state
+        this.state = TopUpState.Form
+      }
+    )
+  }
+
+  public stateForm() {
+    return this.state === TopUpState.Form
+  }
+
+  public statePay() {
+    return this.state === TopUpState.Pay
+  }
+
+  public reminderTypes() {
+    return Object.keys(Myki.TopupReminderType)
   }
 
   private validatePassDuration(control: FormControl) {
@@ -153,5 +213,10 @@ export class TopupPage {
       return null
     }
   }
+}
 
+export enum TopUpState {
+  Form,
+  Pay,
+  Confirm
 }

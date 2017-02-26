@@ -215,5 +215,25 @@ export namespace Myki {
         passDuration: number
         zoneFrom: number
         zoneTo: number
+        cnToken: string
+        ccNumber: string
+        ccExpiryMonth: string
+        ccExpiryYear: string
+        ccCCV: string
+        reminderType: TopupReminderType
+        reminderEmail: string
+        reminderMobile: string
+    }
+
+    export class TopupOrder {
+        description: string
+        amount: number
+        gstAmount: number
+    }
+
+    export enum TopupReminderType {
+        Email,
+        Mobile,
+        None
     }
 }

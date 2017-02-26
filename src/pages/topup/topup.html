@@ -10,23 +10,23 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding [hidden]="!stateForm()">
     <div class="note">
         Top ups online may take <span style="font-weight:600">up to 24 hours to process</span>. If you plan to travel sooner, PTV recommends you top up at a myki machine, myki retail shop or ticket office.
     </div>
 
-    <div class="loading" [hidden]="!loading">
+    <div class="loading" [hidden]="!loadingTopUp">
         <ion-spinner name="crescent"></ion-spinner>
         <div class="text">Loading top up</div>
     </div>
 
-    <div [hidden]="loading">
+    <div [hidden]="loadingTopUp">
         <div *ngIf="isTopupMoney()">
             <form [formGroup]="formTopupMoney">
                 <ul class="card-list">
                     <ion-item no-lines>
                         <ion-label>Top up amount ($)</ion-label>
-                        <ion-input type="number" formControlName="moneyAmount" clearOnEdit></ion-input>
+                        <ion-input type="tel" formControlName="moneyAmount" [(ngModel)]="topupOptions.moneyAmount" clearOnEdit></ion-input>
                     </ion-item>
                 </ul>
                 <div class="error" *ngIf="formTopupMoney.controls.moneyAmount.touched">
@@ -42,8 +42,8 @@
             <form [formGroup]="formTopupPass">
                 <ul class="card-list">
                     <ion-item no-lines>
-                        <ion-label>Pass duration</ion-label>
-                        <ion-input type="number" placeholder="Days" formControlName="passDuration" clearOnEdit></ion-input>
+                        <ion-label>Pass duration (days)</ion-label>
+                        <ion-input type="tel" formControlName="passDuration" [(ngModel)]="topupOptions.passDuration" clearOnEdit></ion-input>
                     </ion-item>
                 </ul>
                 <div class="error" *ngIf="formTopupPass.controls.passDuration.touched">
@@ -56,13 +56,13 @@
                 <ul class="card-list">
                     <ion-item no-lines>
                         <ion-label>From zone</ion-label>
-                        <ion-select formControlName="zoneFrom">
+                        <ion-select formControlName="zoneFrom" [(ngModel)]="topupOptions.zoneFrom">
                             <ion-option *ngFor="let zone of zoneSelect()" [value]="zone">Zone {{zone}}</ion-option>
                         </ion-select>
                     </ion-item>
                     <ion-item no-lines>
                         <ion-label>To zone</ion-label>
-                        <ion-select formControlName="zoneTo">
+                        <ion-select formControlName="zoneTo" [(ngModel)]="topupOptions.zoneTo">
                             <ion-option *ngFor="let zone of zoneSelect()" [value]="zone">Zone {{zone}}</ion-option>
                         </ion-select>
                     </ion-item>
@@ -78,6 +78,60 @@
                 </div>
             </form>
         </div>
-        <button ion-button block (click)="next()" [disabled]="!canNext()">Next</button>
+        <button ion-button block (click)="order()" [disabled]="!canOrder()">Next</button>
+    </div>
+</ion-content>
+
+<ion-content padding [hidden]="!statePay()">
+    <div class="loading" [hidden]="!loadingPay">
+        <ion-spinner name="crescent"></ion-spinner>
+        <div class="text">Loading top up payment</div>
+    </div>
+
+    <div [hidden]="loadingPay">
+        <div class="note topup-summary">
+            <h3>Order</h3>
+            <div>Myki card {{mykiProvider.activeCard().idFormatted()}}</div>
+            <div>{{topupOrder.description}}</div>
+            <div><strong>Total: {{topupOrder.amount | currency:'USD':true}}</strong> <span *ngIf="topupOrder.gstAmount">(includes {{topupOrder.gstAmount | currency:'USD':true}} GST)</span></div>
+        </div>
+        <form [formGroup]="formTopupPay">
+            <div class="note">
+                Pay with credit card (Myki only accepts Mastercard and Visa). This app does not store any credit card details.
+            </div>
+            <ul class="card-list">
+                <ion-item no-lines>
+                    <ion-label fixed>Card</ion-label>
+                    <ion-input type="tel" formControlName="card" placeholder="xxxx xxxx xxxx xxxx"></ion-input>
+                </ion-item>
+                <ion-item no-lines>
+                    <ion-label fixed>Expiry</ion-label>
+                    <ion-input type="number" formControlName="expiry" placeholder="mm/yy"></ion-input>
+                </ion-item>
+                <ion-item no-lines>
+                    <ion-label fixed>CCV</ion-label>
+                    <ion-input type="tel" formControlName="ccv" placeholder="xxx"></ion-input>
+                </ion-item>
+            </ul>
+            <ul class="card-list">
+                <ion-item no-lines>
+                    <ion-label>Send receipt by</ion-label>
+                    <ion-select formControlName="reminderType" [(ngModel)]="topupOptions.reminderType">
+                        <ion-option [value]="Email">Email</ion-option>
+                        <ion-option [value]="Mobile">Mobile</ion-option>
+                        <ion-option [value]="None">None</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item no-lines>
+                    <ion-label fixed>Email</ion-label>
+                    <ion-input type="email" formControlName="reminderEmail" [(ngModel)]="topupOptions.reminderEmail" placeholder="john@doe.com"></ion-input>
+                </ion-item>
+                <ion-item no-lines>
+                    <ion-label fixed>Mobile</ion-label>
+                    <ion-input type="phone" formControlName="reminderMobile" [(ngModel)]="topupOptions.reminderMobile" placeholder="04xxxxxxxx"></ion-input>
+                </ion-item>
+            </ul>
+        </form>
+        <button ion-button block (click)="pay()" [disabled]="!canPay()">Pay</button>
     </div>
 </ion-content>
