@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoadCardsPage } from '../pages/load-cards/load-cards';
 import { IntroPage } from '../pages/intro/intro';
+import { TopupPage } from '../pages/topup/topup';
 
 import { SelectCardComponent } from '../components/select-card/select-card';
 import { TransactionComponent } from '../components/transaction/transaction';
@@ -26,6 +27,7 @@ let pages = [
   HistoryPage,
   LoadCardsPage,
   IntroPage,
+  TopupPage,
 
   SelectCardComponent,
   TransactionComponent,

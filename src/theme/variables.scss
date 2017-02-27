@@ -38,8 +38,14 @@ $colors: (
     contrast: #6A8700,
   ),
   brand-light:  #CFE257,
-  brand-dark:   #9CAF24,
-  brand-darkest:#6A8700,
+  brand-dark:   (
+    base: #9CAF24,
+    contrast: #ffffff
+  ),
+  brand-darkest: (
+    base: #6A8700,
+    contrast: #ffffff
+  ),
   danger:       #f53d3d,
   light:        #ebebeb,
   light-blue:   #b9bec5,
@@ -58,13 +64,13 @@ $toolbar-ios-border-color: transparent;
 $tabs-ios-tab-color-active: color($colors, darker, base);
 $tabs-ios-tab-color-inactive: color($colors, light-blue, base);
 $alert-ios-button-text-color: color($colors, brand-dark, base);
+$alert-ios-button-main-font-weight: 600;
 
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
-
+$alert-md-button-text-color: color($colors, brand-dark, base);
 
 
 // App Windows Variables

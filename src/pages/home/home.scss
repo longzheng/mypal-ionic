@@ -11,20 +11,19 @@ page-home {
         text-align: center;
     }
     .card.balance {
-        display: flex;
+        position: relative;
         .balance-icon {
-            width: 90px;
-            color: white;
-            background: linear-gradient(#e0e1e4, #cdd0d6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute;
+            top: $content-padding;
+            right: $content-padding;
             ion-icon {
-                font-size: 3.5em;
+                font-size: 8em;
+                background: linear-gradient(#eef0f4, #f3f4f7);
             }
         }
         .card-inner {
             flex: 1 0;
+            position: relative;
             .title {
                 color: color($colors, dark, base);
                 font-size: 13px;
@@ -53,6 +52,9 @@ page-home {
                 .autotopup {
                     color: #5ec700;
                 }
+            }
+            button {
+                margin: 0.7em 0 0 0;
             }
         }
     }

@@ -28,11 +28,6 @@ page-login {
             }
             ion-item {
                 padding-left: 0 !important;
-                // disable Android input bottom border
-                &.item-md .item-inner {
-                    border-bottom: none !important;
-                    box-shadow: none !important;
-                }
             }
             button {
                 margin: 0 !important;
@@ -40,11 +35,6 @@ page-login {
             }
             ion-input {
                 padding: 0 $content-padding;
-                input {
-                    &::placeholder {
-                        color: #c4c4c4;
-                    }
-                }
             }
         }
         .register {

@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import '../libs/jquery.payment.js'
 
 export namespace Myki {
     export class Account {
@@ -202,5 +203,56 @@ export namespace Myki {
 
         AutoTopUp,
         Website,
+    }
+
+    export enum TopupType {
+        Money,
+        Pass
+    }
+
+    export class TopupOptions {
+        topupType: Myki.TopupType
+        moneyAmount: number
+        passDuration: number
+        zoneFrom: number
+        zoneTo: number
+        cnToken: string
+        ccNumber: string
+        ccExpiry: string
+        ccCVC: string
+        reminderType: TopupReminderType
+        reminderEmail: string
+        reminderMobile: string
+
+        ccNumberNoSpaces(): string {
+            if (this.ccNumber === undefined)
+                return ''
+
+            return this.ccNumber.replace(/\s+/g, '');
+        }
+
+        ccExpiryMonth(): string {
+            // parse the month/year from the credit card expiry
+            let expiry = $.payment.cardExpiryVal(this.ccExpiry)
+            return expiry.month.toString()
+        }
+
+        ccExpiryYear(): string {
+            // parse the month/year from the credit card expiry
+            let expiry = $.payment.cardExpiryVal(this.ccExpiry)
+            return expiry.year.toString()
+        }
+    }
+
+    export class TopupOrder {
+        description: string
+        amount: number
+        gstAmount: number
+    }
+
+    export enum TopupReminderType {
+        Email,
+        Mobile,
+        None
     }
 }

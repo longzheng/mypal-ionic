@@ -1,5 +1,9 @@
 {
   "globalDependencies": {
-    "jquery": "registry:dt/jquery#1.10.0+20170104155652"
+    "jquery": "registry:dt/jquery#1.10.0+20170104155652",
+    "jquery.payment": "registry:dt/jquery.payment#0.0.0+20161128184045"
+  },
+  "dependencies": {
+    "payment": "registry:dt/payment#2.1.0+20170215173219"
   }
 }
