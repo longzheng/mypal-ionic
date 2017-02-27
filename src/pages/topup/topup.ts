@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ViewController, NavParams, AlertController } from 'ionic-angular';
+import { ViewController, NavParams, AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Myki } from '../../models/myki';
 import { MykiProvider } from '../../providers/myki';
 import * as $ from "jquery";
@@ -28,6 +28,8 @@ export class TopupPage {
     public mykiProvider: MykiProvider,
     public alertCtrl: AlertController,
     public formBuilder: FormBuilder,
+    public actionSheetCtrl: ActionSheetController,
+    public loadingCtrl: LoadingController,
   ) {
     // get topup type from navigation parameter
     this.topupOptions.topupType = navParams.get('type')
@@ -59,11 +61,9 @@ export class TopupPage {
 
     this.formTopupPayCC = formBuilder.group({
       card: ['', [
-        Validators.required,
         this.validateCCNumber
       ]],
       expiry: ['', [
-        Validators.required,
         this.validateCCExpiry
       ]],
       cvc: ['', [
@@ -78,7 +78,7 @@ export class TopupPage {
         Validators.required
       ]],
       reminderEmail: ['', [
-        Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$')
+        Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$') // generic email validation
       ]],
       reminderMobile: [''],
     }, {
@@ -195,12 +195,71 @@ export class TopupPage {
   }
 
   public pay() {
-    // parse the month/year from the credit card expiry
-    let expiry = Payment.fns.cardExpiryVal(this.topupOptions.ccExpiry)
-    this.topupOptions.ccExpiryMonth = expiry.month
-    this.topupOptions.ccExpiryYear = expiry.year
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Confirm top up',
+      buttons: [
+        {
+          text: `Pay $${this.topupOrder.amount}`,
+          role: 'destructive',
+          handler: () => {
+            // start paying process
+            this.confirmPay()
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }
+      ]
+    });
 
-    console.log(this.topupOptions)
+    actionSheet.present();
+  }
+
+  private confirmPay() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'crescent',
+      content: 'Paying...'
+    });
+
+    loading.present();
+
+    this.mykiProvider.topupCardPay(this.topupOptions).then(
+      result => {
+        loading.dismiss()
+      },
+      error => {
+        // error with payment
+        // myki's site shits the fan and doesn't allow the user to do anything with the top up now
+        // to workaround it we're going to set up a new myki topup with the same options we already have
+        this.mykiProvider.topupCardLoad(this.topupOptions).then(() => {
+          return this.mykiProvider.topupCardOrder(this.topupOptions)
+        }).catch(() => {
+          // something went wrong when we're reloading the top up
+          // time to give up and send user back to the home screen
+          loading.dismiss() // dismiss loading throbber
+          let alert = this.alertCtrl.create({
+            title: 'Error processing payment',
+            subTitle: 'An error occured while topping up. Try again.',
+            buttons: ['OK'],
+          })
+          alert.present()
+          this.close() // close modal
+          throw new Error() // throwing so we're not continuing the promise
+        }).then(() => {
+          loading.dismiss()
+          // show error
+          let alert = this.alertCtrl.create({
+            title: 'Error processing payment',
+            subTitle: 'Check your credit card details.',
+            buttons: ['OK'],
+          })
+          alert.present()
+        }).catch(() => {
+          // noop handled earlier
+        })
+      }
+    )
   }
 
   public isReminderEmail() {

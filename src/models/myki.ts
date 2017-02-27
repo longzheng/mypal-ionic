@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import Payment from "payment"
 
 export namespace Myki {
     export class Account {
@@ -218,12 +219,26 @@ export namespace Myki {
         cnToken: string
         ccNumber: string
         ccExpiry: string
-        ccExpiryMonth: number
-        ccExpiryYear: number
         ccCVC: string
         reminderType: TopupReminderType
         reminderEmail: string
         reminderMobile: string
+
+        ccNumberNoSpaces(): string {
+            return this.ccNumber.replace(/\s+/g, '');
+        }
+
+        ccExpiryMonth(): string {
+            // parse the month/year from the credit card expiry
+            let expiry = Payment.fns.cardExpiryVal(this.ccExpiry)
+            return expiry.month.toString()
+        }
+
+        ccExpiryYear(): string {
+            // parse the month/year from the credit card expiry
+            let expiry = Payment.fns.cardExpiryVal(this.ccExpiry)
+            return expiry.year.toString()
+        }
     }
 
     export class TopupOrder {

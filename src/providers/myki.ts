@@ -14,6 +14,7 @@ export class MykiProvider {
   // APi root for all requests
   apiRoot = "https://www.mymyki.com.au/NTSWebPortal/"
   errorUrl = `${this.apiRoot}ErrorPage.aspx`
+  customErrorUrl = `${this.apiRoot}CustomError.aspx`
 
   // holders for ASP.NET page state properties
   private lastViewState = "";
@@ -525,7 +526,7 @@ export class MykiProvider {
             order.amount = parseInt(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykiPass td:nth-of-type(2)").text().trim().replace('$', ''))
             order.gstAmount = parseInt(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxGSTAmount td:nth-of-type(2)").text().trim().replace('$', ''))
           }
-          
+
           // update top up reminder options from the page
           options.reminderEmail = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxreminderemail").val().trim()
           options.reminderMobile = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxreminderMobile").val().trim()
@@ -536,6 +537,98 @@ export class MykiProvider {
           options.cnToken = cnToken
 
           return resolve(order)
+        },
+        error => {
+          return reject();
+        }
+      )
+    })
+  }
+
+  topupCardPay(options: Myki.TopupOptions) {
+    // determine if we're in mock demo models
+    if (this.demoMode) {
+      return this.mockHttpDelay(() => { return Promise.resolve() })
+    }
+
+    // specify the topup endpoint
+    let topupUrl = `${this.apiRoot}Registered/TopUp/TopUpReviewPayments.aspx`;
+
+    // append the "cn" token which is important
+    topupUrl += `?cn=${options.cnToken}`
+
+    return new Promise((resolve, reject) => {
+
+      // set up form fields
+      const body = new URLSearchParams()
+
+      let reminderTypeString = ''
+      switch (options.reminderType) {
+        case Myki.TopupReminderType.Email:
+          reminderTypeString = 'uxrdreimderEmail'
+          break;
+        case Myki.TopupReminderType.Mobile:
+          reminderTypeString = 'uxrdreminderPhone'
+          break;
+        case Myki.TopupReminderType.None:
+          reminderTypeString = 'uxrdreminderNone'
+          break;
+      }
+
+      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber1', options.ccNumberNoSpaces().substr(0, 4))
+      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber2', options.ccNumberNoSpaces().substr(4, 4))
+      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber3', options.ccNumberNoSpaces().substr(8, 4))
+      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber4', options.ccNumberNoSpaces().substr(12, 4))
+      body.set('ctl00$uxContentPlaceHolder$uxMonthList', options.ccExpiryMonth())
+      body.set('ctl00$uxContentPlaceHolder$uxYearList', options.ccExpiryYear())
+      body.set('ctl00$uxContentPlaceHolder$uxSecurityCode', options.ccCVC)
+      body.set('ctl00$uxContentPlaceHolder$reimnder', reminderTypeString)
+      body.set('ctl00$uxContentPlaceHolder$uxreminderemail', options.reminderEmail)
+      body.set('ctl00$uxContentPlaceHolder$uxreminderMobile', options.reminderMobile)
+      body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
+
+      // post form fields
+      this.httpPostFormAsp(topupUrl, body).then(
+        data => {
+
+          // sanity check we've got the right card
+          // scrape webpage
+          let scraperJquery = this.jQueryHTML(data)
+          let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_pnlCardDetails fieldset:nth-of-type(1) p:nth-of-type(1)").text().replace('myki card number', '').trim()
+          if (cardId !== this.activeCard().id)
+            return reject()
+
+          // oh boy the stars are aligning, we're about to submit a top up request for reals now
+
+          // specify the topup endpoint
+          let topupConfirmUrl = `${this.apiRoot}Registered/TopUp/TopupReviewConfirmation.aspx`;
+
+          // append the "cn" token which is important
+          topupConfirmUrl += `?cn=${options.cnToken}`
+
+          // set up form fields
+          const body = new URLSearchParams()
+
+          body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Submit')
+          body.set('ctl00$uxContentPlaceHolder$hdnsubmitMsg', 'Your payment is being processed. Please do not resubmit payment, close this window or click the Back button on your browser.')
+          body.set('ctl00$uxHeader$uxSearchTextBox', '')
+          body.set('ctl00$uxHeader$hidFontSize', '')
+          body.set('ctl00$uxContentPlaceHolder$hdnCardNo', '')
+          body.set('ctl00$uxContentPlaceHolder$hdnselectedDate', '')
+
+          // post form fields
+          this.httpPostFormAsp(topupConfirmUrl, body).then(
+            data => {
+              // check if we're at an error
+              if (data.url === this.customErrorUrl)
+                return reject()
+
+              // yay we've successfully topped up
+              return resolve()
+            },
+            error => {
+              return reject();
+            })
         },
         error => {
           return reject();
