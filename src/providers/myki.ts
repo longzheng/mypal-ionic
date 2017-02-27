@@ -14,7 +14,6 @@ export class MykiProvider {
   // APi root for all requests
   apiRoot = "https://www.mymyki.com.au/NTSWebPortal/"
   errorUrl = `${this.apiRoot}ErrorPage.aspx`
-  customErrorUrl = `${this.apiRoot}CustomError.aspx`
 
   // holders for ASP.NET page state properties
   private lastViewState = "";
@@ -465,7 +464,7 @@ export class MykiProvider {
   topupCardOrder(options: Myki.TopupOptions): Promise<Myki.TopupOrder> {
     // determine if we're in mock demo models
     if (this.demoMode) {
-      return this.mockHttpDelay(() => { return Promise.resolve() })
+      return this.mockHttpDelay(() => { return Promise.resolve(this.mockTopupOrder(options)) })
     }
 
     // specify the topup endpoint
@@ -545,10 +544,10 @@ export class MykiProvider {
     })
   }
 
-  topupCardPay(options: Myki.TopupOptions) {
+  topupCardPay(options: Myki.TopupOptions): Promise<string> {
     // determine if we're in mock demo models
     if (this.demoMode) {
-      return this.mockHttpDelay(() => { return Promise.resolve() })
+      return this.mockHttpDelay(() => { return Promise.resolve('123456') })
     }
 
     // specify the topup endpoint
@@ -619,12 +618,38 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(topupConfirmUrl, body).then(
             data => {
-              // check if we're at an error
-              if (data.url === this.customErrorUrl)
+              // sanity check confirmation URL
+              if (data.url !== `${this.apiRoot}Registered/TopUp/TopUpConfirmation.aspx`)
                 return reject()
 
-              // yay we've successfully topped up
-              return resolve()
+              // HUGE SUCCESS 
+              //                           ,:/+/-
+              //             /M/              .,-=;//;-
+              //        .:/= ;MH/,    ,=/+%$XH@MM#@:
+              //       -$##@+$###@H@MMM#######H:.    -/H#
+              //  .,H@H@ X######@ -H#####@+-     -+H###@X
+              //   .,@##H;      +XM##M/,     =%@###@X;-
+              // X%-  :M##########$.    .:%M###@%:
+              // M##H,   +H@@@$/-.  ,;$M###@%,          -
+              // M####M=,,---,.-%%H####M$:          ,+@##
+              // @##################@/.         :%H##@$-
+              // M###############H,         ;HM##M$=
+              // #################.    .=$M##M$=
+              // ################H..;XM##M$=          .:+
+              // M###################@%=           =+@MH%
+              // @#################M/.         =+H#X%=
+              // =+M###############M,      ,/X#H+:,
+              //   .;XM###########H=   ,/X#H+:;
+              //      .=+HM#######M+/+HM@+=.
+              //          ,:/%XM####H/.
+              //               ,.:=-.
+              // we've successfully topped up
+
+              // scrape webpage
+              let scraperJquery = this.jQueryHTML(data)
+              let transactionReference = scraperJquery.find("#content  fieldset:nth-of-type(1) p:nth-of-type(2) b").text().trim()
+
+              return resolve(transactionReference)
             },
             error => {
               return reject();
@@ -781,8 +806,7 @@ export class MykiProvider {
   private mockHttpDelay(func) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        func()
-        resolve()
+        return resolve(func())
       }, 1000)
     })
   }
@@ -858,6 +882,19 @@ export class MykiProvider {
         transaction[prop] = stubTransaction[prop];
       }
       card.transactions.push(transaction)
+    }
+  }
+
+  private mockTopupOrder(options: Myki.TopupOptions): Myki.TopupOrder {
+    // update myki order 
+    options.reminderEmail = 'john@doe.com'
+    options.reminderMobile = '0412345678'
+
+    // return data
+    return {
+      description: "myki pass(7 Days - Zone 1 - Zone 2 )",
+      amount: 41,
+      gstAmount: 3.73
     }
   }
 }

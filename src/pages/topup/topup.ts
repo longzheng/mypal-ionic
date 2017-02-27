@@ -4,7 +4,7 @@ import { ViewController, NavParams, AlertController, ActionSheetController, Load
 import { Myki } from '../../models/myki';
 import { MykiProvider } from '../../providers/myki';
 import * as $ from "jquery";
-import Payment from "payment"
+import '../../libs/jquery.payment.js'
 
 @Component({
   selector: 'page-topup',
@@ -21,6 +21,7 @@ export class TopupPage {
   public formTopupPayCC: FormGroup;
   public formTopupPayReminder: FormGroup;
   public topupOrder: Myki.TopupOrder = new Myki.TopupOrder()
+  public transactionReference: string;
 
   constructor(
     public viewCtrl: ViewController,
@@ -104,7 +105,8 @@ export class TopupPage {
         let alert = this.alertCtrl.create({
           title: 'Error loading top up',
           subTitle: 'Top up functionality is not available. Please check the myki website.',
-          buttons: ['OK']
+          buttons: ['OK'],
+          enableBackdropDismiss: false,
         })
         alert.present()
         // close modal
@@ -113,9 +115,25 @@ export class TopupPage {
     )
 
     // set up payment fields
-    Payment.formatCardNumber(<any>document.querySelector('ion-input.ccNumber input'))
-    Payment.formatCardExpiry(<any>document.querySelector('ion-input.ccExpiry input'))
-    Payment.formatCardCVC(<any>document.querySelector('ion-input.ccCVC input'))
+    $('ion-input.ccNumber input').payment('formatCardNumber')
+    $('ion-input.ccExpiry input').payment('formatCardExpiry')
+    $('ion-input.ccCVC input').payment('formatCardCVC')
+
+    // handle credit card ENTER behavior
+    $("ion-input.ccNumber input").on('keydown', (e) => {
+      if (e.which == 13) {
+        // focus to password
+        $("ion-input.ccExpiry input").focus()
+      }
+    })
+
+    // handle expiry ENTER behavior
+    $("ion-input.ccExpiry input").on('keydown', (e) => {
+      if (e.which == 13) {
+        // focus to password
+        $("ion-input.ccCVC input").focus()
+      }
+    })
   }
 
   public close() {
@@ -155,7 +173,8 @@ export class TopupPage {
       let alert = this.alertCtrl.create({
         title: 'Top up options error',
         subTitle: 'Please correct the errors ',
-        buttons: ['OK']
+        buttons: ['OK'],
+        enableBackdropDismiss: false,
       })
       alert.present()
     }
@@ -188,6 +207,10 @@ export class TopupPage {
 
   public statePay() {
     return this.state === TopUpState.Pay
+  }
+
+  public stateSuccess() {
+    return this.state === TopUpState.Success
   }
 
   public canPay() {
@@ -226,7 +249,13 @@ export class TopupPage {
 
     this.mykiProvider.topupCardPay(this.topupOptions).then(
       result => {
-        loading.dismiss()
+        // successfully topped up
+        loading.dismiss() // dismiss loading throbber
+        this.state = TopUpState.Success // set the page state
+        this.transactionReference = result // update transaction reference
+        setTimeout(() => {
+          $("ion-content.success ion-icon").addClass("animated") // animate face
+        }, 200)
       },
       error => {
         // error with payment
@@ -242,6 +271,7 @@ export class TopupPage {
             title: 'Error processing payment',
             subTitle: 'An error occured while topping up. Try again.',
             buttons: ['OK'],
+            enableBackdropDismiss: false,
           })
           alert.present()
           this.close() // close modal
@@ -253,6 +283,7 @@ export class TopupPage {
             title: 'Error processing payment',
             subTitle: 'Check your credit card details.',
             buttons: ['OK'],
+            enableBackdropDismiss: false,
           })
           alert.present()
         }).catch(() => {
@@ -307,14 +338,16 @@ export class TopupPage {
   }
 
   private validateCCNumber(control: FormControl) {
-    if (!Payment.fns.validateCardNumber(control.value))
+    if (!$.payment.validateCardNumber(control.value))
       return { invalidNumber: true }
 
     return null
   }
 
   private validateCCExpiry(control: FormControl) {
-    if (!Payment.fns.validateCardExpiry(control.value))
+    let expiry = $.payment.cardExpiryVal(control.value !== undefined ? control.value : '') // can't validate undefined, so pass in empty string
+
+    if (!$.payment.validateCardExpiry(expiry.month.toString(), expiry.year.toString()))
       return { invalidExpiry: true }
 
     return null
@@ -324,12 +357,12 @@ export class TopupPage {
     return (group: FormGroup): any => {
       let cardNumber = group.controls['card'].value
       let cardCVC = group.controls['cvc'].value
-      let cardType = Payment.fns.cardType(cardNumber)
+      let cardType = $.payment.cardType(cardNumber)
 
       if (cardNumber && !(cardType === 'visa' || cardType === 'mastercard'))
         return { invalidCardType: true }
 
-      if (!Payment.fns.validateCardCVC(cardCVC, cardType))
+      if (!$.payment.validateCardCVC(cardCVC, cardType))
         return { invalidCVC: true }
 
       return null
@@ -356,5 +389,5 @@ export class TopupPage {
 export enum TopUpState {
   Form,
   Pay,
-  Confirm
+  Success
 }

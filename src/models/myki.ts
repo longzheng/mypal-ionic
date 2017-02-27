@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import Payment from "payment"
+import '../libs/jquery.payment.js'
 
 export namespace Myki {
     export class Account {
@@ -225,18 +225,21 @@ export namespace Myki {
         reminderMobile: string
 
         ccNumberNoSpaces(): string {
+            if (this.ccNumber === undefined)
+                return ''
+
             return this.ccNumber.replace(/\s+/g, '');
         }
 
         ccExpiryMonth(): string {
             // parse the month/year from the credit card expiry
-            let expiry = Payment.fns.cardExpiryVal(this.ccExpiry)
+            let expiry = $.payment.cardExpiryVal(this.ccExpiry)
             return expiry.month.toString()
         }
 
         ccExpiryYear(): string {
             // parse the month/year from the credit card expiry
-            let expiry = Payment.fns.cardExpiryVal(this.ccExpiry)
+            let expiry = $.payment.cardExpiryVal(this.ccExpiry)
             return expiry.year.toString()
         }
     }

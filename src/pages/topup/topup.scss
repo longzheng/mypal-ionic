@@ -6,9 +6,41 @@ page-topup {
         text-align: right;
     }
     .topup-summary {
-        text-align: center;
+        margin: 0 0 1em 0;
+        background: color($colors, darker, base);
         strong {
             font-weight: 600;
+        }
+        ion-item {
+            color: color($colors, light, base);
+            &+ion-item {
+                border-top: 1px solid color($colors, dark, base) !important;
+            }
+            div[item-left] {
+                color: color($colors, light-blue, base);
+            }
+            div[item-right] {
+                text-align: right;
+            }
+        }
+    }
+    ion-content.success {
+        background: color($colors, primary, base) !important;
+        color: color($colors, darker, base);
+        text-align: center;
+        ion-icon {
+            font-size: 7em;
+            transition: 0.7s transform cubic-bezier(1.000, 0.005, 0.660, 1.650);
+            transform: scale(0);
+            &.animated {
+                transform: scale(1);
+            }
+        }
+        p {
+            line-height: 1.6;
+        }
+        button {
+            margin-top: 1.6em;
         }
     }
 }

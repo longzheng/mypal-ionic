@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar color="primary">
         <ion-buttons left>
-            <button ion-button (click)="close()">Cancel</button>
+            <button ion-button (click)="close()" [hidden]="stateSuccess()">Cancel</button>
         </ion-buttons>
         <ion-title>
             {{title()}}
@@ -89,12 +89,22 @@
     </div>
 
     <div [hidden]="loadingPay">
-        <div class="note topup-summary">
-            <h3>Order</h3>
-            <div>Myki card {{mykiProvider.activeCard().idFormatted()}}</div>
-            <div>{{topupOrder.description}}</div>
-            <div><strong>Total: {{topupOrder.amount | currency:'USD':true}}</strong> <span *ngIf="topupOrder.gstAmount">(includes {{topupOrder.gstAmount | currency:'USD':true}} GST)</span></div>
-        </div>
+        <ul class="card-list topup-summary">
+            <ion-item no-lines>
+                <div item-left>Myki card</div>
+                <div item-right>{{mykiProvider.activeCard().idFormatted()}}</div>
+            </ion-item>
+
+            <ion-item no-lines>
+              <div item-left>Top up</div>
+                <div item-right>{{topupOrder.description}}</div>
+            </ion-item>
+
+            <ion-item no-lines>
+                <div item-left><strong>Total</strong></div>
+                <div item-right><strong>{{topupOrder.amount | currency:'USD':true}}</strong> <small *ngIf="topupOrder.gstAmount"><br>GST included: {{topupOrder.gstAmount | currency:'USD':true}}</small></div>
+            </ion-item>
+        </ul>
         <form [formGroup]="formTopupPayCC">
             <div class="note">
                 Pay with credit card (Myki only accepts Mastercard and Visa). This app does not store any credit card details.
@@ -102,7 +112,7 @@
             <ul class="card-list">
                 <ion-item no-lines>
                     <ion-label fixed>Card</ion-label>
-                    <ion-input class="ccNumber" type="tel" formControlName="card" [(ngModel)]="topupOptions.ccNumber" placeholder="xxxx xxxx xxxx xxxx"></ion-input>
+                    <ion-input class="ccNumber" type="tel" formControlName="card" [(ngModel)]="topupOptions.ccNumber" placeholder="•••• •••• •••• ••••"></ion-input>
                 </ion-item>
                 <ion-item no-lines>
                     <ion-label fixed>Expiry</ion-label>
@@ -110,7 +120,7 @@
                 </ion-item>
                 <ion-item no-lines>
                     <ion-label fixed>CVC</ion-label>
-                    <ion-input class="ccCVC" type="tel" formControlName="cvc" [(ngModel)]="topupOptions.ccCVC" placeholder="xxx"></ion-input>
+                    <ion-input class="ccCVC" type="tel" formControlName="cvc" [(ngModel)]="topupOptions.ccCVC" placeholder="•••"></ion-input>
                 </ion-item>
             </ul>
             <div class="error" *ngIf="formTopupPayCC.controls.card.touched">
@@ -157,5 +167,15 @@
             </div>
         </form>
         <button ion-button block (click)="pay()" [disabled]="!canPay()">Pay</button>
+    </div>
+</ion-content>
+
+<ion-content class="success" padding [hidden]="!stateSuccess()">
+    <div class="message">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <h2>Top up confirmed</h2>
+        <p>Myki card {{mykiProvider.activeCard().idFormatted()}} topped up with {{topupOrder.description}}. Credit card ending {{topupOptions.ccNumberNoSpaces().slice(-4)}} in has been charged {{topupOrder.amount | currency:'USD':true}}</p>
+        <p>Top ups may take up to 24 hours to be processed and will not immediately appear in the app. After it is processed it will be added to your card the next time you touch on.</p>
+        <button ion-button block color="brand-inverse" (click)="close()">Close</button>
     </div>
 </ion-content>
