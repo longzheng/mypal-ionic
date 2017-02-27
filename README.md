@@ -11,7 +11,7 @@ Mobile app to see Myki account details for iOS & Android
 I'm making this app because the [Myki site](https://www.mymyki.com.au/NTSWebPortal/Login.aspx) doesn't have a mobile view nor a mobile app, and I wanted to experiment with the [Ionic framework](https://ionicframework.com) to make a hybrid mobile app. This is a spinoff from my abandoned [Eastlink app](https://github.com/longzheng/eastly-ionic/).
 
 ## Screenshots
-![](https://cloud.githubusercontent.com/assets/484912/22861878/9a4da3f0-f177-11e6-96b4-d81d049a2e2b.jpg)
+![](https://cloud.githubusercontent.com/assets/484912/23365652/eaec62e2-fd57-11e6-93b0-6996618bd975.jpg)
 
 ## Current features
 - Log in to Myki online account with username & password
@@ -19,9 +19,9 @@ I'm making this app because the [Myki site](https://www.mymyki.com.au/NTSWebPort
 - Shows myki money & myki pass balance
 - Shows card information
 - Shows recent transactions
+- Top up with credit card
 
 ## Planned features
-- Top up with credit card
 - Show top up locations
 
 ## Build requirements
