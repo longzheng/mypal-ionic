@@ -4,7 +4,7 @@ import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
 import { LoginPage } from '../login/login';
-import { Calendar } from 'ionic-native';
+import { Calendar } from '@ionic-native/calendar';
 import { TopupPage } from '../topup/topup';
 import moment from 'moment';
 

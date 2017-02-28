@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config';
 import { LoginPage } from '../login/login'
-import { Firebase } from 'ionic-native';
+import { Firebase } from '@ionic-native/firebase';
 
 
 /*
