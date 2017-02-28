@@ -52,8 +52,12 @@ export class HomePage {
     return this.mykiProvider.activeCard();
   }
 
-  inactiveCard() {
+  replacedCard() {
     return this.card().status === Myki.CardStatus.Replaced
+  }
+
+  blockedCard() {
+    return this.card().status === Myki.CardStatus.Blocked
   }
 
   userOptions() {

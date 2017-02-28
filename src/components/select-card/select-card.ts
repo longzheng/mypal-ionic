@@ -36,7 +36,7 @@ export class SelectCardComponent {
   }
 
   activeCards() {
-    return this.mykiProvider.mykiAccount.cards.filter(x => x.status === Myki.CardStatus.Active)
+    return this.mykiProvider.mykiAccount.cards.filter(x => x.status !== Myki.CardStatus.Replaced)
   }
 
   inactiveCards() {

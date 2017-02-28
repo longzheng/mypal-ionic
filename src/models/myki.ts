@@ -184,7 +184,8 @@ export namespace Myki {
 
     export enum CardStatus {
         Active,
-        Replaced
+        Replaced,
+        Blocked
     }
 
     export enum TransactionType {

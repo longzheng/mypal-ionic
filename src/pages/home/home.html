@@ -28,8 +28,12 @@
     </div>
 
     <div [hidden]="!card().loaded">
-        <div class="card replaced" [hidden]="!inactiveCard()">
+        <div class="card replaced" [hidden]="!replacedCard()">
             <div class="card-inner">Card replaced</div>
+        </div>
+
+        <div class="card replaced" [hidden]="!blockedCard()">
+            <div class="card-inner">Card blocked</div>
         </div>
 
         <div class="card balance">
@@ -44,7 +48,7 @@
                     <div class="autotopup" [hidden]="!card().autoTopup">
                         <ion-icon name="md-refresh"></ion-icon> Auto top up enabled</div>
                 </div>
-                <button ion-button icon-left block (click)="topupMoney()" [disabled]="inactiveCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
+                <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
             </div>
         </div>
 
@@ -58,7 +62,7 @@
                 <div class="info" [hidden]="!card().passActive">
                     {{card().passActive}}
                 </div>
-                <button ion-button icon-left block (click)="topupPass()" [disabled]="inactiveCard()"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
+                <button ion-button icon-left block (click)="topupPass()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
             </div>
         </div>
 
