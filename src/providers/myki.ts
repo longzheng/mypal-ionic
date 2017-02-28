@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptionsArgs, URLSearchParams, RequestOptions } from '@angular/http';
+import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
 import { ConfigProvider } from './config';
-import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { Myki } from '../models/myki';
 import { CustomURLEncoder } from '../models/customUrlEncoder';
@@ -817,7 +816,7 @@ export class MykiProvider {
 
   private mockAccountDetails() {
     let card1 = this.findOrInsertCardById('308412345678901')
-    card1.status = 0
+    card1.status = Myki.CardStatus.Active
     card1.holder = this.mykiAccount.holder
     card1.moneyBalance = 70.18
     card1.passActive = "7 days, \n Zone 1-Zone 2,\n valid until " + moment().add(2, 'days').format("D MMM YY") + " 03:00:00 AM"
@@ -825,12 +824,12 @@ export class MykiProvider {
     card1.passActiveExpiry = moment().add(2, 'days').hours(3).toDate()
 
     let card2 = this.findOrInsertCardById('308412345678902')
-    card2.status = 0
+    card2.status = Myki.CardStatus.Active
     card2.holder = this.mykiAccount.holder
     card2.moneyBalance = 0.5
 
     let card3 = this.findOrInsertCardById('308412345678903')
-    card3.status = 1
+    card3.status = Myki.CardStatus.Replaced
     card3.holder = this.mykiAccount.holder
     card3.moneyBalance = 0
   }
@@ -840,7 +839,7 @@ export class MykiProvider {
       case '308412345678901':
         card.loaded = true
         card.passActive = "7 days , Zone 1-Zone 2.Valid to " + moment().add(2, 'days').format("D MMM YYYY") + " 03:00:00 AM"
-        card.type = 0
+        card.type = Myki.CardType.FullFare
         card.expiry = new Date("2020-01-04T14:00:00.000Z")
         card.moneyTopupInProgress = 0
         card.moneyTotalBalance = 70.18
@@ -850,7 +849,8 @@ export class MykiProvider {
         break;
       case '308412345678902':
         card.loaded = true
-        card.type = 2
+        card.type = Myki.CardType.Children
+        card.status = Myki.CardStatus.Blocked
         card.expiry = new Date("2018-12-21T14:00:00.000Z")
         card.moneyTopupInProgress = 10
         card.moneyTotalBalance = 0.5
@@ -858,7 +858,7 @@ export class MykiProvider {
         break;
       case '308412345678903':
         card.loaded = true
-        card.type = 0
+        card.type = Myki.CardType.FullFare
         card.moneyTopupInProgress = 0
         card.lastTransactionDate = new Date("2016-01-01T16:12:02.000Z")
         break;
