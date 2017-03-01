@@ -84,4 +84,5 @@
     <plugin name="cordova-plugin-calendar" spec="~4.5.5">
         <variable name="CALENDAR_USAGE_DESCRIPTION" value="This app uses your calendar to remind you of your myki card expiry" />
     </plugin>
+    <plugin name="cordova-plugin-crosswalk-webview" spec="~2.3.0" />
 </widget>
