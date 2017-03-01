@@ -58,7 +58,7 @@
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="16" />
+    <preference name="android-minSdkVersion" value="21" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
@@ -84,5 +84,4 @@
     <plugin name="cordova-plugin-calendar" spec="~4.5.5">
         <variable name="CALENDAR_USAGE_DESCRIPTION" value="This app uses your calendar to remind you of your myki card expiry" />
     </plugin>
-    <plugin name="cordova-plugin-crosswalk-webview" spec="~2.3.0" />
 </widget>
