@@ -374,6 +374,9 @@ export class MykiProvider {
 
                 card.transactions.push(trans)
 
+                // group transactions by date
+                card.groupTransactions()
+
               })
 
               return resolve();
@@ -882,6 +885,9 @@ export class MykiProvider {
         transaction[prop] = stubTransaction[prop];
       }
       card.transactions.push(transaction)
+
+      // group transactions by date
+      card.groupTransactions()
     }
   }
 

@@ -1,9 +1,5 @@
 <div class="card">
     <div class="card-inner">
-        <div class="date">
-            <div>{{transaction.dateTime | amDateFormat:'dddd ll'}}</div>
-            <div>{{transaction.dateTime | amDateFormat:'LT'}}</div>
-        </div>
         <div class="content">
             <div class="icon">
                 <div class="method">
@@ -24,13 +20,17 @@
                 <div class="title">
                     <div class="action">
                         <div class="type">{{transaction.typeToString()}}</div>
-                        <div class="description">{{transactionDescription()}} <span class="zone" *ngIf="isTransport()">{{transaction.zone}}</span></div>
+                        <div class="description">{{transactionDescription()}}</div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="meta">
+            <div class="date">{{transaction.dateTime | amDateFormat:'LT'}}</div>
+            <div class="zone" *ngIf="isTransport()">Zone {{transaction.zone}}</div>
+        </div>
     </div>
-    <div class="meta" *ngIf="isTopup() || isMoneyTransaction() || isPassTransaction()">
+    <div class="cost" *ngIf="isTopup() || isMoneyTransaction() || isPassTransaction()">
         <div class="card-inner">
             <div *ngIf="isTopup()">
                 Via {{transaction.serviceToString()}}

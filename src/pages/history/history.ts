@@ -5,7 +5,7 @@ import { NavController, ToastController } from 'ionic-angular';
 
 @Component({
   selector: 'page-history',
-  templateUrl: 'history.html'
+  templateUrl: 'history.html',
 })
 export class HistoryPage {
 
@@ -47,6 +47,10 @@ export class HistoryPage {
 
   transactions() {
     return this.card().transactions;
+  }
+
+  transactionsGrouped() {
+    return this.card().transactionsGrouped
   }
 
   hasTransactions() {

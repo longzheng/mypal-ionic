@@ -2,93 +2,82 @@ transaction {
     .card {
         margin: 0;
     }
-
-    .date {
+    .card-inner {
         display: flex;
-        color: color($colors, gray, base);
-        div {
-            font-size: 13px;
-            &:nth-child(1) {
-                flex: 1 0;
-            }
-            &:nth-child(2) {
-                text-align: right;
-            }
-        }
-    }
-    .content {
-        display: flex;
-        margin: 1em 0 0;
-        >.icon {
-            width: 32px;
-            height: 32px;
-            margin-right: 1em;
-            position: relative;
-            text-align: center;
-            .method {
-                color: color($colors, light-blue, base);
-                width: 100%;
-                height: 100%;
-                ion-icon {
+        .content {
+            flex: 1 0;
+            display: flex;
+            >.icon {
+                width: 32px;
+                height: 32px;
+                margin-right: 1em;
+                position: relative;
+                text-align: center;
+                .method {
+                    color: color($colors, light-blue, base);
                     width: 100%;
                     height: 100%;
+                    ion-icon {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .type {
+                    position: absolute;
+                    bottom: -6px;
+                    right: -2px;
                 }
             }
-            .type {
-                position: absolute;
-                bottom: -6px;
-                right: -2px;
-            }
-        }
-        .detail {
-            display: flex;
-            flex: 1 0;
-            flex-direction: column;
-            .title {
-                align-items: center;
+            .detail {
                 display: flex;
-                .action {
-                    flex: 1 0;
-                    .type {
-                        font-size: 13px;
-                        color: color($colors, dark, bas);
-                        line-height: 1.2;
-                    }
-                    .description {
-                        font-size: 1em;
-                        color: color($colors, black, base);
-                        line-height: 1.5;
-                        .zone {
-                            margin-left: 0.3em;
-                            line-height: 16px;
-                            display: inline-block;
-                            min-width: 16px;
-                            height: 16px;
-                            padding: 0 0.35em;
-                            border-radius: 100px;
-                            border: 1px solid color($colors, light-blue, base);
-                            color: color($colors, light-blue, base);
-                            font-size: 11px;
-                            font-weight: 600;
-                            text-align: center;
+                flex: 1 0;
+                flex-direction: column;
+                .title {
+                    align-items: center;
+                    display: flex;
+                    .action {
+                        flex: 1 0;
+                        .type {
+                            font-size: 13px;
+                            color: color($colors, dark, bas);
+                            line-height: 1.2;
+                        }
+                        .description {
+                            font-size: 1em;
+                            color: color($colors, black, base);
+                            line-height: 1.5;
                         }
                     }
                 }
             }
         }
+        .meta {
+            color: color($colors, gray, base);
+            font-size: 13px;
+            text-align: right;
+            margin-left: 0.5em;
+            .zone {
+                font-weight: 300;
+                margin-top: 0.2em;
+            }
+        }
     }
-    .meta {
+    .cost {
         border-top: 1px solid color($colors, light, base);
         color: color($colors, dark, base);
         font-size: 13px;
         .info {
             display: flex;
+            width: 100%;
             div {
                 &:nth-child(1) {
                     flex: 1 0;
                 }
                 &:nth-child(2) {
                     text-align: right;
+                }
+                strong {
+                    font-weight: bold;
                 }
             }
         }

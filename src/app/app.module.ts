@@ -11,7 +11,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoadCardsPage } from '../pages/load-cards/load-cards';
 import { IntroPage } from '../pages/intro/intro';
 import { TopupPage } from '../pages/topup/topup';
-
 import { SelectCardComponent } from '../components/select-card/select-card';
 import { TransactionComponent } from '../components/transaction/transaction';
 
@@ -28,13 +27,15 @@ let pages = [
   LoadCardsPage,
   IntroPage,
   TopupPage,
-
   SelectCardComponent,
-  TransactionComponent,
+  TransactionComponent
+]
+
+let pipes = [
 ]
 
 export function declarations() {
-  return pages
+  return pages.concat(<any>pipes)
 }
 
 export function entryComponents() {
@@ -45,7 +46,7 @@ export function entryComponents() {
   declarations: declarations(),
   imports: [
     IonicModule.forRoot(MyApp),
-    MomentModule
+    MomentModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: entryComponents(),
@@ -54,7 +55,7 @@ export function entryComponents() {
     MykiProvider,
     ConfigProvider,
     Storage,
-    CurrencyPipe
+    CurrencyPipe,
   ]
 })
 export class AppModule {}

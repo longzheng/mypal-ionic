@@ -25,6 +25,7 @@ export namespace Myki {
         lastTransactionDate: Date;
         autoTopup: boolean;
         transactions: Array<Transaction> = [];
+        transactionsGrouped: Array<any>;
 
         idFormatted(): string {
             let cardId = this.id
@@ -77,6 +78,19 @@ export namespace Myki {
 
             let daysLeft = moment(this.passActiveExpiry).startOf('day').diff(moment(), 'days') + 1;
             return `${daysLeft} day${daysLeft > 1 ? 's' : ''} left`
+        }
+
+        // preprocess transaction groups by day
+        // we're doing this on demand since a dynamic groupBy pipe is too expensive
+        groupTransactions() {
+            var groups = {};
+            this.transactions.forEach(function (transaction) {
+                var day = moment(transaction.dateTime).format('dddd ll')
+                groups[day] = groups[day] ? groups[day] : { day: day, transactions: [] };
+                groups[day].transactions.push(transaction);
+            });
+
+            this.transactionsGrouped = Object.keys(groups).map(function (key) { return groups[key] });
         }
     }
 

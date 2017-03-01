@@ -28,9 +28,12 @@
             <span *ngIf="hasTransactions()"><br> Showing most recent {{transactions().length}} transactions</span>
         </div>
         <ion-list>
-            <div class="transaction-item" *ngFor="let trans of transactions()">
-                <transaction [transaction]="trans"></transaction>
-            </div>
+            <ion-item-group *ngFor="let transactionGroup of transactionsGrouped()">
+                <ion-item-divider color="light" sticky>{{transactionGroup.day}}</ion-item-divider>
+                <div class="transaction-item" *ngFor="let trans of transactionGroup.transactions">
+                    <transaction [transaction]="trans"></transaction>
+                </div>
+            </ion-item-group>
         </ion-list>
 
         <div class="empty" *ngIf="!hasTransactions()">
