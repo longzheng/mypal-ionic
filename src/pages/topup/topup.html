@@ -174,8 +174,8 @@
     <div class="message">
         <ion-icon name="checkmark-circle"></ion-icon>
         <h2>Top up confirmed</h2>
-        <p>Myki card {{mykiProvider.activeCard().idFormatted()}} topped up with {{topupOrder.description}}. Credit card ending {{topupOptions.ccNumberNoSpaces().slice(-4)}} in has been charged {{topupOrder.amount | currency:'USD':true}}</p>
-        <p>Top ups may take up to 24 hours to be processed and will not immediately appear in the app. After it is processed it will be added to your card the next time you touch on.</p>
+        <p>Myki card {{mykiProvider.activeCard().idFormatted()}} topped up with {{topupOrder.description}}. Credit card ending in {{topupOptions.ccNumberNoSpaces().slice(-4)}} has been charged {{topupOrder.amount | currency:'USD':true}}</p>
+        <p>Top ups may take up to 24 hours to be processed and will not immediately appear in the app. After it is processed it will be synced to your card the next time you touch on.</p>
         <button ion-button block color="brand-inverse" (click)="close()">Close</button>
     </div>
 </ion-content>
