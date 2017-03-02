@@ -25,7 +25,7 @@
     <div [hidden]="!card().transactionLoaded">
         <div class="note">
             Transactions may be delayed by up to 24 hours
-            <span *ngIf="hasTransactions()"><br> Showing most recent {{transactions().length}} transactions</span>
+            <span *ngIf="hasTransactions()"><br> Showing most recent {{transactions().length}} transactions.</span>
         </div>
         <ion-list>
             <ion-item-group *ngFor="let transactionGroup of transactionsGrouped()">
@@ -35,6 +35,8 @@
                 </div>
             </ion-item-group>
         </ion-list>
+
+        <div class="note" *ngIf="hasTransactions() && transactions().length == 40"><br> To view more transactions, visit the myki site.</div>
 
         <div class="empty" *ngIf="!hasTransactions()">
             <ion-icon name="mypal-tab-history"></ion-icon>
