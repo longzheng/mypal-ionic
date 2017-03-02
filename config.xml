@@ -81,7 +81,7 @@
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <engine name="android" spec="latest" />
     <plugin name="cordova-plugin-firebase" spec="~0.1.19" />
-    <plugin name="cordova-plugin-calendar" spec="~4.5.5">
+    <plugin name="cordova-plugin-calendar" spec="https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git">
         <variable name="CALENDAR_USAGE_DESCRIPTION" value="This app uses your calendar to remind you of your myki card expiry" />
     </plugin>
 </widget>

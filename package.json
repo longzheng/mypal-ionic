@@ -50,7 +50,6 @@
     "cordova-plugin-calendar"
   ],
   "cordovaPlatforms": [
-    "ios",
     {
       "platform": "ios",
       "version": "",

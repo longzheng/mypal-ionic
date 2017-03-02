@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, NavController, ActionSheetController, MenuController, ToastController, ModalController } from 'ionic-angular';
+import { Platform, App, NavController, ActionSheetController, MenuController, ToastController, ModalController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
@@ -23,6 +23,7 @@ export class HomePage {
     public menuCtrl: MenuController,
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
+    public platform: Platform,
   ) {
 
   }
@@ -111,81 +112,74 @@ export class HomePage {
   }
 
   addPassReminder() {
-    if ((<any>window).Calendar === undefined)
-      return
+    // get card ID
+    let cardId = this.card().idFormatted()
 
-    Calendar.hasWritePermission().then(
-      result => {
-        if (!result)
-          // if we don't have calendar permissions, ask for it
-          Calendar.requestWritePermission().then(
-            () => {
-              // when we have permissions (or think we have permission), move on
-              return Promise.resolve()
-            }
-          )
-      })
-      .then(
-      result => {
-        // get card ID
-        let cardId = this.card().idFormatted()
-
-        // create the calendar event
-        Calendar.createEventInteractively(
-          `Myki pass expires`,
-          null,
-          `Card number ${cardId}`,
-          this.card().passActiveExpiry,
-          moment(this.card().passActiveExpiry).add(1, 'days').toDate() // the calendar end date needs to be the "end of day"
-        ).catch(() => {
-          // there was an error creating event, we probably don't have permission
-          let toast = this.toastCtrl.create({
-            position: 'top',
-            message: 'This app does not have calendar permissions. Please go to settings and enable calendar permissions for this app.',
-            duration: 3000
-          });
-          toast.present();
-        })
-      })
+    this.calendarCreateReminderWithPermission(
+      `Myki pass expires`,
+      null,
+      `Card number ${cardId}`,
+      this.card().passActiveExpiry,
+      moment(this.card().passActiveExpiry).add(1, 'days').toDate() // the calendar end date needs to be the "end of day"
+    )
   }
 
   addExpiryReminder() {
+    // get card ID
+    let cardId = this.card().idFormatted()
+
+    this.calendarCreateReminderWithPermission(
+      `Myki card expires`,
+      null,
+      `Card number ${cardId}`,
+      this.card().expiry,
+      moment(this.card().expiry).add(1, 'days').toDate() // the calendar end date needs to be the "end of day"
+    )
+  }
+
+  private calendarCreateReminderWithPermission(title?: string, location?: string, notes?: string, startDate?: Date, endDate?: Date) {
     if ((<any>window).Calendar === undefined)
       return
 
     Calendar.hasWritePermission().then(
       result => {
-        if (!result)
-          // if we don't have calendar permissions, ask for it
-          Calendar.requestWritePermission().then(
-            () => {
-              // when we have permissions (or think we have permission), move on
-              return Promise.resolve()
-            }
-          )
+        if (!result && this.platform.is('ios')) {
+          // we don't have calendar permissions
+          // ask for calendar permissions
+          // only matters on iOS since Android seems to allow us to create calendar event anyway
+          // if we're targetting Android SDK>23 we might need this for runtime permission https://developer.android.com/training/permissions/requesting.html
+          Calendar.requestWritePermission().then()
+        }
+        
+        // just kidding, we don't actually care, going to create event anyway
+        this.calendarCreateReminder(title, location, notes, startDate, endDate)
       })
-      .then(
-      result => {
-        // get card ID
-        let cardId = this.card().idFormatted()
+  }
 
-        // create the calendar event
-        Calendar.createEventInteractively(
-          `Myki card expires`,
-          null,
-          `Card number ${cardId}`,
-          this.card().expiry,
-          moment(this.card().expiry).add(1, 'days').toDate() // the calendar end date needs to be the "end of day"
-        ).catch(() => {
-          // there was an error creating event, we probably don't have permission
-          let toast = this.toastCtrl.create({
-            position: 'top',
-            message: 'This app does not have calendar permissions. Please go to settings and enable calendar permissions for this app.',
-            duration: 3000
-          });
-          toast.present();
-        })
-      })
+  private calendarCreateReminder(title?: string, location?: string, notes?: string, startDate?: Date, endDate?: Date) {
+    // create the calendar event
+    // on iOS: if we don't have permissions, this will error
+    // on Android, we can create event anyway
+    Calendar.createEventInteractively(
+      title,
+      location,
+      notes,
+      startDate,
+      endDate
+    ).catch(() => {
+      // show calendar error
+      this.calendarError()
+    })
+  }
+
+  private calendarError() {
+    // there was an error creating event, we probably don't have permission
+    let toast = this.toastCtrl.create({
+      position: 'top',
+      message: 'This app does not have calendar permissions. Please go to settings and enable calendar permissions for this app.',
+      duration: 3000
+    });
+    toast.present();
   }
 
 }
