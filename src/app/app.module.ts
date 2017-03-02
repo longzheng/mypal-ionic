@@ -31,11 +31,8 @@ let pages = [
   TransactionComponent
 ]
 
-let pipes = [
-]
-
 export function declarations() {
-  return pages.concat(<any>pipes)
+  return pages
 }
 
 export function entryComponents() {
