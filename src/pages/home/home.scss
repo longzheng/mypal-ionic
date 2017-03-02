@@ -57,6 +57,27 @@ page-home {
                 margin: 0.7em 0 0 0;
             }
         }
+        &.pass {
+            .buttons {
+                display: flex;
+                button.topup {
+                    flex: 1 0;
+                }
+                button.reminder {
+                    margin-left: 0.5em;
+                    ion-icon {
+                        font-size: 1.5em;
+                        padding: 0 0.7em;
+                    }
+                }
+            }
+        }
+    }
+    .card-list {
+        ion-icon.reminder {
+            font-size: 1.3em;
+            line-height: 1.3em;
+        }
     }
     .loading {
         padding: 3em 0 !important;

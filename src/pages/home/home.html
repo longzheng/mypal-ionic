@@ -36,7 +36,7 @@
             <div class="card-inner">Card blocked</div>
         </div>
 
-        <div class="card balance">
+        <div class="card balance money">
             <div class="balance-icon">
                 <ion-icon name="mypal-money"></ion-icon>
             </div>
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <div class="card balance">
+        <div class="card balance pass">
             <div class="balance-icon">
                 <ion-icon name="mypal-pass"></ion-icon>
             </div>
@@ -62,13 +62,15 @@
                 <div class="info" [hidden]="!card().passActive">
                     {{card().passActive}}
                 </div>
-                <button ion-button icon-left block (click)="topupPass()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
+                <div class="buttons">
+                    <button class="topup" ion-button icon-left block (click)="topupPass()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
+                    <button class="reminder" ion-button icon-only color="dark" (click)="addPassReminder()" *ngIf="card().passActive"><ion-icon name="md-alarm"></ion-icon></button>
+                </div>
             </div>
         </div>
 
         <div class="note">
-            Balance may be delayed by up to 24 hours<br>
-            Last processed transaction {{card().lastTransactionDate | amCalendar:null:{sameElse: 'DD/MM/YYYY'} }}
+            Balance may be delayed by up to 24 hours<br> Last processed transaction {{card().lastTransactionDate | amCalendar:null:{sameElse: 'DD/MM/YYYY'} }}
         </div>
 
         <ul class="card-list">
@@ -87,10 +89,10 @@
                 <div item-right>{{card().typeToString()}}</div>
             </ion-item>
 
-            <ion-item no-lines>
+            <ion-item no-lines (click)="addExpiryReminder()">
                 <div item-left>Expiry</div>
                 <div item-right>{{card().expiry | amDateFormat:'LL'}}</div>
-                <ion-icon item-right name="ios-alarm-outline" (click)="addReminder()" tappable></ion-icon>
+                <ion-icon item-right name="md-alarm" color="dark" class="reminder"></ion-icon>
             </ion-item>
         </ul>
     </div>

@@ -110,7 +110,10 @@ export class HomePage {
     modal.present();
   }
 
-  addReminder() {
+  addPassReminder() {
+    if ((<any>window).Calendar === undefined)
+      return
+
     Calendar.hasWritePermission().then(
       result => {
         if (!result)
@@ -127,12 +130,48 @@ export class HomePage {
         // get card ID
         let cardId = this.card().idFormatted()
 
-        // get the last 5 digits of the card (with space)
-        let cardLastDigits = cardId.substring(cardId.length - 6)
+        // create the calendar event
+        Calendar.createEventInteractively(
+          `Myki pass expires`,
+          null,
+          `Card number ${cardId}`,
+          this.card().passActiveExpiry,
+          moment(this.card().passActiveExpiry).add(1, 'days').toDate() // the calendar end date needs to be the "end of day"
+        ).catch(() => {
+          // there was an error creating event, we probably don't have permission
+          let toast = this.toastCtrl.create({
+            position: 'top',
+            message: 'This app does not have calendar permissions. Please go to settings and enable calendar permissions for this app.',
+            duration: 3000
+          });
+          toast.present();
+        })
+      })
+  }
+
+  addExpiryReminder() {
+    if ((<any>window).Calendar === undefined)
+      return
+
+    Calendar.hasWritePermission().then(
+      result => {
+        if (!result)
+          // if we don't have calendar permissions, ask for it
+          Calendar.requestWritePermission().then(
+            () => {
+              // when we have permissions (or think we have permission), move on
+              return Promise.resolve()
+            }
+          )
+      })
+      .then(
+      result => {
+        // get card ID
+        let cardId = this.card().idFormatted()
 
         // create the calendar event
         Calendar.createEventInteractively(
-          `Myki card ${cardLastDigits} expires`,
+          `Myki card expires`,
           null,
           `Card number ${cardId}`,
           this.card().expiry,
