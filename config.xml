@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.longzheng.mypalionic" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.longzheng.mypalionic" version="0.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>mypal</name>
     <description>Manage myki on the go</description>
     <author email="long.zheng@gmail.com" href="https://github.com/longzheng/mypal-ionic">Long Zheng</author>
@@ -82,6 +82,6 @@
     <engine name="android" spec="latest" />
     <plugin name="cordova-plugin-firebase" spec="~0.1.19" />
     <plugin name="cordova-plugin-calendar" spec="https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git">
-        <variable name="CALENDAR_USAGE_DESCRIPTION" value="This app uses your calendar to remind you of your myki card expiry" />
+        <variable name="CALENDAR_USAGE_DESCRIPTION" value="This app uses your calendar to remind you of your myki pass and card expiry" />
     </plugin>
 </widget>
