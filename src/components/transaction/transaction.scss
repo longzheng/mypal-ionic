@@ -29,36 +29,37 @@ transaction {
                 }
             }
             .detail {
-                display: flex;
                 flex: 1 0;
-                flex-direction: column;
-                .title {
-                    align-items: center;
+                .meta {
                     display: flex;
-                    .action {
+                    flex: 1 0;
+                    font-size: 13px;
+                    margin-bottom: 0.3em;
+                    .type {
                         flex: 1 0;
-                        .type {
-                            font-size: 13px;
-                            color: color($colors, dark, bas);
-                            line-height: 1.2;
-                        }
-                        .description {
-                            font-size: 1em;
-                            color: color($colors, black, base);
-                            line-height: 1.5;
-                        }
+                        color: color($colors, dark, base);
+                    }
+                    .date {
+                        color: color($colors, gray, base);
+                        text-align: right;
+                        margin-left: 1em;
                     }
                 }
-            }
-        }
-        .meta {
-            color: color($colors, gray, base);
-            font-size: 13px;
-            text-align: right;
-            margin-left: 0.5em;
-            .zone {
-                font-weight: 300;
-                margin-top: 0.2em;
+                .action {
+                    display: flex;
+                    flex: 1 0;
+                    line-height: 1.5;
+                    .description {
+                        flex: 1 0;
+                        color: color($colors, black, base);
+                    }
+                    .zone {
+                        color: color($colors, light-blue, base);
+                        font-weight: 300;
+                        text-align: right;
+                        margin-left: 1em;
+                    }
+                }
             }
         }
     }
@@ -77,7 +78,7 @@ transaction {
                     text-align: right;
                 }
                 strong {
-                    font-weight: bold;
+                    font-weight: 600;
                 }
             }
         }

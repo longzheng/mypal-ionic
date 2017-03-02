@@ -11,12 +11,16 @@ page-history {
                     top: -1px;
                     padding-left: 0;
                     box-shadow: 0 1px 3px color($colors, light, base);
+                    border: 0 none !important;
+                    .platform-ios:not(.platform-mobileweb) & {
+                        // iOS Safari implements position: sticky from relative position with padding
+                        top: -16px;
+                    }
                 }
                 .transaction-item {
                     width: 100%;
                     margin-bottom: 0.8em;
-
-                    &:nth-of-type(1){
+                    &:nth-of-type(1) {
                         margin-top: 3px;
                     }
                 }

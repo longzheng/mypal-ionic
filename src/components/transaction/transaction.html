@@ -17,17 +17,15 @@
                 </div>
             </div>
             <div class="detail">
-                <div class="title">
-                    <div class="action">
-                        <div class="type">{{transaction.typeToString()}}</div>
-                        <div class="description">{{transactionDescription()}}</div>
-                    </div>
+                <div class="meta">
+                    <div class="type">{{transaction.typeToString()}}</div>
+                    <div class="date">{{transactionDate()}}</div>
+                </div>
+                <div class="action">
+                    <div class="description">{{transactionDescription()}}</div>
+                    <div class="zone" *ngIf="isTransport()">Zone {{transaction.zone}}</div>
                 </div>
             </div>
-        </div>
-        <div class="meta">
-            <div class="date">{{transaction.dateTime | amDateFormat:'LT'}}</div>
-            <div class="zone" *ngIf="isTransport()">Zone {{transaction.zone}}</div>
         </div>
     </div>
     <div class="cost" *ngIf="isTopup() || isMoneyTransaction() || isPassTransaction()">

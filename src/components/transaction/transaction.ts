@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { Myki } from '../../models/myki';
+import * as moment from 'moment';
+import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'transaction',
@@ -11,7 +13,8 @@ export class TransactionComponent {
   @Input() transaction: Myki.Transaction
 
   constructor(
-    public currencyPipe: CurrencyPipe
+    public currencyPipe: CurrencyPipe,
+    public platform: Platform,
   ) {
   }
 
@@ -89,6 +92,17 @@ export class TransactionComponent {
     }
 
     return this.transaction.description
+  }
+
+  transactionDate(): string {
+    let format = 'LT' // format as 2:03 PM
+
+    // if platform is android
+    // we don't have sticky date headers so display date too
+    if (this.platform.is('android'))
+      format = 'D/M LT'
+    
+    return moment(this.transaction.dateTime).format(format)
   }
 
 }
