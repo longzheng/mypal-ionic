@@ -173,11 +173,9 @@ ion-menu {
 ion-input {
     input {
         color: color($colors, brand-dark, base);
-
         &::placeholder {
             color: #c4c4c4;
         }
-
         &.ng-invalid {
             color: color($colors, danger, base);
         }
@@ -196,5 +194,13 @@ ion-item {
     &.item-md .item-inner {
         border-bottom: none !important;
         box-shadow: none !important;
+    }
+}
+
+// hack for iOS alert allows you to scroll backdrop
+// https://github.com/driftyco/ionic/issues/6980
+ion-app.disable-scroll {
+    ion-content>.scroll-content {
+        overflow: hidden;
     }
 }
