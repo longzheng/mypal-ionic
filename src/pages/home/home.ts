@@ -120,7 +120,7 @@ export class HomePage {
       null,
       `Card number ${cardId}`,
       this.card().passActiveExpiry,
-      moment(this.card().passActiveExpiry).add(1, 'days').toDate() // the calendar end date needs to be the "end of day"
+      this.card().passActiveExpiry,
     )
   }
 
@@ -133,7 +133,7 @@ export class HomePage {
       null,
       `Card number ${cardId}`,
       this.card().expiry,
-      moment(this.card().expiry).add(1, 'days').toDate() // the calendar end date needs to be the "end of day"
+      this.card().expiry,
     )
   }
 
@@ -160,12 +160,15 @@ export class HomePage {
     // create the calendar event
     // on iOS: if we don't have permissions, this will error
     // on Android, we can create event anyway
-    Calendar.createEventInteractively(
+    Calendar.createEventInteractivelyWithOptions(
       title,
       location,
       notes,
       startDate,
-      endDate
+      endDate,
+      {
+        firstReminderMinutes: moment.duration(1, "day").asMinutes(),
+      }
     ).catch(() => {
       // show calendar error
       this.calendarError()
