@@ -40,3 +40,7 @@ www.zip
 # Firebase configs
 GoogleService-Info.plist
 google-services.json
+
+# Cordova build
+build.json
+android.keystore
