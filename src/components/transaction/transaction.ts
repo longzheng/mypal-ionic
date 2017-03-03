@@ -85,7 +85,7 @@ export class TransactionComponent {
 
   transactionDescription(): string {
     // different text for myki money top isTopup
-    if (this.isTopupMoney()){
+    if (this.isTopupMoney()) {
       let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
       let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
       return `${credit} (Balance ${balance})`
@@ -98,10 +98,16 @@ export class TransactionComponent {
     let format = 'LT' // format as 2:03 PM
 
     // if platform is android
-    // we don't have sticky date headers so display date too
-    if (this.platform.is('android'))
-      format = 'D/M LT'
-    
+    if (this.platform.is('android')) {
+      // detect chrome version
+      var chromeRegex = /Chrome\/(\d+)/i
+      let userAgentMatch = navigator.userAgent.match(chromeRegex)
+      // if we're not using chrome webview or chrome is less than version 56
+      // we don't have sticky date headers so display date too
+      if (userAgentMatch == null || (userAgentMatch != null && parseInt(userAgentMatch[1]) < 56) )
+        format = 'D/M LT'
+    }
+
     return moment(this.transaction.dateTime).format(format)
   }
 
