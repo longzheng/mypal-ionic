@@ -1,0 +1,13 @@
+page-launch-roadblock {
+    ion-content {
+        background: color($colors, primary, base) !important;
+        color: color($colors, darker, base);
+        text-align: center;
+        ion-icon {
+            font-size: 3em;
+        }
+        p {
+            line-height: 1.6;
+        }
+    }
+}
