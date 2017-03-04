@@ -3,11 +3,21 @@ page-launch-roadblock {
         background: color($colors, primary, base) !important;
         color: color($colors, darker, base);
         text-align: center;
-        ion-icon {
-            font-size: 3em;
+        .scroll-content {
+            display: flex;
         }
-        p {
-            line-height: 1.6;
+        .message {
+            flex: 1 0;
+            align-self: center;
+            ion-icon {
+                font-size: 5em;
+                color: color($colors, brand-dark, base);
+            }
+            p {
+                font-size: 1.3em;
+                font-weight: 300;
+                line-height: 1.6;
+            }
         }
     }
 }
