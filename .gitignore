@@ -44,3 +44,6 @@ google-services.json
 # Cordova build
 build.json
 android.keystore
+
+# Docs 
+docs/**/*.css
