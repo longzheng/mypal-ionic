@@ -106,6 +106,9 @@ ion-icon {
     &[class*="mypal-vline"] {
         mask-image: url(../assets/img/vline.svg);
     }
+    &[class*="mypal-cards"] {
+        mask-image: url(../assets/img/cards.svg);
+    }
 }
 
 // restyling the app tabbar
