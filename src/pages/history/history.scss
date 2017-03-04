@@ -13,7 +13,7 @@ page-history {
                     border: 0 none !important;
                     .platform-ios:not(.platform-mobileweb) & {
                         // iOS Safari implements position: sticky from relative position with padding
-                        top: -16px;
+                        top: -17px;
                     }
                 }
                 .transaction-item {
