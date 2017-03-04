@@ -46,7 +46,8 @@ export class LoginPage {
           let alert = this.alertCtrl.create({
             title: 'Saved login invalid',
             subTitle: 'Could not log in with your saved login details. Please re-enter your username and password.',
-            buttons: ['OK']
+            buttons: ['OK'],
+            enableBackdropDismiss: false
           })
           alert.present()
 
@@ -80,7 +81,8 @@ export class LoginPage {
     if (!this.username || !this.password) {
       let alert = this.alertCtrl.create({
         title: 'Username and password required',
-        buttons: ['OK']
+        buttons: ['OK'],
+        enableBackdropDismiss: false
       })
       alert.present()
       return;

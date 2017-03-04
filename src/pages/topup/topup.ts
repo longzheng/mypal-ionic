@@ -192,7 +192,8 @@ export class TopupPage {
         let alert = this.alertCtrl.create({
           title: 'Error ordering top up',
           subTitle: 'Please check your top up options',
-          buttons: ['OK']
+          buttons: ['OK'],
+          enableBackdropDismiss: false
         })
         alert.present()
         // reset state
