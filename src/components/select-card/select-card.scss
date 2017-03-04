@@ -8,6 +8,9 @@ select-card {
             padding: 2em;
         }
     }
+    .note {
+        color: color($colors, darker, base);
+    }
     // cards
     .menu-card {
         border-radius: $card-radius;
