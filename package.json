@@ -21,6 +21,7 @@
     "@angular/platform-server": "2.2.1",
     "@ionic-native/calendar": "^3.0.0",
     "@ionic-native/firebase": "^3.0.0",
+    "@ionic-native/headercolor": "^3.0.0",
     "@ionic-native/splashscreen": "^3.0.0",
     "@ionic-native/statusbar": "^3.0.0",
     "@ionic/storage": "1.1.7",

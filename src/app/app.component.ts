@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { App, Platform, AlertController, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/statusbar';
+import { HeaderColor } from '@ionic-native/headercolor';
 import { Splashscreen } from '@ionic-native/splashscreen';
 import { ConfigProvider } from '../providers/config';
 import { LoginPage } from '../pages/login/login';
@@ -30,6 +31,7 @@ export class MyApp {
       // Android status bar coloring
       if (platform.is('android')) {
         StatusBar.backgroundColorByHexString("#9CAF24");
+        HeaderColor.tint("#9CAF24");
       }
 
       // check if we've seen intro

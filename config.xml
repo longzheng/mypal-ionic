@@ -84,4 +84,5 @@
     <plugin name="cordova-plugin-calendar" spec="https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git">
         <variable name="CALENDAR_USAGE_DESCRIPTION" value="This app uses your calendar to remind you of your myki pass and card expiry" />
     </plugin>
+    <plugin name="cordova-plugin-headercolor" spec="~1.0" />
 </widget>
