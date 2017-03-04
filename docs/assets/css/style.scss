@@ -1,0 +1,147 @@
+@import '_reset';
+body {
+    font: 15px/1.7 'Rubik', sans-serif;
+    color: #656A73;
+}
+
+.container {
+    margin: 0 15px;
+    @media (min-width: 960px) {
+        width: 960px;
+        margin: 0 auto;
+    }
+}
+
+h3 {
+    font-size: 1.7em;
+    font-weight: 300;
+    margin: 0 0 0.5em;
+}
+
+section.hero {
+    color: #323740;
+    background: #CFE257;
+    .container {
+        display: flex;
+        @media (max-width: 959px) {
+            text-align: center;
+            flex-direction: column;
+            padding: 3em 0;
+        }
+        @media (min-width: 960px) {
+            flex-direction: row;
+            align-items: center;
+            min-height: 700px;
+            height: 100vh;
+        }
+    }
+    .text {
+        flex: 1 0;
+        @media (min-width: 960px) {
+            margin-right: 5em;
+        }
+        @media (max-width: 959px) {}
+        >img {
+            width: 80px;
+        }
+        h1 {
+            font-size: 3.77em;
+            font-weight: 600;
+            em {
+                font-style: italic;
+            }
+        }
+        h2 {
+            font-size: 1.66em;
+            font-weight: 300;
+        }
+        .download {
+            margin-top: 3em;
+            a {
+                margin-right: 0.6em;
+                img {
+                    height: 40px;
+                }
+            }
+        }
+    }
+    .screenshots {
+        position: relative;
+        @media (max-width: 959px) {
+            height: 400px;
+        }
+        @media (min-width: 960px) {
+            width: 480px;
+            height: 520px;
+        }
+        div {
+            position: absolute;
+            @media (max-width: 959px) {
+                left: 50%;
+                img {
+                    height: 400px;
+                }
+                &.iphone {
+                    transform: translateX(-100%);
+                }
+            }
+            @media (min-width: 960px) {
+                &.iphone {
+                    top: -3em;
+                    left: 0;
+                    opacity: 0;
+                    animation: anim-iphone 2s ease-in-out forwards;
+                }
+                &.android {
+                    bottom: -3em;
+                    right: 0;
+                    opacity: 0;
+                    animation: anim-android 2s ease-in-out forwards;
+                }
+            }
+        }
+    }
+}
+
+section.faq {
+    margin: 3em 0;
+}
+
+section.legal {
+    margin: 3em 0 10em;
+    ul {
+        list-style: disc outside;
+        margin-left: 2em;
+        li {
+            margin: 0.3em 0;
+        }
+    }
+}
+
+@keyframes anim-iphone {
+    0% {
+        transform: translateY(-5%) perspective( 2000px) rotateY( 20deg);
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes anim-android {
+    0% {
+        transform: translateY(5%) perspective( 2000px) rotateY( -20deg);
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
