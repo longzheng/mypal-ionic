@@ -65,7 +65,7 @@ export class MyApp {
       // if value exists, show a prompt
       if (result) {
         let alert = this.alertCtrl.create({
-          title: 'Information',
+          title: 'Notice',
           subTitle: result,
           buttons: ['OK'],
           enableBackdropDismiss: false
