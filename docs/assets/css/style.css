@@ -55,8 +55,11 @@ body {
   margin: 0 15px; }
   @media (min-width: 960px) {
     .container {
-      width: 960px;
+      width: 920px;
       margin: 0 auto; } }
+
+a {
+  color: #90A600; }
 
 h3 {
   font-size: 1.7em;
@@ -83,31 +86,40 @@ section.hero {
     flex: 1 0; }
     @media (min-width: 960px) {
       section.hero .text {
-        margin-right: 5em; } }
+        margin-right: 1em; } }
     section.hero .text > img {
       width: 80px; }
     section.hero .text h1 {
-      font-size: 3.77em;
-      font-weight: 600; }
+      font-size: 3.7em;
+      font-weight: 500; }
+      @media (max-width: 959px) {
+        section.hero .text h1 {
+          font-size: 2.4em; } }
       section.hero .text h1 em {
-        font-style: italic; }
+        font-style: italic;
+        margin-left: -0.1em; }
     section.hero .text h2 {
-      font-size: 1.66em;
-      font-weight: 300; }
+      font-size: 1.5em;
+      font-weight: 400;
+      line-height: 1.55; }
+      @media (max-width: 959px) {
+        section.hero .text h2 {
+          font-size: 1.1em; } }
     section.hero .text .download {
-      margin-top: 3em; }
+      margin-top: 2em; }
       section.hero .text .download a {
-        margin-right: 0.6em; }
+        margin-right: 0.2em; }
         section.hero .text .download a img {
           height: 40px; }
   section.hero .screenshots {
     position: relative; }
     @media (max-width: 959px) {
       section.hero .screenshots {
-        height: 400px; } }
+        height: 400px;
+        margin: 2em 0; } }
     @media (min-width: 960px) {
       section.hero .screenshots {
-        width: 480px;
+        width: 500px;
         height: 520px; } }
     section.hero .screenshots div {
       position: absolute; }
@@ -117,7 +129,11 @@ section.hero {
           section.hero .screenshots div img {
             height: 400px; }
           section.hero .screenshots div.iphone {
-            transform: translateX(-100%); } }
+            transform: translateX(-100%) rotateZ(15deg);
+            padding-right: 1em; }
+          section.hero .screenshots div.android {
+            transform: rotateZ(15deg);
+            padding-left: 1em; } }
       @media (min-width: 960px) {
         section.hero .screenshots div.iphone {
           top: -3em;
@@ -128,35 +144,55 @@ section.hero {
           bottom: -3em;
           right: 0;
           opacity: 0;
-          animation: anim-android 2s ease-in-out forwards; } }
+          animation: anim-android 2s ease-in-out forwards;
+          z-index: 1; } }
+  section.hero .copyright {
+    font-size: 0.6em;
+    opacity: 0.4; }
+    @media (min-width: 960px) {
+      section.hero .copyright {
+        margin-top: 4em; } }
+    @media (max-width: 959px) {
+      section.hero .copyright {
+        margin-top: 2em;
+        line-height: 1.4; } }
 
 section.faq {
-  margin: 3em 0; }
+  margin: 5em 0; }
+  section.faq ul li {
+    margin: 0.3em 0 2em;
+    color: #999da5; }
+    section.faq ul li strong {
+      font-weight: 500;
+      color: #656A73; }
 
 section.legal {
-  margin: 3em 0 10em; }
-  section.legal ul {
-    list-style: disc outside;
-    margin-left: 2em; }
-    section.legal ul li {
-      margin: 0.3em 0; }
+  font-size: 0.8em;
+  padding: 5em 0;
+  background: #ECEFF2; }
+  section.legal ul li {
+    margin: 0.3em 0 1em; }
 
 @keyframes anim-iphone {
   0% {
-    transform: translateY(-5%) perspective(2000px) rotateY(20deg);
-    opacity: 0; }
-  30% {
+    transform: translateY(-5%) rotateZ(-5deg);
+    opacity: 0;
+    -webkit-filter: drop-shadow(0 60px 40px transparent); }
+  50% {
     opacity: 1; }
   100% {
-    transform: translateY(0);
-    opacity: 1; } }
+    transform: translateY(0) rotateZ(-8deg);
+    opacity: 1;
+    -webkit-filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.15)); } }
 
 @keyframes anim-android {
   0% {
-    transform: translateY(5%) perspective(2000px) rotateY(-20deg);
-    opacity: 0; }
+    transform: translateY(-5%) rotateZ(3deg);
+    opacity: 0;
+    -webkit-filter: drop-shadow(0 20px 40px transparent); }
   30% {
     opacity: 1; }
   100% {
-    transform: translateY(0);
-    opacity: 1; } }
+    transform: translateY(0) rotateZ(7deg);
+    opacity: 1;
+    -webkit-filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.4)); } }

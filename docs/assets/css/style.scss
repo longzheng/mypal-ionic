@@ -7,9 +7,13 @@ body {
 .container {
     margin: 0 15px;
     @media (min-width: 960px) {
-        width: 960px;
+        width: 920px;
         margin: 0 auto;
     }
+}
+
+a {
+    color: #90A600;
 }
 
 h3 {
@@ -38,27 +42,35 @@ section.hero {
     .text {
         flex: 1 0;
         @media (min-width: 960px) {
-            margin-right: 5em;
+            margin-right: 1em;
         }
         @media (max-width: 959px) {}
         >img {
             width: 80px;
         }
         h1 {
-            font-size: 3.77em;
-            font-weight: 600;
+            font-size: 3.7em;
+            font-weight: 500;
+            @media (max-width: 959px) {
+                font-size: 2.4em;
+            }
             em {
                 font-style: italic;
+                margin-left: -0.1em;
             }
         }
         h2 {
-            font-size: 1.66em;
-            font-weight: 300;
+            font-size: 1.5em;
+            font-weight: 400;
+            line-height: 1.55;
+            @media (max-width: 959px) {
+                font-size: 1.1em;
+            }
         }
         .download {
-            margin-top: 3em;
+            margin-top: 2em;
             a {
-                margin-right: 0.6em;
+                margin-right: 0.2em;
                 img {
                     height: 40px;
                 }
@@ -69,9 +81,10 @@ section.hero {
         position: relative;
         @media (max-width: 959px) {
             height: 400px;
+            margin: 2em 0;
         }
         @media (min-width: 960px) {
-            width: 480px;
+            width: 500px;
             height: 520px;
         }
         div {
@@ -82,7 +95,12 @@ section.hero {
                     height: 400px;
                 }
                 &.iphone {
-                    transform: translateX(-100%);
+                    transform: translateX(-100%) rotateZ(15deg);
+                    padding-right: 1em;
+                }
+                &.android {
+                    transform: rotateZ(15deg);
+                    padding-left: 1em;
                 }
             }
             @media (min-width: 960px) {
@@ -97,51 +115,77 @@ section.hero {
                     right: 0;
                     opacity: 0;
                     animation: anim-android 2s ease-in-out forwards;
+                    z-index: 1;
                 }
             }
+        }
+    }
+    .copyright {
+        font-size: 0.6em;
+        opacity: 0.4;
+        @media (min-width: 960px) {
+            margin-top: 4em;
+        }
+        @media (max-width: 959px) {
+            margin-top: 2em;
+            line-height: 1.4;
         }
     }
 }
 
 section.faq {
-    margin: 3em 0;
+    margin: 5em 0;
+    ul {
+        li {
+            margin: 0.3em 0 2em;
+            color: lighten(#656A73, 20%);
+            strong {
+                font-weight: 500;
+                color: #656A73;
+            }
+        }
+    }
 }
 
 section.legal {
-    margin: 3em 0 10em;
+    font-size: 0.8em;
+    padding: 5em 0;
+    background: #ECEFF2;
     ul {
-        list-style: disc outside;
-        margin-left: 2em;
         li {
-            margin: 0.3em 0;
+            margin: 0.3em 0 1em;
         }
     }
 }
 
 @keyframes anim-iphone {
     0% {
-        transform: translateY(-5%) perspective( 2000px) rotateY( 20deg);
+        transform: translateY(-5%) rotateZ(-5deg);
         opacity: 0;
+        -webkit-filter: drop-shadow(0 60px 40px rgba(0, 0, 0, 0));
     }
-    30% {
+    50% {
         opacity: 1;
     }
     100% {
-        transform: translateY(0);
+        transform: translateY(0) rotateZ(-8deg);
         opacity: 1;
+        -webkit-filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.15));
     }
 }
 
 @keyframes anim-android {
     0% {
-        transform: translateY(5%) perspective( 2000px) rotateY( -20deg);
+        transform: translateY(-5%) rotateZ(3deg);
         opacity: 0;
+        -webkit-filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0));
     }
     30% {
         opacity: 1;
     }
     100% {
-        transform: translateY(0);
+        transform: translateY(0) rotateZ(7deg);
         opacity: 1;
+        -webkit-filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.4));
     }
 }
