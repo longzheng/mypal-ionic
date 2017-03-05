@@ -101,7 +101,7 @@ export class LoginPage {
         this.configProvider.loginSave(this.username, this.password)
 
         // log event
-        Firebase.logEvent("login_success", null)
+        Firebase.logEvent("login", {})
 
         // go to load cards page
         this.goToLoadCards()
@@ -146,7 +146,7 @@ export class LoginPage {
 
   register() {
     // log event
-    Firebase.logEvent("login_register_account", null)
+    Firebase.logEvent("sign_up", {})
 
     // open myki register page
     window.open('https://www.mymyki.com.au/NTSWebPortal/Common/register/SetupWebAccess.aspx?menu=Set%20up%20web%20access', '_system');

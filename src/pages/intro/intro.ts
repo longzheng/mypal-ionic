@@ -17,6 +17,7 @@ export class IntroPage {
   ) { }
 
   ionViewDidLoad() {
+    Firebase.logEvent("tutorial_begin", {})
   }
 
   goToLogin() {
@@ -24,7 +25,7 @@ export class IntroPage {
     this.configProvider.introSetSeen();
 
     // log event
-    Firebase.logEvent("intro_finished", null)
+    Firebase.logEvent("tutorial_complete", {})
 
     // go to login page
     this.navCtrl.setRoot(LoginPage, null, { animate: true, direction: 'forward' })

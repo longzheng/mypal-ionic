@@ -114,7 +114,10 @@ export class HomePage {
 
   addPassReminder() {
     // log event
-    Firebase.logEvent("calendar_pass_expiry", null)
+    Firebase.logEvent("select_content", {
+      "content_type": "calendar pass expiry",
+      "item_id": "calendar_pass"
+    })
 
     // get card ID
     let cardId = this.card().idFormatted()
@@ -130,7 +133,10 @@ export class HomePage {
 
   addExpiryReminder() {
     // log event
-    Firebase.logEvent("calendar_card_expiry", null)
+    Firebase.logEvent("select_content", {
+      "content_type": "calendar card expiry",
+      "item_id": "calendar_card"
+    })
 
     // get card ID
     let cardId = this.card().idFormatted()
