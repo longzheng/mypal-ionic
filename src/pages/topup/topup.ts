@@ -4,7 +4,7 @@ import { ViewController, NavParams, AlertController, ActionSheetController, Load
 import { Myki } from '../../models/myki';
 import { MykiProvider } from '../../providers/myki';
 import * as $ from "jquery";
-import { Firebase } from '@ionic-native/firebase'; ƒ
+import { Firebase } from '@ionic-native/firebase';
 import '../../libs/jquery.payment.js'
 
 @Component({
