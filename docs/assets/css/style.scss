@@ -25,6 +25,7 @@ h3 {
 section.hero {
     color: #323740;
     background: #CFE257;
+    overflow: hidden;
     .container {
         display: flex;
         @media (max-width: 959px) {
