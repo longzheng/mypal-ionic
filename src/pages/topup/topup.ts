@@ -4,6 +4,7 @@ import { ViewController, NavParams, AlertController, ActionSheetController, Load
 import { Myki } from '../../models/myki';
 import { MykiProvider } from '../../providers/myki';
 import * as $ from "jquery";
+import { Firebase } from '@ionic-native/firebase'; ƒ
 import '../../libs/jquery.payment.js'
 
 @Component({
@@ -99,8 +100,18 @@ export class TopupPage {
     this.loadingTopUp = true;
     this.mykiProvider.topupCardLoad(this.topupOptions).then(
       result => {
+        // log event
+        Firebase.logEvent("topup_load", {
+          type: this.topupOptions.topupType.toString()
+        })
+
         this.loadingTopUp = false
       }, error => {
+        // log event
+        Firebase.logEvent("topup_load_error", {
+          type: this.topupOptions.topupType.toString()
+        })
+
         // show error
         let alert = this.alertCtrl.create({
           title: 'Error loading top up',
@@ -171,8 +182,8 @@ export class TopupPage {
     ) {
       // show error
       let alert = this.alertCtrl.create({
-        title: 'Top up options error',
-        subTitle: 'Please correct the errors ',
+        title: 'Top up error',
+        subTitle: 'Please correct the top up errors',
         buttons: ['OK'],
         enableBackdropDismiss: false,
       })
@@ -185,9 +196,19 @@ export class TopupPage {
     // submit the order
     this.mykiProvider.topupCardOrder(this.topupOptions).then(
       result => {
+        // log event
+        Firebase.logEvent("topup_order", {
+          type: this.topupOptions.topupType.toString()
+        })
+
         this.loadingPay = false     // remove loading
         this.topupOrder = result    // store the top up order we get back
       }, error => {
+        // log event
+        Firebase.logEvent("topup_order_error", {
+          type: this.topupOptions.topupType.toString()
+        })
+
         // show error
         let alert = this.alertCtrl.create({
           title: 'Error ordering top up',
@@ -219,6 +240,12 @@ export class TopupPage {
   }
 
   public pay() {
+    // log event
+    Firebase.logEvent("topup_pay_confirm", {
+      type: this.topupOptions.topupType.toString(),
+      price: this.topupOrder.amount
+    })
+
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Confirm top up',
       buttons: [
@@ -250,6 +277,12 @@ export class TopupPage {
 
     this.mykiProvider.topupCardPay(this.topupOptions).then(
       result => {
+        // log event
+        Firebase.logEvent("topup_pay_success", {
+          type: this.topupOptions.topupType.toString(),
+          price: this.topupOrder.amount
+        })
+
         // successfully topped up
         loading.dismiss() // dismiss loading throbber
         this.state = TopUpState.Success // set the page state
@@ -259,6 +292,12 @@ export class TopupPage {
         }, 200)
       },
       error => {
+        // log event
+        Firebase.logEvent("topup_pay_error", {
+          type: this.topupOptions.topupType.toString(),
+          price: this.topupOrder.amount
+        })
+
         // error with payment
         // myki's site shits the fan and doesn't allow the user to do anything with the top up now
         // to workaround it we're going to set up a new myki topup with the same options we already have

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config';
-import { LoginPage } from '../login/login'
+import { LoginPage } from '../login/login';
+import { Firebase } from '@ionic-native/firebase';
 
 @Component({
   selector: 'page-intro',
@@ -21,6 +22,9 @@ export class IntroPage {
   goToLogin() {
     // set intro as seen
     this.configProvider.introSetSeen();
+
+    // log event
+    Firebase.logEvent("intro_finished", null)
 
     // go to login page
     this.navCtrl.setRoot(LoginPage, null, { animate: true, direction: 'forward' })

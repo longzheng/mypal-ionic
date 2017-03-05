@@ -6,6 +6,7 @@ import { Myki } from '../../models/myki';
 import { LoginPage } from '../login/login';
 import { Calendar } from '@ionic-native/calendar';
 import { TopupPage } from '../topup/topup';
+import { Firebase } from '@ionic-native/firebase';
 import moment from 'moment';
 
 @Component({
@@ -112,6 +113,9 @@ export class HomePage {
   }
 
   addPassReminder() {
+    // log event
+    Firebase.logEvent("calendar_pass_expiry", null)
+
     // get card ID
     let cardId = this.card().idFormatted()
 
@@ -125,6 +129,9 @@ export class HomePage {
   }
 
   addExpiryReminder() {
+    // log event
+    Firebase.logEvent("calendar_card_expiry", null)
+
     // get card ID
     let cardId = this.card().idFormatted()
 
@@ -150,7 +157,7 @@ export class HomePage {
           // if we're targetting Android SDK>23 we might need this for runtime permission https://developer.android.com/training/permissions/requesting.html
           Calendar.requestWritePermission().then()
         }
-        
+
         // just kidding, we don't actually care, going to create event anyway
         this.calendarCreateReminder(title, location, notes, startDate, endDate)
       })

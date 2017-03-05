@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController, LoadingController } from 'io
 import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { LoadCardsPage } from '../load-cards/load-cards';
+import { Firebase } from '@ionic-native/firebase';
 import * as $ from "jquery";
 
 @Component({
@@ -99,6 +100,9 @@ export class LoginPage {
         // save login
         this.configProvider.loginSave(this.username, this.password)
 
+        // log event
+        Firebase.logEvent("login_success", null)
+
         // go to load cards page
         this.goToLoadCards()
       },
@@ -141,6 +145,9 @@ export class LoginPage {
   }
 
   register() {
+    // log event
+    Firebase.logEvent("login_register_account", null)
+
     // open myki register page
     window.open('https://www.mymyki.com.au/NTSWebPortal/Common/register/SetupWebAccess.aspx?menu=Set%20up%20web%20access', '_system');
   }
