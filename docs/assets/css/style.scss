@@ -82,7 +82,7 @@ section.hero {
         position: relative;
         @media (max-width: 959px) {
             height: 400px;
-            margin: 2em 0;
+            margin: 2em 0 3em;
         }
         @media (min-width: 960px) {
             width: 500px;
@@ -90,18 +90,16 @@ section.hero {
         }
         div {
             position: absolute;
+            height: 100%;
             @media (max-width: 959px) {
                 left: 50%;
-                img {
-                    height: 400px;
-                }
                 &.iphone {
                     transform: translateX(-100%) rotateZ(15deg);
-                    padding-right: 1em;
+                    padding-right: 0.5em;
                 }
                 &.android {
                     transform: rotateZ(15deg);
-                    padding-left: 1em;
+                    padding-left: 0.5em;
                 }
             }
             @media (min-width: 960px) {
@@ -118,6 +116,9 @@ section.hero {
                     animation: anim-android 2s ease-in-out forwards;
                     z-index: 1;
                 }
+            }
+            img {
+                height: 100%;
             }
         }
     }

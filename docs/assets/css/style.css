@@ -117,24 +117,23 @@ section.hero {
     @media (max-width: 959px) {
       section.hero .screenshots {
         height: 400px;
-        margin: 2em 0; } }
+        margin: 2em 0 3em; } }
     @media (min-width: 960px) {
       section.hero .screenshots {
         width: 500px;
         height: 520px; } }
     section.hero .screenshots div {
-      position: absolute; }
+      position: absolute;
+      height: 100%; }
       @media (max-width: 959px) {
         section.hero .screenshots div {
           left: 50%; }
-          section.hero .screenshots div img {
-            height: 400px; }
           section.hero .screenshots div.iphone {
             transform: translateX(-100%) rotateZ(15deg);
-            padding-right: 1em; }
+            padding-right: 0.5em; }
           section.hero .screenshots div.android {
             transform: rotateZ(15deg);
-            padding-left: 1em; } }
+            padding-left: 0.5em; } }
       @media (min-width: 960px) {
         section.hero .screenshots div.iphone {
           top: -3em;
@@ -147,6 +146,8 @@ section.hero {
           opacity: 0;
           animation: anim-android 2s ease-in-out forwards;
           z-index: 1; } }
+      section.hero .screenshots div img {
+        height: 100%; }
   section.hero .copyright {
     font-size: 0.6em;
     opacity: 0.4; }
