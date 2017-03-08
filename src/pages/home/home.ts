@@ -127,7 +127,7 @@ export class HomePage {
       null,
       `Card number ${cardId}`,
       this.card().passActiveExpiry,
-      this.card().passActiveExpiry,
+      moment(this.card().passActiveExpiry).add(1, 'seconds').toDate(),
     )
   }
 
@@ -146,7 +146,7 @@ export class HomePage {
       null,
       `Card number ${cardId}`,
       this.card().expiry,
-      this.card().expiry,
+      moment(this.card().expiry).add(1, 'seconds').toDate(),
     )
   }
 
