@@ -64,7 +64,7 @@ a {
 h3 {
   font-size: 1.7em;
   font-weight: 300;
-  margin: 0 0 0.5em; }
+  margin: 2em 0 0.5em; }
 
 section.hero {
   color: #323740;
@@ -81,8 +81,7 @@ section.hero {
       section.hero .container {
         flex-direction: row;
         align-items: center;
-        min-height: 700px;
-        height: 100vh; } }
+        min-height: 870px; } }
   section.hero .text {
     flex: 1 0; }
     @media (min-width: 960px) {

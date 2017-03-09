@@ -19,7 +19,7 @@ a {
 h3 {
     font-size: 1.7em;
     font-weight: 300;
-    margin: 0 0 0.5em;
+    margin: 2em 0 0.5em;
 }
 
 section.hero {
@@ -36,8 +36,7 @@ section.hero {
         @media (min-width: 960px) {
             flex-direction: row;
             align-items: center;
-            min-height: 700px;
-            height: 100vh;
+            min-height: 870px;
         }
     }
     .text {
