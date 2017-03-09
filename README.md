@@ -3,12 +3,12 @@
 Mobile app to see Myki account details for iOS & Android
 
 ## Download links
-- Google Play: coming soon
+- [Google Play](https://play.google.com/store/apps/details?id=com.longzheng.mypalionic)
 - App Store: coming soon
 
 ## Background
 
-I'm making this app because the [Myki site](https://www.mymyki.com.au/NTSWebPortal/Login.aspx) doesn't have a mobile view nor a mobile app, and I wanted to experiment with the [Ionic framework](https://ionicframework.com) to make a hybrid mobile app. This is a spinoff from my abandoned [Eastlink app](https://github.com/longzheng/eastly-ionic/).
+I'm making this app because the [Myki site](https://www.mymyki.com.au/NTSWebPortal/Login.aspx) doesn't have a mobile view nor a mobile app, and I wanted to experiment with the [Ionic framework](https://ionicframework.com) to make a hybrid mobile app.
 
 ## Screenshots
 ![](https://cloud.githubusercontent.com/assets/484912/23365652/eaec62e2-fd57-11e6-93b0-6996618bd975.jpg)
