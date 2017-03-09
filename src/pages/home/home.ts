@@ -73,6 +73,13 @@ export class HomePage {
           }
         },
         {
+          text: 'Help & support',
+          handler: () => {
+            // open project page
+            window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
+          }
+        },
+        {
           text: 'Log out',
           role: 'destructive',
           handler: () => {
