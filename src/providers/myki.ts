@@ -247,7 +247,7 @@ export class MykiProvider {
               let cardTable = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardDetailsPnl table");
 
               card.holder = cardTable.find("tr:nth-child(1) td:nth-child(2)").text().trim();
-              card.setType(cardTable.find("tr:nth-child(2) td:nth-child(2)").text().trim());
+              card.type = cardTable.find("tr:nth-child(2) td:nth-child(2)").text().trim();
               card.expiry = moment(cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim(), "D MMM YYYY").toDate();
               card.status = Myki.CardStatus[cardTable.find("tr:nth-child(4) td:nth-child(2)").text().trim()];
               card.moneyBalance = parseFloat(cardTable.find("tr:nth-child(5) td:nth-child(2)").text().trim().replace("$", ""));
@@ -842,7 +842,7 @@ export class MykiProvider {
       case '308412345678901':
         card.loaded = true
         card.passActive = "7 days , Zone 1-Zone 2.Valid to " + moment().add(2, 'days').format("D MMM YYYY") + " 03:00:00 AM"
-        card.type = Myki.CardType.FullFare
+        card.type = "Full Fare"
         card.expiry = new Date("2020-01-04T14:00:00.000Z")
         card.moneyTopupInProgress = 0
         card.moneyTotalBalance = 70.18
@@ -852,7 +852,7 @@ export class MykiProvider {
         break;
       case '308412345678902':
         card.loaded = true
-        card.type = Myki.CardType.Children
+        card.type = "Children"
         card.status = Myki.CardStatus.Blocked
         card.expiry = new Date("2018-12-21T14:00:00.000Z")
         card.moneyTopupInProgress = 10
@@ -861,7 +861,7 @@ export class MykiProvider {
         break;
       case '308412345678903':
         card.loaded = true
-        card.type = Myki.CardType.FullFare
+        card.type = "Concession"
         card.moneyTopupInProgress = 0
         card.lastTransactionDate = new Date("2016-01-01T16:12:02.000Z")
         break;

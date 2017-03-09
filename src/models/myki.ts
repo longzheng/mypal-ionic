@@ -12,7 +12,7 @@ export namespace Myki {
         transactionLoaded: boolean = false;
         holder: string;
         id: string;
-        type: CardType;
+        type: string;
         expiry: Date;
         status: CardStatus;
         moneyBalance: number;
@@ -30,46 +30,6 @@ export namespace Myki {
         idFormatted(): string {
             let cardId = this.id
             return `${cardId.substr(0, 1)} ${cardId.substr(1, 5)} ${cardId.substr(6, 4)} ${cardId.substr(10, 4)} ${cardId.substr(14, 1)}`
-        }
-
-        setType(type: string) {
-            switch (type) {
-                case 'Full Fare':
-                    this.type = CardType.FullFare;
-                    break;
-                case 'Concession':
-                    this.type = CardType.Concession;
-                    break;
-                case 'Children':
-                case 'Child - aged 4 to 16 years of age':
-                    this.type = CardType.Children;
-                    break;
-                case 'Seniors':
-                    this.type = CardType.Seniors;
-                    break;
-                case 'Commuter Club':
-                    this.type = CardType.CommuterClub;
-                    break;
-                default:
-                    throw new Error('Invalid card type')
-            }
-        }
-
-        typeToString(): string {
-            switch (this.type) {
-                case CardType.FullFare:
-                    return "Full fare";
-                case CardType.Concession:
-                    return "Concession";
-                case CardType.Children:
-                    return "Children";
-                case CardType.Seniors:
-                    return "Seniors";
-                case CardType.CommuterClub:
-                    return "Commuter Club"
-                default:
-                    return '';
-            }
         }
 
         passActiveFriendlyText(): string {
@@ -186,14 +146,6 @@ export namespace Myki {
                     return '';
             }
         }
-    }
-
-    export enum CardType {
-        FullFare,
-        Concession,
-        Children,
-        Seniors,
-        CommuterClub
     }
 
     export enum CardStatus {

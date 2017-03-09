@@ -74,6 +74,9 @@ page-home {
         }
     }
     .card-list {
+        div[item-right] {
+            text-align: right; // tweak so that line-wrapped words are right-aligned
+        }
         ion-icon.reminder {
             font-size: 1.3em;
             line-height: 1.3em;
