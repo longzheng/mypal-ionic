@@ -11,7 +11,7 @@ Mobile app to see Myki account details for iOS & Android
 I'm making this app because the [Myki site](https://www.mymyki.com.au/NTSWebPortal/Login.aspx) doesn't have a mobile view nor a mobile app, and I wanted to experiment with the [Ionic framework](https://ionicframework.com) to make a hybrid mobile app.
 
 ## Screenshots
-![](https://cloud.githubusercontent.com/assets/484912/23365652/eaec62e2-fd57-11e6-93b0-6996618bd975.jpg)
+![](https://cloud.githubusercontent.com/assets/484912/23941006/349f8008-09bb-11e7-98f5-25a93d40d387.jpg)
 
 ## Current features
 - Log in to Myki online account with username & password
