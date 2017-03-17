@@ -48,7 +48,9 @@
                     <div class="autotopup" [hidden]="!card().autoTopup">
                         <ion-icon name="md-refresh"></ion-icon> Auto top up enabled</div>
                 </div>
-                <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
+                <div [hidden]="isIos()">
+                    <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
+                </div>
             </div>
         </div>
 
@@ -62,9 +64,12 @@
                 <div class="info" [hidden]="!card().passActive">
                     {{card().passActive}}
                 </div>
-                <div class="buttons">
+                <div class="buttons" [hidden]="isIos()">
                     <button class="topup" ion-button icon-left block (click)="topupPass()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
                     <button class="reminder" ion-button icon-only color="dark" (click)="addPassReminder()" *ngIf="card().passActive"><ion-icon name="md-alarm"></ion-icon></button>
+                </div>
+                <div class="buttons" [hidden]="!isIos()">
+                    <button ion-button block icon-left color="dark" (click)="addPassReminder()" *ngIf="card().passActive"><ion-icon name="md-alarm"></ion-icon> Remind me</button>
                 </div>
             </div>
         </div>

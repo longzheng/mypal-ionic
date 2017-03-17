@@ -5,6 +5,11 @@
       <h1>Welcome to mypal</h1>
       <p>Manage your myki on the go</p>
     </ion-slide>
+    <ion-slide padding *ngIf="!isIos()">
+      <img src="./assets/img/intro/icon-topup.svg" />
+      <h1>Top up</h1>
+      <p>Add myki money and pass to your myki card with a credit card</p>
+    </ion-slide>
     <ion-slide padding>
       <img src="./assets/img/intro/icon-2.svg" />
       <h1>Check your balance</h1>

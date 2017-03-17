@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config';
 import { LoginPage } from '../login/login';
 import { Firebase } from '@ionic-native/firebase';
@@ -14,6 +14,7 @@ export class IntroPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public configProvider: ConfigProvider,
+    public platform: Platform,
   ) { }
 
   ionViewDidLoad() {
@@ -29,6 +30,10 @@ export class IntroPage {
 
     // go to login page
     this.navCtrl.setRoot(LoginPage, null, { animate: true, direction: 'forward' })
+  }
+
+  isIos() {
+    return this.platform.is('ios');
   }
 
 }
