@@ -111,6 +111,8 @@ section.hero {
         margin-right: 0.2em; }
         section.hero .text .download a img {
           height: 40px; }
+        section.hero .text .download a.ios {
+          opacity: 0.2; }
   section.hero .screenshots {
     position: relative; }
     @media (max-width: 959px) {

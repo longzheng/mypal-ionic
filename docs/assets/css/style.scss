@@ -74,6 +74,10 @@ section.hero {
                 img {
                     height: 40px;
                 }
+
+                &.ios {
+                    opacity: 0.2;
+                }
             }
         }
     }

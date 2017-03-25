@@ -4,7 +4,7 @@ Mobile app to see Myki account details for iOS & Android
 
 ## Download links
 - [Google Play](https://play.google.com/store/apps/details?id=com.longzheng.mypalionic)
-- App Store: coming soon
+- App Store (Apple refuses to approve the app)
 
 ## Background
 
