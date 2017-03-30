@@ -519,13 +519,13 @@ export class MykiProvider {
 
           if (options.topupType === Myki.TopupType.Money) {
             order.description = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykimoney td:nth-of-type(1)").text().trim()
-            order.amount = parseInt(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykimoney td:nth-of-type(2)").text().trim().replace('$', ''))
+            order.amount = parseFloat(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykimoney td:nth-of-type(2)").text().trim().replace('$', '').replace(',','')) // remove $ and commas from value
           }
 
           if (options.topupType === Myki.TopupType.Pass) {
             order.description = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykiPass td:nth-of-type(1)").text().trim()
-            order.amount = parseInt(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykiPass td:nth-of-type(2)").text().trim().replace('$', ''))
-            order.gstAmount = parseInt(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxGSTAmount td:nth-of-type(2)").text().trim().replace('$', ''))
+            order.amount = parseFloat(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykiPass td:nth-of-type(2)").text().trim().replace('$', '').replace(',','')) // remove $ and commas from value
+            order.gstAmount = parseFloat(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxGSTAmount td:nth-of-type(2)").text().trim().replace('$', '').replace(',','')) // remove $ and commas from value
           }
 
           // update top up reminder options from the page
