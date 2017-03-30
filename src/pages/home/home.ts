@@ -160,9 +160,11 @@ export class HomePage {
   }
 
   isIos() {
+    return false;
+    
     // Apple App Store review will not approve the app if there is top up functionality
     // detect if platform is iOS and we will hide the top up buttons
-    return this.platform.is('ios');
+    //return this.platform.is('ios');
   }
 
   private calendarCreateReminderWithPermission(title?: string, location?: string, notes?: string, startDate?: Date, endDate?: Date) {

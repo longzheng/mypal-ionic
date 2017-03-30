@@ -34,7 +34,9 @@ export class IntroPage {
   }
 
   isIos() {
-    return this.platform.is('ios');
+    return false;
+
+    //return this.platform.is('ios');
   }
 
 }
