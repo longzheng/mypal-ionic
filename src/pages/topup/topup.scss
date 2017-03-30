@@ -14,18 +14,18 @@ page-topup {
         ion-item {
             color: color($colors, light, base);
             &+ion-item {
-                border-top: 1px solid color($colors, dark, base) !important;
+                border-top: 1px solid lighten(color($colors, darker, base),10%) !important;
             }
             div[item-left] {
                 color: color($colors, light-blue, base);
             }
             div[item-right] {
                 text-align: right;
+                max-width: 70%;
             }
         }
     }
     ion-content.success {
-        background: color($colors, primary, base) !important;
         color: color($colors, darker, base);
         text-align: center;
         ion-icon {
