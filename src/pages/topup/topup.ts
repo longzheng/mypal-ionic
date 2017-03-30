@@ -32,6 +32,7 @@ export class TopupPage {
     public formBuilder: FormBuilder,
     public actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController,
+    public firebase: Firebase,
   ) {
     // get topup type from navigation parameter
     this.topupOptions.topupType = navParams.get('type')
@@ -101,7 +102,7 @@ export class TopupPage {
     this.mykiProvider.topupCardLoad(this.topupOptions).then(
       result => {
         // log event
-        Firebase.logEvent("begin_checkout", {})
+        this.firebase.logEvent("begin_checkout", {})
 
         this.loadingTopUp = false
       }, error => {
@@ -193,7 +194,7 @@ export class TopupPage {
         this.topupOrder = result    // store the top up order we get back
 
         // log event
-        Firebase.logEvent("add_to_cart", {
+        this.firebase.logEvent("add_to_cart", {
           "item_category": this.topupOptions.topupType.toString(),
           "item_id": `topup-${this.topupOptions.topupType}`,
           "item_name": this.topupOrder.description,
@@ -266,7 +267,7 @@ export class TopupPage {
     this.mykiProvider.topupCardPay(this.topupOptions).then(
       result => {
         // log event
-        Firebase.logEvent("ecommerce_purchase", {
+        this.firebase.logEvent("ecommerce_purchase", {
           "currency": "AUD",
           "value": this.topupOrder.amount
         })

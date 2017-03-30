@@ -25,6 +25,8 @@ export class HomePage {
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
     public platform: Platform,
+    public firebase: Firebase,
+    public calendar: Calendar,
   ) {
 
   }
@@ -121,7 +123,7 @@ export class HomePage {
 
   addPassReminder() {
     // log event
-    Firebase.logEvent("select_content", {
+    this.firebase.logEvent("select_content", {
       "content_type": "calendar pass expiry",
       "item_id": "calendar_pass"
     })
@@ -140,7 +142,7 @@ export class HomePage {
 
   addExpiryReminder() {
     // log event
-    Firebase.logEvent("select_content", {
+    this.firebase.logEvent("select_content", {
       "content_type": "calendar card expiry",
       "item_id": "calendar_card"
     })
@@ -167,14 +169,14 @@ export class HomePage {
     if ((<any>window).Calendar === undefined)
       return
 
-    Calendar.hasWritePermission().then(
+    this.calendar.hasWritePermission().then(
       result => {
         if (!result && this.platform.is('ios')) {
           // we don't have calendar permissions
           // ask for calendar permissions
           // only matters on iOS since Android seems to allow us to create calendar event anyway
           // if we're targetting Android SDK>23 we might need this for runtime permission https://developer.android.com/training/permissions/requesting.html
-          Calendar.requestWritePermission().then()
+          this.calendar.requestWritePermission().then()
         }
 
         // just kidding, we don't actually care, going to create event anyway
@@ -186,7 +188,7 @@ export class HomePage {
     // create the calendar event
     // on iOS: if we don't have permissions, this will error
     // on Android, we can create event anyway
-    Calendar.createEventInteractivelyWithOptions(
+    this.calendar.createEventInteractivelyWithOptions(
       title,
       location,
       notes,

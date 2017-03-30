@@ -1,9 +1,11 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { MyApp } from './app.component';
 import { CurrencyPipe } from '@angular/common';
 import { MomentModule } from 'angular2-moment';
-import { MyApp } from './app.component';
+import { IonicStorageModule } from '@ionic/storage';
 
+// Custom pages
 import { LoginPage } from '../pages/login/login';
 import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
@@ -13,12 +15,20 @@ import { IntroPage } from '../pages/intro/intro';
 import { TopupPage } from '../pages/topup/topup';
 import { LaunchRoadblockPage } from '../pages/launch-roadblock/launch-roadblock';
 
+// Custom components
 import { SelectCardComponent } from '../components/select-card/select-card';
 import { TransactionComponent } from '../components/transaction/transaction';
 
+// Custom providers
 import { MykiProvider } from '../providers/myki';
 import { ConfigProvider } from '../providers/config';
-import { Storage } from '@ionic/storage';
+
+// Ionic native
+import { StatusBar } from '@ionic-native/status-bar';
+import { HeaderColor } from '@ionic-native/header-color';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { Calendar } from '@ionic-native/calendar';
+import { Firebase } from '@ionic-native/firebase';
 
 let pages = [
   MyApp,
@@ -47,15 +57,23 @@ export function entryComponents() {
   imports: [
     IonicModule.forRoot(MyApp),
     MomentModule,
+    // Ionic Storage
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: entryComponents(),
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CurrencyPipe,
+    // Custom providers
     MykiProvider,
     ConfigProvider,
-    Storage,
-    CurrencyPipe,
+    // Ionic native
+    StatusBar,
+    HeaderColor,
+    SplashScreen,
+    Calendar,
+    Firebase
   ]
 })
 export class AppModule {}

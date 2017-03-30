@@ -22,7 +22,8 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public mykiProvider: MykiProvider,
     public configProvider: ConfigProvider,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public firebase: Firebase,
   ) {
   }
 
@@ -101,7 +102,7 @@ export class LoginPage {
         this.configProvider.loginSave(this.username, this.password)
 
         // log event
-        Firebase.logEvent("login", {})
+        this.firebase.logEvent("login", {})
 
         // go to load cards page
         this.goToLoadCards()
@@ -146,7 +147,7 @@ export class LoginPage {
 
   register() {
     // log event
-    Firebase.logEvent("sign_up", {})
+    this.firebase.logEvent("sign_up", {})
 
     // open myki register page
     window.open('https://www.mymyki.com.au/NTSWebPortal/Common/register/SetupWebAccess.aspx?menu=Set%20up%20web%20access', '_system');

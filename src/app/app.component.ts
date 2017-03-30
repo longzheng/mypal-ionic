@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { App, Platform, AlertController, ModalController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/statusbar';
-import { HeaderColor } from '@ionic-native/headercolor';
-import { Splashscreen } from '@ionic-native/splashscreen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { HeaderColor } from '@ionic-native/header-color';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { ConfigProvider } from '../providers/config';
 import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
-import { Firebase } from '@ionic-native/firebase';
 import { LaunchRoadblockPage } from '../pages/launch-roadblock/launch-roadblock';
 
 @Component({
@@ -22,23 +21,26 @@ export class MyApp {
     public configProvider: ConfigProvider,
     public alertCtrl: AlertController,
     public modalCtrl: ModalController,
+    public statusBar: StatusBar,
+    public headerColor: HeaderColor,
+    public splashScreen: SplashScreen,
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
+      this.statusBar.styleDefault();
 
       // Android status bar coloring
       if (platform.is('android')) {
-        StatusBar.backgroundColorByHexString("#9CAF24");
-        HeaderColor.tint("#9CAF24");
+        this.statusBar.backgroundColorByHexString("#9CAF24");
+        this.headerColor.tint("#9CAF24");
       }
 
       // check if we've seen intro
       this.configProvider.introHasSeen().then(
         result => {
           // hide splash screen
-          Splashscreen.hide();
+          this.splashScreen.hide();
 
           //Make sure we have the Firebase plugin
           if ((<any>window).FirebasePlugin !== undefined) {
