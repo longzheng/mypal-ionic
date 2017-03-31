@@ -12,7 +12,7 @@
 
 <ion-content padding [hidden]="!stateForm()">
     <div class="note">
-        Top ups online may take <span style="font-weight:600">up to 24 hours to process</span>. If you plan to travel sooner, PTV recommends you top up at a myki machine, myki retail shop or ticket office.
+        Top ups online may take <span style="font-weight:600">up to 90 minutes to process</span>. If you plan to travel sooner, PTV recommends you top up at a myki machine, myki retail shop or ticket office.
     </div>
 
     <div class="loading" [hidden]="!loadingTopUp">
@@ -175,7 +175,7 @@
         <ion-icon name="checkmark-circle"></ion-icon>
         <h2>Top up confirmed</h2>
         <p>Myki card {{mykiProvider.activeCard().idFormatted()}} topped up with {{topupOrder.description}}. Credit card ending in {{topupOptions.ccNumberNoSpaces().slice(-4)}} has been charged {{topupOrder.amount | currency:'USD':true}}</p>
-        <p>Top ups may take up to 24 hours to be processed and will not immediately appear in the app. After it is processed it will be synced to your card the next time you touch on.</p>
+        <p>Top ups may take up to 90 minutes to be processed and will not immediately appear in the app. After it is processed it will be synced to your card the next time you touch on.</p>
         <button ion-button block color="brand-inverse" (click)="close()">Close</button>
     </div>
 </ion-content>
