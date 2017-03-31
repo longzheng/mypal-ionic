@@ -256,14 +256,14 @@ export class MykiProvider {
 
               // process pass
               let passActive = cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim();
-              if (passActive !== '-') {
+              if (passActive !== '' && passActive !== '-') {
                 card.passActive = passActive
                 card.passActiveEnabled = true
                 card.passActiveExpiry = moment(passActive.split('Valid to ')[1], "D MMM YYYY").toDate()
               }
 
               let passInactive = cardTable.find("tr:nth-child(9) td:nth-child(2)").text().trim();
-              if (passInactive !== '-')
+              if (passInactive !== '' && passInactive !== '-')
                 card.passInactive = passInactive
 
               card.lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
