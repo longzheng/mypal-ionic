@@ -373,11 +373,13 @@ export class MykiProvider {
                 trans.moneyBalance = moneyBalance != "" ? parseFloat(moneyBalance) : null
 
                 card.transactions.push(trans)
-
-                // group transactions by date
-                card.groupTransactions()
-
               })
+
+              // sort transactions
+              card.sortTransactions();
+
+              // group transactions by date
+              card.groupTransactions()
 
               return resolve();
             },
@@ -519,13 +521,13 @@ export class MykiProvider {
 
           if (options.topupType === Myki.TopupType.Money) {
             order.description = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykimoney td:nth-of-type(1)").text().trim()
-            order.amount = parseFloat(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykimoney td:nth-of-type(2)").text().trim().replace('$', '').replace(',','')) // remove $ and commas from value
+            order.amount = parseFloat(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykimoney td:nth-of-type(2)").text().trim().replace('$', '').replace(',', '')) // remove $ and commas from value
           }
 
           if (options.topupType === Myki.TopupType.Pass) {
             order.description = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykiPass td:nth-of-type(1)").text().trim()
-            order.amount = parseFloat(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykiPass td:nth-of-type(2)").text().trim().replace('$', '').replace(',','')) // remove $ and commas from value
-            order.gstAmount = parseFloat(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxGSTAmount td:nth-of-type(2)").text().trim().replace('$', '').replace(',','')) // remove $ and commas from value
+            order.amount = parseFloat(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxMykiPass td:nth-of-type(2)").text().trim().replace('$', '').replace(',', '')) // remove $ and commas from value
+            order.gstAmount = parseFloat(scraperJquery.find("#ctl00_uxContentPlaceHolder_uxGSTAmount td:nth-of-type(2)").text().trim().replace('$', '').replace(',', '')) // remove $ and commas from value
           }
 
           // update top up reminder options from the page
@@ -885,10 +887,13 @@ export class MykiProvider {
         transaction[prop] = stubTransaction[prop];
       }
       card.transactions.push(transaction)
-
-      // group transactions by date
-      card.groupTransactions()
     }
+
+    // sort transactions
+    card.sortTransactions();
+
+    // group transactions by date
+    card.groupTransactions()
   }
 
   private mockTopupOrder(options: Myki.TopupOptions): Myki.TopupOrder {

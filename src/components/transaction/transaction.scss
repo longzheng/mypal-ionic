@@ -1,31 +1,48 @@
 transaction {
     .card {
         margin: 0;
+        position: relative;
     }
     .card-inner {
         display: flex;
         .content {
             flex: 1 0;
             display: flex;
+            .connector {
+                width: 3px;
+                background: color($colors, light-blue, base);
+                position: absolute;
+                left: 31px;
+                &.touchon {
+                    top: 0;
+                    bottom: 28px;
+                }
+                &.touchoff {
+                    top: 28px;
+                    bottom: 0;
+                }
+            }
             >.icon {
                 width: 32px;
                 height: 32px;
+                border-radius: 32px;
                 margin-right: 1em;
+                color: white;
                 position: relative;
                 text-align: center;
-                .method {
-                    color: color($colors, light-blue, base);
-                    width: 100%;
-                    height: 100%;
-                    ion-icon {
-                        width: 100%;
-                        height: 100%;
-                    }
+                &.touchon {
+                    background: #7ED321;
                 }
-                .type {
-                    position: absolute;
-                    bottom: -6px;
-                    right: -2px;
+                &.touchoff {
+                    background: #FF943C;
+                }
+                &.topup {
+                    background: #3CBCFF;
+                }
+                ion-icon {
+                    margin: 6px;
+                    width: 20px;
+                    height: 20px;
                 }
             }
             .detail {
@@ -60,25 +77,9 @@ transaction {
                         margin-left: 1em;
                     }
                 }
-            }
-        }
-    }
-    .cost {
-        border-top: 1px solid color($colors, light, base);
-        color: color($colors, dark, base);
-        font-size: 13px;
-        .info {
-            display: flex;
-            width: 100%;
-            div {
-                &:nth-child(1) {
-                    flex: 1 0;
-                }
-                &:nth-child(2) {
-                    text-align: right;
-                }
-                strong {
-                    font-weight: 600;
+                .cost {
+                    color: color($colors, brand-dark, base);
+                    margin-top: 0.5em;
                 }
             }
         }

@@ -52,6 +52,30 @@ export namespace Myki {
 
             this.transactionsGrouped = Object.keys(groups).map(function (key) { return groups[key] });
         }
+
+        // preprocess transaction list sorting
+        // the myki site returns touch off default fare out of order (after a touch on)
+        // we need the touch off default fare before a touch on so our visual timeline works
+        // all the ordering is reverse because we're displaying in reverse chronological (newest first)
+        sortTransactions() {
+            this.transactions.sort((a, b) => {
+                // first sort by time
+                if (a.dateTime > b.dateTime) {
+                    // greater than
+                    return -1;
+                } else if (a.dateTime < b.dateTime) {
+                    // less than
+                    return 1;
+                } else {
+                    // the same datetime
+                    // sort by type
+                    if (a.type === TransactionType.TouchOffDefaultFare)
+                        return 1;
+
+                    return -1;
+                }
+            })
+        }
     }
 
     export class Transaction {

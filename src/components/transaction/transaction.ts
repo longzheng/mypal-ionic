@@ -67,10 +67,6 @@ export class TransactionComponent {
     return this.transaction.service === Myki.TransactionService.VLine;
   }
 
-  isPassTransaction(): boolean {
-    return this.transaction.moneyBalance == null && this.isTouchOff()
-  }
-
   isMoneyTransaction(): boolean {
     return this.transaction.debit != null && this.isTouchOff()
   }

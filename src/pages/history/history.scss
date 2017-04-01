@@ -18,7 +18,31 @@ page-history {
                 }
                 .transaction-item {
                     width: 100%;
-                    margin-bottom: 0.8em;
+                    position: relative;
+                    &:after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        bottom: 0;
+                        left: 60px;
+                        right: 0;
+                        height: 1px;
+                        background: color($colors, light, base);
+                    }
+                    .card {
+                        border-radius: 0;
+                    }
+                    &:first-of-type {
+                        .card {
+                            border-radius: $card-radius $card-radius 0 0;
+                        }
+                    }
+                    &:last-of-type {
+                        border-bottom: 0;
+                        .card {
+                            border-radius: 0 0 $card-radius $card-radius;
+                        }
+                    }
                 }
             }
         }
