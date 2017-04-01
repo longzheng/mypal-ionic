@@ -38,7 +38,10 @@ page-history {
                         }
                     }
                     &:last-of-type {
-                        border-bottom: 0;
+                        &:after {
+                            display: none;
+                        }
+
                         .card {
                             border-radius: 0 0 $card-radius $card-radius;
                         }
