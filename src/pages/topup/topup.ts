@@ -361,10 +361,13 @@ export class TopupPage {
   }
 
   private validatePassDuration(control: FormControl) {
+    let duration = control.value;
+
     if (
-      control.value < 7
-      || (control.value > 7 && control.value < 28)
-      || control.value > 365
+      isNaN(duration)
+      || duration < 7
+      || (duration > 7 && duration < 28)
+      || duration > 365
     )
       return { invalidPassDuration: true }
 
@@ -372,9 +375,13 @@ export class TopupPage {
   }
 
   private validateMoneyAmount(control: FormControl) {
+    let amount = control.value;
+
     if (
-      control.value < 10
-      || control.value > 250
+      isNaN(amount)
+      || amount % 1 !== 0
+      || amount < 10
+      || amount > 250
     )
       return { invalidMoneyAmount: true }
 

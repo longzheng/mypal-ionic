@@ -484,14 +484,14 @@ export class MykiProvider {
         body.set('ctl00$uxContentPlaceHolder$uxSelectedamount', '')
         body.set('ctl00$uxContentPlaceHolder$uxMaxtoopupAmount', '')
         body.set('ctl00$uxContentPlaceHolder$uxAmounts', 'Other amount')
-        body.set('ctl00$uxContentPlaceHolder$uxAmountlist', options.moneyAmount.toString()) // the amount we're actually topping up
+        body.set('ctl00$uxContentPlaceHolder$uxAmountlist', parseInt(<any>options.moneyAmount).toString()) // the amount we're actually topping up
         body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
       }
 
       if (options.topupType === Myki.TopupType.Pass) {
         body.set('ctl00$uxContentPlaceHolder$uxMaxtoopupAmount', '250') // myki expects this value
         body.set('ctl00$uxContentPlaceHolder$uxSelectedamount', '')
-        body.set('ctl00$uxContentPlaceHolder$uxdays', options.passDuration.toString()) // the pass duration we're topping up
+        body.set('ctl00$uxContentPlaceHolder$uxdays', parseInt(<any>options.passDuration).toString()) // the pass duration we're topping up
         body.set('ctl00$uxContentPlaceHolder$uxDurationtype', '2') // duration is in days (not weeks)
         body.set('ctl00$uxContentPlaceHolder$uxNumberOfDays', '1043')
         body.set('ctl00$uxContentPlaceHolder$uxExpiryDays', '')

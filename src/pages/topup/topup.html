@@ -21,7 +21,7 @@
             <form [formGroup]="formTopupMoney">
                 <div class="card">
                     <div class="card-inner">
-                        <div class="title">Top up amount ($)</div>
+                        <div class="title">Top up amount ($ whole dollars)</div>
                         <ul class="presets" [hidden]="topupMoneyCustom">
                             <li><button ion-button type="button" round [color]="topupMoneyIs(10) ? 'brand-darkest' : 'brand-light'"
                                     (click)="topupMoneySet(10)">10</button></li>
@@ -55,7 +55,7 @@
             <form [formGroup]="formTopupPass">
                 <div class="card">
                     <div class="card-inner">
-                        <div class="title">Pass days</div>
+                        <div class="title">Pass duration (days)</div>
                         <ul class="presets" [hidden]="topupPassCustom">
                             <li><button ion-button type="button" round [color]="topupPassIs(7) ? 'brand-darkest' : 'brand-light'"
                                     (click)="topupPassSet(7)">7</button></li>
@@ -111,7 +111,7 @@
         <button type="submit" ion-button block (click)="order()" [disabled]="!canOrder()">Next</button>
         <div class="note" style="margin-top: 2em">
             Top ups online may take <span style="font-weight:600">up to 90 minutes to process</span>. If you plan to travel
-            sooner, PTV recommends you top up at a myki machine, myki retail shop or ticket office.
+            sooner, top up at a myki machine, myki retail shop or ticket office.
         </div>
     </div>
 </ion-content>
