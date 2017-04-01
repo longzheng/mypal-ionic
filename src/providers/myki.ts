@@ -841,10 +841,10 @@ export class MykiProvider {
       case '308412345678901':
         card.loaded = true
         card.passActive = "7 days , Zone 1-Zone 2.Valid to " + moment().add(2, 'days').format("D MMM YYYY") + " 03:00:00 AM"
-        card.passInactive = "28 days , Zone 1-Zone 2, Not yet active"
+        card.passInactive = ""
         card.type = "Full Fare"
         card.expiry = new Date("2020-01-04T14:00:00.000Z")
-        card.moneyTopupInProgress = 50
+        card.moneyTopupInProgress = 0
         card.moneyTotalBalance = 70.18
         card.lastTransactionDate = new Date("2017-02-14T00:25:47.000Z")
         card.autoTopup = true
