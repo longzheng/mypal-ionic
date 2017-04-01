@@ -41,6 +41,11 @@ $card-margin-topbottom: 1.5em;
     .card-inner {
         padding: $content-padding;
     }
+    .title {
+        color: color($colors, dark, base);
+        font-size: 1.6rem;
+        margin: 0 0 0.5em;
+    }
 }
 
 // card list container
@@ -176,11 +181,12 @@ ion-menu {
 ion-input {
     input {
         color: color($colors, brand-dark, base);
-        &::placeholder {
-            color: #c4c4c4;
-        }
-        &.ng-invalid {
+        // show error only when invalid AND touched
+        &.ng-invalid.ng-touched {
             color: color($colors, danger, base);
+            &::placeholder {
+                color: lighten(color($colors, danger, base), 20%);
+            }
         }
     }
 }

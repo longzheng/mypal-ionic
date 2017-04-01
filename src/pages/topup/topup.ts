@@ -23,6 +23,8 @@ export class TopupPage {
   public formTopupPayReminder: FormGroup;
   public topupOrder: Myki.TopupOrder = new Myki.TopupOrder()
   public transactionReference: string;
+  public topupMoneyCustom: boolean = false;
+  public topupPassCustom: boolean = false;
 
   constructor(
     public viewCtrl: ViewController,
@@ -156,6 +158,40 @@ export class TopupPage {
   public isTopupPass() {
     return this.topupOptions.topupType === Myki.TopupType.Pass
   }
+
+  public topupMoneyIs(amount: number) {
+    return this.topupOptions.moneyAmount === amount
+  }
+
+  public topupMoneySet(amount: number) {
+    this.topupOptions.moneyAmount = amount
+  }
+
+  public customTopupMoney() {
+    this.topupMoneyCustom = true;
+    $("input[name=moneyAmount]").focus()
+  }
+
+  public topupPassIs(duration: number) {
+    return this.topupOptions.passDuration === duration
+  }
+
+  public topupPassSet(duration: number) {
+    this.topupOptions.passDuration = duration
+  }
+
+  public customTopupPass() {
+    this.topupPassCustom = true;
+    $("input[name=passDuration]").focus()
+  }
+
+  public zoneFromOptions = {
+    title: 'From zone',
+  };
+
+  public zoneToOptions = {
+    title: 'To zone',
+  };
 
   public zoneSelect() {
     // currently max zones 13 https://static.ptv.vic.gov.au/siteassets/PDFs/Maps/Network-maps/Regional-Network-Map_myki-zones_connections.pdf
