@@ -49,7 +49,7 @@
                         <ion-icon name="md-refresh"></ion-icon> Auto top up enabled</div>
                 </div>
                 <div [hidden]="isIos()">
-                    <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
+                    <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard() || card().moneyTopupInProgress"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
                 </div>
             </div>
         </div>
@@ -61,11 +61,12 @@
             <div class="card-inner">
                 <p class="title">Myki pass</p>
                 <h2 class="balance-hero" [ngClass]="{'inactive': !card().passActive}">{{card().passActiveFriendlyText()}}</h2>
-                <div class="info" [hidden]="!card().passActive">
-                    {{card().passActive}}
+                <div class="info">
+                    <div [hidden]="!card().passActive">{{card().passActive}}</div>
+                    <div [hidden]="!card().passInactive">{{card().passInactive}}</div>
                 </div>
                 <div class="buttons" [hidden]="isIos()">
-                    <button class="topup" ion-button icon-left block (click)="topupPass()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
+                    <button class="topup" ion-button icon-left block (click)="topupPass()" [disabled]="replacedCard() || blockedCard() || card().passInactive"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
                     <button class="reminder" ion-button icon-only color="dark" (click)="addPassReminder()" *ngIf="card().passActive"><ion-icon name="md-alarm"></ion-icon></button>
                 </div>
                 <div class="buttons" [hidden]="!isIos()">
