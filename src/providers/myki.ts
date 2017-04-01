@@ -184,7 +184,6 @@ export class MykiProvider {
                 let passActive = cardJquery.find("td:nth-child(4)").text().trim();
                 if (passActive !== '') {
                   card.passActive = passActive
-                  card.passActiveEnabled = true
                   card.passActiveExpiry = moment(passActive.split('valid until ')[1], "D MMM YY").toDate()
                 }
               })
@@ -258,7 +257,6 @@ export class MykiProvider {
               let passActive = cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim();
               if (passActive !== '' && passActive !== '-') {
                 card.passActive = passActive
-                card.passActiveEnabled = true
                 card.passActiveExpiry = moment(passActive.split('Valid to ')[1], "D MMM YYYY").toDate()
               }
 
@@ -825,7 +823,6 @@ export class MykiProvider {
     card1.holder = this.mykiAccount.holder
     card1.moneyBalance = 70.18
     card1.passActive = "7 days, \n Zone 1-Zone 2,\n valid until " + moment().add(2, 'days').format("D MMM YY") + " 03:00:00 AM"
-    card1.passActiveEnabled = true
     card1.passActiveExpiry = moment().add(2, 'days').hours(3).toDate()
 
     let card2 = this.findOrInsertCardById('308412345678902')

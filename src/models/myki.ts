@@ -19,7 +19,6 @@ export namespace Myki {
         moneyTopupInProgress: number;
         moneyTotalBalance: number;
         passActive: string;
-        passActiveEnabled: boolean;
         passActiveExpiry: Date;
         passInactive: string;
         lastTransactionDate: Date;
