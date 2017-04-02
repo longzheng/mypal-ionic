@@ -20,6 +20,7 @@ select-card {
         height: 130px !important;
         background: color($colors, darker, base);
         color: white;
+        text-transform: none;
         &.active {
             background: color($colors, primary, base);
             color: color($colors, black, base);
@@ -51,20 +52,22 @@ select-card {
                 position: absolute;
                 top: 0;
                 right: 0;
+                opacity: 0.3;
             }
             .info {
-                display: flex;
                 font-size: 13px;
                 position: absolute;
                 bottom: 0;
                 left: 0;
                 right: 0;
+                .nickname {
+                    margin-bottom: 0.7em;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
                 .number {
                     font-weight: 600;
-                }
-                .type {
-                    text-align: right;
-                    flex: 1 0;
                 }
             }
         }

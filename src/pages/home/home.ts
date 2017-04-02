@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, App, NavController, ActionSheetController, MenuController, ToastController, ModalController } from 'ionic-angular';
+import { Platform, App, NavController, ActionSheetController, MenuController, ToastController, ModalController, AlertController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
@@ -27,6 +27,7 @@ export class HomePage {
     public platform: Platform,
     public firebase: Firebase,
     public calendar: Calendar,
+    public alertCtrl: AlertController,
   ) {
 
   }
@@ -62,6 +63,10 @@ export class HomePage {
 
   blockedCard() {
     return this.card().status === Myki.CardStatus.Blocked
+  }
+
+  cardNickname() {
+    return this.configProvider.cardNicknameGet(this.card().id)
   }
 
   userOptions() {
@@ -161,10 +166,38 @@ export class HomePage {
 
   isIos() {
     return false;
-    
+
     // Apple App Store review will not approve the app if there is top up functionality
     // detect if platform is iOS and we will hide the top up buttons
     //return this.platform.is('ios');
+  }
+
+  // set a nickname for the card
+  nicknameSet() {
+    let alert = this.alertCtrl.create({
+      title: 'Card nickname',
+      subTitle: 'Set a friendly name to identfy the card',
+      inputs: [
+        {
+          name: 'nickname',
+          placeholder: 'Nickname',
+          value: this.cardNickname()
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Set',
+          handler: data => {
+            this.configProvider.cardNicknameSet(this.card().id, data.nickname)
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   private calendarCreateReminderWithPermission(title?: string, location?: string, notes?: string, startDate?: Date, endDate?: Date) {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuController } from 'ionic-angular';
+import { ConfigProvider } from '../../providers/config';
 import { MykiProvider } from '../../providers/myki';
 import { Myki } from '../../models/myki';
 
@@ -18,6 +19,7 @@ export class SelectCardComponent {
   constructor(
     public mykiProvider: MykiProvider,
     public menuCtrl: MenuController,
+    public configProvider: ConfigProvider,
   ) {
 
   }
@@ -29,6 +31,10 @@ export class SelectCardComponent {
   selectCard(card: Myki.Card) {
     this.mykiProvider.setActiveCard(card.id);
     this.menuCtrl.close()
+  }
+
+  cardNickname(card: Myki.Card) {
+    return this.configProvider.cardNicknameGet(card.id)
   }
 
   isActiveCard(cardId: string) {

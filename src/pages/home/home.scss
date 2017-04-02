@@ -72,6 +72,9 @@ page-home {
         div[item-right] {
             text-align: right; // tweak so that line-wrapped words are right-aligned
         }
+        .nickname-unset {
+            color: color($colors, light-blue, base);
+        }
         ion-icon.reminder {
             font-size: 1.3em;
             line-height: 1.3em;

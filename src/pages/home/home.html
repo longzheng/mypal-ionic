@@ -85,6 +85,14 @@
                 <div item-right>{{card().idFormatted()}}</div>
             </ion-item>
 
+            <ion-item no-lines (click)="nicknameSet()">
+                <div item-left>Nickname</div>
+                <div item-right>
+                    <span [hidden]="cardNickname()" class="nickname-unset">Tap to set</span>
+                    <span [hidden]="!cardNickname()">{{cardNickname()}}</span>
+                </div>
+            </ion-item>
+
             <ion-item no-lines>
                 <div item-left>Name</div>
                 <div item-right>{{card().holder}}</div>
