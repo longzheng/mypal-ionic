@@ -20,7 +20,7 @@
                     <div class="zone" *ngIf="isTransport()">Zone {{transaction.zone}}</div>
                 </div>
                 <div class="cost" *ngIf="isTopup() || isMoneyTransaction()">
-                    <span *ngIf="isTopup()">Via {{transaction.serviceToString()}}</span>
+                    <span *ngIf="isTopup() && transaction.serviceToString()">Via {{transaction.serviceToString()}}</span>
                     <span *ngIf="isMoneyTransaction()">{{transaction.debit | currency:'USD':true}} (Balance: {{transaction.moneyBalance | currency:'USD':true}})</span>
                 </div>
             </div>
