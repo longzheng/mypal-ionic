@@ -115,13 +115,13 @@ export class LoginPage {
           enableBackdropDismiss: false,
           buttons: [
             {
-              text: 'Forget username',
+              text: 'Forgot username',
               handler: () => {
                 window.open('https://www.mymyki.com.au/NTSWebPortal/common/Auxillary/ForgottenUsername.aspx', '_system');
               }
             },
             {
-              text: 'Forget password',
+              text: 'Forgot password',
               handler: () => {
                 window.open('https://www.mymyki.com.au/NTSWebPortal/common/Auxillary/ForgotPassword.aspx', '_system');
               }
