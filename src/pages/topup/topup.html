@@ -7,7 +7,7 @@
             {{title()}}
         </ion-title>
          <ion-buttons right>
-            <button ion-button (click)="farePrices($event)" [hidden]="!isTopupMoney()">Fare prices</button>
+            <button ion-button (click)="farePrices($event)" [hidden]="!isTopupMoney() || !stateForm()">Fare prices</button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>

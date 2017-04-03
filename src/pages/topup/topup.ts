@@ -202,6 +202,7 @@ export class TopupPage {
     });
   }
 
+  // open fare prices popover
   public farePrices(event) {
     let popover = this.popoverCtrl.create(FarePricesPage);
     popover.present({

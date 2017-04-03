@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Platform, App, NavController, ActionSheetController, MenuController, ToastController, ModalController, AlertController } from 'ionic-angular';
+import { Platform, App, NavController, ActionSheetController, MenuController, ToastController, ModalController, AlertController, PopoverController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
 import { LoginPage } from '../login/login';
+import { FarePricesPage } from '../fare-prices/fare-prices';
 import { Calendar } from '@ionic-native/calendar';
 import { TopupPage } from '../topup/topup';
 import { Firebase } from '@ionic-native/firebase';
@@ -28,6 +29,7 @@ export class HomePage {
     public firebase: Firebase,
     public calendar: Calendar,
     public alertCtrl: AlertController,
+    public popoverCtrl: PopoverController,
   ) {
 
   }
@@ -198,6 +200,14 @@ export class HomePage {
       ]
     });
     alert.present();
+  }
+
+  // open fare prices popover
+  farePrices(event) {
+    let popover = this.popoverCtrl.create(FarePricesPage);
+    popover.present({
+      ev: event
+    });
   }
 
   private calendarCreateReminderWithPermission(title?: string, location?: string, notes?: string, startDate?: Date, endDate?: Date) {

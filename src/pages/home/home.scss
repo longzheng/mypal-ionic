@@ -1,4 +1,16 @@
 page-home {
+    ion-navbar {
+        ion-buttons[right] {            
+            button:not(:last-of-type) {
+                margin-right: 0.5em;
+            }
+            &.bar-buttons-ios {
+                ion-icon[name="mypal-fares"] {
+                    font-size: 1.3em;
+                }
+            }
+        }
+    }
     ion-content {
         .scroll-content {
             background: $background-color; // override so pull to refresh doesn't overlap page

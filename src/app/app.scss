@@ -114,6 +114,9 @@ ion-icon {
     &[class*="mypal-cards"] {
         mask-image: url(../assets/img/cards.svg);
     }
+    &[class*="mypal-fares"] {
+        mask-image: url(../assets/img/fares.svg);
+    }
 }
 
 // restyling the app tabbar
