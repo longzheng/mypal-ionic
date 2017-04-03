@@ -1,0 +1,69 @@
+<ion-content>
+  <ion-segment [(ngModel)]="fareType" color="brand-darkest">
+    <ion-segment-button value="full">
+      Full fare
+    </ion-segment-button>
+    <ion-segment-button value="concession">
+      Concession
+    </ion-segment-button>
+  </ion-segment>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="type">Type</th>
+        <th class="zone">Zone 1+2</th>
+        <th class="zone">Zone 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="type">2 hour</td>
+        <td class="zone">
+          <span *ngIf="isFull()">$4.10</span>
+          <span *ngIf="isConcession()">$2.05</span>
+        </td>
+        <td class="zone">
+          <span *ngIf="isFull()">$2.80</span>
+          <span *ngIf="isConcession()">$1.40</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="type">Daily</td>
+        <td class="zone">
+          <span *ngIf="isFull()">$8.20</span>
+          <span *ngIf="isConcession()">$4.10</span>
+        </td>
+        <td class="zone">
+          <span *ngIf="isFull()">$5.60</span>
+          <span *ngIf="isConcession()">$2.80</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="type">Weekend daily cap</td>
+        <td class="zone center" colspan="2">
+          <span *ngIf="isFull()">$6.00</span>
+          <span *ngIf="isConcession()">$3.00</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="type">Public holiday cap</td>
+        <td class="zone center" colspan="2">
+          <span *ngIf="isFull()">$6.00</span>
+          <span *ngIf="isConcession()">$3.00</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Early Bird train travel</strong><br> Touch on and touch off before 7.15am and ensure you have a positive myki
+    money balance to receive the free Early Bird fare.
+    <span *ngIf="isConcession()"><br><br>
+    <strong>Seniors daily cap</strong><br>
+     Seniors cap $4.10 for unlimited travel in Zones 1 &amp; 2. Seniors also travel free on Saturdays and Sundays for trips entirely within one or two consecutive zones
+    (including Zone 1+2) and on regional town bus services.
+    </span>
+  </div>
+
+</ion-content>

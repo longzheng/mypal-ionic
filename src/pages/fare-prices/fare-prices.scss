@@ -1,0 +1,46 @@
+page-fare-prices {
+    ion-content {
+        background: white !important;
+    }
+    ion-segment.segment-ios {
+        width: auto;
+        margin: 1em 1em 0.5em;
+    }
+    table {
+        width: auto;
+        margin: 0 1em;
+        font-size: 1.1em;
+        th,
+        td {
+            padding: 1em 0;
+            border-bottom: 1px solid color($colors, light, base);
+        }
+        thead {
+            th {
+                text-align: left;
+                font-weight: normal;
+                color: color($colors, brand-dark, base) !important;
+            }
+        }
+        tbody {
+            td {
+                background: white;
+                color: color($colors, black, base);
+            }
+        }
+        .type {
+            width: 35%;
+            color: color($colors, dark, base);
+        }
+        .zone {
+            padding-left: 0.6em;
+            text-align: center;
+            &.center {
+                text-align: center;
+            }
+        }
+    }
+    .note {
+        margin: 1em;
+    }
+}

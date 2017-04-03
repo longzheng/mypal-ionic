@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ViewController, NavParams, AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
+import { ViewController, NavParams, AlertController, ActionSheetController, LoadingController, PopoverController } from 'ionic-angular';
 import { Myki } from '../../models/myki';
 import { MykiProvider } from '../../providers/myki';
+import { FarePricesPage } from '../fare-prices/fare-prices';
 import * as $ from "jquery";
 import { Firebase } from '@ionic-native/firebase';
 import '../../libs/jquery.payment.js'
@@ -35,6 +36,7 @@ export class TopupPage {
     public actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController,
     public firebase: Firebase,
+    public popoverCtrl: PopoverController,
   ) {
     // get topup type from navigation parameter
     this.topupOptions.topupType = navParams.get('type')
@@ -197,6 +199,13 @@ export class TopupPage {
     // currently max zones 13 https://static.ptv.vic.gov.au/siteassets/PDFs/Maps/Network-maps/Regional-Network-Map_myki-zones_connections.pdf
     return Array.apply(null, { length: 13 }).map(function (value, index) {
       return (index + 1);
+    });
+  }
+
+  public farePrices(event) {
+    let popover = this.popoverCtrl.create(FarePricesPage);
+    popover.present({
+      ev: event
     });
   }
 

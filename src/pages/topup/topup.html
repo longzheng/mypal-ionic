@@ -6,6 +6,9 @@
         <ion-title>
             {{title()}}
         </ion-title>
+         <ion-buttons right>
+            <button ion-button (click)="farePrices($event)" [hidden]="!isTopupMoney()">Fare prices</button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 

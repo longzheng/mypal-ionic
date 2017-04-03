@@ -76,12 +76,16 @@ $tabs-ios-tab-color-inactive: color($colors, light-blue, base);
 $alert-ios-button-text-color: color($colors, brand-dark, base);
 $alert-ios-button-main-font-weight: 600;
 $loading-ios-content-font-weight: 500;
+$popover-ios-width: 300px;
+$popover-ios-background: white;
 
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 $alert-md-button-text-color: color($colors, brand-dark, base);
+$popover-md-width: 300px;
+$popover-md-background: white;
 
 
 // App Windows Variables

@@ -14,6 +14,7 @@ import { LoadCardsPage } from '../pages/load-cards/load-cards';
 import { IntroPage } from '../pages/intro/intro';
 import { TopupPage } from '../pages/topup/topup';
 import { LaunchRoadblockPage } from '../pages/launch-roadblock/launch-roadblock';
+import { FarePricesPage } from '../pages/fare-prices/fare-prices';
 
 // Custom components
 import { SelectCardComponent } from '../components/select-card/select-card';
@@ -40,6 +41,7 @@ let pages = [
   IntroPage,
   TopupPage,
   LaunchRoadblockPage,
+  FarePricesPage,
   SelectCardComponent,
   TransactionComponent
 ]
