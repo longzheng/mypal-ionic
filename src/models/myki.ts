@@ -146,6 +146,9 @@ export namespace Myki {
                 case 'Website':
                     this.service = TransactionService.Website;
                     break;
+                case '-':
+                    this.service = null;
+                    break;
                 default:
                     throw new Error('Invalid transaction service')
             }
