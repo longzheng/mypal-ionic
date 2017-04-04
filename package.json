@@ -22,6 +22,7 @@
     "@ionic-native/calendar": "^3.4.3",
     "@ionic-native/core": "^3.4.3",
     "@ionic-native/firebase": "^3.4.3",
+    "@ionic-native/google-maps": "^3.4.4",
     "@ionic-native/header-color": "^3.4.3",
     "@ionic-native/splash-screen": "^3.4.3",
     "@ionic-native/status-bar": "^3.4.3",
