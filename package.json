@@ -43,15 +43,19 @@
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
-    "ionic-plugin-keyboard",
     "cordova-plugin-whitelist",
     "cordova-plugin-statusbar",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
     "cordova-plugin-inappbrowser",
+    "ionic-plugin-keyboard",
     "cordova-plugin-firebase",
     "cordova-plugin-compat",
-    "cordova-plugin-calendar"
+    {
+      "locator": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
+      "id": "cordova-plugin-calendar"
+    },
+    "cordova-plugin-headercolor"
   ],
   "cordovaPlatforms": [
     {
