@@ -68,10 +68,13 @@ export namespace Myki {
                 } else {
                     // the same datetime
                     // sort by type
-                    if (a.type === TransactionType.TouchOffDefaultFare)
+                    if (a.type === TransactionType.TouchOffDefaultFare) {
                         return 1;
-
-                    return -1;
+                    } else if ((a.type === TransactionType.TopUpMoney || a.type === TransactionType.TopUpPass) && b.type === TransactionType.TouchOn ){
+                        return 1;
+                    } else {
+                        return -1;
+                    }
                 }
             })
         }
