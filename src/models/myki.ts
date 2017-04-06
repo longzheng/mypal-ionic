@@ -16,6 +16,7 @@ export namespace Myki {
         expiry: Date;
         status: CardStatus;
         moneyBalance: number;
+        moneyTopUpAppPurchased: number;
         moneyTopupInProgress: number;
         moneyTotalBalance: number;
         passActive: string;

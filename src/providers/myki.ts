@@ -651,6 +651,10 @@ export class MykiProvider {
               let scraperJquery = this.jQueryHTML(data)
               let transactionReference = scraperJquery.find("#content  fieldset:nth-of-type(1) p:nth-of-type(2) b").text().trim()
 
+              // if we purchased myki money, store how much we have on order
+              if (options.topupType === Myki.TopupType.Money)
+                this.activeCard().moneyTopUpAppPurchased += options.moneyAmount
+
               return resolve(transactionReference)
             },
             error => {
@@ -844,7 +848,7 @@ export class MykiProvider {
         card.passInactive = ""
         card.type = "Full Fare"
         card.expiry = new Date("2020-01-04T14:00:00.000Z")
-        card.moneyTopupInProgress = 0
+        card.moneyTopupInProgress = 10
         card.moneyTotalBalance = 70.18
         card.lastTransactionDate = new Date("2017-02-14T00:25:47.000Z")
         card.autoTopup = true

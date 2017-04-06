@@ -1,6 +1,6 @@
 page-home {
     ion-navbar {
-        ion-buttons[right] {            
+        ion-buttons[right] {
             button:not(:last-of-type) {
                 margin-right: 0.5em;
             }
@@ -36,6 +36,19 @@ page-home {
         .card-inner {
             flex: 1 0;
             position: relative;
+            .autotopup {
+                float: right;
+                background: #5ec700;
+                padding: 0.4em;
+                margin: -0.2em -0.2em 0 0;
+                border-radius: $card-radius;
+                color: white;
+                ion-icon {
+                    margin-right: 0.3em;
+                    vertical-align: middle;
+                    margin-top: -0.1em;
+                }
+            }
             .balance-hero {
                 font-size: 2.3em;
                 font-weight: 600;
@@ -48,17 +61,13 @@ page-home {
             .info {
                 color: color($colors, dark, base);
                 line-height: 1.5;
+                font-size: 1.2em;
                 >div {
-                    ion-icon {
-                        margin-right: 0.3em;
-                    }
                     &+div {
                         margin-top: 0.5em;
                     }
                 }
-                .autotopup {
-                    color: #5ec700;
-                }
+                .inprogress {}
             }
             button {
                 margin: 0.7em 0 0 0;

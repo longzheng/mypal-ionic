@@ -44,15 +44,17 @@
                 <ion-icon name="mypal-money"></ion-icon>
             </div>
             <div class="card-inner">
+                <div class="autotopup" [hidden]="!card().autoTopup">
+                    <ion-icon name="md-refresh"></ion-icon> Auto top up
+                </div>
                 <p class="title">Myki money</p>
                 <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}</h2>
                 <div class="info">
-                    <div class="autotopup" [hidden]="!card().autoTopup">
-                        <ion-icon name="md-refresh"></ion-icon> Auto top up enabled</div>
+                    <div class="apppurchased" [hidden]="!card().moneyTopUpAppPurchased">{{card().moneyTopUpAppPurchased | currency:'USD':true}} purchased pending processing</div>
                     <div class="inprogress" [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} will be added at next touch on</div>
                 </div>
                 <div [hidden]="isIos()">
-                    <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard() || card().moneyTopupInProgress"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
+                    <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
                 </div>
             </div>
         </div>
@@ -79,7 +81,8 @@
         </div>
 
         <div class="note">
-            Balance may be delayed by up to 24 hours<br> Last processed transaction {{card().lastTransactionDate | amCalendar:null:{sameElse: 'DD/MM/YYYY'} }}
+            Balance may be delayed by up to 24 hours<br> Last processed transaction {{card().lastTransactionDate | amCalendar:null:{sameElse:
+            'DD/MM/YYYY'} }}
         </div>
 
         <ul class="card-list">
