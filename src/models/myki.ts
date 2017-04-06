@@ -108,6 +108,12 @@ export namespace Myki {
                 case 'Top up myki money':
                     this.type = TransactionType.TopUpMoney;
                     break;
+                case 'Card Purchase':
+                    this.type = TransactionType.CardPurchase;
+                    break;
+                case 'Reimbursement':
+                    this.type = TransactionType.Reimbursement;
+                    break;
                 default:
                     throw new Error('Invalid transaction type "' + type + '"')
             }
@@ -125,6 +131,10 @@ export namespace Myki {
                     return "Top up myki pass"
                 case TransactionType.TopUpMoney:
                     return "Top up myki money";
+                case TransactionType.CardPurchase:
+                    return "Card purchase";
+                case TransactionType.Reimbursement:
+                    return "Reimbursement";
                 default:
                     return '';
             }
@@ -153,6 +163,12 @@ export namespace Myki {
                 case 'Retail':
                     this.service = TransactionService.Retail;
                     break;
+                case 'TOT':
+                    this.service = TransactionService.TOT;
+                    break;
+                case 'Others':
+                    this.service = TransactionService.Others;
+                    break;
                 case '-':
                     this.service = null;
                     break;
@@ -177,6 +193,10 @@ export namespace Myki {
                     return 'Website';
                 case TransactionService.Retail:
                     return 'Retail';
+                case TransactionService.TOT:
+                    return 'Ticket office terminal';
+                case TransactionService.Others:
+                    return 'Others';
                 default:
                     return '';
             }
@@ -194,7 +214,9 @@ export namespace Myki {
         TouchOff,
         TouchOffDefaultFare,
         TopUpPass,
-        TopUpMoney
+        TopUpMoney,
+        CardPurchase,
+        Reimbursement
     }
 
     export enum TransactionService {
@@ -205,7 +227,9 @@ export namespace Myki {
 
         AutoTopUp,
         Website,
-        Retail
+        Retail,
+        TOT,
+        Others
     }
 
     export enum TopupType {

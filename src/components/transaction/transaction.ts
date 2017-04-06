@@ -47,6 +47,16 @@ export class TransactionComponent {
     }
   }
 
+  isInfo(): boolean {
+    switch (this.transaction.type) {
+      case Myki.TransactionType.CardPurchase:
+      case Myki.TransactionType.Reimbursement:
+        return true;
+      default:
+        return false;
+    }
+  }
+
   isTransport(): boolean {
     return this.isTouchOn() || this.isTouchOff()
   }
@@ -79,9 +89,23 @@ export class TransactionComponent {
     return this.transaction.type === Myki.TransactionType.TopUpPass
   }
 
+  isReimbursement(): boolean {
+    return this.transaction.type === Myki.TransactionType.Reimbursement
+  }
+
+  isCardPurchase(): boolean {
+    return this.transaction.type === Myki.TransactionType.CardPurchase
+  }
+
   transactionDescription(): string {
-    // different text for myki money top isTopup
-    if (this.isTopupMoney()) {
+    // different text for card purchase
+    if (this.isCardPurchase()) {
+      let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
+      return credit
+    } 
+
+    // different text for myki money top up or reimbursement
+    if (this.isTopupMoney() || this.isReimbursement()) {
       let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
       let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
       return `${credit} (Balance ${balance})`
