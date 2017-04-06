@@ -31,6 +31,7 @@ import { HeaderColor } from '@ionic-native/header-color';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Calendar } from '@ionic-native/calendar';
 import { Firebase } from '@ionic-native/firebase';
+import { AppVersion } from '@ionic-native/app-version';
 
 let pages = [
   MyApp,
@@ -76,7 +77,8 @@ export function entryComponents() {
     HeaderColor,
     SplashScreen,
     Calendar,
-    Firebase
+    Firebase,
+    AppVersion,
   ]
 })
 export class AppModule { }
