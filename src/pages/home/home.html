@@ -51,7 +51,7 @@
                     </div>
                 </h2>
                 <div class="info">
-                    <div class="apppurchased" [hidden]="!card().moneyTopUpAppPurchased">{{card().moneyTopUpAppPurchased | currency:'USD':true}} purchased pending processing</div>
+                    <div class="apppurchased" [hidden]="!card().moneyTopUpAppPurchased">{{card().moneyTopUpAppPurchased | currency:'USD':true}} purchased processing</div>
                     <div class="inprogress" [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} will be added at next touch on</div>
                 </div>
                 <div [hidden]="isIos()">

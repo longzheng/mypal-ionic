@@ -653,7 +653,7 @@ export class MykiProvider {
 
               // if we purchased myki money, store how much we have on order
               if (options.topupType === Myki.TopupType.Money)
-                this.activeCard().moneyTopUpAppPurchased += options.moneyAmount
+                this.activeCard().moneyTopUpAppPurchased = (this.activeCard().moneyTopUpAppPurchased || 0) + options.moneyAmount
 
               return resolve(transactionReference)
             },
