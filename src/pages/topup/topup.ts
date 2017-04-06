@@ -7,6 +7,7 @@ import { FarePricesPage } from '../fare-prices/fare-prices';
 import * as $ from "jquery";
 import { Firebase } from '@ionic-native/firebase';
 import '../../libs/jquery.payment.js'
+import { CardIO } from '@ionic-native/card-io';
 
 @Component({
   selector: 'page-topup',
@@ -37,6 +38,7 @@ export class TopupPage {
     public loadingCtrl: LoadingController,
     public firebase: Firebase,
     public popoverCtrl: PopoverController,
+    private cardIO: CardIO,
   ) {
     // get topup type from navigation parameter
     this.topupOptions.topupType = navParams.get('type')
@@ -278,6 +280,33 @@ export class TopupPage {
 
   public canPay() {
     return (this.formTopupPayCC.valid && this.formTopupPayReminder.valid)
+  }
+
+  public scanCard() {
+    // use CardIO to scan card
+    try {
+      this.cardIO.canScan()
+        .then((res: boolean) => {
+          // can scan card
+          if (res) {
+            let options = {
+              scanExpiry: true,
+              supressConfirmation: true,
+              supressManual: true,
+              hideCardIOLogo: true
+            };
+            // scan card
+            this.cardIO.scan(options).then(response => {
+              // get scan result
+              this.topupOptions.ccNumber = response.cardNumber
+              this.topupOptions.ccExpiry = response.expiryMonth + '/' + response.expiryYear.toString().substr(2,2)
+            });
+          }
+        }
+        );
+    } catch (e) {
+      // no op
+    }
   }
 
   public pay() {

@@ -150,6 +150,7 @@
                 <ion-item no-lines>
                     <ion-label fixed>Card</ion-label>
                     <ion-input class="ccNumber" type="tel" formControlName="card" [(ngModel)]="topupOptions.ccNumber" placeholder="•••• •••• •••• ••••"></ion-input>
+                    <ion-icon item-right name="md-qr-scanner" color="dark" (click)="scanCard()"></ion-icon>
                 </ion-item>
                 <ion-item no-lines>
                     <ion-label fixed>Expiry</ion-label>
