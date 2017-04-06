@@ -32,6 +32,7 @@
     "ionicons": "3.0.0",
     "jquery": "^3.1.1",
     "moment": "^2.17.1",
+    "raven-js": "^3.14.0",
     "rxjs": "5.0.1",
     "sw-toolbox": "3.4.0",
     "zone.js": "0.7.2"

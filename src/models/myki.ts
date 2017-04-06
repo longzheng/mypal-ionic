@@ -109,7 +109,7 @@ export namespace Myki {
                     this.type = TransactionType.TopUpMoney;
                     break;
                 default:
-                    throw new Error('Invalid transaction type')
+                    throw new Error('Invalid transaction type "' + type + '"')
             }
         }
 
@@ -154,7 +154,7 @@ export namespace Myki {
                     this.service = null;
                     break;
                 default:
-                    throw new Error('Invalid transaction service')
+                    throw new Error('Invalid transaction service "' + service + '"')
             }
         }
 
