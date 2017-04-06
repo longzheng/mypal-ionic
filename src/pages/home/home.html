@@ -47,9 +47,9 @@
                 <p class="title">Myki money</p>
                 <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}</h2>
                 <div class="info">
-                    <div [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} top up in progress</div>
                     <div class="autotopup" [hidden]="!card().autoTopup">
                         <ion-icon name="md-refresh"></ion-icon> Auto top up enabled</div>
+                    <div class="inprogress" [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} will be added at next touch on</div>
                 </div>
                 <div [hidden]="isIos()">
                     <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard() || card().moneyTopupInProgress"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
