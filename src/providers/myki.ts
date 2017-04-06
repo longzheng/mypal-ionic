@@ -346,11 +346,17 @@ export class MykiProvider {
                 let time = transJquery.find("td:nth-child(2)").text().trim()
                 trans.dateTime = moment(`${date} ${time}`, "DD/MM/YYYY HH:mm:ss").toDate()
 
-                // type
-                trans.setType(transJquery.find("td:nth-child(3)").text().trim().replace("*", "")) // remove * from transaction type
+                try {
+                  // type
+                  trans.setType(transJquery.find("td:nth-child(3)").text().trim().replace("*", "")) // remove * from transaction type
 
-                // service
-                trans.setService(transJquery.find("td:nth-child(4)").text().trim())
+                  // service
+                  trans.setService(transJquery.find("td:nth-child(4)").text().trim())
+                } catch (e) {
+                  // log the transaction that failed
+                  console.log(elem.innerHTML);
+                  throw e;
+                }
 
                 // zone
                 trans.zone = transJquery.find("td:nth-child(5)").text().trim()
