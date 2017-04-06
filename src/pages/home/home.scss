@@ -36,19 +36,6 @@ page-home {
         .card-inner {
             flex: 1 0;
             position: relative;
-            .autotopup {
-                float: right;
-                background: #5ec700;
-                padding: 0.4em;
-                margin: -0.2em -0.2em 0 0;
-                border-radius: $card-radius;
-                color: white;
-                ion-icon {
-                    margin-right: 0.3em;
-                    vertical-align: middle;
-                    margin-top: -0.1em;
-                }
-            }
             .balance-hero {
                 font-size: 2.3em;
                 font-weight: 600;
@@ -57,11 +44,27 @@ page-home {
                 &.inactive {
                     color: color($colors, light-blue, base);
                 }
+                .autotopup {
+                    background: #5ec700;
+                    display: inline-block;
+                    vertical-align: middle;
+                    font-size: 1.3rem;
+                    font-weight: normal;
+                    padding: 0.4em 0.5em;
+                    margin: -0.5em 0 0 0;
+                    border-radius: $card-radius;
+                    color: #e5ffce;
+                    ion-icon {
+                        margin-right: 0.3em;
+                        vertical-align: middle;
+                        margin-top: -0.1em;
+                    }
+                }
             }
             .info {
                 color: color($colors, dark, base);
                 line-height: 1.5;
-                font-size: 1.2em;
+                font-size: 1.1em;
                 >div {
                     &+div {
                         margin-top: 0.5em;

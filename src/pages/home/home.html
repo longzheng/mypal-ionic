@@ -44,11 +44,12 @@
                 <ion-icon name="mypal-money"></ion-icon>
             </div>
             <div class="card-inner">
-                <div class="autotopup" [hidden]="!card().autoTopup">
-                    <ion-icon name="md-refresh"></ion-icon> Auto top up
-                </div>
                 <p class="title">Myki money</p>
-                <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}</h2>
+                <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}
+                    <div class="autotopup" [hidden]="!card().autoTopup">
+                        <ion-icon name="md-refresh"></ion-icon> Auto top up
+                    </div>
+                </h2>
                 <div class="info">
                     <div class="apppurchased" [hidden]="!card().moneyTopUpAppPurchased">{{card().moneyTopUpAppPurchased | currency:'USD':true}} purchased pending processing</div>
                     <div class="inprogress" [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} will be added at next touch on</div>
