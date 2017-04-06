@@ -71,7 +71,7 @@ export namespace Myki {
                     // sort by type
                     if (a.type === TransactionType.TouchOffDefaultFare) {
                         return 1;
-                    } else if ((a.type === TransactionType.TopUpMoney || a.type === TransactionType.TopUpPass) && b.type === TransactionType.TouchOn ){
+                    } else if ((a.type === TransactionType.TopUpMoney || a.type === TransactionType.TopUpPass) && b.type === TransactionType.TouchOn) {
                         return 1;
                     } else {
                         return -1;
@@ -150,6 +150,9 @@ export namespace Myki {
                 case 'Website':
                     this.service = TransactionService.Website;
                     break;
+                case 'Retail':
+                    this.service = TransactionService.Retail;
+                    break;
                 case '-':
                     this.service = null;
                     break;
@@ -172,6 +175,8 @@ export namespace Myki {
                     return 'Auto top up';
                 case TransactionService.Website:
                     return 'Website';
+                case TransactionService.Retail:
+                    return 'Retail';
                 default:
                     return '';
             }
@@ -200,6 +205,7 @@ export namespace Myki {
 
         AutoTopUp,
         Website,
+        Retail
     }
 
     export enum TopupType {
