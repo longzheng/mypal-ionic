@@ -175,6 +175,9 @@ export namespace Myki {
                 case 'Website':
                     this.service = TransactionService.Website;
                     break;
+                case 'TopCo':
+                    this.service = TransactionService.TopCo;
+                    break;
                 case 'Retail':
                     this.service = TransactionService.Retail;
                     break;
@@ -206,6 +209,8 @@ export namespace Myki {
                     return 'Auto top up';
                 case TransactionService.Website:
                     return 'Website';
+                case TransactionService.TopCo:
+                    return 'TopCo (NTS OpCo Portal)';
                 case TransactionService.Retail:
                     return 'Retail';
                 case TransactionService.TOT:
@@ -245,6 +250,7 @@ export namespace Myki {
 
         AutoTopUp,
         Website,
+        TopCo,
         Retail,
         TOT,
         Others
