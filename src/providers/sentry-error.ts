@@ -12,6 +12,7 @@ export class SentryErrorHandler extends IonicErrorHandler {
 
         try {
             Raven.captureException(error.originalError || error);
+            Raven.showReportDialog({});
         }
         catch (e) {
             console.error(e);
