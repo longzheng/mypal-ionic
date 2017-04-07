@@ -6,6 +6,7 @@ import { Myki } from '../models/myki';
 import { CustomURLEncoder } from '../models/customUrlEncoder';
 import * as $ from "jquery";
 import * as moment from 'moment';
+import Raven from 'raven-js';
 
 @Injectable()
 export class MykiProvider {
@@ -355,7 +356,7 @@ export class MykiProvider {
                 } catch (e) {
                   // log the transaction that failed
                   console.log(elem.innerHTML);
-                  throw e;
+                  Raven.captureException(e);
                 }
 
                 // zone
