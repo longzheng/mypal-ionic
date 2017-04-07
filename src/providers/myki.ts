@@ -33,6 +33,7 @@ export class MykiProvider {
   }
 
   setActiveCard(id: string) {
+    console.log('setting active card')
     this.activeCardId = id;
 
     // if card isn't loaded yet, load it
@@ -55,6 +56,7 @@ export class MykiProvider {
   }
 
   logout() {
+    console.log('logging out')
     // clear saved login
     this.configProvider.loginForget()
   }
@@ -66,6 +68,8 @@ export class MykiProvider {
 
   // log in to myki account
   login(username: string, password: string): Promise<Response> {
+    console.log('logging in')
+
     // determine if we're in mock demo models
     if (username === 'demo' && password === 'demo') {
       this.demoMode = true;
@@ -93,6 +97,8 @@ export class MykiProvider {
               if (data.url !== `${this.apiRoot}Registered/MyMykiAccount.aspx?menu=My%20myki%20account`)
                 return reject()
 
+              console.log("logged in to account")
+
               // store the last username/password
               this.username = username;
               this.password = password;
@@ -101,8 +107,13 @@ export class MykiProvider {
               let scraperJquery = this.jQueryHTML(data)
 
               // scrape account holder
-              this.mykiAccount.holder = scraperJquery.find('#ctl00_uxContentPlaceHolder_uxUserName').text()
-
+              try {
+                this.mykiAccount.holder = scraperJquery.find('#ctl00_uxContentPlaceHolder_uxUserName').text()
+              } catch (e) {
+                console.error('error scraping account holder')
+                console.log(data)
+                throw e
+              }
               return resolve();
             },
             error => {
@@ -119,6 +130,8 @@ export class MykiProvider {
   // re-login
   // the myki session might have expired
   relogin(): Promise<Response> {
+    console.log('relogging in')
+
     return new Promise((resolve, reject) => {
       // try logging in
       this.login(this.username, this.password).then(
@@ -126,6 +139,7 @@ export class MykiProvider {
           // for some reason we have to get the account details after logging in before we can do anything else
           this.getAccountDetails().then(
             result => {
+              console.log('relogged in')
               return resolve()
             }, error => {
               return reject(error)
@@ -138,6 +152,8 @@ export class MykiProvider {
   }
 
   getAccountDetails(): Promise<Response> {
+    console.log('loading account details')
+
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { this.mockAccountDetails() })
@@ -151,8 +167,10 @@ export class MykiProvider {
       this.httpGetAsp(accountUrl).then(
         data => {
           // check if we're redirected to error page
-          if (data.url === this.errorUrl)
+          if (data.url === this.errorUrl) {
+            console.error('error loading account details (redirected to error page)')
             return reject()
+          }
 
           // set up form fields
           const body = new URLSearchParams()
@@ -161,6 +179,8 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(accountUrl, body).then(
             data => {
+              console.log('loaded account details')
+
               // scrape webpage
               let scraperJquery = this.jQueryHTML(data)
 
@@ -169,55 +189,75 @@ export class MykiProvider {
 
               // get card ids of active cards
               activeCards.each((index, elem) => {
-                var cardJquery = $(elem)
-                let cardId = cardJquery.find("td:nth-child(1)").text().trim();
+                try {
+                  var cardJquery = $(elem)
+                  let cardId = cardJquery.find("td:nth-child(1)").text().trim();
 
-                // create or update card
-                let card = this.findOrInsertCardById(cardId)
+                  // create or update card
+                  let card = this.findOrInsertCardById(cardId)
 
-                card.status = Myki.CardStatus.Active;
-                card.holder = cardJquery.find("td:nth-child(2)").text().trim();
+                  card.status = Myki.CardStatus.Active;
+                  card.holder = cardJquery.find("td:nth-child(2)").text().trim();
 
-                // process money
-                card.moneyBalance = parseFloat(cardJquery.find("td:nth-child(3)").text().trim().replace("$", ""));
+                  // process money
+                  card.moneyBalance = parseFloat(cardJquery.find("td:nth-child(3)").text().trim().replace("$", ""));
 
-                // process pass
-                let passActive = cardJquery.find("td:nth-child(4)").text().trim();
-                if (passActive !== '') {
-                  card.passActive = passActive
-                  card.passActiveExpiry = moment(passActive.split('valid until ')[1], "D MMM YY").toDate()
+                  // process pass
+                  let passActive = cardJquery.find("td:nth-child(4)").text().trim();
+                  if (passActive !== '') {
+                    card.passActive = passActive
+                    card.passActiveExpiry = moment(passActive.split('valid until ')[1], "D MMM YY").toDate()
+                  }
+                } catch (e) {
+                  console.error('error parsing active card')
+                  console.log(elem)
+                  throw e
                 }
               })
+
+              console.log(`found ${activeCards.length} active cards`)
 
               // scrape ianctive cards
               let inactiveCards = scraperJquery.find("#tabs-2 table tr").not(":first")
 
               // get card ids of active cards
               inactiveCards.each((index, elem) => {
-                var cardJquery = $(elem)
-                let cardId = cardJquery.find("td:nth-child(1)").text().trim();
+                try {
+                  var cardJquery = $(elem)
+                  let cardId = cardJquery.find("td:nth-child(1)").text().trim();
 
-                // create or update card
-                let card = this.findOrInsertCardById(cardId)
+                  // create or update card
+                  let card = this.findOrInsertCardById(cardId)
 
-                card.status = Myki.CardStatus.Replaced;
-                card.holder = cardJquery.find("td:nth-child(2)").text().trim();
+                  card.status = Myki.CardStatus.Replaced;
+                  card.holder = cardJquery.find("td:nth-child(2)").text().trim();
+                } catch (e) {
+                  console.error('error parsing inactive card')
+                  console.log(elem)
+                  throw e
+                }
               })
+
+              console.log(`found ${inactiveCards.length} inactive cards`)
 
               return resolve();
             },
             error => {
+              console.error('error loading account details (POST)')
               return reject();
             }
           )
         },
         error => {
+          console.log('error loading account details (GET)')
           return reject()
         })
     })
   }
 
   getCardDetails(card: Myki.Card, loadHistory: boolean = false) {
+    console.log('getting card details')
+
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { this.mockCardDetails(card) })
@@ -231,8 +271,10 @@ export class MykiProvider {
       this.httpGetAspWithRetry(cardUrl).then(
         data => {
           // check if we're redirected to error page
-          if (data.url === this.errorUrl)
+          if (data.url === this.errorUrl) {
+            console.error('error loading card details (redirected to error page)')
             return reject()
+          }
 
           // set up form fields
           const body = new URLSearchParams()
@@ -242,32 +284,40 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(cardUrl, body).then(
             data => {
-              // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
-              let cardTable = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardDetailsPnl table");
+              console.log('loaded card details')
 
-              card.holder = cardTable.find("tr:nth-child(1) td:nth-child(2)").text().trim();
-              card.type = cardTable.find("tr:nth-child(2) td:nth-child(2)").text().trim();
-              card.expiry = moment(cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim(), "D MMM YYYY").toDate();
-              card.status = Myki.CardStatus[cardTable.find("tr:nth-child(4) td:nth-child(2)").text().trim()];
-              card.moneyBalance = parseFloat(cardTable.find("tr:nth-child(5) td:nth-child(2)").text().trim().replace("$", ""));
-              card.moneyTopupInProgress = parseFloat(cardTable.find("tr:nth-child(6) td:nth-child(2)").text().trim().replace("$", ""));
-              card.moneyTotalBalance = parseFloat(cardTable.find("tr:nth-child(7) td:nth-child(2)").text().trim().replace("$", ""));
+              try {
+                // scrape webpage
+                let scraperJquery = this.jQueryHTML(data)
+                let cardTable = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardDetailsPnl table");
 
-              // process pass
-              let passActive = cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim();
-              if (passActive !== '' && passActive !== '-') {
-                card.passActive = passActive
-                card.passActiveExpiry = moment(passActive.split('Valid to ')[1], "D MMM YYYY").toDate()
+                card.holder = cardTable.find("tr:nth-child(1) td:nth-child(2)").text().trim();
+                card.type = cardTable.find("tr:nth-child(2) td:nth-child(2)").text().trim();
+                card.expiry = moment(cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim(), "D MMM YYYY").toDate();
+                card.status = Myki.CardStatus[cardTable.find("tr:nth-child(4) td:nth-child(2)").text().trim()];
+                card.moneyBalance = parseFloat(cardTable.find("tr:nth-child(5) td:nth-child(2)").text().trim().replace("$", ""));
+                card.moneyTopupInProgress = parseFloat(cardTable.find("tr:nth-child(6) td:nth-child(2)").text().trim().replace("$", ""));
+                card.moneyTotalBalance = parseFloat(cardTable.find("tr:nth-child(7) td:nth-child(2)").text().trim().replace("$", ""));
+
+                // process pass
+                let passActive = cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim();
+                if (passActive !== '' && passActive !== '-') {
+                  card.passActive = passActive
+                  card.passActiveExpiry = moment(passActive.split('Valid to ')[1], "D MMM YYYY").toDate()
+                }
+
+                let passInactive = cardTable.find("tr:nth-child(9) td:nth-child(2)").text().trim();
+                if (passInactive !== '' && passInactive !== '-')
+                  card.passInactive = passInactive
+
+                card.lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
+
+                card.autoTopup = cardTable.find("tr:nth-child(11) td:nth-child(2) li#ctl00_uxContentPlaceHolder_ModifyAutoload").length > 0;
+              } catch (e) {
+                console.error('error parsing card details')
+                console.log(data)
+                throw e
               }
-
-              let passInactive = cardTable.find("tr:nth-child(9) td:nth-child(2)").text().trim();
-              if (passInactive !== '' && passInactive !== '-')
-                card.passInactive = passInactive
-
-              card.lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
-
-              card.autoTopup = cardTable.find("tr:nth-child(11) td:nth-child(2) li#ctl00_uxContentPlaceHolder_ModifyAutoload").length > 0;
 
               // load card history?
               if (loadHistory)
@@ -279,17 +329,21 @@ export class MykiProvider {
               return resolve();
             },
             error => {
+              console.error('error loading card details (POST)')
               return reject();
             }
           )
         },
         error => {
+          console.error('error loading card details (GET)')
           return reject()
         })
     })
   }
 
   getCardHistory(card: Myki.Card) {
+    console.log('loading card history')
+
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { this.mockCardHistory(card) })
@@ -303,8 +357,10 @@ export class MykiProvider {
       this.httpGetAspWithRetry(historyUrl).then(
         data => {
           // check if we're redirected to error page
-          if (data.url === this.errorUrl)
+          if (data.url === this.errorUrl) {
+            console.error('error loading card history (redirected to error page)')
             return reject()
+          }
 
           // set up form fields
           const body = new URLSearchParams()
@@ -321,6 +377,8 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(historyUrl, body).then(
             data => {
+              console.log('loaded card history')
+
               // clear existing card history
               card.transactions = [];
 
@@ -334,48 +392,51 @@ export class MykiProvider {
 
               // check if any transction records existing
               // there is a table row with the CSS class "header"
-              if (historyTable.find("tr.Header").length === -1)
+              if (historyTable.find("tr.Header").length === -1) {
+                console.log('no transactions exist')
                 return resolve(); // no records exist, early exit
+              }
 
               // loop over each transaction row
               historyTable.find("tr").not(":first").each((index, elem) => {
                 var transJquery = $(elem)
                 let trans = new Myki.Transaction();
 
-                // process date & time
-                let date = transJquery.find("td:nth-child(1)").text().trim()
-                let time = transJquery.find("td:nth-child(2)").text().trim()
-                trans.dateTime = moment(`${date} ${time}`, "DD/MM/YYYY HH:mm:ss").toDate()
-
                 try {
+                  // process date & time
+                  let date = transJquery.find("td:nth-child(1)").text().trim()
+                  let time = transJquery.find("td:nth-child(2)").text().trim()
+                  trans.dateTime = moment(`${date} ${time}`, "DD/MM/YYYY HH:mm:ss").toDate()
+
                   // type
                   trans.setType(transJquery.find("td:nth-child(3)").text().trim().replace("*", "")) // remove * from transaction type
 
                   // service
                   trans.setService(transJquery.find("td:nth-child(4)").text().trim())
+
+                  // zone
+                  trans.zone = transJquery.find("td:nth-child(5)").text().trim()
+
+                  // description
+                  trans.description = transJquery.find("td:nth-child(6)").text().trim()
+
+                  // credit
+                  let credit = transJquery.find("td:nth-child(7)").text().trim().replace("-", "").replace("$", "") // remove "-" for empty fields and "$"
+                  trans.credit = credit != "" ? parseFloat(credit) : null
+
+                  // debit
+                  let debit = transJquery.find("td:nth-child(8)").text().trim().replace("-", "").replace("$", "")
+                  trans.debit = debit != "" ? parseFloat(debit) : null
+
+                  // balance
+                  let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("-", "").replace("$", "")
+                  trans.moneyBalance = moneyBalance != "" ? parseFloat(moneyBalance) : null
                 } catch (e) {
                   // log the transaction that failed
-                  console.log(elem.innerHTML);
-                  Raven.captureException(e);
+                  console.error('error parsing transaction')
+                  console.log((<any>elem).outerHTML);
+                  Raven.captureException(e); // don't throw again, we just want to do it silently
                 }
-
-                // zone
-                trans.zone = transJquery.find("td:nth-child(5)").text().trim()
-
-                // description
-                trans.description = transJquery.find("td:nth-child(6)").text().trim()
-
-                // credit
-                let credit = transJquery.find("td:nth-child(7)").text().trim().replace("-", "").replace("$", "") // remove "-" for empty fields and "$"
-                trans.credit = credit != "" ? parseFloat(credit) : null
-
-                // debit
-                let debit = transJquery.find("td:nth-child(8)").text().trim().replace("-", "").replace("$", "")
-                trans.debit = debit != "" ? parseFloat(debit) : null
-
-                // balance
-                let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("-", "").replace("$", "")
-                trans.moneyBalance = moneyBalance != "" ? parseFloat(moneyBalance) : null
 
                 card.transactions.push(trans)
               })
@@ -389,17 +450,21 @@ export class MykiProvider {
               return resolve();
             },
             error => {
+              console.error('error loading card history (POST)')
               return reject();
             }
           )
         },
         error => {
+          console.error('error loading card history (GET)')
           return reject()
         })
     })
   }
 
   topupCardLoad(topupOptions: Myki.TopupOptions) {
+    console.log('loading top up')
+
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { return Promise.resolve() })
@@ -413,8 +478,12 @@ export class MykiProvider {
       this.httpGetAspWithRetry(topupUrl).then(
         data => {
           // check if we're redirected to error page
-          if (data.url === this.errorUrl)
+          if (data.url === this.errorUrl) {
+            console.error('error loading top up (redirected to error page)')
             return reject()
+          }
+
+          console.log('POST top up')
 
           // we need to first do a AJAX call to get the "list" of cards before we can select one
           // set up form fields
@@ -426,6 +495,8 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(topupUrl, body).then(
             data => {
+
+              console.log('POST top up with card selected')
 
               // select our desired card
               // set up form fields
@@ -685,6 +756,7 @@ export class MykiProvider {
         }
       ).catch(error => {
         if (error === "session") {
+          console.log('session error, going to try relogging in')
           // session error
           // we want to try logging in and then retrying
           this.relogin().then(
@@ -718,8 +790,10 @@ export class MykiProvider {
       this.http.get(url, options).subscribe(
         data => {
           // if the page we landed on is not the page we requested
-          if (data.url !== url)
+          if (data.url !== url) {
+            console.error('error HTTP GET page (redirected to another URL)')
             return reject("session")
+          }
 
           // update the page state
           this.storePageState(data);
