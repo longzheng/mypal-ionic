@@ -31,6 +31,7 @@ export class TransactionComponent {
     switch (this.transaction.type) {
       case Myki.TransactionType.TouchOff:
       case Myki.TransactionType.TouchOffDefaultFare:
+      case Myki.TransactionType.FareProductSale:
         return true;
       default:
         return false;
@@ -51,6 +52,8 @@ export class TransactionComponent {
     switch (this.transaction.type) {
       case Myki.TransactionType.CardPurchase:
       case Myki.TransactionType.Reimbursement:
+      case Myki.TransactionType.AdminFee:
+      case Myki.TransactionType.MoneyDebit:
         return true;
       default:
         return false;
@@ -97,12 +100,23 @@ export class TransactionComponent {
     return this.transaction.type === Myki.TransactionType.CardPurchase
   }
 
+  isMoneyDebit(): boolean {
+    return this.transaction.type === Myki.TransactionType.MoneyDebit
+  }
+
   transactionDescription(): string {
     // different text for card purchase
     if (this.isCardPurchase()) {
       let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
       return credit
-    } 
+    }
+
+    // money debit
+    if (this.isMoneyDebit()) {
+      let debit = this.currencyPipe.transform(this.transaction.debit, "USD", true)
+      let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
+      return `-${debit} (Balance ${balance})`
+    }
 
     // different text for myki money top up or reimbursement
     if (this.isTopupMoney() || this.isReimbursement()) {

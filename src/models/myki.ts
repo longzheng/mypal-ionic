@@ -114,6 +114,15 @@ export namespace Myki {
                 case 'Reimbursement':
                     this.type = TransactionType.Reimbursement;
                     break;
+                case 'Administration Fee':
+                    this.type = TransactionType.AdminFee;
+                    break;
+                case 'myki money debit':
+                    this.type = TransactionType.MoneyDebit;
+                    break;
+                case 'Fare Product Sale':
+                    this.type = TransactionType.FareProductSale;
+                    break;
                 default:
                     throw new Error('Invalid transaction type "' + type + '"')
             }
@@ -135,6 +144,12 @@ export namespace Myki {
                     return "Card purchase";
                 case TransactionType.Reimbursement:
                     return "Reimbursement";
+                case TransactionType.AdminFee:
+                    return "Administration fee";
+                case TransactionType.MoneyDebit:
+                    return "Myki money debit";
+                case TransactionType.FareProductSale:
+                    return "Fare product sale (touch off)";
                 default:
                     return '';
             }
@@ -216,7 +231,10 @@ export namespace Myki {
         TopUpPass,
         TopUpMoney,
         CardPurchase,
-        Reimbursement
+        Reimbursement,
+        AdminFee,
+        MoneyDebit,
+        FareProductSale
     }
 
     export enum TransactionService {
