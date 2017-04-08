@@ -104,15 +104,20 @@ export class TransactionComponent {
     return this.transaction.type === Myki.TransactionType.MoneyDebit
   }
 
+  isMoneyPurchase(): boolean {
+    return this.transaction.type === Myki.TransactionType.MoneyPurchase
+  }
+
   transactionDescription(): string {
-    // different text for card purchase
+    // card purchase
     if (this.isCardPurchase()) {
       let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
       return credit
     }
 
     // money debit
-    if (this.isMoneyDebit()) {
+    // money purchase
+    if (this.isMoneyDebit() || this.isMoneyPurchase()) {
       let debit = this.currencyPipe.transform(this.transaction.debit, "USD", true)
       let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
       return `-${debit} (Balance ${balance})`
