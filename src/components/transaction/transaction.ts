@@ -54,6 +54,7 @@ export class TransactionComponent {
       case Myki.TransactionType.Reimbursement:
       case Myki.TransactionType.AdminFee:
       case Myki.TransactionType.MoneyDebit:
+      case Myki.TransactionType.Compensation:
         return true;
       default:
         return false;
@@ -108,6 +109,10 @@ export class TransactionComponent {
     return this.transaction.type === Myki.TransactionType.MoneyPurchase
   }
 
+  isCompensation(): boolean {
+    return this.transaction.type === Myki.TransactionType.Compensation
+  }
+
   transactionDescription(): string {
     // card purchase
     if (this.isCardPurchase()) {
@@ -115,6 +120,7 @@ export class TransactionComponent {
       return credit
     }
 
+    // debit
     // money debit
     // money purchase
     if (this.isMoneyDebit() || this.isMoneyPurchase()) {
@@ -123,13 +129,22 @@ export class TransactionComponent {
       return `-${debit} (Balance ${balance})`
     }
 
-    // different text for myki money top up or reimbursement
+    // compensation
+    if (this.isCompensation()) {
+      let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
+      let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
+      return `+${credit} (Balance ${balance})`
+    }
+
+    // credit
+    // myki money top up or reimbursement
     if (this.isTopupMoney() || this.isReimbursement()) {
       let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
       let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
-      return `${credit} (Balance ${balance})`
+      return `+${credit} (Balance ${balance})`
     }
 
+    // standard touch on/touch off
     return this.transaction.description
   }
 
@@ -143,7 +158,7 @@ export class TransactionComponent {
       let userAgentMatch = navigator.userAgent.match(chromeRegex)
       // if we're not using chrome webview or chrome is less than version 56
       // we don't have sticky date headers so display date too
-      if (userAgentMatch == null || (userAgentMatch != null && parseInt(userAgentMatch[1]) < 56) )
+      if (userAgentMatch == null || (userAgentMatch != null && parseInt(userAgentMatch[1]) < 56))
         format = 'D/M LT'
     }
 
