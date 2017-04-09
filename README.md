@@ -20,9 +20,7 @@ I'm making this app because the [Myki site](https://www.mymyki.com.au/NTSWebPort
 - Shows card information
 - Shows recent transactions
 - Top up with credit card
-
-## Planned features
-- Show top up locations
+- Show retail top up outlets
 
 ## Build requirements
 Must have Cordova and [Ionic 2 installed](https://ionicframework.com/getting-started/) ```npm install -g cordova ionic```
