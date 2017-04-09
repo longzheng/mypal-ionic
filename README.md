@@ -37,3 +37,7 @@ open -a Google\ Chrome --args --disable-web-security --user-data-dir
 Windows from cmd
 chrome.exe --disable-web-security --user-data-dir
 ```
+
+Restore Ionic state (Cordova platform & plugins) ```ionic state restore```
+
+Run on device ```ionic run android```
