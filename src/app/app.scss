@@ -93,6 +93,9 @@ ion-icon {
     &[class*="mypal-tab-history"] {
         mask-image: url(../assets/img/tab-history.svg);
     }
+    &[class*="mypal-tab-outlets"] {
+        mask-image: url(../assets/img/tab-outlets.svg);
+    }
     &[class*="mypal-money"] {
         mask-image: url(../assets/img/money.svg);
     }
