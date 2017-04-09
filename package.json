@@ -58,7 +58,13 @@
       "locator": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
       "id": "cordova-plugin-calendar"
     },
-    "cordova-plugin-headercolor"
+    "cordova-plugin-headercolor",
+    "cordova-plugin-app-version",
+    "cordova-plugin-googlemaps",
+    {
+      "locator": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
+      "id": "com.googlemaps.ios"
+    }
   ],
   "cordovaPlatforms": [
     {
