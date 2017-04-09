@@ -6,7 +6,7 @@
         <ion-title>
             {{title()}}
         </ion-title>
-         <ion-buttons right>
+        <ion-buttons right>
             <button ion-button (click)="farePrices($event)" [hidden]="!isTopupMoney() || !stateForm()">Fare prices</button>
         </ion-buttons>
     </ion-navbar>
@@ -163,6 +163,8 @@
             <div class="error" *ngIf="formTopupPayCC.controls.card.touched">
                 <div *ngIf="formTopupPayCC.controls.card.hasError('invalidNumber')">
                     <ion-icon name="ios-alert-outline"></ion-icon> Invalid credit card number.</div>
+            </div>
+            <div class="error" *ngIf="formTopupPayCC.controls.card.touched">
                 <div *ngIf="formTopupPayCC.hasError('invalidCardType')">
                     <ion-icon name="ios-alert-outline"></ion-icon> Invalid credit card type. Only Mastercard and Visa supported.</div>
             </div>
