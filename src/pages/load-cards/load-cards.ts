@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config';
 import { MykiProvider } from '../../providers/myki';
-import { Myki } from '../../models/myki';
 import { TabsPage } from '../tabs/tabs';
 import { LoginPage } from '../login/login';
 

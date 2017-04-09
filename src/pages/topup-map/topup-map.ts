@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Http, Response } from '@angular/http';
-import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
+import { Http } from '@angular/http';
+import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, MarkerOptions } from '@ionic-native/google-maps';
 
 @Component({
   selector: 'page-topup-map',

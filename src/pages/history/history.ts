@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MykiProvider } from '../../providers/myki';
-import { Myki } from '../../models/myki';
 import { NavController, ToastController } from 'ionic-angular';
 
 @Component({
