@@ -48,8 +48,10 @@ export class TopupMapPage {
       // wait a second for things to initialize a bit
       setTimeout(() => {
         map.getMyLocation().then((location) => {
-          map.setCenter(location.latLng)
-          map.setZoom(17)
+          map.moveCamera({
+            'target': location.latLng,
+            'zoom': 17
+          })
         });
       }, 1000)
 
