@@ -1,0 +1,24 @@
+page-topup-map {
+    .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 1em;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 10px;
+        color: white;
+        text-align: center;
+        ion-spinner {
+            margin-bottom: 0.5em;
+            * {
+                stroke: white;
+            }
+        }
+    }
+}
+
+// prevent map gettinb hidden by blackness in iOS
+ion-app._gmaps_cdv_ .nav-decor {
+    display: none !important;
+}

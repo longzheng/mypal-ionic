@@ -15,6 +15,7 @@ import { IntroPage } from '../pages/intro/intro';
 import { TopupPage } from '../pages/topup/topup';
 import { LaunchRoadblockPage } from '../pages/launch-roadblock/launch-roadblock';
 import { FarePricesPage } from '../pages/fare-prices/fare-prices';
+import { TopupMapPage } from '../pages/topup-map/topup-map';
 
 // Custom components
 import { SelectCardComponent } from '../components/select-card/select-card';
@@ -31,6 +32,7 @@ import { HeaderColor } from '@ionic-native/header-color';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Calendar } from '@ionic-native/calendar';
 import { Firebase } from '@ionic-native/firebase';
+import { GoogleMaps } from '@ionic-native/google-maps';
 import { AppVersion } from '@ionic-native/app-version';
 
 let pages = [
@@ -44,6 +46,7 @@ let pages = [
   TopupPage,
   LaunchRoadblockPage,
   FarePricesPage,
+  TopupMapPage,
   SelectCardComponent,
   TransactionComponent
 ]
@@ -78,7 +81,8 @@ export function entryComponents() {
     SplashScreen,
     Calendar,
     Firebase,
-    AppVersion,
+    GoogleMaps,
+    AppVersion
   ]
 })
 export class AppModule { }

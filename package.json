@@ -23,6 +23,7 @@
     "@ionic-native/calendar": "^3.4.3",
     "@ionic-native/core": "^3.4.3",
     "@ionic-native/firebase": "^3.4.3",
+    "@ionic-native/google-maps": "^3.4.4",
     "@ionic-native/header-color": "^3.4.3",
     "@ionic-native/splash-screen": "^3.4.3",
     "@ionic-native/status-bar": "^3.4.3",
@@ -57,7 +58,13 @@
       "locator": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
       "id": "cordova-plugin-calendar"
     },
-    "cordova-plugin-headercolor"
+    "cordova-plugin-headercolor",
+    "cordova-plugin-app-version",
+    "cordova-plugin-googlemaps",
+    {
+      "locator": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
+      "id": "com.googlemaps.ios"
+    }
   ],
   "cordovaPlatforms": [
     {
