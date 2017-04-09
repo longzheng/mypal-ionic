@@ -1,0 +1,31 @@
+<div class="container-full" [hidden]="!loggingIn()">
+    <div class="loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <div class="text">Logging in</div>
+    </div>
+</div>
+
+<div class="container-full" [hidden]="!loadingAccount()">
+    <div class="loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <div class="text">Loading account details</div>
+    </div>
+</div>
+
+<div class="login" [hidden]="loggingIn() || loadingAccount()">
+    <div class="form">
+        <p>To see your account balance and transaction history, log in to your myki online account</p>
+        <ul class="card-list">
+            <ion-item no-lines>
+                <ion-input type="text" [(ngModel)]="username" name="username" placeholder="Username" autocapitalize="none"></ion-input>
+            </ion-item>
+            <ion-item no-lines>
+                <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Password"></ion-input>
+            </ion-item>
+        </ul>
+        <button ion-button block color="brand" (click)="logIn()">Log in</button>
+    </div>
+    <div class="register">
+        <button ion-button block outline color="brand-dark" (click)="register()">Register a myki online account</button>
+    </div>
+</div>

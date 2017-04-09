@@ -5,6 +5,13 @@ export namespace Myki {
     export class Account {
         holder: string;
         cards: Array<Card> = [];
+        loaded: boolean = false;
+
+        reset() {
+            this.holder = null
+            this.cards = []
+            this.loaded = false
+        }
     }
 
     export class Card {
@@ -28,6 +35,9 @@ export namespace Myki {
         transactionsGrouped: Array<any>;
 
         idFormatted(): string {
+            if (!this.id)
+                return null
+
             let cardId = this.id
             return `${cardId.substr(0, 1)} ${cardId.substr(1, 5)} ${cardId.substr(6, 4)} ${cardId.substr(10, 4)} ${cardId.substr(14, 1)}`
         }

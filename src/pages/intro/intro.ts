@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config';
-import { LoginPage } from '../login/login';
+import { TabsPage } from '../tabs/tabs';
 import { Firebase } from '@ionic-native/firebase';
 
 @Component({
@@ -22,15 +22,15 @@ export class IntroPage {
     this.firebase.logEvent("tutorial_begin", {})
   }
 
-  goToLogin() {
+  goToMain() {
     // set intro as seen
     this.configProvider.introSetSeen();
 
     // log event
     this.firebase.logEvent("tutorial_complete", {})
 
-    // go to login page
-    this.navCtrl.setRoot(LoginPage, null, { animate: true, direction: 'forward' })
+    // go to main page
+    this.navCtrl.setRoot(TabsPage, null, { animate: true, direction: 'forward' })
   }
 
   isIos() {

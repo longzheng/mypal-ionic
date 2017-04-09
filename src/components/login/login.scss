@@ -1,17 +1,6 @@
-page-login {
-    background: color($colors, primary, base) !important;
-    ion-content {
-        background: color($colors, primary, base) !important;
-
-        .scroll-content {
-            // fixes keyboard opening scrolling view
-            overflow-y: hidden !important;
-            padding-bottom: 0 !important;
-        }
-    }
+login {
     .login {
         .form {
-            margin-top: 3em;
             h2 {
                 color: color($colors, darker, base);
                 text-align: center;

@@ -4,8 +4,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HeaderColor } from '@ionic-native/header-color';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppVersion } from '@ionic-native/app-version';
+import { MykiProvider } from '../providers/myki';
 import { ConfigProvider } from '../providers/config';
-import { LoginPage } from '../pages/login/login';
+import { TabsPage } from '../pages/tabs/tabs';
 import { IntroPage } from '../pages/intro/intro';
 import { LaunchRoadblockPage } from '../pages/launch-roadblock/launch-roadblock';
 import Raven from 'raven-js';
@@ -26,6 +27,7 @@ export class MyApp {
     public headerColor: HeaderColor,
     public splashScreen: SplashScreen,
     public appVersion: AppVersion,
+    public mykiProvider: MykiProvider,
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -48,7 +50,7 @@ export class MyApp {
 
       // check if we've seen intro
       this.configProvider.introHasSeen().then(
-        result => {
+        hasSeenIntro => {
           // hide splash screen
           this.splashScreen.hide();
 
@@ -64,9 +66,38 @@ export class MyApp {
             });
           }
 
-          if (result)
-            return this.rootPage = LoginPage;
+          if (hasSeenIntro) {
+            // handle saved login
+            // get saved login details
+            this.configProvider.loginGet().then(
+              result => {
+                // check if we have any stored login information
+                if (!result[0] || !result[1]) {
+                  return;
+                }
 
+                // login
+                this.mykiProvider.loginGetAccount(result[0], result[1]).then()
+                  .catch(() => {
+                    // show error
+                    let alert = this.alertCtrl.create({
+                      title: 'Saved login invalid',
+                      subTitle: 'Could not log in with your saved login details. Please re-enter your username and password.',
+                      buttons: ['OK'],
+                      enableBackdropDismiss: false
+                    })
+                    alert.present()
+                  })
+              }, error => {
+                // no op
+              })
+
+            // if have seen intro, go to tabs page
+            this.rootPage = TabsPage
+            return
+          }
+
+          // if have not seen the intro, go to intro
           this.rootPage = IntroPage;
         })
 
@@ -96,5 +127,9 @@ export class MyApp {
         modal.present()
       }
     });
+  }
+
+  menuEnabled() {
+    return this.mykiProvider.mykiAccount.loaded
   }
 }

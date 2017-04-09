@@ -3,7 +3,6 @@ import { Platform, App, NavController, ActionSheetController, MenuController, To
 import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
-import { LoginPage } from '../login/login';
 import { FarePricesPage } from '../fare-prices/fare-prices';
 import { Calendar } from '@ionic-native/calendar';
 import { TopupPage } from '../topup/topup';
@@ -35,8 +34,6 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    // enable menu
-    this.menuCtrl.enable(true);
   }
 
   doRefresh(refresher) {
@@ -53,6 +50,10 @@ export class HomePage {
       }).then(() => {
         refresher.complete();
       })
+  }
+
+  accountLoaded() {
+    return this.mykiProvider.mykiAccount.loaded;
   }
 
   card() {
@@ -94,14 +95,6 @@ export class HomePage {
           handler: () => {
             // log out
             this.mykiProvider.logout()
-
-            // disable menu
-            this.menuCtrl.enable(false);
-
-            // go to log in page
-            this.app.getRootNav().setRoot(LoginPage, null, { animate: true, direction: 'back' }).then(result => {
-              this.mykiProvider.reset()
-            })
           }
         },
 
