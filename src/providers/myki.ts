@@ -204,7 +204,7 @@ export class MykiProvider {
 
                   // process pass
                   let passActive = cardJquery.find("td:nth-child(4)").text().trim();
-                  if (passActive !== '') {
+                  if (passActive !== '' && passActive.includes('valid until')) {
                     card.passActive = passActive
                     card.passActiveExpiry = moment(passActive.split('valid until ')[1], "D MMM YY").toDate()
                   }
