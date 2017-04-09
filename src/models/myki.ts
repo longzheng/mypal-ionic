@@ -34,7 +34,7 @@ export namespace Myki {
 
         passActiveFriendlyText(): string {
             if (!this.passActiveExpiry)
-                return 'No pass'
+                return 'No pass active'
 
             let daysLeft = moment(this.passActiveExpiry).startOf('day').diff(moment(), 'days') + 1;
             return `${daysLeft} day${daysLeft > 1 ? 's' : ''} left`
