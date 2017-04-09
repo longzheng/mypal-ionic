@@ -309,10 +309,6 @@ export class MykiProvider {
                 let passInactive = cardTable.find("tr:nth-child(9) td:nth-child(2)").text().trim();
                 if (passInactive !== '' && passInactive !== '-') {
                   card.passInactive = passInactive
-                  console.log('myki pass not yet active exists')
-                  console.log('active: ' + passActive)
-                  console.log('inactive: ' + passInactive)
-                  Raven.captureException(new Error("Debug myki pass inactive"));
                 }
 
                 card.lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
