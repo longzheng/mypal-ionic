@@ -9,6 +9,7 @@
                 <ion-icon name="mypal-vline" *ngIf="!isTopup() && isServiceVLine()"></ion-icon>
                 <ion-icon name="mypal-money" *ngIf="isTopupMoney()"></ion-icon>
                 <ion-icon name="mypal-pass" *ngIf="isTopupPass()"></ion-icon>
+                <ion-icon name="mypal-info" *ngIf="isInfo()"></ion-icon>
             </div>
             <div class="detail">
                 <div class="meta">
@@ -19,9 +20,10 @@
                     <div class="description">{{transactionDescription()}}</div>
                     <div class="zone" *ngIf="isTransport()">Zone {{transaction.zone}}</div>
                 </div>
-                <div class="cost" *ngIf="isTopup() || isMoneyTransaction()">
-                    <span *ngIf="isTopup() && transaction.serviceToString()">Via {{transaction.serviceToString()}}</span>
-                    <span *ngIf="isMoneyTransaction()">{{transaction.debit | currency:'USD':true}} (Balance: {{transaction.moneyBalance | currency:'USD':true}})</span>
+                <div class="cost" *ngIf="isTopup() || isMoneyTransaction() || isInfo()">
+                    <span *ngIf="isCompensation() && transaction.description">{{transaction.description}}</span>
+                    <span *ngIf="(isInfo() || isTopup()) && transaction.serviceToString()">{{transaction.serviceToString()}}</span>
+                    <span *ngIf="isMoneyTransaction()">-{{transaction.debit | currency:'USD':true}} (Balance: {{transaction.moneyBalance | currency:'USD':true}})</span>
                 </div>
             </div>
         </div>

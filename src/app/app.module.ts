@@ -24,6 +24,7 @@ import { TransactionComponent } from '../components/transaction/transaction';
 // Custom providers
 import { MykiProvider } from '../providers/myki';
 import { ConfigProvider } from '../providers/config';
+import { SentryErrorHandler } from '../providers/sentry-error';
 
 // Ionic native
 import { StatusBar } from '@ionic-native/status-bar';
@@ -32,6 +33,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Calendar } from '@ionic-native/calendar';
 import { Firebase } from '@ionic-native/firebase';
 import { GoogleMaps } from '@ionic-native/google-maps';
+import { AppVersion } from '@ionic-native/app-version';
 
 let pages = [
   MyApp,
@@ -68,7 +70,7 @@ export function entryComponents() {
   bootstrap: [IonicApp],
   entryComponents: entryComponents(),
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
     CurrencyPipe,
     // Custom providers
     MykiProvider,
@@ -79,7 +81,8 @@ export function entryComponents() {
     SplashScreen,
     Calendar,
     Firebase,
-    GoogleMaps
+    GoogleMaps,
+    AppVersion
   ]
 })
-export class AppModule {}
+export class AppModule { }

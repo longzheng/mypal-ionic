@@ -16,6 +16,7 @@ export namespace Myki {
         expiry: Date;
         status: CardStatus;
         moneyBalance: number;
+        moneyTopUpAppPurchased: number;
         moneyTopupInProgress: number;
         moneyTotalBalance: number;
         passActive: string;
@@ -33,7 +34,7 @@ export namespace Myki {
 
         passActiveFriendlyText(): string {
             if (!this.passActiveExpiry)
-                return 'No pass'
+                return 'No pass active'
 
             let daysLeft = moment(this.passActiveExpiry).startOf('day').diff(moment(), 'days') + 1;
             return `${daysLeft} day${daysLeft > 1 ? 's' : ''} left`
@@ -70,7 +71,7 @@ export namespace Myki {
                     // sort by type
                     if (a.type === TransactionType.TouchOffDefaultFare) {
                         return 1;
-                    } else if ((a.type === TransactionType.TopUpMoney || a.type === TransactionType.TopUpPass) && b.type === TransactionType.TouchOn ){
+                    } else if ((a.type === TransactionType.TopUpMoney || a.type === TransactionType.TopUpPass) && b.type === TransactionType.TouchOn) {
                         return 1;
                     } else {
                         return -1;
@@ -107,8 +108,29 @@ export namespace Myki {
                 case 'Top up myki money':
                     this.type = TransactionType.TopUpMoney;
                     break;
+                case 'Card Purchase':
+                    this.type = TransactionType.CardPurchase;
+                    break;
+                case 'Reimbursement':
+                    this.type = TransactionType.Reimbursement;
+                    break;
+                case 'Administration Fee':
+                    this.type = TransactionType.AdminFee;
+                    break;
+                case 'myki money debit':
+                    this.type = TransactionType.MoneyDebit;
+                    break;
+                case 'Fare Product Sale':
+                    this.type = TransactionType.FareProductSale;
+                    break;
+                case 'myki money purchase':
+                    this.type = TransactionType.FareProductSale;
+                    break;
+                case 'Compensation':
+                    this.type = TransactionType.Compensation;
+                    break;
                 default:
-                    throw new Error('Invalid transaction type')
+                    throw new Error('Invalid transaction type "' + type + '"')
             }
         }
 
@@ -124,6 +146,20 @@ export namespace Myki {
                     return "Top up myki pass"
                 case TransactionType.TopUpMoney:
                     return "Top up myki money";
+                case TransactionType.CardPurchase:
+                    return "Card purchase";
+                case TransactionType.Reimbursement:
+                    return "Reimbursement";
+                case TransactionType.AdminFee:
+                    return "Administration fee";
+                case TransactionType.MoneyDebit:
+                    return "Myki money debit";
+                case TransactionType.FareProductSale:
+                    return "Fare product sale (touch off)";
+                case TransactionType.MoneyPurchase:
+                    return "Myki money purchase";
+                case TransactionType.Compensation:
+                    return "Compensation";
                 default:
                     return '';
             }
@@ -149,11 +185,24 @@ export namespace Myki {
                 case 'Website':
                     this.service = TransactionService.Website;
                     break;
+                case 'TopCo':
+                    this.service = TransactionService.TopCo;
+                    break;
+                case 'Retail':
+                    this.service = TransactionService.Retail;
+                    break;
+                case 'TOT':
+                    this.service = TransactionService.TOT;
+                    break;
+                case 'Others':
+                    this.service = TransactionService.Others;
+                    break;
                 case '-':
+                case '':
                     this.service = null;
                     break;
                 default:
-                    throw new Error('Invalid transaction service')
+                    throw new Error('Invalid transaction service "' + service + '"')
             }
         }
 
@@ -171,6 +220,14 @@ export namespace Myki {
                     return 'Auto top up';
                 case TransactionService.Website:
                     return 'Website';
+                case TransactionService.TopCo:
+                    return 'TopCo (NTS OpCo Portal)';
+                case TransactionService.Retail:
+                    return 'Retail';
+                case TransactionService.TOT:
+                    return 'Ticket office terminal';
+                case TransactionService.Others:
+                    return 'Others';
                 default:
                     return '';
             }
@@ -188,7 +245,14 @@ export namespace Myki {
         TouchOff,
         TouchOffDefaultFare,
         TopUpPass,
-        TopUpMoney
+        TopUpMoney,
+        CardPurchase,
+        Reimbursement,
+        AdminFee,
+        MoneyDebit,
+        FareProductSale,
+        MoneyPurchase,
+        Compensation
     }
 
     export enum TransactionService {
@@ -199,6 +263,10 @@ export namespace Myki {
 
         AutoTopUp,
         Website,
+        TopCo,
+        Retail,
+        TOT,
+        Others
     }
 
     export enum TopupType {

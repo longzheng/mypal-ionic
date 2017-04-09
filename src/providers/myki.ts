@@ -6,6 +6,7 @@ import { Myki } from '../models/myki';
 import { CustomURLEncoder } from '../models/customUrlEncoder';
 import * as $ from "jquery";
 import * as moment from 'moment';
+import Raven from 'raven-js';
 
 @Injectable()
 export class MykiProvider {
@@ -32,6 +33,7 @@ export class MykiProvider {
   }
 
   setActiveCard(id: string) {
+    console.log('setting active card')
     this.activeCardId = id;
 
     // if card isn't loaded yet, load it
@@ -54,6 +56,7 @@ export class MykiProvider {
   }
 
   logout() {
+    console.log('logging out')
     // clear saved login
     this.configProvider.loginForget()
   }
@@ -65,6 +68,8 @@ export class MykiProvider {
 
   // log in to myki account
   login(username: string, password: string): Promise<Response> {
+    console.log('logging in')
+
     // determine if we're in mock demo models
     if (username === 'demo' && password === 'demo') {
       this.demoMode = true;
@@ -92,6 +97,8 @@ export class MykiProvider {
               if (data.url !== `${this.apiRoot}Registered/MyMykiAccount.aspx?menu=My%20myki%20account`)
                 return reject()
 
+              console.log("logged in to account")
+
               // store the last username/password
               this.username = username;
               this.password = password;
@@ -100,8 +107,13 @@ export class MykiProvider {
               let scraperJquery = this.jQueryHTML(data)
 
               // scrape account holder
-              this.mykiAccount.holder = scraperJquery.find('#ctl00_uxContentPlaceHolder_uxUserName').text()
-
+              try {
+                this.mykiAccount.holder = scraperJquery.find('#ctl00_uxContentPlaceHolder_uxUserName').text()
+              } catch (e) {
+                console.error('error scraping account holder')
+                console.log(data)
+                throw e
+              }
               return resolve();
             },
             error => {
@@ -118,6 +130,8 @@ export class MykiProvider {
   // re-login
   // the myki session might have expired
   relogin(): Promise<Response> {
+    console.log('relogging in')
+
     return new Promise((resolve, reject) => {
       // try logging in
       this.login(this.username, this.password).then(
@@ -125,6 +139,7 @@ export class MykiProvider {
           // for some reason we have to get the account details after logging in before we can do anything else
           this.getAccountDetails().then(
             result => {
+              console.log('relogged in')
               return resolve()
             }, error => {
               return reject(error)
@@ -137,6 +152,8 @@ export class MykiProvider {
   }
 
   getAccountDetails(): Promise<Response> {
+    console.log('loading account details')
+
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { this.mockAccountDetails() })
@@ -150,8 +167,10 @@ export class MykiProvider {
       this.httpGetAsp(accountUrl).then(
         data => {
           // check if we're redirected to error page
-          if (data.url === this.errorUrl)
+          if (data.url === this.errorUrl) {
+            console.error('error loading account details (redirected to error page)')
             return reject()
+          }
 
           // set up form fields
           const body = new URLSearchParams()
@@ -160,6 +179,8 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(accountUrl, body).then(
             data => {
+              console.log('loaded account details')
+
               // scrape webpage
               let scraperJquery = this.jQueryHTML(data)
 
@@ -168,55 +189,75 @@ export class MykiProvider {
 
               // get card ids of active cards
               activeCards.each((index, elem) => {
-                var cardJquery = $(elem)
-                let cardId = cardJquery.find("td:nth-child(1)").text().trim();
+                try {
+                  var cardJquery = $(elem)
+                  let cardId = cardJquery.find("td:nth-child(1)").text().trim();
 
-                // create or update card
-                let card = this.findOrInsertCardById(cardId)
+                  // create or update card
+                  let card = this.findOrInsertCardById(cardId)
 
-                card.status = Myki.CardStatus.Active;
-                card.holder = cardJquery.find("td:nth-child(2)").text().trim();
+                  card.status = Myki.CardStatus.Active;
+                  card.holder = cardJquery.find("td:nth-child(2)").text().trim();
 
-                // process money
-                card.moneyBalance = parseFloat(cardJquery.find("td:nth-child(3)").text().trim().replace("$", ""));
+                  // process money
+                  card.moneyBalance = parseFloat(cardJquery.find("td:nth-child(3)").text().trim().replace("$", ""));
 
-                // process pass
-                let passActive = cardJquery.find("td:nth-child(4)").text().trim();
-                if (passActive !== '') {
-                  card.passActive = passActive
-                  card.passActiveExpiry = moment(passActive.split('valid until ')[1], "D MMM YY").toDate()
+                  // process pass
+                  let passActive = cardJquery.find("td:nth-child(4)").text().trim();
+                  if (passActive !== '' && passActive.includes('valid until')) {
+                    card.passActive = passActive
+                    card.passActiveExpiry = moment(passActive.split('valid until ')[1], "D MMM YY").toDate()
+                  }
+                } catch (e) {
+                  console.error('error parsing active card')
+                  console.log(elem)
+                  throw e
                 }
               })
+
+              console.log(`found ${activeCards.length} active cards`)
 
               // scrape ianctive cards
               let inactiveCards = scraperJquery.find("#tabs-2 table tr").not(":first")
 
               // get card ids of active cards
               inactiveCards.each((index, elem) => {
-                var cardJquery = $(elem)
-                let cardId = cardJquery.find("td:nth-child(1)").text().trim();
+                try {
+                  var cardJquery = $(elem)
+                  let cardId = cardJquery.find("td:nth-child(1)").text().trim();
 
-                // create or update card
-                let card = this.findOrInsertCardById(cardId)
+                  // create or update card
+                  let card = this.findOrInsertCardById(cardId)
 
-                card.status = Myki.CardStatus.Replaced;
-                card.holder = cardJquery.find("td:nth-child(2)").text().trim();
+                  card.status = Myki.CardStatus.Replaced;
+                  card.holder = cardJquery.find("td:nth-child(2)").text().trim();
+                } catch (e) {
+                  console.error('error parsing inactive card')
+                  console.log(elem)
+                  throw e
+                }
               })
+
+              console.log(`found ${inactiveCards.length} inactive cards`)
 
               return resolve();
             },
             error => {
+              console.error('error loading account details (POST)')
               return reject();
             }
           )
         },
         error => {
+          console.log('error loading account details (GET)')
           return reject()
         })
     })
   }
 
   getCardDetails(card: Myki.Card, loadHistory: boolean = false) {
+    console.log('getting card details')
+
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { this.mockCardDetails(card) })
@@ -230,8 +271,10 @@ export class MykiProvider {
       this.httpGetAspWithRetry(cardUrl).then(
         data => {
           // check if we're redirected to error page
-          if (data.url === this.errorUrl)
+          if (data.url === this.errorUrl) {
+            console.error('error loading card details (redirected to error page)')
             return reject()
+          }
 
           // set up form fields
           const body = new URLSearchParams()
@@ -241,32 +284,41 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(cardUrl, body).then(
             data => {
-              // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
-              let cardTable = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardDetailsPnl table");
+              console.log('loaded card details')
 
-              card.holder = cardTable.find("tr:nth-child(1) td:nth-child(2)").text().trim();
-              card.type = cardTable.find("tr:nth-child(2) td:nth-child(2)").text().trim();
-              card.expiry = moment(cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim(), "D MMM YYYY").toDate();
-              card.status = Myki.CardStatus[cardTable.find("tr:nth-child(4) td:nth-child(2)").text().trim()];
-              card.moneyBalance = parseFloat(cardTable.find("tr:nth-child(5) td:nth-child(2)").text().trim().replace("$", ""));
-              card.moneyTopupInProgress = parseFloat(cardTable.find("tr:nth-child(6) td:nth-child(2)").text().trim().replace("$", ""));
-              card.moneyTotalBalance = parseFloat(cardTable.find("tr:nth-child(7) td:nth-child(2)").text().trim().replace("$", ""));
+              try {
+                // scrape webpage
+                let scraperJquery = this.jQueryHTML(data)
+                let cardTable = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardDetailsPnl table");
 
-              // process pass
-              let passActive = cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim();
-              if (passActive !== '' && passActive !== '-') {
-                card.passActive = passActive
-                card.passActiveExpiry = moment(passActive.split('Valid to ')[1], "D MMM YYYY").toDate()
+                card.holder = cardTable.find("tr:nth-child(1) td:nth-child(2)").text().trim();
+                card.type = cardTable.find("tr:nth-child(2) td:nth-child(2)").text().trim();
+                card.expiry = moment(cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim(), "D MMM YYYY").toDate();
+                card.status = Myki.CardStatus[cardTable.find("tr:nth-child(4) td:nth-child(2)").text().trim()];
+                card.moneyBalance = parseFloat(cardTable.find("tr:nth-child(5) td:nth-child(2)").text().trim().replace("$", ""));
+                card.moneyTopupInProgress = parseFloat(cardTable.find("tr:nth-child(6) td:nth-child(2)").text().trim().replace("$", ""));
+                card.moneyTotalBalance = parseFloat(cardTable.find("tr:nth-child(7) td:nth-child(2)").text().trim().replace("$", ""));
+
+                // process pass
+                let passActive = cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim();
+                if (passActive !== '' && passActive !== '-') {
+                  card.passActive = passActive
+                  card.passActiveExpiry = moment(passActive.split('Valid to ')[1], "D MMM YYYY").toDate()
+                }
+
+                let passInactive = cardTable.find("tr:nth-child(9) td:nth-child(2)").text().trim();
+                if (passInactive !== '' && passInactive !== '-') {
+                  card.passInactive = passInactive
+                }
+
+                card.lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
+
+                card.autoTopup = cardTable.find("tr:nth-child(11) td:nth-child(2) li#ctl00_uxContentPlaceHolder_ModifyAutoload").length > 0;
+              } catch (e) {
+                console.error('error parsing card details')
+                console.log(data)
+                throw e
               }
-
-              let passInactive = cardTable.find("tr:nth-child(9) td:nth-child(2)").text().trim();
-              if (passInactive !== '' && passInactive !== '-')
-                card.passInactive = passInactive
-
-              card.lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
-
-              card.autoTopup = cardTable.find("tr:nth-child(11) td:nth-child(2) li#ctl00_uxContentPlaceHolder_ModifyAutoload").length > 0;
 
               // load card history?
               if (loadHistory)
@@ -278,17 +330,21 @@ export class MykiProvider {
               return resolve();
             },
             error => {
+              console.error('error loading card details (POST)')
               return reject();
             }
           )
         },
         error => {
+          console.error('error loading card details (GET)')
           return reject()
         })
     })
   }
 
   getCardHistory(card: Myki.Card) {
+    console.log('loading card history')
+
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { this.mockCardHistory(card) })
@@ -302,8 +358,10 @@ export class MykiProvider {
       this.httpGetAspWithRetry(historyUrl).then(
         data => {
           // check if we're redirected to error page
-          if (data.url === this.errorUrl)
+          if (data.url === this.errorUrl) {
+            console.error('error loading card history (redirected to error page)')
             return reject()
+          }
 
           // set up form fields
           const body = new URLSearchParams()
@@ -320,6 +378,8 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(historyUrl, body).then(
             data => {
+              console.log('loaded card history')
+
               // clear existing card history
               card.transactions = [];
 
@@ -333,42 +393,51 @@ export class MykiProvider {
 
               // check if any transction records existing
               // there is a table row with the CSS class "header"
-              if (historyTable.find("tr.Header").length === -1)
+              if (historyTable.find("tr.Header").length === -1) {
+                console.log('no transactions exist')
                 return resolve(); // no records exist, early exit
+              }
 
               // loop over each transaction row
               historyTable.find("tr").not(":first").each((index, elem) => {
                 var transJquery = $(elem)
                 let trans = new Myki.Transaction();
 
-                // process date & time
-                let date = transJquery.find("td:nth-child(1)").text().trim()
-                let time = transJquery.find("td:nth-child(2)").text().trim()
-                trans.dateTime = moment(`${date} ${time}`, "DD/MM/YYYY HH:mm:ss").toDate()
+                try {
+                  // process date & time
+                  let date = transJquery.find("td:nth-child(1)").text().trim()
+                  let time = transJquery.find("td:nth-child(2)").text().trim()
+                  trans.dateTime = moment(`${date} ${time}`, "DD/MM/YYYY HH:mm:ss").toDate()
 
-                // type
-                trans.setType(transJquery.find("td:nth-child(3)").text().trim().replace("*", "")) // remove * from transaction type
+                  // type
+                  trans.setType(transJquery.find("td:nth-child(3)").text().trim().replace("*", "")) // remove * from transaction type
 
-                // service
-                trans.setService(transJquery.find("td:nth-child(4)").text().trim())
+                  // service
+                  trans.setService(transJquery.find("td:nth-child(4)").text().trim())
 
-                // zone
-                trans.zone = transJquery.find("td:nth-child(5)").text().trim()
+                  // zone
+                  trans.zone = transJquery.find("td:nth-child(5)").text().trim()
 
-                // description
-                trans.description = transJquery.find("td:nth-child(6)").text().trim()
+                  // description
+                  trans.description = transJquery.find("td:nth-child(6)").text().trim()
 
-                // credit
-                let credit = transJquery.find("td:nth-child(7)").text().trim().replace("-", "").replace("$", "") // remove "-" for empty fields and "$"
-                trans.credit = credit != "" ? parseFloat(credit) : null
+                  // credit
+                  let credit = transJquery.find("td:nth-child(7)").text().trim().replace("-", "").replace("$", "") // remove "-" for empty fields and "$"
+                  trans.credit = credit != "" ? parseFloat(credit) : null
 
-                // debit
-                let debit = transJquery.find("td:nth-child(8)").text().trim().replace("-", "").replace("$", "")
-                trans.debit = debit != "" ? parseFloat(debit) : null
+                  // debit
+                  let debit = transJquery.find("td:nth-child(8)").text().trim().replace("-", "").replace("$", "")
+                  trans.debit = debit != "" ? parseFloat(debit) : null
 
-                // balance
-                let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("-", "").replace("$", "")
-                trans.moneyBalance = moneyBalance != "" ? parseFloat(moneyBalance) : null
+                  // balance
+                  let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("-", "").replace("$", "")
+                  trans.moneyBalance = moneyBalance != "" ? parseFloat(moneyBalance) : null
+                } catch (e) {
+                  // log the transaction that failed
+                  console.error('error parsing transaction')
+                  console.log((<any>elem).outerHTML);
+                  Raven.captureException(e); // don't throw again, we just want to do it silently
+                }
 
                 card.transactions.push(trans)
               })
@@ -382,17 +451,21 @@ export class MykiProvider {
               return resolve();
             },
             error => {
+              console.error('error loading card history (POST)')
               return reject();
             }
           )
         },
         error => {
+          console.error('error loading card history (GET)')
           return reject()
         })
     })
   }
 
   topupCardLoad(topupOptions: Myki.TopupOptions) {
+    console.log('loading top up')
+
     // determine if we're in mock demo models
     if (this.demoMode) {
       return this.mockHttpDelay(() => { return Promise.resolve() })
@@ -406,8 +479,12 @@ export class MykiProvider {
       this.httpGetAspWithRetry(topupUrl).then(
         data => {
           // check if we're redirected to error page
-          if (data.url === this.errorUrl)
+          if (data.url === this.errorUrl) {
+            console.error('error loading top up (redirected to error page)')
             return reject()
+          }
+
+          console.log('POST top up')
 
           // we need to first do a AJAX call to get the "list" of cards before we can select one
           // set up form fields
@@ -419,6 +496,8 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(topupUrl, body).then(
             data => {
+
+              console.log('POST top up with card selected')
 
               // select our desired card
               // set up form fields
@@ -651,6 +730,10 @@ export class MykiProvider {
               let scraperJquery = this.jQueryHTML(data)
               let transactionReference = scraperJquery.find("#content  fieldset:nth-of-type(1) p:nth-of-type(2) b").text().trim()
 
+              // if we purchased myki money, store how much we have on order
+              if (options.topupType === Myki.TopupType.Money)
+                this.activeCard().moneyTopUpAppPurchased = (this.activeCard().moneyTopUpAppPurchased || 0) + options.moneyAmount
+
               return resolve(transactionReference)
             },
             error => {
@@ -674,6 +757,7 @@ export class MykiProvider {
         }
       ).catch(error => {
         if (error === "session") {
+          console.log('session error, going to try relogging in')
           // session error
           // we want to try logging in and then retrying
           this.relogin().then(
@@ -707,8 +791,10 @@ export class MykiProvider {
       this.http.get(url, options).subscribe(
         data => {
           // if the page we landed on is not the page we requested
-          if (data.url !== url)
+          if (data.url !== url) {
+            console.error('error HTTP GET page (redirected to another URL)')
             return reject("session")
+          }
 
           // update the page state
           this.storePageState(data);
@@ -844,7 +930,7 @@ export class MykiProvider {
         card.passInactive = ""
         card.type = "Full Fare"
         card.expiry = new Date("2020-01-04T14:00:00.000Z")
-        card.moneyTopupInProgress = 0
+        card.moneyTopupInProgress = 10
         card.moneyTotalBalance = 70.18
         card.lastTransactionDate = new Date("2017-02-14T00:25:47.000Z")
         card.autoTopup = true
@@ -871,7 +957,7 @@ export class MykiProvider {
   private mockCardHistory(card: Myki.Card) {
     card.transactionLoaded = true
 
-    let stubTransactions: Array<Myki.Transaction> = JSON.parse('[{"dateTime":"2017-02-14T00:25:47.000Z","type":1,"service":1,"zone":"1/2","description":"Flinders Street Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:43:17.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:43:17.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:31:47.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:31:47.000Z","type":4,"service":1,"zone":"1","description":"Southern Cross Station","credit":2,"debit":null,"moneyBalance":70.18},{"dateTime":"2017-02-13T23:31:47.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T09:12:43.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T00:26:39.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:42:42.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:42:42.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:30:17.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:30:17.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T09:13:35.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T00:46:31.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T00:02:37.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T00:02:37.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-09T08:25:09.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-09T00:34:45.000Z","type":1,"service":1,"zone":"1","description":"Flinders Street Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:41:01.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:41:01.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:30:36.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":4.1,"moneyBalance":70.18},{"dateTime":"2017-02-08T23:30:36.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:30:36.000Z","type":3,"service":5,"zone":"-","description":"7 Days  Zone 1-2 ($41.00)","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T09:05:41.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T00:33:26.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":1.3,"moneyBalance":74.28},{"dateTime":"2017-02-07T23:40:12.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T23:40:12.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":2.8,"moneyBalance":75.58},{"dateTime":"2017-02-07T23:28:41.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T23:28:41.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T09:28:47.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T00:26:07.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:37:58.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:37:58.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:29:04.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:29:04.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T08:35:46.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T00:29:18.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-05T23:43:38.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-05T23:43:38.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-05T23:25:19.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null}]')
+    let stubTransactions: Array<Myki.Transaction> = JSON.parse('[{"dateTime":"2017-02-14T00:25:47.000Z","type":5,"service":6,"zone":"","description":"Springvale Station","credit":6,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-14T00:25:47.000Z","type":1,"service":1,"zone":"1/2","description":"Flinders Street Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:43:17.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:43:17.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:31:47.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T23:31:47.000Z","type":4,"service":1,"zone":"1","description":"Southern Cross Station","credit":2,"debit":null,"moneyBalance":70.18},{"dateTime":"2017-02-13T23:31:47.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T09:12:43.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-13T00:26:39.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:42:42.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:42:42.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:30:17.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-12T23:30:17.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T09:13:35.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T00:46:31.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T00:02:37.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-10T00:02:37.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-09T08:25:09.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-09T00:34:45.000Z","type":1,"service":1,"zone":"1","description":"Flinders Street Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:41:01.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:41:01.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:30:36.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":4.1,"moneyBalance":70.18},{"dateTime":"2017-02-08T23:30:36.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T23:30:36.000Z","type":3,"service":5,"zone":"-","description":"7 Days  Zone 1-2 ($41.00)","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T09:05:41.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-08T00:33:26.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":1.3,"moneyBalance":74.28},{"dateTime":"2017-02-07T23:40:12.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T23:40:12.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":2.8,"moneyBalance":75.58},{"dateTime":"2017-02-07T23:28:41.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T23:28:41.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T09:28:47.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-07T00:26:07.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:37:58.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:37:58.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:29:04.000Z","type":2,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T23:29:04.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T08:35:46.000Z","type":0,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-06T00:29:18.000Z","type":1,"service":1,"zone":"1","description":"Southern Cross Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-05T23:43:38.000Z","type":0,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-05T23:43:38.000Z","type":2,"service":1,"zone":"2","description":"Springvale Station","credit":null,"debit":null,"moneyBalance":null},{"dateTime":"2017-02-05T23:25:19.000Z","type":0,"service":0,"zone":"2","description":"Mulgrave,Route 813in","credit":null,"debit":null,"moneyBalance":null}]')
 
     for (let stubTransaction of stubTransactions) {
       let transaction = new Myki.Transaction()

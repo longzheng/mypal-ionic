@@ -178,7 +178,7 @@ export class HomePage {
   nicknameSet() {
     let alert = this.alertCtrl.create({
       title: 'Card nickname',
-      subTitle: 'Set a friendly name to identfy the card',
+      subTitle: 'Set a friendly name to identify the card',
       inputs: [
         {
           name: 'nickname',

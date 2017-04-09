@@ -3,17 +3,18 @@ import { App, Platform, AlertController, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HeaderColor } from '@ionic-native/header-color';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AppVersion } from '@ionic-native/app-version';
 import { ConfigProvider } from '../providers/config';
 import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
 import { LaunchRoadblockPage } from '../pages/launch-roadblock/launch-roadblock';
+import Raven from 'raven-js';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage = null;
-  roadBlocked = false;
 
   constructor(
     public app: App,
@@ -24,6 +25,7 @@ export class MyApp {
     public statusBar: StatusBar,
     public headerColor: HeaderColor,
     public splashScreen: SplashScreen,
+    public appVersion: AppVersion,
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -34,6 +36,14 @@ export class MyApp {
       if (platform.is('android')) {
         this.statusBar.backgroundColorByHexString("#9CAF24");
         this.headerColor.tint("#9CAF24");
+      }
+
+      // Sentry.io error logging
+      // Set release version from app version
+      if ((<any>window).cordova !== undefined) {
+        this.appVersion.getVersionNumber().then(result => {
+          Raven.setRelease(result)
+        })
       }
 
       // check if we've seen intro

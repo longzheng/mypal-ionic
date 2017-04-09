@@ -49,4 +49,8 @@ export class SelectCardComponent {
     return this.mykiProvider.mykiAccount.cards.filter(x => x.status === Myki.CardStatus.Replaced)
   }
 
+  trackCard(index, card: Myki.Card) {
+    return card ? card.id : undefined
+  }
+
 }

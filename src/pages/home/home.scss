@@ -1,6 +1,6 @@
 page-home {
     ion-navbar {
-        ion-buttons[right] {            
+        ion-buttons[right] {
             button:not(:last-of-type) {
                 margin-right: 0.5em;
             }
@@ -44,21 +44,33 @@ page-home {
                 &.inactive {
                     color: color($colors, light-blue, base);
                 }
+                .autotopup {
+                    background: #5ec700;
+                    display: inline-block;
+                    vertical-align: middle;
+                    font-size: 1.3rem;
+                    font-weight: normal;
+                    padding: 0.4em 0.5em;
+                    margin: -0.5em 0 0 0;
+                    border-radius: $card-radius;
+                    color: #e5ffce;
+                    ion-icon {
+                        margin-right: 0.3em;
+                        vertical-align: middle;
+                        margin-top: -0.1em;
+                    }
+                }
             }
             .info {
                 color: color($colors, dark, base);
                 line-height: 1.5;
+                font-size: 1.1em;
                 >div {
-                    ion-icon {
-                        margin-right: 0.3em;
-                    }
                     &+div {
                         margin-top: 0.5em;
                     }
                 }
-                .autotopup {
-                    color: #5ec700;
-                }
+                .inprogress {}
             }
             button {
                 margin: 0.7em 0 0 0;
