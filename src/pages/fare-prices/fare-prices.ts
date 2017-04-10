@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Myki } from '../../models/myki';
 import { MykiProvider } from '../../providers/myki';
 
 @Component({
@@ -9,7 +8,7 @@ import { MykiProvider } from '../../providers/myki';
 })
 export class FarePricesPage {
 
-  public fareType: string;
+  public fareType: string = "full";
 
   constructor(
     public navCtrl: NavController,
@@ -18,6 +17,11 @@ export class FarePricesPage {
   ) { }
 
   ionViewDidLoad() {
+    // check if our account has loaded
+    // if not, don't bother trying to select fare type
+    if (!this.mykiProvider.mykiAccount.loaded)
+      return
+
     // default to fare type for the card
     // if not a full fare card, show concession
     this.fareType = this.mykiProvider.activeCard().type === "Full Fare" ? "full" : "concession";

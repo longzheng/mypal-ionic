@@ -85,8 +85,10 @@ ion-icon {
         background: currentColor;
         width: 1em;
         height: 1em;
+    } // custom icons
+    &[class*="mypal-logo-solid"] {
+        mask-image: url(../assets/img/logo-solid.svg);
     }
-    // custom icons
     &[class*="mypal-tab-balance"] {
         mask-image: url(../assets/img/tab-balance.svg);
     }
@@ -130,14 +132,17 @@ ion-tabs {
     .tabbar {
         border-top: none !important;
         background: white;
-        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02);
-        // restyling icon
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02); // restyling icon
         $tab-icon-size: 26px;
         ion-icon {
             min-width: $tab-icon-size !important;
             width: $tab-icon-size !important;
             height: $tab-icon-size !important;
             margin: 0 !important; // removed tab text, don't need any margins
+        }
+        .tab-button-text {
+            margin-top: 2px;
+            margin-bottom: 0px;
         }
     }
 }
@@ -167,9 +172,12 @@ ion-menu {
         font-size: 6em;
         opacity: 0.5;
     }
-    .text {
+    h2 {
         margin-top: 0.7em;
         font-size: 1.4em;
+    }
+    p {
+        margin-top: 0.5em;
     }
 }
 
@@ -189,8 +197,7 @@ ion-menu {
 // input override
 ion-input {
     input {
-        color: color($colors, brand-dark, base);
-        // show error only when invalid AND touched
+        color: color($colors, brand-dark, base); // show error only when invalid AND touched
         &.ng-invalid.ng-touched {
             color: color($colors, danger, base);
             &::placeholder {

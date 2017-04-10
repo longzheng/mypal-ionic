@@ -23,7 +23,7 @@
     </div>
 
     <div [hidden]="!card().transactionLoaded">
-        <div class="note">
+        <div class="note" *ngIf="hasTransactions()">
             Transactions may be delayed by up to 24 hours
             <span *ngIf="hasTransactions()"><br> Showing most recent {{transactions().length}} transactions.</span>
         </div>
@@ -40,7 +40,8 @@
 
         <div class="empty" *ngIf="!hasTransactions()">
             <ion-icon name="mypal-tab-history"></ion-icon>
-            <div class="text">No transactions</div>
+            <h2>No transactions</h2>
+            <p>Transactions may be delayed by up to 24 hours</p>
         </div>
     </div>
 </ion-content>

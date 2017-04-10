@@ -20,101 +20,105 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-refresher (ionRefresh)="doRefresh($event)">
+    <login [hidden]="accountLoaded()"></login>
+
+    <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]="accountLoaded()">
         <ion-refresher-content>
         </ion-refresher-content>
     </ion-refresher>
 
-    <div class="loading" [hidden]="card().loaded">
-        <ion-spinner name="crescent"></ion-spinner>
-        <div class="text">Loading card</div>
-    </div>
-
-    <div [hidden]="!card().loaded">
-        <div class="card replaced" [hidden]="!replacedCard()">
-            <div class="card-inner">Card replaced</div>
+    <div [hidden]="!accountLoaded()">
+        <div class="loading" [hidden]="card().loaded">
+            <ion-spinner name="crescent"></ion-spinner>
+            <div class="text">Loading card</div>
         </div>
 
-        <div class="card replaced" [hidden]="!blockedCard()">
-            <div class="card-inner">Card blocked</div>
-        </div>
-
-        <div class="card balance money">
-            <div class="balance-icon">
-                <ion-icon name="mypal-money"></ion-icon>
+        <div [hidden]="!card().loaded">
+            <div class="card replaced" [hidden]="!replacedCard()">
+                <div class="card-inner">Card replaced</div>
             </div>
-            <div class="card-inner">
-                <p class="title">Myki money</p>
-                <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}
-                    <div class="autotopup" [hidden]="!card().autoTopup">
-                        <ion-icon name="md-refresh"></ion-icon> Auto top up
+
+            <div class="card replaced" [hidden]="!blockedCard()">
+                <div class="card-inner">Card blocked</div>
+            </div>
+
+            <div class="card balance money">
+                <div class="balance-icon">
+                    <ion-icon name="mypal-money"></ion-icon>
+                </div>
+                <div class="card-inner">
+                    <p class="title">Myki money</p>
+                    <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}
+                        <div class="autotopup" [hidden]="!card().autoTopup">
+                            <ion-icon name="md-refresh"></ion-icon> Auto top up
+                        </div>
+                    </h2>
+                    <div class="info">
+                        <div class="apppurchased" [hidden]="!card().moneyTopUpAppPurchased">{{card().moneyTopUpAppPurchased | currency:'USD':true}} purchased processing</div>
+                        <div class="inprogress" [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} will be added at next touch on</div>
                     </div>
-                </h2>
-                <div class="info">
-                    <div class="apppurchased" [hidden]="!card().moneyTopUpAppPurchased">{{card().moneyTopUpAppPurchased | currency:'USD':true}} purchased processing</div>
-                    <div class="inprogress" [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} will be added at next touch on</div>
-                </div>
-                <div [hidden]="isIos()">
-                    <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
+                    <div [hidden]="isIos()">
+                        <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="card balance pass">
-            <div class="balance-icon">
-                <ion-icon name="mypal-pass"></ion-icon>
+            <div class="card balance pass">
+                <div class="balance-icon">
+                    <ion-icon name="mypal-pass"></ion-icon>
+                </div>
+                <div class="card-inner">
+                    <p class="title">Myki pass</p>
+                    <h2 class="balance-hero" [ngClass]="{'inactive': !card().passActive}">{{card().passActiveFriendlyText()}}</h2>
+                    <div class="info">
+                        <div [hidden]="!card().passActive">{{card().passActive}}</div>
+                        <div [hidden]="!card().passInactive">{{card().passInactive}}</div>
+                    </div>
+                    <div class="buttons" [hidden]="isIos()">
+                        <button class="topup" ion-button icon-left block (click)="topupPass()" [disabled]="replacedCard() || blockedCard() || card().passInactive"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
+                        <button class="reminder" ion-button icon-only color="dark" (click)="addPassReminder()" *ngIf="card().passActive"><ion-icon name="md-alarm"></ion-icon></button>
+                    </div>
+                    <div class="buttons" [hidden]="!isIos()">
+                        <button ion-button block icon-left color="dark" (click)="addPassReminder()" *ngIf="card().passActive"><ion-icon name="md-alarm"></ion-icon> Remind me</button>
+                    </div>
+                </div>
             </div>
-            <div class="card-inner">
-                <p class="title">Myki pass</p>
-                <h2 class="balance-hero" [ngClass]="{'inactive': !card().passActive}">{{card().passActiveFriendlyText()}}</h2>
-                <div class="info">
-                    <div [hidden]="!card().passActive">{{card().passActive}}</div>
-                    <div [hidden]="!card().passInactive">{{card().passInactive}}</div>
-                </div>
-                <div class="buttons" [hidden]="isIos()">
-                    <button class="topup" ion-button icon-left block (click)="topupPass()" [disabled]="replacedCard() || blockedCard() || card().passInactive"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
-                    <button class="reminder" ion-button icon-only color="dark" (click)="addPassReminder()" *ngIf="card().passActive"><ion-icon name="md-alarm"></ion-icon></button>
-                </div>
-                <div class="buttons" [hidden]="!isIos()">
-                    <button ion-button block icon-left color="dark" (click)="addPassReminder()" *ngIf="card().passActive"><ion-icon name="md-alarm"></ion-icon> Remind me</button>
-                </div>
+
+            <div class="note">
+                Balance may be delayed by up to 24 hours<br> Last processed transaction {{card().lastTransactionDate | amCalendar:null:{sameElse:
+                'DD/MM/YYYY'} }}
             </div>
+
+            <ul class="card-list">
+                <ion-item no-lines>
+                    <div item-left>Number</div>
+                    <div item-right>{{card().idFormatted()}}</div>
+                </ion-item>
+
+                <ion-item no-lines (click)="nicknameSet()">
+                    <div item-left>Nickname</div>
+                    <div item-right>
+                        <span [hidden]="cardNickname()" class="nickname-unset">Tap to set</span>
+                        <span [hidden]="!cardNickname()">{{cardNickname()}}</span>
+                    </div>
+                </ion-item>
+
+                <ion-item no-lines>
+                    <div item-left>Name</div>
+                    <div item-right>{{card().holder}}</div>
+                </ion-item>
+
+                <ion-item no-lines>
+                    <div item-left>Type</div>
+                    <div item-right>{{card().type}}</div>
+                </ion-item>
+
+                <ion-item no-lines (click)="addExpiryReminder()">
+                    <div item-left>Expiry</div>
+                    <div item-right>{{card().expiry | amDateFormat:'LL'}}</div>
+                    <ion-icon item-right name="md-alarm" color="dark" class="reminder"></ion-icon>
+                </ion-item>
+            </ul>
         </div>
-
-        <div class="note">
-            Balance may be delayed by up to 24 hours<br> Last processed transaction {{card().lastTransactionDate | amCalendar:null:{sameElse:
-            'DD/MM/YYYY'} }}
-        </div>
-
-        <ul class="card-list">
-            <ion-item no-lines>
-                <div item-left>Number</div>
-                <div item-right>{{card().idFormatted()}}</div>
-            </ion-item>
-
-            <ion-item no-lines (click)="nicknameSet()">
-                <div item-left>Nickname</div>
-                <div item-right>
-                    <span [hidden]="cardNickname()" class="nickname-unset">Tap to set</span>
-                    <span [hidden]="!cardNickname()">{{cardNickname()}}</span>
-                </div>
-            </ion-item>
-
-            <ion-item no-lines>
-                <div item-left>Name</div>
-                <div item-right>{{card().holder}}</div>
-            </ion-item>
-
-            <ion-item no-lines>
-                <div item-left>Type</div>
-                <div item-right>{{card().type}}</div>
-            </ion-item>
-
-            <ion-item no-lines (click)="addExpiryReminder()">
-                <div item-left>Expiry</div>
-                <div item-right>{{card().expiry | amDateFormat:'LL'}}</div>
-                <ion-icon item-right name="md-alarm" color="dark" class="reminder"></ion-icon>
-            </ion-item>
-        </ul>
     </div>
 </ion-content>

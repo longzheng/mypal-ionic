@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MykiProvider } from '../../providers/myki';
-import { Myki } from '../../models/myki';
 import { NavController, ToastController } from 'ionic-angular';
 
 @Component({
@@ -33,12 +32,8 @@ export class HistoryPage {
       })
   }
 
-  gotoHistory() {
-    this.navCtrl.parent.select(1)
-  }
-
-  account() {
-    return this.mykiProvider.mykiAccount;
+  accountLoaded() {
+    return this.mykiProvider.mykiAccount.loaded;
   }
 
   card() {

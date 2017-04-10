@@ -3,7 +3,6 @@ import { Platform, App, NavController, ActionSheetController, MenuController, To
 import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Myki } from '../../models/myki';
-import { LoginPage } from '../login/login';
 import { FarePricesPage } from '../fare-prices/fare-prices';
 import { Calendar } from '@ionic-native/calendar';
 import { TopupPage } from '../topup/topup';
@@ -35,8 +34,6 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    // enable menu
-    this.menuCtrl.enable(true);
   }
 
   doRefresh(refresher) {
@@ -53,6 +50,10 @@ export class HomePage {
       }).then(() => {
         refresher.complete();
       })
+  }
+
+  accountLoaded() {
+    return this.mykiProvider.mykiAccount.loaded;
   }
 
   card() {
@@ -72,44 +73,46 @@ export class HomePage {
   }
 
   userOptions() {
-    let actionSheet = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: 'Open myki site',
-          handler: () => {
-            // open myki site
-            window.open('https://www.mymyki.com.au/NTSWebPortal/Login.aspx', '_system');
-          }
-        },
-        {
-          text: 'Help & support',
-          handler: () => {
-            // open project page
-            window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
-          }
-        },
-        {
-          text: 'Log out',
-          role: 'destructive',
-          handler: () => {
-            // log out
-            this.mykiProvider.logout()
+    let buttons: any = [{
+      text: 'Open myki site',
+      handler: () => {
+        // open myki site
+        window.open('https://www.mymyki.com.au/NTSWebPortal/Login.aspx', '_system');
+      }
+    },
+    {
+      text: 'Help & support',
+      handler: () => {
+        // open project page
+        window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
+      }
+    },
+    {
+      text: 'Open source licenses',
+      handler: () => {
+        // open license page
+        window.open('https://longzheng.github.io/mypal-ionic/license.txt', '_system');
+      }
+    }]
 
-            // disable menu
-            this.menuCtrl.enable(false);
-
-            // go to log in page
-            this.app.getRootNav().setRoot(LoginPage, null, { animate: true, direction: 'back' }).then(result => {
-              this.mykiProvider.reset()
-            })
-          }
-        },
-
-        {
-          text: 'Cancel',
-          role: 'cancel',
+    // add log out depending on whether or not logged in
+    if (this.accountLoaded())
+      buttons.push({
+        text: 'Log out',
+        role: 'destructive',
+        handler: () => {
+          this.mykiProvider.logout()
         }
-      ]
+      })
+
+    // add cancel
+    buttons.push({
+      text: 'Cancel',
+      role: 'cancel',
+    })
+
+    let actionSheet = this.actionSheetCtrl.create({
+      buttons: buttons
     });
 
     actionSheet.present();

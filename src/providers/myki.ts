@@ -26,6 +26,10 @@ export class MykiProvider {
   mykiAccount = new Myki.Account();
   activeCardId = '';
 
+  // Store login state
+  loggingIn: boolean = false;
+  loggedIn: boolean = false;
+
   constructor(
     public http: Http,
     public configProvider: ConfigProvider
@@ -49,7 +53,7 @@ export class MykiProvider {
   }
 
   activeCard() {
-    if (this.activeCardId === '')
+    if (this.activeCardId === '' || this.mykiAccount.cards.length === 0)
       return new Myki.Card;
 
     return this.mykiAccount.cards.find(x => x.id === this.activeCardId)
@@ -57,23 +61,26 @@ export class MykiProvider {
 
   logout() {
     console.log('logging out')
+    // reset state
+    this.loggedIn = false;
+    this.mykiAccount.reset()
     // clear saved login
     this.configProvider.loginForget()
-  }
-
-  reset() {
-    // clear current state
-    this.mykiAccount = new Myki.Account()
   }
 
   // log in to myki account
   login(username: string, password: string): Promise<Response> {
     console.log('logging in')
 
+    this.loggingIn = true
+
     // determine if we're in mock demo models
     if (username === 'demo' && password === 'demo') {
       this.demoMode = true;
-      return this.mockHttpDelay(() => { this.mockLogin() })
+      return this.mockHttpDelay(() => {
+        this.mockLogin()
+        this.loggingIn = false
+      })
     }
 
     // specify the login endpoint
@@ -98,6 +105,7 @@ export class MykiProvider {
                 return reject()
 
               console.log("logged in to account")
+              this.loggedIn = true;
 
               // store the last username/password
               this.username = username;
@@ -119,10 +127,31 @@ export class MykiProvider {
             error => {
               return reject();
             }
-          )
+          ).then(() => {this.loggingIn = false})
         },
         error => {
+          this.loggingIn = false
           return reject()
+        })
+    })
+  }
+
+  // login and get account details
+  loginGetAccount(username: string, password: string): Promise<Response> {
+    return new Promise((resolve, reject) => {
+      // try logging in
+      this.login(username, password).then(
+        result => {
+          // for some reason we have to get the account details after logging in before we can do anything else
+          this.getAccountDetails().then(
+            result => {
+              return resolve()
+            }, error => {
+              return reject('account')
+            }
+          )
+        }, error => {
+          return reject('login')
         })
     })
   }
@@ -131,24 +160,7 @@ export class MykiProvider {
   // the myki session might have expired
   relogin(): Promise<Response> {
     console.log('relogging in')
-
-    return new Promise((resolve, reject) => {
-      // try logging in
-      this.login(this.username, this.password).then(
-        result => {
-          // for some reason we have to get the account details after logging in before we can do anything else
-          this.getAccountDetails().then(
-            result => {
-              console.log('relogged in')
-              return resolve()
-            }, error => {
-              return reject(error)
-            }
-          )
-        }, error => {
-          return reject(error)
-        })
-    })
+    return this.loginGetAccount(this.username, this.password)
   }
 
   getAccountDetails(): Promise<Response> {
@@ -239,6 +251,15 @@ export class MykiProvider {
               })
 
               console.log(`found ${inactiveCards.length} inactive cards`)
+
+              this.mykiAccount.loaded = true
+
+              // check if we have more than 1 card
+              if (this.mykiAccount.cards.length === 0)
+                return reject();
+
+              // set last active card
+              this.setLastActiveCard()
 
               return resolve();
             },
@@ -891,6 +912,27 @@ export class MykiProvider {
     return cards[oldCard]
   }
 
+  private setLastActiveCard() {
+    // get stored active card id
+    this.configProvider.activeCardGet().then(
+      cardId => {
+        let activeCardFound = false
+        // if there is an active card id stored, see if it exists in the current account
+        activeCardFound = this.mykiAccount.cards.findIndex(x => x.id === cardId) !== -1
+
+        if (activeCardFound) {
+          // set active card to stored active card
+          this.setActiveCard(cardId)
+        } else {
+          // set active card to first card
+          this.setActiveCard(this.mykiAccount.cards[0].id)
+        }
+      }, error => {
+        // set active card to first card
+        this.setActiveCard(this.mykiAccount.cards[0].id)
+      })
+  }
+
   private mockHttpDelay(func) {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -901,6 +943,7 @@ export class MykiProvider {
 
   private mockLogin() {
     this.mykiAccount.holder = "Demo account"
+    this.loggedIn = true
   }
 
   private mockAccountDetails() {
@@ -920,6 +963,9 @@ export class MykiProvider {
     card3.status = Myki.CardStatus.Replaced
     card3.holder = this.mykiAccount.holder
     card3.moneyBalance = 0
+
+    this.mykiAccount.loaded = true
+    this.setLastActiveCard()
   }
 
   private mockCardDetails(card: Myki.Card) {

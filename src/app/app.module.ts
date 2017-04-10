@@ -1,18 +1,16 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CurrencyPipe } from '@angular/common';
 import { MomentModule } from 'angular2-moment';
 import { IonicStorageModule } from '@ionic/storage';
 
 // Custom pages
-import { LoginPage } from '../pages/login/login';
 import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { LoadCardsPage } from '../pages/load-cards/load-cards';
 import { IntroPage } from '../pages/intro/intro';
 import { TopupPage } from '../pages/topup/topup';
 import { LaunchRoadblockPage } from '../pages/launch-roadblock/launch-roadblock';
@@ -20,6 +18,7 @@ import { FarePricesPage } from '../pages/fare-prices/fare-prices';
 import { TopupMapPage } from '../pages/topup-map/topup-map';
 
 // Custom components
+import { LoginComponent } from '../components/login/login';
 import { SelectCardComponent } from '../components/select-card/select-card';
 import { TransactionComponent } from '../components/transaction/transaction';
 
@@ -39,16 +38,15 @@ import { AppVersion } from '@ionic-native/app-version';
 
 let pages = [
   MyApp,
-  LoginPage,
   TabsPage,
   HomePage,
   HistoryPage,
-  LoadCardsPage,
   IntroPage,
   TopupPage,
   LaunchRoadblockPage,
   FarePricesPage,
   TopupMapPage,
+  LoginComponent,
   SelectCardComponent,
   TransactionComponent
 ]

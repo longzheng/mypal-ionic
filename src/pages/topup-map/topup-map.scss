@@ -16,6 +16,9 @@ page-topup-map {
             }
         }
     }
+    .empty {
+        margin: $content-margin * 2;
+    }
 }
 
 // prevent map gettinb hidden by blackness in iOS
