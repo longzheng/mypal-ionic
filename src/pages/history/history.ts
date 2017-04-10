@@ -32,12 +32,8 @@ export class HistoryPage {
       })
   }
 
-  gotoHistory() {
-    this.navCtrl.parent.select(1)
-  }
-
-  account() {
-    return this.mykiProvider.mykiAccount;
+  accountLoaded() {
+    return this.mykiProvider.mykiAccount.loaded;
   }
 
   card() {
