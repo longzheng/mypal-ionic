@@ -127,9 +127,10 @@ export class MykiProvider {
             error => {
               return reject();
             }
-          )
+          ).then(() => {this.loggingIn = false})
         },
         error => {
+          this.loggingIn = false
           return reject()
         })
     })
