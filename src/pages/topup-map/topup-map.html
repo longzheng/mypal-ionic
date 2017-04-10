@@ -1,10 +1,5 @@
 <ion-header>
     <ion-navbar color="primary">
-        <ion-buttons left>
-            <button ion-button icon-only menuToggle>
-                <ion-icon name="mypal-cards"></ion-icon>
-            </button>
-        </ion-buttons>
         <ion-title>
             Top up outlets
         </ion-title>
@@ -12,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-    <div #map id="map" style="height:100%;" [hidden]="mapError"></div>
+    <div #map id="map" style="height:100%;" [hidden]="mapError || locationsError"></div>
     <div class="loading" *ngIf="loading">
         <ion-spinner name="crescent"></ion-spinner>
         <div>Loading retail outlets</div>
@@ -21,5 +16,10 @@
         <ion-icon name="mypal-tab-outlets"></ion-icon>
         <h2>Map not available</h2>
         <p>Google Play Services is not available on this device</p>
+    </div>
+    <div class="empty" *ngIf="locationsError">
+        <ion-icon name="mypal-tab-outlets"></ion-icon>
+        <h2>Top up outlets not available</h2>
+        <p>Could not load myki top up retail outlets from PTV</p>
     </div>
 </ion-content>

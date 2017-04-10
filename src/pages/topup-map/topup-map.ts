@@ -13,6 +13,8 @@ export class TopupMapPage {
   map: GoogleMap
   mapLicense: string
   mapError: boolean = false;
+  locationsError: boolean = false;
+  locations: Array<MarkerOptions> = [];
 
   constructor(
     public navCtrl: NavController,
@@ -23,9 +25,9 @@ export class TopupMapPage {
 
   ionViewDidLoad() {
     this.googleMaps.isAvailable().then(isAvailable => {
-      if (isAvailable){
+      if (isAvailable) {
         this.loadMap();
-      }else{
+      } else {
         this.mapError = true
       }
     })
@@ -67,7 +69,7 @@ export class TopupMapPage {
           });
       }, 1000)
 
-      // start loading throbber
+      // start loading
       this.loading = true
 
       // load myki top up locations
@@ -79,6 +81,14 @@ export class TopupMapPage {
             let parser = new DOMParser();
             let xmlData = parser.parseFromString(data.trim(), "application/xml");
             let locations = xmlData.getElementsByTagName("d");
+
+            if (locations.length === 0) {
+              this.locationsError = true
+              this.loading = false
+              return
+            }
+
+            // process all markers
             for (var i = 0; i < locations.length; i++) {
               let location = locations[i];
               let locationName = location.getElementsByTagName("N")[0].textContent
@@ -89,16 +99,34 @@ export class TopupMapPage {
                 position: new LatLng(locationLat, locationLng),
                 title: locationName
               };
-
-              this.map.addMarker(markerOptions);
+              // add marker to list to be added
+              this.locations.push(markerOptions);
             }
+
+            this.addMarker(0);
           }
         }, error => {
           // no op
-        }, () => {
-          this.loading = false;
         });
     });
+  }
+
+  // We're adding thousands of markers
+  // iOS seems to have a problem if location service is disabled then adding markers will freeze the whole app
+  // We throttle adding markers one by one in a timeout (without delay) seems to work
+  addMarker(i) {
+    setTimeout(() => {
+      // add marker to map
+      this.map.addMarker(this.locations[i]);
+      i++;
+      if (i < this.locations.length) {
+        // if still markers to add
+        this.addMarker(i);
+      } else {
+        // hide loading
+        this.loading = false
+      }
+    }, 0)
   }
 
 }
