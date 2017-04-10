@@ -87,6 +87,9 @@ ion-icon {
         height: 1em;
     }
     // custom icons
+    &[class*="mypal-logo-solid"] {
+        mask-image: url(../assets/img/logo-solid.svg);
+    }
     &[class*="mypal-tab-balance"] {
         mask-image: url(../assets/img/tab-balance.svg);
     }
@@ -167,9 +170,12 @@ ion-menu {
         font-size: 6em;
         opacity: 0.5;
     }
-    .text {
+    h2 {
         margin-top: 0.7em;
         font-size: 1.4em;
+    }
+    p {
+        margin-top: 0.5em;
     }
 }
 

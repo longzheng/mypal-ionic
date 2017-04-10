@@ -1,20 +1,18 @@
 login {
     .login {
+        .heading {
+            color: color($colors, dark, base);
+            text-align: center;
+            max-width: 80%;
+            margin: 1em auto;
+            line-height: 1.5;
+
+            ion-icon {
+                font-size: 5em;
+                opacity: 0.2;
+            }
+        }
         .form {
-            h2 {
-                color: color($colors, darker, base);
-                text-align: center;
-                font-size: 1.4em;
-                font-weight: 600;
-            }
-            p {
-                color: color($colors, darker, base);
-                text-align: center;
-                font-size: 13px;
-                max-width: 80%;
-                margin: 0 auto 2em;
-                line-height: 1.5;
-            }
             ion-item {
                 padding-left: 0 !important;
             }
@@ -22,12 +20,9 @@ login {
                 margin: 0 !important;
                 border-radius: $card-radius !important;
             }
-            ion-input {
-                padding: 0 $content-padding;
-            }
         }
         .register {
-            margin: 3em 0;
+            margin: 2em 0;
         }
     }
 }
