@@ -3,26 +3,23 @@ login {
         .heading {
             color: color($colors, dark, base);
             text-align: center;
-            max-width: 80%;
+            max-width: 90%;
             margin: 1em auto;
             line-height: 1.5;
-
             ion-icon {
-                font-size: 5em;
-                opacity: 0.2;
+                font-size: 10em;
+                background: linear-gradient(#ddd, rgba(0, 0, 0, 0));
+                margin-bottom: -40px;
             }
         }
         .form {
-            ion-item {
-                padding-left: 0 !important;
-            }
             button {
                 margin: 0 !important;
                 border-radius: $card-radius !important;
             }
         }
         .register {
-            margin: 2em 0;
+            margin: 1em 0;
         }
     }
 }
