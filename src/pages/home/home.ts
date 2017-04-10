@@ -73,36 +73,39 @@ export class HomePage {
   }
 
   userOptions() {
-    let actionSheet = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: 'Open myki site',
-          handler: () => {
-            // open myki site
-            window.open('https://www.mymyki.com.au/NTSWebPortal/Login.aspx', '_system');
-          }
-        },
-        {
-          text: 'Help & support',
-          handler: () => {
-            // open project page
-            window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
-          }
-        },
-        {
-          text: 'Log out',
-          role: 'destructive',
-          handler: () => {
-            // log out
-            this.mykiProvider.logout()
-          }
-        },
+    let buttons: any = [{
+      text: 'Open myki site',
+      handler: () => {
+        // open myki site
+        window.open('https://www.mymyki.com.au/NTSWebPortal/Login.aspx', '_system');
+      }
+    },
+    {
+      text: 'Help & support',
+      handler: () => {
+        // open project page
+        window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
+      }
+    }]
 
-        {
-          text: 'Cancel',
-          role: 'cancel',
+    // add log out depending on whether or not logged in
+    if (this.accountLoaded())
+      buttons.push({
+        text: 'Log out',
+        role: 'destructive',
+        handler: () => {
+          this.mykiProvider.logout()
         }
-      ]
+      })
+
+    // add cancel
+    buttons.push({
+      text: 'Cancel',
+      role: 'cancel',
+    })
+
+    let actionSheet = this.actionSheetCtrl.create({
+      buttons: buttons
     });
 
     actionSheet.present();
