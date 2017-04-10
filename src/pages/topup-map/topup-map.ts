@@ -10,6 +10,9 @@ import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, MarkerOptions } from '@
 export class TopupMapPage {
 
   loading: boolean = false;
+  map: GoogleMap
+  mapLicense: string
+  mapError: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -19,14 +22,20 @@ export class TopupMapPage {
   ) { }
 
   ionViewDidLoad() {
-    this.loadMap();
+    this.googleMaps.isAvailable().then(isAvailable => {
+      if (isAvailable){
+        this.loadMap();
+      }else{
+        this.mapError = true
+      }
+    })
   }
 
   loadMap() {
     // create a new map by passing HTMLElement
     let element: HTMLElement = document.getElementById('map');
 
-    let map: GoogleMap = this.googleMaps.create(element, {
+    this.map = this.googleMaps.create(element, {
       'controls': {
         'compass': true,
         'myLocationButton': true
@@ -42,17 +51,20 @@ export class TopupMapPage {
 
     // listen to MAP_READY event
     // You must wait for this event to fire before adding something to the map or modifying it in anyway
-    map.one(GoogleMapsEvent.MAP_READY).then(() => {
+    this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
 
       // center on current location
       // wait a second for things to initialize a bit
       setTimeout(() => {
-        map.getMyLocation().then((location) => {
-          map.moveCamera({
-            'target': location.latLng,
-            'zoom': 17
-          })
-        });
+        this.map.getMyLocation().then(
+          location => {
+            this.map.moveCamera({
+              'target': location.latLng,
+              'zoom': 17
+            })
+          }, error => {
+            // no op
+          });
       }, 1000)
 
       // start loading throbber
@@ -78,7 +90,7 @@ export class TopupMapPage {
                 title: locationName
               };
 
-              map.addMarker(markerOptions);
+              this.map.addMarker(markerOptions);
             }
           }
         }, error => {
@@ -86,11 +98,7 @@ export class TopupMapPage {
         }, () => {
           this.loading = false;
         });
-
-
     });
-
-
   }
 
 }
