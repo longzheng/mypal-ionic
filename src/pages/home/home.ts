@@ -86,6 +86,13 @@ export class HomePage {
         // open project page
         window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
       }
+    },
+    {
+      text: 'Open source licenses',
+      handler: () => {
+        // open license page
+        window.open('https://longzheng.github.io/mypal-ionic/license.txt', '_system');
+      }
     }]
 
     // add log out depending on whether or not logged in
