@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, MarkerOptions } from '@ionic-native/google-maps';
+import { Firebase } from '@ionic-native/firebase';
 
 @Component({
   selector: 'page-topup-map',
@@ -21,9 +22,16 @@ export class TopupMapPage {
     public navParams: NavParams,
     private googleMaps: GoogleMaps,
     private http: Http,
+    private firebase: Firebase,
   ) { }
 
   ionViewDidLoad() {
+    // log event
+    this.firebase.logEvent("select_content", {
+      "content_type": "view topup map page",
+      "item_id": "page_topup_map"
+    })
+
     this.googleMaps.isAvailable().then(isAvailable => {
       if (isAvailable) {
         this.loadMap();

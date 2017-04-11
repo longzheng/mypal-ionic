@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
+import { Firebase } from '@ionic-native/firebase';
 
 @Component({
   selector: 'page-fare-prices',
@@ -14,9 +15,16 @@ export class FarePricesPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public mykiProvider: MykiProvider,
+    private firebase: Firebase,
   ) { }
 
   ionViewDidLoad() {
+    // log event
+    this.firebase.logEvent("select_content", {
+      "content_type": "view fare prices page",
+      "item_id": "page_fare_prices"
+    })
+
     // check if our account has loaded
     // if not, don't bother trying to select fare type
     if (!this.mykiProvider.mykiAccount.loaded)
