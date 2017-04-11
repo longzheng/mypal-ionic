@@ -111,7 +111,7 @@ export class TopupMapPage {
               let markerOptions: MarkerOptions = {
                 position: new LatLng(locationLat, locationLng),
                 title: locationName,
-                snippet: locationAddress + '\n' + locationNote,
+                snippet: locationNote + '. \n' + locationAddress,
                 styles: {
                   "maxWidth": "80%"
                 }
