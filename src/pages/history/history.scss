@@ -4,6 +4,9 @@ page-history {
             background: $background-color; // override so pull to refresh doesn't overlap page
             border-top: none !important; // override so pull to refresh has no border
         }
+        .history-content {
+            animation: 0.3s historyContentLoaded ease-out;
+        }
         ion-list {
             ion-item-group {
                 margin-bottom: 2em;
@@ -41,7 +44,6 @@ page-history {
                         &:after {
                             display: none;
                         }
-
                         .card {
                             border-radius: 0 0 $card-radius $card-radius;
                         }
@@ -52,5 +54,15 @@ page-history {
     }
     .loading {
         padding: 3em 0 !important;
+    }
+}
+
+@keyframes historyContentLoaded {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
     }
 }

@@ -22,7 +22,7 @@
         <div class="text">Loading transactions</div>
     </div>
 
-    <div [hidden]="!card().transactionLoaded">
+    <div class="history-content" [hidden]="!card().transactionLoaded">
         <div class="note" *ngIf="hasTransactions()">
             Transactions may be delayed by up to 24 hours
             <span *ngIf="hasTransactions()"><br> Showing most recent {{transactions().length}} transactions.</span>
