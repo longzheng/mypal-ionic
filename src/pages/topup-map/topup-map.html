@@ -10,7 +10,7 @@
     <div #map id="map" style="height:100%;" [hidden]="mapError || locationsError"></div>
     <div class="loading" *ngIf="loading">
         <ion-spinner name="crescent"></ion-spinner>
-        <div>Loading retail outlets</div>
+        <div>Loading retail outlets ({{locationsLoaded}}%)</div>
     </div>
     <div class="empty" *ngIf="mapError">
         <ion-icon name="mypal-tab-outlets"></ion-icon>

@@ -16,6 +16,7 @@ export class TopupMapPage {
   mapError: boolean = false;
   locationsError: boolean = false;
   locations: Array<MarkerOptions> = [];
+  locationsLoaded: number = 0
 
   constructor(
     public navCtrl: NavController,
@@ -100,12 +101,18 @@ export class TopupMapPage {
             for (var i = 0; i < locations.length; i++) {
               let location = locations[i];
               let locationName = location.getElementsByTagName("N")[0].textContent
+              let locationAddress = location.getElementsByTagName("A1")[0].textContent
+              let locationNote = this.markerTypeToString(location.getElementsByTagName("F")[0].textContent)
               let locationLat = parseFloat(location.getElementsByTagName("Lt")[0].textContent)
               let locationLng = parseFloat(location.getElementsByTagName("Lg")[0].textContent)
               // create new marker
               let markerOptions: MarkerOptions = {
                 position: new LatLng(locationLat, locationLng),
-                title: locationName
+                title: locationName,
+                snippet: locationAddress + '\n' + locationNote,
+                styles: {
+                  "maxWidth": "80%"
+                }
               };
               // add marker to list to be added
               this.locations.push(markerOptions);
@@ -126,6 +133,8 @@ export class TopupMapPage {
     setTimeout(() => {
       // add marker to map
       this.map.addMarker(this.locations[i]);
+      // update progress in %
+      this.locationsLoaded = Math.ceil(i / this.locations.length * 100)
       i++;
       if (i < this.locations.length) {
         // if still markers to add
@@ -135,6 +144,33 @@ export class TopupMapPage {
         this.loading = false
       }
     }, 0)
+  }
+
+  private markerTypeToString(type: string) {
+    switch (type) {
+      case '0':
+        return "Top up only";
+      case '1':
+        return "Top up only (accessible)"
+      case '2':
+        return "myki machine (top up only)"
+      case '3':
+        return "Buy a myki visitor pack"
+      case '4':
+        return "Buy or top up your myki (24 hours)"
+      case '5':
+        return "myki machine (buy or top up full fare)"
+      case '7':
+        return "Buy or top up at ticket office or myki machine"
+      case '8':
+        return "Buy or top up your myki"
+      case '9':
+        return "Buy or top up your myki (accessible)"
+      case '10':
+        return "Buy pre-loaded myki cards only"
+      default:
+        throw new Error("Invalid top up marker type: " + type)
+    }
   }
 
 }
