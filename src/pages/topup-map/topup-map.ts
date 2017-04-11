@@ -39,6 +39,8 @@ export class TopupMapPage {
       } else {
         this.mapError = true
       }
+    }, error => {
+      this.mapError = true
     })
   }
 
