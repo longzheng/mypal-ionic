@@ -322,9 +322,6 @@ export class TopupPage {
         loading.dismiss() // dismiss loading throbber
         this.state = TopUpState.Success // set the page state
         this.transactionReference = result // update transaction reference
-        setTimeout(() => {
-          $("ion-content.success ion-icon").addClass("animated") // animate face
-        }, 200)
       },
       error => {
         // error with payment

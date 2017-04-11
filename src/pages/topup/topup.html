@@ -126,6 +126,7 @@
     </div>
 
     <div [hidden]="loadingPay">
+        <div class="note">Please review your top up order</div>
         <ul class="card-list topup-summary">
             <ion-item no-lines>
                 <div item-left>Myki card</div>
@@ -212,12 +213,33 @@
 
 <ion-content class="success" padding [hidden]="!stateSuccess()">
     <div class="message">
-        <ion-icon name="checkmark-circle"></ion-icon>
-        <h2>Top up confirmed</h2>
-        <p>Myki card {{mykiProvider.activeCard().idFormatted()}} topped up with {{topupOrder.description}}. Credit card ending
-            in {{topupOptions.ccNumberNoSpaces().slice(-4)}} has been charged {{topupOrder.amount | currency:'USD':true}}</p>
-        <p>Top ups may take up to 90 minutes to be processed and will not immediately appear in the app. After it is processed
-            it will be synced to your card the next time you touch on.</p>
+        <div class="empty">
+            <ion-icon name="checkmark-circle"></ion-icon>
+            <h2>Top up submitted</h2>
+        </div>
+        <ul class="card-list topup-receipt">
+            <ion-item no-lines>
+                <div item-left>Myki card</div>
+                <div item-right>{{mykiProvider.activeCard().idFormatted()}}</div>
+            </ion-item>
+
+            <ion-item no-lines>
+                <div item-left>Top up</div>
+                <div item-right>{{topupOrder.description}}</div>
+            </ion-item>
+
+            <ion-item no-lines>
+                <div item-left>Credit card</div>
+                <div item-right>•••• •••• •••• {{topupOptions.ccNumberNoSpaces().slice(-4)}}</div>
+            </ion-item>
+
+            <ion-item no-lines>
+                <div item-left><strong>Paid</strong></div>
+                <div item-right><strong>{{topupOrder.amount | currency:'USD':true}}</strong><small *ngIf="topupOrder.gstAmount"><br>GST included: {{topupOrder.gstAmount | currency:'USD':true}}</small></div>
+            </ion-item>
+        </ul>
+        <div class="note">Top ups may take up to 90 minutes to be processed and will not immediately appear in the app. After it is processed
+            it will be synced to your card the next time you touch on.</div>
         <button ion-button block large (click)="close()">Close</button>
     </div>
 </ion-content>

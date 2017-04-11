@@ -34,18 +34,14 @@ page-topup {
                 font-size: 4rem;
                 margin: 0;
             }
-
             .pass-zones {
                 display: flex;
-                
                 .zone {
                     flex: 1 0;
                     position: relative;
-
                     &:first-child {
                         border-right: 1px solid color($colors, light, base);
                     }
-
                     ion-select {
                         font-size: 1.2em;
                         padding-left: 0;
@@ -79,18 +75,13 @@ page-topup {
         }
     }
     ion-content.success {
-        color: color($colors, darker, base);
-        text-align: center;
-        ion-icon {
-            font-size: 7em;
-            transition: 0.7s transform cubic-bezier(1.000, 0.005, 0.660, 1.650);
-            transform: scale(0);
-            &.animated {
-                transform: scale(1);
+        .topup-receipt {
+            ion-item {
+                div[item-right] {
+                    text-align: right;
+                    max-width: 75%;
+                }
             }
-        }
-        p {
-            line-height: 1.6;
         }
         button {
             margin-top: 1.6em;
