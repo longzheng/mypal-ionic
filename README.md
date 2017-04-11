@@ -27,7 +27,11 @@ Must have Cordova and [Ionic 2 installed](https://ionicframework.com/getting-sta
 
 Install npm packages ```npm install```
 
-When debugging with Chrome, security limitations must be disabled since we're accessing a third-party site without CORS headers
+Restore Ionic state (Cordova platform & plugins) ```ionic state restore```
+
+Run on device ```ionic run android``` or ```ionic run ios```
+
+Debug in browser ```ionic serve``` (When debugging with Chrome, security limitations must be disabled since we're accessing a third-party site without CORS headers)
 ```
 OSX from terminal
 open -a Google\ Chrome --args --disable-web-security --user-data-dir
@@ -35,7 +39,3 @@ open -a Google\ Chrome --args --disable-web-security --user-data-dir
 Windows from cmd
 chrome.exe --disable-web-security --user-data-dir
 ```
-
-Restore Ionic state (Cordova platform & plugins) ```ionic state restore```
-
-Run on device ```ionic run android```
