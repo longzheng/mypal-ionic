@@ -62,6 +62,7 @@ export class MykiProvider {
   logout() {
     console.log('logging out')
     // reset state
+    this.demoMode = false;
     this.loggedIn = false;
     this.mykiAccount.reset()
     // clear saved login
