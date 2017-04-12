@@ -210,6 +210,9 @@ export namespace Myki {
                 case 'Others':
                     this.service = TransactionService.Others;
                     break;
+                case 'Call Center':
+                    this.service = TransactionService.CallCenter;
+                    break;
                 case '-':
                 case '':
                     this.service = null;
@@ -243,6 +246,8 @@ export namespace Myki {
                     return 'Ticket office terminal';
                 case TransactionService.Others:
                     return 'Others';
+                case TransactionService.CallCenter:
+                    return 'Call centre';
                 default:
                     return '';
             }
@@ -282,7 +287,8 @@ export namespace Myki {
         Retail,
         BPay,
         TOT,
-        Others
+        Others,
+        CallCenter
     }
 
     export enum TopupType {
