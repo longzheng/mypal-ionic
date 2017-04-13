@@ -1,5 +1,5 @@
-<ion-content>
-    <button ion-button full class="menu-card" [ngClass]="{'active': isActiveCard(card.id)}" *ngFor="let card of activeCards(); trackBy: trackCard" (click)="selectCard(card)">
+<button ion-button full class="menu-card" [ngClass]="{'active': isActiveCard(card.id)}" *ngFor="let card of activeCards(); trackBy: trackCard"
+    (click)="selectCard(card)">
         <div class="card-inner">
             <div class="balance">
                 <div class="money"><ion-icon name="mypal-money"></ion-icon> {{card.moneyBalance | currency:'USD':true}}</div>
@@ -12,7 +12,8 @@
         </div>
     </button>
 
-    <button ion-button full class="menu-card replaced" [ngClass]="{'active': isActiveCard(card.id)}" *ngFor="let card of inactiveCards(); trackBy: trackCard" (click)="selectCard(card)">
+<button ion-button full class="menu-card replaced" [ngClass]="{'active': isActiveCard(card.id)}" *ngFor="let card of inactiveCards(); trackBy: trackCard"
+    (click)="selectCard(card)">
         <div class="card-inner">
             <div class="replaced">Replaced</div>
             <div class="info">
@@ -21,5 +22,4 @@
         </div>
     </button>
 
-    <div class="note">To add a new card, visit the myki website</div>
-</ion-content>
+<div class="note">To add a new card, visit the myki website</div>

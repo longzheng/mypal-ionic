@@ -1,5 +1,14 @@
 <ion-menu [content]="menu" [enabled]="menuEnabled()" type="push">
-    <select-card></select-card>
+    <ion-header>
+        <ion-navbar color="primary">
+            <ion-title>
+                Cards
+            </ion-title>
+        </ion-navbar>
+    </ion-header>
+    <ion-content>
+        <select-card></select-card>
+    </ion-content>
 </ion-menu>
 
 <ion-nav #menu [root]="rootPage"></ion-nav>
