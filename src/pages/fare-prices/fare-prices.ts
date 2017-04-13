@@ -32,7 +32,15 @@ export class FarePricesPage {
 
     // default to fare type for the card
     // if not a full fare card, show concession
-    this.fareType = this.mykiProvider.activeCard().type === "Full Fare" ? "full" : "concession";
+    switch (this.mykiProvider.activeCard().type) {
+      case "Full Fare":
+      case "Commuter Club":
+        this.fareType = "full";
+        break;
+      default:
+        this.fareType = "concession";
+        break;
+    }
   }
 
   public isFull() {
