@@ -1,5 +1,19 @@
 <ion-menu [content]="menu" [enabled]="menuEnabled()" type="push">
-    <select-card></select-card>
+    <ion-header>
+        <ion-navbar color="black">
+            <ion-title>
+                Cards
+            </ion-title>
+            <ion-buttons right>
+                <button ion-button icon-only (click)="userOptions()">
+                <ion-icon name="person"></ion-icon>
+            </button>
+            </ion-buttons>
+        </ion-navbar>
+    </ion-header>
+    <ion-content>
+        <select-card></select-card>
+    </ion-content>
 </ion-menu>
 
 <ion-nav #menu [root]="rootPage"></ion-nav>

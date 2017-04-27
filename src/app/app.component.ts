@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, Platform, AlertController, ModalController } from 'ionic-angular';
+import { App, Platform, AlertController, ModalController, ActionSheetController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HeaderColor } from '@ionic-native/header-color';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,6 +23,7 @@ export class MyApp {
     public configProvider: ConfigProvider,
     public alertCtrl: AlertController,
     public modalCtrl: ModalController,
+    public actionSheetCtrl: ActionSheetController,
     public statusBar: StatusBar,
     public headerColor: HeaderColor,
     public splashScreen: SplashScreen,
@@ -131,5 +132,25 @@ export class MyApp {
 
   menuEnabled() {
     return this.mykiProvider.mykiAccount.loaded
+  }
+
+  userOptions() {
+    let actionSheet = this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: 'Log out',
+          role: 'destructive',
+          handler: () => {
+            this.mykiProvider.logout()
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }
+      ]
+    });
+
+    actionSheet.present();
   }
 }

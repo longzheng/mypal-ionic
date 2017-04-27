@@ -149,8 +149,8 @@ ion-tabs {
 
 // restyling side menu
 ion-menu {
-    .menu-inner {
-        background: #86898e !important;
+    ion-content {
+        background: color($colors, dark, base) !important;
     }
 }
 
