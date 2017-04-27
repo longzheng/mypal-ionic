@@ -72,47 +72,33 @@ export class HomePage {
     return this.configProvider.cardNicknameGet(this.card().id)
   }
 
-  userOptions() {
-    let buttons: any = [{
-      text: 'Open myki site',
-      handler: () => {
-        // open myki site
-        window.open('https://www.mymyki.com.au/NTSWebPortal/Login.aspx', '_system');
-      }
-    },
-    {
-      text: 'Help & support',
-      handler: () => {
-        // open project page
-        window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
-      }
-    },
-    {
-      text: 'Open source licenses',
-      handler: () => {
-        // open license page
-        window.open('https://longzheng.github.io/mypal-ionic/license.txt', '_system');
-      }
-    }]
-
-    // add log out depending on whether or not logged in
-    if (this.accountLoaded())
-      buttons.push({
-        text: 'Log out',
-        role: 'destructive',
-        handler: () => {
-          this.mykiProvider.logout()
-        }
-      })
-
-    // add cancel
-    buttons.push({
-      text: 'Cancel',
-      role: 'cancel',
-    })
-
+  infoOptions() {
     let actionSheet = this.actionSheetCtrl.create({
-      buttons: buttons
+      buttons: [{
+        text: 'Open myki site',
+        handler: () => {
+          // open myki site
+          window.open('https://www.mymyki.com.au/NTSWebPortal/Login.aspx', '_system');
+        }
+      },
+      {
+        text: 'Help & support',
+        handler: () => {
+          // open project page
+          window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
+        }
+      },
+      {
+        text: 'Open source licenses',
+        handler: () => {
+          // open license page
+          window.open('https://longzheng.github.io/mypal-ionic/license.txt', '_system');
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel',
+      }]
     });
 
     actionSheet.present();
