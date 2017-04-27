@@ -2,45 +2,37 @@ select-card {
     display: block;
     width: 100%;
     height: 100%;
-    ion-content {
-        background: transparent !important; // background is set on the menu
-        .scroll-content {
-            padding: 2em;
-        }
-    }
     .note {
-        color: color($colors, darker, base);
-    }
-    // cards
+        color: color($colors, gray, base);
+        margin: $content-padding;
+    } // cards
     .menu-card {
-        border-radius: $card-radius;
-        margin-bottom: 1.5em !important;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
         padding: $content-padding;
-        height: 130px !important;
-        background: color($colors, darker, base);
+        height: 80px;
+        border-bottom: 1px solid lighten(color($colors, dark, base), 5%);
         color: white;
         text-transform: none;
         &.active {
-            background: color($colors, primary, base);
-            color: color($colors, black, base);
+            background: darken(color($colors, dark, base), 10%);
         }
         &.replaced {
-            opacity: 0.3;
+            color: color($colors, gray, base);
         }
         .card-inner {
-            text-align: left;
             width: 100%;
             height: 100%;
             position: relative;
+            display: flex;
             .balance {
+                text-align: right;
+                color: color($colors, light-blue, base);
                 ion-icon {
                     vertical-align: middle;
-                    margin-right: 0.1em;
-                    margin-top: -4px;
+                    margin-left: 0.3em;
+                    float: right;
                 }
                 .money {
-                    margin-bottom: 1em;
+                    margin-bottom: 0.7em;
                 }
                 .pass {
                     &.inactive {
@@ -48,25 +40,21 @@ select-card {
                     }
                 }
             }
-            .replaced {
-                position: absolute;
-                top: 0;
-                right: 0;
-            }
+            .replaced {}
             .info {
+                flex: 1 0;
                 font-size: 13px;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
+                min-width: 0;
+                padding-right: 1em;
+                .number {
+                    font-weight: 600;
+                }
                 .nickname {
-                    margin-bottom: 0.7em;
+                    margin-top: 0.7em;
+                    font-size: 15px;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                }
-                .number {
-                    font-weight: 600;
                 }
             }
         }

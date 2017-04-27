@@ -50,6 +50,14 @@ export namespace Myki {
             return `${daysLeft} day${daysLeft > 1 ? 's' : ''} left`
         }
 
+        passActiveFriendlyTextShort(): string {
+            if (!this.passActiveExpiry)
+                return 'N/A'
+
+            let daysLeft = moment(this.passActiveExpiry).startOf('day').diff(moment(), 'days') + 1;
+            return `${daysLeft} day${daysLeft > 1 ? 's' : ''}`
+        }
+
         // preprocess transaction groups by day
         // we're doing this on demand since a dynamic groupBy pipe is too expensive
         groupTransactions() {
