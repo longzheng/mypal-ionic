@@ -55,6 +55,7 @@ export class TransactionComponent {
       case Myki.TransactionType.AdminFee:
       case Myki.TransactionType.MoneyDebit:
       case Myki.TransactionType.Compensation:
+      case Myki.TransactionType.CancelTopUpMoney:
         return true;
       default:
         return false;
@@ -113,6 +114,10 @@ export class TransactionComponent {
     return this.transaction.type === Myki.TransactionType.Compensation
   }
 
+  isCancelTopUpMoney(): boolean {
+    return this.transaction.type === Myki.TransactionType.CancelTopUpMoney
+  }
+
   transactionDescription(): string {
     // card purchase
     if (this.isCardPurchase()) {
@@ -123,7 +128,8 @@ export class TransactionComponent {
     // debit
     // money debit
     // money purchase
-    if (this.isMoneyDebit() || this.isMoneyPurchase()) {
+    // cancel top up money
+    if (this.isMoneyDebit() || this.isMoneyPurchase() || this.isCancelTopUpMoney()) {
       let debit = this.currencyPipe.transform(this.transaction.debit, "USD", true)
       let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
       return `-${debit} (Balance ${balance})`

@@ -126,6 +126,9 @@ export namespace Myki {
                 case 'Top up myki money':
                     this.type = TransactionType.TopUpMoney;
                     break;
+                case 'Cancel top up myki money':
+                    this.type = TransactionType.CancelTopUpMoney;
+                    break;
                 case 'Card Purchase':
                     this.type = TransactionType.CardPurchase;
                     break;
@@ -164,6 +167,8 @@ export namespace Myki {
                     return "Top up myki pass"
                 case TransactionType.TopUpMoney:
                     return "Top up myki money";
+                case TransactionType.CancelTopUpMoney:
+                    return "Cancel top up myki money";
                 case TransactionType.CardPurchase:
                     return "Card purchase";
                 case TransactionType.Reimbursement:
@@ -274,6 +279,7 @@ export namespace Myki {
         TouchOffDefaultFare,
         TopUpPass,
         TopUpMoney,
+        CancelTopUpMoney,
         CardPurchase,
         Reimbursement,
         AdminFee,
