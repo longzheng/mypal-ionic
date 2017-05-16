@@ -56,6 +56,7 @@ export class TransactionComponent {
       case Myki.TransactionType.MoneyDebit:
       case Myki.TransactionType.Compensation:
       case Myki.TransactionType.CancelTopUpMoney:
+      case Myki.TransactionType.RefundPass:
         return true;
       default:
         return false;
