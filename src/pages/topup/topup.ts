@@ -347,7 +347,7 @@ export class TopupPage {
           // show error
           let alert = this.alertCtrl.create({
             title: 'Error processing payment',
-            subTitle: 'Check your credit card details.',
+            subTitle: 'Check your credit card details. Your credit card my have been declined by myki. Declined transactions may be deducted from your bank account temporarily, check with your bank.',
             buttons: ['OK'],
             enableBackdropDismiss: false,
           })
