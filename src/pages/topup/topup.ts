@@ -6,7 +6,8 @@ import { MykiProvider } from '../../providers/myki';
 import { FarePricesPage } from '../fare-prices/fare-prices';
 import * as $ from "jquery";
 import { Firebase } from '@ionic-native/firebase';
-import '../../libs/jquery.payment.js'
+import '../../libs/jquery.payment.js';
+import moment from 'moment';
 
 @Component({
   selector: 'page-topup',
@@ -167,6 +168,10 @@ export class TopupPage {
 
   public topupMoneySet(amount: number) {
     this.topupOptions.moneyAmount = amount
+  }
+
+  public topupPassExpiryDate() {
+    return moment().add(this.topupOptions.passDuration, 'days');
   }
 
   public customTopupMoney() {

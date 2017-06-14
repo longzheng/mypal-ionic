@@ -26,18 +26,12 @@
                     <div class="card-inner">
                         <div class="title">Top up amount ($ whole dollars)</div>
                         <ul class="presets" [hidden]="topupMoneyCustom">
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(10) ? 'brand-darkest' : 'brand-light'"
-                                    (click)="topupMoneySet(10)">10</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(20) ? 'brand-darkest' : 'brand-light'"
-                                    (click)="topupMoneySet(20)">20</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(30) ? 'brand-darkest' : 'brand-light'"
-                                    (click)="topupMoneySet(30)">30</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(40) ? 'brand-darkest' : 'brand-light'"
-                                    (click)="topupMoneySet(40)">40</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(50) ? 'brand-darkest' : 'brand-light'"
-                                    (click)="topupMoneySet(50)">50</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(60) ? 'brand-darkest' : 'brand-light'"
-                                    (click)="topupMoneySet(60)">60</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(10) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(10)">10</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(20) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(20)">20</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(30) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(30)">30</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(40) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(40)">40</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(50) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(50)">50</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(60) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(60)">60</button></li>
                         </ul>
                         <a class="custom" [hidden]="topupMoneyCustom" (click)="customTopupMoney()">Set other amount</a>
                         <div [hidden]="!topupMoneyCustom">
@@ -60,23 +54,22 @@
                     <div class="card-inner">
                         <div class="title">Pass duration (days)</div>
                         <ul class="presets" [hidden]="topupPassCustom">
-                            <li><button ion-button type="button" round [color]="topupPassIs(7) ? 'brand-darkest' : 'brand-light'"
-                                    (click)="topupPassSet(7)">7</button></li>
-                            <li><button ion-button type="button" round [color]="topupPassIs(28) ? 'brand-darkest' : 'brand-light'"
-                                    (click)="topupPassSet(28)">28</button></li>
-                            <li><button ion-button type="button" round [color]="topupPassIs(365) ? 'brand-darkest' : 'brand-light'"
-                                    (click)="topupPassSet(365)">365</button></li>
+                            <li><button ion-button type="button" round [color]="topupPassIs(7) ? 'brand-darkest' : 'brand-light'" (click)="topupPassSet(7)">7</button></li>
+                            <li><button ion-button type="button" round [color]="topupPassIs(28) ? 'brand-darkest' : 'brand-light'" (click)="topupPassSet(28)">28</button></li>
+                            <li><button ion-button type="button" round [color]="topupPassIs(365) ? 'brand-darkest' : 'brand-light'" (click)="topupPassSet(365)">365</button></li>
                         </ul>
                         <a class="custom" [hidden]="topupPassCustom" (click)="customTopupPass()">Set other duration</a>
                         <div [hidden]="!topupPassCustom">
-                            <ion-input type="tel" name="passDuration" formControlName="passDuration" placeholder="Enter days" [(ngModel)]="topupOptions.passDuration"
-                                clearOnEdit></ion-input>
+                            <ion-input type="tel" name="passDuration" formControlName="passDuration" placeholder="Enter days" [(ngModel)]="topupOptions.passDuration" clearOnEdit></ion-input>
                         </div>
                     </div>
                 </div>
                 <div class="error" *ngIf="formTopupPass.controls.passDuration.touched">
                     <div *ngIf="formTopupPass.controls.passDuration.hasError('invalidPassDuration')">
                         <ion-icon name="ios-alert-outline"></ion-icon> Invalid pass duration.</div>
+                </div>
+                <div class="note" *ngIf="!formTopupPass.controls.passDuration.hasError('invalidPassDuration')">
+                    Pass wil expire on <span style="font-weight:600">{{topupPassExpiryDate() | amDateFormat:'dddd LL'}}</span> if activated today.
                 </div>
                 <div class="note">
                     Pass available in either 7 days or between 28-365 days. You will need a positive myki money balance to activate a myki pass.
@@ -113,8 +106,7 @@
         </div>
         <button type="submit" ion-button block large (click)="order()" [disabled]="!canOrder()">Next</button>
         <div class="note" style="margin-top: 2em">
-            Top ups online may take <span style="font-weight:600">up to 90 minutes to process</span>. If you plan to travel
-            sooner, top up at a myki machine, myki retail shop or ticket office.
+            Top ups online may take <span style="font-weight:600">up to 90 minutes to process</span>. If you plan to travel sooner, top up at a myki machine, myki retail shop or ticket office.
         </div>
     </div>
 </ion-content>
@@ -194,8 +186,7 @@
                 </ion-item>
                 <ion-item no-lines [hidden]="!isReminderMobile()">
                     <ion-label fixed>Mobile</ion-label>
-                    <ion-input type="phone" formControlName="reminderMobile" [(ngModel)]="topupOptions.reminderMobile" [required]="isReminderMobile()"
-                        placeholder="04xxxxxxxx"></ion-input>
+                    <ion-input type="phone" formControlName="reminderMobile" [(ngModel)]="topupOptions.reminderMobile" [required]="isReminderMobile()" placeholder="04xxxxxxxx"></ion-input>
                 </ion-item>
             </ul>
             <div class="error" *ngIf="formTopupPayReminder.touched">
@@ -238,8 +229,7 @@
                 <div item-right><strong>{{topupOrder.amount | currency:'USD':true}}</strong><small *ngIf="topupOrder.gstAmount"><br>GST included: {{topupOrder.gstAmount | currency:'USD':true}}</small></div>
             </ion-item>
         </ul>
-        <div class="note">Top ups may take up to 90 minutes to be processed and will not immediately appear in the app. After it is processed
-            it will be synced to your card the next time you touch on.</div>
+        <div class="note">Top ups may take up to 90 minutes to be processed and will not immediately appear in the app. After it is processed it will be synced to your card the next time you touch on.</div>
         <button ion-button block large (click)="close()">Close</button>
     </div>
 </ion-content>
