@@ -1,5 +1,6 @@
 {
   "name": "mypal",
   "app_id": "e5ca0218",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "watchPatterns": []
 }
