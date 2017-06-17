@@ -69,7 +69,7 @@
                         <ion-icon name="ios-alert-outline"></ion-icon> Invalid pass duration.</div>
                 </div>
                 <div class="note" *ngIf="!formTopupPass.controls.passDuration.hasError('invalidPassDuration')">
-                    Pass wil expire on <span style="font-weight:600">{{topupPassExpiryDate() | amDateFormat:'dddd LL'}}</span> if activated today.
+                    Pass will expire on <span style="font-weight:600">{{topupPassExpiryDate() | amDateFormat:'dddd, D MMMM'}}</span> if activated today.
                 </div>
                 <div class="note">
                     Pass available in either 7 days or between 28-365 days. You will need a positive myki money balance to activate a myki pass.
