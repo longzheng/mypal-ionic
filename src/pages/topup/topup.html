@@ -173,7 +173,7 @@
         <form [formGroup]="formTopupPayReminder">
             <ul class="card-list">
                 <ion-item no-lines>
-                    <ion-label>Send receipt by</ion-label>
+                    <ion-label fixed>Receipt</ion-label>
                     <ion-select formControlName="reminderType" [(ngModel)]="topupOptions.reminderType">
                         <ion-option [value]="0">Email</ion-option>
                         <ion-option [value]="1">Mobile</ion-option>
