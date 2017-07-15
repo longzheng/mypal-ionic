@@ -16,6 +16,10 @@ transaction {
                 &.touchon {
                     top: 0;
                     height: 28px;
+                    &.nexttouchon {
+                        top: 0;
+                        height: 72px;
+                    }
                 }
                 &.touchoff {
                     top: 28px;

@@ -30,8 +30,8 @@
         <ion-list>
             <ion-item-group *ngFor="let transactionGroup of transactionsGrouped()">
                 <ion-item-divider color="light" sticky>{{transactionGroup.day}}</ion-item-divider>
-                <div class="transaction-item" *ngFor="let trans of transactionGroup.transactions">
-                    <transaction [transaction]="trans"></transaction>
+                <div class="transaction-item" *ngFor="let trans of transactionGroup.transactions; let i = index">
+                    <transaction [transaction]="trans" [nextTransaction]="transactionGroup.transactions[i+1]"></transaction>
                 </div>
             </ion-item-group>
         </ion-list>

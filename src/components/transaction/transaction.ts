@@ -11,6 +11,7 @@ import { Platform } from 'ionic-angular';
 export class TransactionComponent {
 
   @Input() transaction: Myki.Transaction
+  @Input() nextTransaction: Myki.Transaction
 
   constructor(
     public currencyPipe: CurrencyPipe,
@@ -36,6 +37,13 @@ export class TransactionComponent {
       default:
         return false;
     }
+  }
+
+  isNextTouchOn(): boolean {
+    if (!this.nextTransaction)
+      return false;
+
+    return this.nextTransaction.type === Myki.TransactionType.TouchOn;
   }
 
   isTopup(): boolean {
