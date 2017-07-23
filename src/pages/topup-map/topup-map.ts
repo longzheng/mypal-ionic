@@ -33,15 +33,7 @@ export class TopupMapPage {
       "item_id": "page_topup_map"
     })
 
-    this.googleMaps.isAvailable().then(isAvailable => {
-      if (isAvailable) {
-        this.loadMap();
-      } else {
-        this.mapError = true
-      }
-    }, error => {
-      this.mapError = true
-    })
+    this.loadMap();
   }
 
   loadMap() {
@@ -57,8 +49,11 @@ export class TopupMapPage {
         'tilt': false,
       },
       'camera': {
-        'latLng': new LatLng(-37.8136, 144.9631),
-        'zoom': 17
+        target: {
+          lat: -37.8136,
+          lng: 144.9631
+        },
+        zoom: 17
       }
     });
 
