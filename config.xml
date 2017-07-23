@@ -80,7 +80,7 @@
     </plugin>
     <plugin name="cordova-plugin-device" spec="~1.1.5" />
     <plugin name="cordova-plugin-firebase" spec="~0.1.20" />
-    <plugin name="cordova-plugin-googlemaps" spec="~1.4.0" />
+    <plugin name="cordova-plugin-googlemaps" spec="git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps" />
     <plugin name="cordova-plugin-headercolor" spec="~1.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="~1.7.0" />
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.2" />
