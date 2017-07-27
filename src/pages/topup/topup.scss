@@ -56,24 +56,32 @@ page-topup {
     }
     .topup-page-pay {
         animation: slideLeft 0.3s ease-out;
-    }
-    .topup-summary {
-        margin: 0 0 1em 0;
-        background: color($colors, darker, base);
-        strong {
-            font-weight: 600;
+        .topup-summary {
+            margin: 0 0 1em 0;
+            background: color($colors, darker, base);
+            strong {
+                font-weight: 600;
+            }
+            ion-item {
+                color: color($colors, light, base);
+                &+ion-item {
+                    border-top: 1px solid lighten(color($colors, darker, base), 10%) !important;
+                }
+                div[item-left] {
+                    color: color($colors, light-blue, base);
+                }
+                div[item-right] {
+                    text-align: right;
+                    max-width: 75%;
+                }
+            }
         }
-        ion-item {
-            color: color($colors, light, base);
-            &+ion-item {
-                border-top: 1px solid lighten(color($colors, darker, base), 10%) !important;
-            }
-            div[item-left] {
-                color: color($colors, light-blue, base);
-            }
-            div[item-right] {
-                text-align: right;
-                max-width: 75%;
+
+        .topup-pay-reminder {
+            .topup-pay-reminder-type {
+                &.select-md {
+                    padding-left: 8px;
+                }
             }
         }
     }
@@ -81,7 +89,6 @@ page-topup {
         ion-icon {
             animation: tada 1s;
         }
-
         .topup-receipt {
             ion-item {
                 div[item-right] {
@@ -106,23 +113,25 @@ page-topup {
 }
 
 @keyframes tada {
-  from {
-    transform: scale3d(1, 1, 1);
-  }
-
-  10%, 20% {
-    transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -4deg);
-  }
-
-  30%, 50%, 70%, 90% {
-    transform: scale3d(1.4, 1.4, 1.4) rotate3d(0, 0, 1, 4deg);
-  }
-
-  40%, 60%, 80% {
-    transform: scale3d(1.4, 1.4, 1.4) rotate3d(0, 0, 1, -4deg);
-  }
-
-  to {
-    transform: scale3d(1, 1, 1);
-  }
+    from {
+        transform: scale3d(1, 1, 1);
+    }
+    10%,
+    20% {
+        transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -4deg);
+    }
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: scale3d(1.4, 1.4, 1.4) rotate3d(0, 0, 1, 4deg);
+    }
+    40%,
+    60%,
+    80% {
+        transform: scale3d(1.4, 1.4, 1.4) rotate3d(0, 0, 1, -4deg);
+    }
+    to {
+        transform: scale3d(1, 1, 1);
+    }
 }

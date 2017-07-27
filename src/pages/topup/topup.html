@@ -171,10 +171,10 @@
             </div>
         </form>
         <form [formGroup]="formTopupPayReminder">
-            <ul class="card-list">
+            <ul class="card-list topup-pay-reminder">
                 <ion-item no-lines>
                     <ion-label fixed>Receipt</ion-label>
-                    <ion-select formControlName="reminderType" [(ngModel)]="topupOptions.reminderType">
+                    <ion-select class="topup-pay-reminder-type" formControlName="reminderType" [(ngModel)]="topupOptions.reminderType">
                         <ion-option [value]="0">Email</ion-option>
                         <ion-option [value]="1">Mobile</ion-option>
                         <ion-option [value]="2">None</ion-option>
