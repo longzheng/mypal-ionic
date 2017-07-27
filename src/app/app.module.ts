@@ -35,6 +35,7 @@ import { Calendar } from '@ionic-native/calendar';
 import { Firebase } from '@ionic-native/firebase';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { AppVersion } from '@ionic-native/app-version';
+import { SecureStorage } from '@ionic-native/secure-storage';
 
 let pages = [
   MyApp,
@@ -84,7 +85,8 @@ export function entryComponents() {
     Calendar,
     Firebase,
     GoogleMaps,
-    AppVersion
+    AppVersion,
+    SecureStorage
   ]
 })
 export class AppModule { }

@@ -24,6 +24,7 @@
         "@ionic-native/firebase": "^4.1.0",
         "@ionic-native/google-maps": "^4.1.0",
         "@ionic-native/header-color": "^4.1.0",
+        "@ionic-native/secure-storage": "^4.1.0",
         "@ionic-native/splash-screen": "^4.1.0",
         "@ionic-native/status-bar": "^4.1.0",
         "@ionic/storage": "2.0.1",
@@ -37,6 +38,7 @@
         "cordova-plugin-googlemaps": "https://github.com/mapsplugin/cordova-plugin-googlemaps#multiple_maps",
         "cordova-plugin-headercolor": "~1.0",
         "cordova-plugin-inappbrowser": "~1.7.0",
+        "cordova-plugin-secure-storage": "^2.6.8",
         "cordova-plugin-splashscreen": "~4.0.2",
         "cordova-plugin-statusbar": "~2.2.2",
         "cordova-plugin-whitelist": "1.3.2",
@@ -117,7 +119,8 @@
                 "API_KEY_FOR_IOS": "API_KEY",
                 "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
                 "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
-            }
+            },
+            "cordova-plugin-secure-storage": {}
         }
     }
 }

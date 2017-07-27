@@ -29,6 +29,7 @@ export class TopupPage {
   public transactionReference: string;
   public topupMoneyCustom: boolean = false;
   public topupPassCustom: boolean = false;
+  public canSaveCreditCard: boolean = false;
 
   constructor(
     public viewCtrl: ViewController,
@@ -105,18 +106,25 @@ export class TopupPage {
     this.topupOptions.zoneTo = 2
     this.topupOptions.reminderType = Myki.TopupReminderType.Email
 
-    // check saved credit card
-    this.configProvider.creditCardGet().then(
-      card => {
-        // load saved credit card
-        this.topupOptions.creditCard = card
-        // we probably want to save details again
-        this.topupOptions.saveCreditCard = true
-      }, error => {
-        // no saved credit card
-        // no op
+    // check if we can save credit card
+    this.configProvider.hasSecureStorage().then(result => {
+      if (result) {
+        this.canSaveCreditCard = true;
+
+        // check saved credit card
+        this.configProvider.creditCardGet().then(
+          card => {
+            // load saved credit card
+            this.topupOptions.creditCard = card
+            // we probably want to save details again
+            this.topupOptions.saveCreditCard = true
+          }, error => {
+            // no saved credit card
+            // no op
+          }
+        )
       }
-    )
+    });
 
     // initialize top up
     this.loadingTopUp = true;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
 import { CreditCard } from '../models/creditCard';
 
 @Injectable()
@@ -9,12 +10,15 @@ export class ConfigProvider {
   private CONFIG_INTROSEEN = 'intro'
   private CONFIG_ACTIVECARD = 'activecard'
   private CONFIG_NICKNAMES = 'nicknames'
-  private CONFIG_CREDITCARD = 'savecreditcard'
+
+  private SECURESTORAGE_NAME = 'mypal_store'
+  private SECURESTORAGE_CREDITCARD = 'savecreditcard'
 
   public cardNicknames = {}
 
   constructor(
-    public storage: Storage
+    public storage: Storage,
+    public secureStorage: SecureStorage
   ) {
     this.cardNicknameLoad().then(
       nicknames => {
@@ -111,27 +115,65 @@ export class ConfigProvider {
     this.storage.set(this.CONFIG_NICKNAMES, this.cardNicknames)
   }
 
+  // do we have secure storage?
+  hasSecureStorage(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      // create/load secure storage
+      this.secureStorage.create(this.SECURESTORAGE_NAME)
+        .then((storage: SecureStorageObject) => {
+          return resolve(true)
+        }, error => {
+          // secure storage error
+          return resolve(false)
+        })
+    })
+  }
+
   // get the stored username/password
   creditCardGet(): Promise<CreditCard> {
     return new Promise((resolve, reject) => {
-      this.storage.get(this.CONFIG_CREDITCARD).then(
-        (creditCard: CreditCard) => {
-          if (!creditCard)
-            return reject()
+      // create/load secure storage
+      this.secureStorage.create(this.SECURESTORAGE_NAME)
+        .then((storage: SecureStorageObject) => {
+          // load our key
+          storage.get(this.SECURESTORAGE_CREDITCARD).then(
+            data => {
+              if (!data)
+                return reject()
 
-          resolve(creditCard)
+              resolve(JSON.parse(data))
+            }
+          );
+        }, error => {
+          // secure storage error
+          return reject()
         })
     })
   }
 
   // remove stored username/password
   creditCardForget() {
-    this.storage.remove(this.CONFIG_CREDITCARD)
+    // create/load secure storage
+    this.secureStorage.create(this.SECURESTORAGE_NAME)
+      .then((storage: SecureStorageObject) => {
+        // remove our key
+        storage.remove(this.SECURESTORAGE_CREDITCARD);
+      })
   }
 
   // save username/password
   creditCardSave(creditCard: CreditCard) {
-    this.storage.set(this.CONFIG_CREDITCARD, creditCard)
+    return new Promise((resolve, reject) => {
+      // create/load secure storage
+      this.secureStorage.create(this.SECURESTORAGE_NAME)
+        .then((storage: SecureStorageObject) => {
+          // set our key
+          storage.set(this.SECURESTORAGE_CREDITCARD, JSON.stringify(creditCard));
+        }, error => {
+          // secure storage error
+          return reject()
+        })
+    })
   }
 
 }
