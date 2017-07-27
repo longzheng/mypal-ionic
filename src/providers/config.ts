@@ -142,6 +142,8 @@ export class ConfigProvider {
                 return reject()
 
               resolve(JSON.parse(data))
+            }, error => {
+              return reject()
             }
           );
         }, error => {
