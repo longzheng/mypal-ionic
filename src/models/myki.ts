@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import '../libs/jquery.payment.js'
+import { CreditCard } from './creditCard';
 
 export namespace Myki {
     export class Account {
@@ -323,29 +324,28 @@ export namespace Myki {
         zoneFrom: number
         zoneTo: number
         cnToken: string
-        ccNumber: string
-        ccExpiry: string
-        ccCVC: string
+        creditCard: CreditCard = new CreditCard()
         reminderType: TopupReminderType
         reminderEmail: string
         reminderMobile: string
+        saveCreditCard: boolean
 
         ccNumberNoSpaces(): string {
-            if (this.ccNumber === undefined)
+            if (this.creditCard.ccNumber === undefined)
                 return ''
 
-            return this.ccNumber.replace(/\s+/g, '');
+            return this.creditCard.ccNumber.replace(/\s+/g, '');
         }
 
         ccExpiryMonth(): string {
             // parse the month/year from the credit card expiry
-            let expiry = $.payment.cardExpiryVal(this.ccExpiry)
+            let expiry = $.payment.cardExpiryVal(this.creditCard.ccExpiry)
             return expiry.month.toString()
         }
 
         ccExpiryYear(): string {
             // parse the month/year from the credit card expiry
-            let expiry = $.payment.cardExpiryVal(this.ccExpiry)
+            let expiry = $.payment.cardExpiryVal(this.creditCard.ccExpiry)
             return expiry.year.toString()
         }
     }

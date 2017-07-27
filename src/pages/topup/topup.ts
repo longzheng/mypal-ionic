@@ -3,11 +3,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ViewController, NavParams, AlertController, ActionSheetController, LoadingController, PopoverController } from 'ionic-angular';
 import { Myki } from '../../models/myki';
 import { MykiProvider } from '../../providers/myki';
+import { ConfigProvider } from '../../providers/config';
 import { FarePricesPage } from '../fare-prices/fare-prices';
 import * as $ from "jquery";
 import { Firebase } from '@ionic-native/firebase';
 import '../../libs/jquery.payment.js';
 import moment from 'moment';
+import { CreditCard } from '../../models/creditCard';
 
 @Component({
   selector: 'page-topup',
@@ -32,6 +34,7 @@ export class TopupPage {
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public mykiProvider: MykiProvider,
+    public configProvider: ConfigProvider,
     public alertCtrl: AlertController,
     public formBuilder: FormBuilder,
     public actionSheetCtrl: ActionSheetController,
@@ -102,6 +105,19 @@ export class TopupPage {
     this.topupOptions.zoneTo = 2
     this.topupOptions.reminderType = Myki.TopupReminderType.Email
 
+    // check saved credit card
+    this.configProvider.creditCardGet().then(
+      card => {
+        // load saved credit card
+        this.topupOptions.creditCard = card
+        // we probably want to save details again
+        this.topupOptions.saveCreditCard = true
+      }, error => {
+        // no saved credit card
+        // no op
+      }
+    )
+
     // initialize top up
     this.loadingTopUp = true;
     this.mykiProvider.topupCardLoad(this.topupOptions).then(
@@ -132,7 +148,7 @@ export class TopupPage {
     // handle credit card ENTER behavior
     $("ion-input.ccNumber input").on('keydown', (e) => {
       if (e.which == 13) {
-        // focus to password
+        // focus to expiry
         $("ion-input.ccExpiry input").focus()
       }
     })
@@ -140,7 +156,7 @@ export class TopupPage {
     // handle expiry ENTER behavior
     $("ion-input.ccExpiry input").on('keydown', (e) => {
       if (e.which == 13) {
-        // focus to password
+        // focus to CVC
         $("ion-input.ccCVC input").focus()
       }
     })
@@ -327,6 +343,16 @@ export class TopupPage {
         loading.dismiss() // dismiss loading throbber
         this.state = TopUpState.Success // set the page state
         this.transactionReference = result // update transaction reference
+
+        // determine if we need to save credit card details
+        if (this.topupOptions.saveCreditCard) {
+          // save credit card
+          this.configProvider.creditCardSave(this.topupOptions.creditCard);
+        } else {
+          // we might want to forget credit card
+          // let's just do it anyway
+          this.configProvider.creditCardForget();
+        }
       },
       error => {
         // error with payment

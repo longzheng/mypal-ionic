@@ -686,7 +686,7 @@ export class MykiProvider {
       body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber4', options.ccNumberNoSpaces().substr(12, 4))
       body.set('ctl00$uxContentPlaceHolder$uxMonthList', options.ccExpiryMonth())
       body.set('ctl00$uxContentPlaceHolder$uxYearList', options.ccExpiryYear())
-      body.set('ctl00$uxContentPlaceHolder$uxSecurityCode', options.ccCVC)
+      body.set('ctl00$uxContentPlaceHolder$uxSecurityCode', options.creditCard.ccCVC)
       body.set('ctl00$uxContentPlaceHolder$reimnder', reminderTypeString)
       body.set('ctl00$uxContentPlaceHolder$uxreminderemail', options.reminderEmail)
       body.set('ctl00$uxContentPlaceHolder$uxreminderMobile', options.reminderMobile)
