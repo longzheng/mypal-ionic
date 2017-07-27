@@ -22,9 +22,8 @@
                     <a class="ios" href="#iosapp"><img src="assets/img/download-appstore.png" /></a>
                     <a class="android" href="https://play.google.com/store/apps/details?id=com.longzheng.mypalionic"><img src="assets/img/download-googleplay.png" /></a>
                 </div>
-                <div class="copyright">Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store
-                    is a service mark of Apple Inc., registered in the U.S. and other countries. Google Play and the Google
-                    Play logo are trademarks of Google Inc. Myki is a trademark of Public Transport Development Authority.</div>
+                <div class="copyright">Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc., registered in the U.S. and other countries. Google Play and the Google Play logo are trademarks
+                    of Google Inc. Myki is a trademark of Public Transport Development Authority.</div>
             </div>
             <div class="screenshots">
                 <div class="iphone"><img src="assets/img/screenshot-iphone.png" /></div>
@@ -53,7 +52,8 @@
                 </li>
                 <li>
                     <strong>I can't seem to log in with the correct username & password?</strong>
-                    <br>A number of people have reported this issue. It appears the myki system has a bug with older accounts with longer passwords. Sometime recently a password length restriction was added. To resolve this issue, change your account password to something shorter.
+                    <br>A number of people have reported this issue. It appears the myki system has a bug with older accounts with longer passwords. Sometime recently a password length restriction was added. To resolve this issue, change your account
+                    password to something shorter.
                 </li>
                 <li>
                     <strong>Why is my balance or transactions inaccurate?</strong>
@@ -77,7 +77,7 @@
                 </li>
                 <li>
                     <strong>Are you stealing my credit card information?</strong>
-                    <br> Credit card information is only sent to the myki website and is not stored.
+                    <br> Credit card information is only sent to the myki website and is only stored on the device if you wish to save your credit card details for convenience.
                     <br>
                     <br>If you are tech savvy, you can audit the network traffic with a proxy or <a href="https://github.com/longzheng/mypal-ionic/">audit the source code here</a>.
                 </li>
@@ -85,9 +85,7 @@
                     <strong>Who made this and why?</strong>
                     <br>My name is <a href="https://twitter.com/longzheng">Long Zheng</a> and I'm a software designer &amp; developer in Melbourne.
                     <br>
-                    <br>I use myki everyday but the myki website is extremely cumbersome, especially on mobile. I was eager
-                    to learn the new mobile development tool Ionic2 and I thought it might be useful to make a better experience
-                    for myki on mobile.
+                    <br>I use myki everyday but the myki website is extremely cumbersome, especially on mobile. I was eager to learn the new mobile development tool Ionic2 and I thought it might be useful to make a better experience for myki on mobile.
                     <br>
                     <br>I want to make myki great again.
                 </li>
@@ -99,16 +97,11 @@
         <div class="container">
             <h3>Privacy policy</h3>
             <ul>
-                <li>The app collects and transmits myki account information to the myki website for the purpose of signing into
-                    myki on your behalf. The account information is stored only the device for the purpose of remembering
-                    your sign in.</li>
+                <li>The app collects and transmits myki account information to the myki website for the purpose of signing into myki on your behalf. The account information is stored only the device for the purpose of remembering your sign in.</li>
                 <li>The app does not collect, store or transmit any personally identifable information.</li>
-                <li>The app collects and transmits credit card information to the myki website for the purpose of completing
-                    a top up transaction. Credit card information is not stored.</li>
-                <li>The app collects and transmits anonymous usage data, mobile advertising identifiers (Android Advertising
-                    ID &amp; Advertising Identifier for iOS), device metadata and error logs to Google for the purpose of
-                    analytics and improving the service. You can opt-out of mobile advertising identifiers in your device
-                    settings.
+                <li>The app collects and transmits credit card information to the myki website for the purpose of completing a top up transaction. Credit card information is only stored on the device if you choose to save credit card details for convenience.</li>
+                <li>The app collects and transmits anonymous usage data, mobile advertising identifiers (Android Advertising ID &amp; Advertising Identifier for iOS), device metadata and error logs to Google for the purpose of analytics and improving the
+                    service. You can opt-out of mobile advertising identifiers in your device settings.
                 </li>
                 <li>This policy may change from time to time and is available on this website.</li>
             </ul>
@@ -116,11 +109,16 @@
     </section>
 
     <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
                 (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
         ga('create', 'UA-92955518-4', 'auto');
