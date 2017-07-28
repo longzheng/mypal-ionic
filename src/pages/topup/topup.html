@@ -26,12 +26,18 @@
                     <div class="card-inner">
                         <div class="title">Top up amount ($ whole dollars)</div>
                         <ul class="presets" [hidden]="topupMoneyCustom">
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(10) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(10)">10</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(20) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(20)">20</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(30) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(30)">30</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(40) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(40)">40</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(50) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(50)">50</button></li>
-                            <li><button ion-button type="button" round [color]="topupMoneyIs(60) ? 'brand-darkest' : 'brand-light'" (click)="topupMoneySet(60)">60</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(10) ? 'brand-darkest' : 'brand-light'"
+                                    (click)="topupMoneySet(10)">10</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(20) ? 'brand-darkest' : 'brand-light'"
+                                    (click)="topupMoneySet(20)">20</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(30) ? 'brand-darkest' : 'brand-light'"
+                                    (click)="topupMoneySet(30)">30</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(40) ? 'brand-darkest' : 'brand-light'"
+                                    (click)="topupMoneySet(40)">40</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(50) ? 'brand-darkest' : 'brand-light'"
+                                    (click)="topupMoneySet(50)">50</button></li>
+                            <li><button ion-button type="button" round [color]="topupMoneyIs(60) ? 'brand-darkest' : 'brand-light'"
+                                    (click)="topupMoneySet(60)">60</button></li>
                         </ul>
                         <a class="custom" [hidden]="topupMoneyCustom" (click)="customTopupMoney()">Set other amount</a>
                         <div [hidden]="!topupMoneyCustom">
@@ -54,13 +60,17 @@
                     <div class="card-inner">
                         <div class="title">Pass duration (days)</div>
                         <ul class="presets" [hidden]="topupPassCustom">
-                            <li><button ion-button type="button" round [color]="topupPassIs(7) ? 'brand-darkest' : 'brand-light'" (click)="topupPassSet(7)">7</button></li>
-                            <li><button ion-button type="button" round [color]="topupPassIs(28) ? 'brand-darkest' : 'brand-light'" (click)="topupPassSet(28)">28</button></li>
-                            <li><button ion-button type="button" round [color]="topupPassIs(365) ? 'brand-darkest' : 'brand-light'" (click)="topupPassSet(365)">365</button></li>
+                            <li><button ion-button type="button" round [color]="topupPassIs(7) ? 'brand-darkest' : 'brand-light'"
+                                    (click)="topupPassSet(7)">7</button></li>
+                            <li><button ion-button type="button" round [color]="topupPassIs(28) ? 'brand-darkest' : 'brand-light'"
+                                    (click)="topupPassSet(28)">28</button></li>
+                            <li><button ion-button type="button" round [color]="topupPassIs(365) ? 'brand-darkest' : 'brand-light'"
+                                    (click)="topupPassSet(365)">365</button></li>
                         </ul>
                         <a class="custom" [hidden]="topupPassCustom" (click)="customTopupPass()">Set other duration</a>
                         <div [hidden]="!topupPassCustom">
-                            <ion-input type="tel" name="passDuration" formControlName="passDuration" placeholder="Enter days" [(ngModel)]="topupOptions.passDuration" clearOnEdit></ion-input>
+                            <ion-input type="tel" name="passDuration" formControlName="passDuration" placeholder="Enter days" [(ngModel)]="topupOptions.passDuration"
+                                clearOnEdit></ion-input>
                         </div>
                     </div>
                 </div>
@@ -69,7 +79,7 @@
                         <ion-icon name="ios-alert-outline"></ion-icon> Invalid pass duration.</div>
                 </div>
                 <div class="note" *ngIf="!formTopupPass.controls.passDuration.hasError('invalidPassDuration')">
-                    Pass will expire on <span style="font-weight:600">{{topupPassExpiryDate() | amDateFormat:'dddd, D MMMM'}}</span> if activated today.
+                    Pass will expire on <span style="font-weight:600">{{topupPassExpiryDate() | amDateFormat:'dddd, D MMMM'}}</span>                    if activated today.
                 </div>
                 <div class="note">
                     Pass available in either 7 days or between 28-365 days. You will need a positive myki money balance to activate a myki pass.
@@ -106,7 +116,8 @@
         </div>
         <button type="submit" ion-button block large (click)="order()" [disabled]="!canOrder()">Next</button>
         <div class="note" style="margin-top: 2em">
-            Top ups online may take <span style="font-weight:600">up to 90 minutes to process</span>. If you plan to travel sooner, top up at a myki machine, myki retail shop or ticket office.
+            Top ups online may take <span style="font-weight:600">up to 90 minutes to process</span>. If you plan to travel
+            sooner, top up at a myki machine, myki retail shop or ticket office.
         </div>
     </div>
 </ion-content>
@@ -139,37 +150,58 @@
             <div class="note">
                 Pay with credit card (Myki only accepts Mastercard and Visa).
             </div>
-            <ul class="card-list">
-                <ion-item no-lines>
-                    <ion-label fixed>Card</ion-label>
-                    <ion-input class="ccNumber" type="tel" formControlName="card" [(ngModel)]="topupOptions.creditCard.ccNumber" placeholder="•••• •••• •••• ••••"></ion-input>
-                </ion-item>
-                <ion-item no-lines>
-                    <ion-label fixed>Expiry</ion-label>
-                    <ion-input class="ccExpiry" type="tel" formControlName="expiry" [(ngModel)]="topupOptions.creditCard.ccExpiry" placeholder="mm/yy"></ion-input>
-                </ion-item>
-                <ion-item no-lines>
-                    <ion-label fixed>CVC</ion-label>
-                    <ion-input class="ccCVC" type="tel" formControlName="cvc" [(ngModel)]="topupOptions.creditCard.ccCVC" placeholder="•••"></ion-input>
-                </ion-item>
-            </ul>
-            <div class="error" *ngIf="formTopupPayCC.controls.card.touched">
-                <div *ngIf="formTopupPayCC.controls.card.hasError('invalidNumber')">
-                    <ion-icon name="ios-alert-outline"></ion-icon> Invalid credit card number.</div>
+            <div *ngIf="hasSavedCreditCard">
+                <ul class="card-list">
+                    <ion-item no-lines (click)="changeSavedCreditCard()">
+                        <div item-left>Saved card</div>
+                        <div item-right>•••• •••• •••• {{topupOptions.ccNumberNoSpaces().slice(-4)}}</div>
+                        <ion-icon item-right name="ios-card" color="dark" class=""></ion-icon>
+                    </ion-item>
+                </ul>
             </div>
-            <div class="error" *ngIf="formTopupPayCC.controls.card.touched">
-                <div *ngIf="formTopupPayCC.hasError('invalidCardType')">
-                    <ion-icon name="ios-alert-outline"></ion-icon> Invalid credit card type. Only Mastercard and Visa supported.</div>
-            </div>
-            <div class="error" *ngIf="formTopupPayCC.controls.expiry.touched">
-                <div *ngIf="formTopupPayCC.controls.expiry.hasError('invalidExpiry')">
-                    <ion-icon name="ios-alert-outline"></ion-icon> Invalid expiry.</div>
-            </div>
-            <div class="error" *ngIf="formTopupPayCC.controls.cvc.touched">
-                <div *ngIf="formTopupPayCC.hasError('invalidCVC')">
-                    <ion-icon name="ios-alert-outline"></ion-icon> Invalid CVC.</div>
+            <div [hidden]="hasSavedCreditCard">
+                <ul class="card-list">
+                    <ion-item no-lines>
+                        <ion-label fixed>Card</ion-label>
+                        <ion-input class="ccNumber" type="tel" formControlName="card" [(ngModel)]="topupOptions.creditCard.ccNumber" placeholder="•••• •••• •••• ••••"></ion-input>
+                    </ion-item>
+                    <ion-item no-lines>
+                        <ion-label fixed>Expiry</ion-label>
+                        <ion-input class="ccExpiry" type="tel" formControlName="expiry" [(ngModel)]="topupOptions.creditCard.ccExpiry" placeholder="mm/yy"></ion-input>
+                    </ion-item>
+                    <ion-item no-lines>
+                        <ion-label fixed>CVC</ion-label>
+                        <ion-input class="ccCVC" type="tel" formControlName="cvc" [(ngModel)]="topupOptions.creditCard.ccCVC" placeholder="•••"></ion-input>
+                    </ion-item>
+                </ul>
+                <div class="error" *ngIf="formTopupPayCC.controls.card.touched">
+                    <div *ngIf="formTopupPayCC.controls.card.hasError('invalidNumber')">
+                        <ion-icon name="ios-alert-outline"></ion-icon> Invalid credit card number.</div>
+                </div>
+                <div class="error" *ngIf="formTopupPayCC.controls.card.touched">
+                    <div *ngIf="formTopupPayCC.hasError('invalidCardType')">
+                        <ion-icon name="ios-alert-outline"></ion-icon> Invalid credit card type. Only Mastercard and Visa supported.</div>
+                </div>
+                <div class="error" *ngIf="formTopupPayCC.controls.expiry.touched">
+                    <div *ngIf="formTopupPayCC.controls.expiry.hasError('invalidExpiry')">
+                        <ion-icon name="ios-alert-outline"></ion-icon> Invalid expiry.</div>
+                </div>
+                <div class="error" *ngIf="formTopupPayCC.controls.cvc.touched">
+                    <div *ngIf="formTopupPayCC.hasError('invalidCVC')">
+                        <ion-icon name="ios-alert-outline"></ion-icon> Invalid CVC.</div>
+                </div>
             </div>
         </form>
+
+        <div *ngIf="!hasSavedCreditCard">
+            <ul class="card-list">
+                <ion-item no-lines>
+                    <ion-label>Save credit card details</ion-label>
+                    <ion-toggle [(ngModel)]="topupOptions.saveCreditCard" [disabled]="!canSaveCreditCard"></ion-toggle>
+                </ion-item>
+            </ul>
+        </div>
+
         <form [formGroup]="formTopupPayReminder">
             <ul class="card-list topup-pay-reminder">
                 <ion-item no-lines>
@@ -186,7 +218,8 @@
                 </ion-item>
                 <ion-item no-lines [hidden]="!isReminderMobile()">
                     <ion-label fixed>Mobile</ion-label>
-                    <ion-input type="phone" formControlName="reminderMobile" [(ngModel)]="topupOptions.reminderMobile" [required]="isReminderMobile()" placeholder="04xxxxxxxx"></ion-input>
+                    <ion-input type="phone" formControlName="reminderMobile" [(ngModel)]="topupOptions.reminderMobile" [required]="isReminderMobile()"
+                        placeholder="04xxxxxxxx"></ion-input>
                 </ion-item>
             </ul>
             <div class="error" *ngIf="formTopupPayReminder.touched">
@@ -199,22 +232,11 @@
             </div>
         </form>
 
-        <ul class="card-list">
-            <ion-item no-lines>
-                <ion-label>Save credit card details</ion-label>
-                <ion-toggle [(ngModel)]="topupOptions.saveCreditCard" [disabled]="!canSaveCreditCard"></ion-toggle>
-            </ion-item>
-        </ul>
-
         <div class="note" *ngIf="!canSaveCreditCard" style="margin-bottom:1em">
             You cannot save your credit card details because you do not have screen lock enabled.
         </div>
 
         <button ion-button block (click)="pay()" large [disabled]="!canPay()">Pay</button>
-
-        <div class="note" *ngIf="topupOptions.saveCreditCard" style="margin-top:1em">
-            It is your responsibility to keep your device secure. Anyone with physical access to your device (or if your device is rooted, malicious applications) may access your credit card details.
-        </div>
 
     </div>
 </ion-content>
@@ -246,7 +268,8 @@
                 <div item-right><strong>{{topupOrder.amount | currency:'USD':true}}</strong><small *ngIf="topupOrder.gstAmount"><br>GST included: {{topupOrder.gstAmount | currency:'USD':true}}</small></div>
             </ion-item>
         </ul>
-        <div class="note">Top ups may take up to 90 minutes to be processed and will not immediately appear in the app. After it is processed it will be synced to your card the next time you touch on.</div>
+        <div class="note">Top ups may take up to 90 minutes to be processed and will not immediately appear in the app. After it is processed
+            it will be synced to your card the next time you touch on.</div>
         <button ion-button block large (click)="close()">Close</button>
     </div>
 </ion-content>

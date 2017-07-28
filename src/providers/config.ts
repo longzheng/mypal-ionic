@@ -117,7 +117,7 @@ export class ConfigProvider {
 
   // do we have secure storage?
   hasSecureStorage(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       // create/load secure storage
       this.secureStorage.create(this.SECURESTORAGE_NAME)
         .then((storage: SecureStorageObject) => {

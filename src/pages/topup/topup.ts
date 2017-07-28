@@ -30,6 +30,7 @@ export class TopupPage {
   public topupMoneyCustom: boolean = false;
   public topupPassCustom: boolean = false;
   public canSaveCreditCard: boolean = false;
+  public hasSavedCreditCard: boolean = false;
 
   constructor(
     public viewCtrl: ViewController,
@@ -114,10 +115,18 @@ export class TopupPage {
         // check saved credit card
         this.configProvider.creditCardGet().then(
           card => {
+            // if no card stored, early exit
+            if (!card)
+              return;
+
             // load saved credit card
             this.topupOptions.creditCard = card
+
             // we probably want to save details again
             this.topupOptions.saveCreditCard = true
+
+            // set we have a saved credit card state (changes UI)
+            this.hasSavedCreditCard = true;
           }, error => {
             // no saved credit card
             // no op
@@ -404,6 +413,11 @@ export class TopupPage {
 
   public isReminderMobile() {
     return this.topupOptions.reminderType === Myki.TopupReminderType.Mobile
+  }
+
+  public changeSavedCreditCard() {
+    this.hasSavedCreditCard = false
+    this.topupOptions.creditCard = new CreditCard()
   }
 
   private validatePassDuration(control: FormControl) {
