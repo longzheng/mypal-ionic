@@ -32,7 +32,7 @@
         "com.googlemaps.ios": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
         "cordova-android": "^6.2.3",
         "cordova-ios": "^4.4.0",
-        "cordova-plugin-calendar": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
+        "cordova-plugin-calendar": "^4.6.0",
         "cordova-plugin-device": "~1.1.5",
         "cordova-plugin-firebase": "~0.1.20",
         "cordova-plugin-googlemaps": "https://github.com/mapsplugin/cordova-plugin-googlemaps#multiple_maps",
@@ -102,9 +102,6 @@
             "ios"
         ],
         "plugins": {
-            "cordova-plugin-calendar": {
-                "CALENDAR_USAGE_DESCRIPTION": "This app uses your calendar to remind you of your myki pass and card expiry"
-            },
             "cordova-plugin-device": {},
             "cordova-plugin-firebase": {},
             "cordova-plugin-headercolor": {},
@@ -120,7 +117,10 @@
                 "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
                 "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
             },
-            "cordova-plugin-secure-storage": {}
+            "cordova-plugin-secure-storage": {},
+            "cordova-plugin-calendar": {
+                "CALENDAR_USAGE_DESCRIPTION": "This app uses your calendar to remind you of your myki pass and card expiry"
+            }
         }
     }
 }
