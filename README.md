@@ -23,11 +23,11 @@ I'm making this app because the [Myki site](https://www.mymyki.com.au/NTSWebPort
 - Show retail top up outlets
 
 ## Build requirements
-Must have Cordova and [Ionic 2 installed](https://ionicframework.com/getting-started/) ```npm install -g cordova ionic```
+Must have Cordova and [Ionic 3 installed](https://ionicframework.com/getting-started/) ```npm install -g cordova ionic```
 
 Install npm packages ```npm install```
 
-Restore Ionic state (Cordova platform & plugins) ```ionic state restore```
+Restore Cordova plugins ```ionic cordova prepare```
 
 Run on device ```ionic run android``` or ```ionic run ios```
 
