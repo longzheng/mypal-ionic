@@ -200,6 +200,10 @@
                     <ion-toggle [(ngModel)]="topupOptions.saveCreditCard" [disabled]="!canSaveCreditCard"></ion-toggle>
                 </ion-item>
             </ul>
+
+            <div class="note" *ngIf="!canSaveCreditCard" style="margin-bottom:1em">
+                You cannot save your credit card details because you do not have screen lock enabled.
+            </div>
         </div>
 
         <form [formGroup]="formTopupPayReminder">
@@ -231,10 +235,6 @@
                     <ion-icon name="ios-alert-outline"></ion-icon> Mobile phone number required.</div>
             </div>
         </form>
-
-        <div class="note" *ngIf="!canSaveCreditCard" style="margin-bottom:1em">
-            You cannot save your credit card details because you do not have screen lock enabled.
-        </div>
 
         <button ion-button block (click)="pay()" large [disabled]="!canPay()">Pay</button>
 
