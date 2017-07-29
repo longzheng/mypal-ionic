@@ -80,7 +80,7 @@ export class HomePage {
         {
           text: 'Share the app',
           handler: () => {
-            this.socialSharing.share("I'm using the MyPal app to check and top up my myki on the go", "mypal app", "", "https://longzheng.github.io/mypal-ionic/")            
+            this.socialSharing.share("I'm using the free MyPal app to check and top up my myki on the go", "MyPal myki app", "", "https://longzheng.github.io/mypal-ionic/")            
           }
         },
         {

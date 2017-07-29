@@ -423,7 +423,7 @@ export class TopupPage {
   }
 
   public shareTopup() {
-    this.socialSharing.share("I just used the MyPal app to top up my myki on the go", "mypal app", "", "https://longzheng.github.io/mypal-ionic/")            
+    this.socialSharing.share("I just used the free MyPal app to top up my myki on the go", "MyPal myki app", "", "https://longzheng.github.io/mypal-ionic/")            
   }
 
   private validatePassDuration(control: FormControl) {
