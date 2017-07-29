@@ -8,6 +8,7 @@ import { Calendar } from '@ionic-native/calendar';
 import { TopupPage } from '../topup/topup';
 import { Firebase } from '@ionic-native/firebase';
 import moment from 'moment';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @Component({
   selector: 'page-home',
@@ -29,6 +30,7 @@ export class HomePage {
     public calendar: Calendar,
     public alertCtrl: AlertController,
     public popoverCtrl: PopoverController,
+    public socialSharing: SocialSharing
   ) {
 
   }
@@ -74,31 +76,38 @@ export class HomePage {
 
   infoOptions() {
     let actionSheet = this.actionSheetCtrl.create({
-      buttons: [{
-        text: 'Open myki site',
-        handler: () => {
-          // open myki site
-          window.open('https://www.mymyki.com.au/NTSWebPortal/Login.aspx', '_system');
-        }
-      },
-      {
-        text: 'Help & support',
-        handler: () => {
-          // open project page
-          window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
-        }
-      },
-      {
-        text: 'Open source licenses',
-        handler: () => {
-          // open license page
-          window.open('https://longzheng.github.io/mypal-ionic/license.txt', '_system');
-        }
-      },
-      {
-        text: 'Cancel',
-        role: 'cancel',
-      }]
+      buttons: [
+        {
+          text: 'Share the app',
+          handler: () => {
+            this.socialSharing.share("I'm using the mypal app to check and top up my myki on the go", "mypal myki app", "", "https://longzheng.github.io/mypal-ionic/")            
+          }
+        },
+        {
+          text: 'Open myki site',
+          handler: () => {
+            // open myki site
+            window.open('https://www.mymyki.com.au/NTSWebPortal/Login.aspx', '_system');
+          }
+        },
+        {
+          text: 'Help & support',
+          handler: () => {
+            // open project page
+            window.open('https://longzheng.github.io/mypal-ionic/#support', '_system');
+          }
+        },
+        {
+          text: 'Open source licenses',
+          handler: () => {
+            // open license page
+            window.open('https://longzheng.github.io/mypal-ionic/license.txt', '_system');
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }]
     });
 
     actionSheet.present();
