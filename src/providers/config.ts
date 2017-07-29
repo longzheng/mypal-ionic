@@ -160,22 +160,23 @@ export class ConfigProvider {
       .then((storage: SecureStorageObject) => {
         // remove our key
         storage.remove(this.SECURESTORAGE_CREDITCARD);
+      }, error => {
+        // secure storage error
+        // no op
       })
   }
 
   // save username/password
   creditCardSave(creditCard: CreditCard) {
-    return new Promise((resolve, reject) => {
-      // create/load secure storage
-      this.secureStorage.create(this.SECURESTORAGE_NAME)
-        .then((storage: SecureStorageObject) => {
-          // set our key
-          storage.set(this.SECURESTORAGE_CREDITCARD, JSON.stringify(creditCard));
-        }, error => {
-          // secure storage error
-          return reject()
-        })
-    })
+    // create/load secure storage
+    this.secureStorage.create(this.SECURESTORAGE_NAME)
+      .then((storage: SecureStorageObject) => {
+        // set our key
+        storage.set(this.SECURESTORAGE_CREDITCARD, JSON.stringify(creditCard));
+      }, error => {
+        // secure storage error
+        // no op
+      })
   }
 
 }
