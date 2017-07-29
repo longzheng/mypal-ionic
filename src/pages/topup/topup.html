@@ -243,10 +243,11 @@
 
 <ion-content class="success" padding [hidden]="!stateSuccess()">
     <div class="message">
-        <div class="empty">
+        <div class="heading">
             <ion-icon name="checkmark-circle"></ion-icon>
             <h2>Top up submitted</h2>
         </div>
+
         <ul class="card-list topup-receipt">
             <ion-item no-lines>
                 <div item-left>Myki card</div>
@@ -268,8 +269,10 @@
                 <div item-right><strong>{{topupOrder.amount | currency:'USD':true}}</strong><small *ngIf="topupOrder.gstAmount"><br>GST included: {{topupOrder.gstAmount | currency:'USD':true}}</small></div>
             </ion-item>
         </ul>
-        <div class="note">Top ups may take up to 90 minutes to be processed and will not immediately appear in the app. After it is processed
-            it will be synced to your card the next time you touch on.</div>
+        <div class="note">Top ups may take up to 90 minutes to be processed and will not immediately appear in the app. After it is processed it will be synced to your card the next time you touch on.</div>
+
         <button ion-button block large (click)="close()">Close</button>
+
+        <button ion-button icon-left color="dark" block (click)="shareTopup()"><ion-icon name="md-heart"></ion-icon> Spread the word about the app</button>
     </div>
 </ion-content>

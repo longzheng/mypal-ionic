@@ -10,6 +10,7 @@ import { Firebase } from '@ionic-native/firebase';
 import '../../libs/jquery.payment.js';
 import moment from 'moment';
 import { CreditCard } from '../../models/creditCard';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @Component({
   selector: 'page-topup',
@@ -43,6 +44,7 @@ export class TopupPage {
     public loadingCtrl: LoadingController,
     public firebase: Firebase,
     public popoverCtrl: PopoverController,
+    public socialSharing: SocialSharing
   ) {
     // get topup type from navigation parameter
     this.topupOptions.topupType = navParams.get('type')
@@ -418,6 +420,10 @@ export class TopupPage {
   public changeSavedCreditCard() {
     this.hasSavedCreditCard = false
     this.topupOptions.creditCard = new CreditCard()
+  }
+
+  public shareTopup() {
+    this.socialSharing.share("I just used the MyPal app to top up my myki on the go", "mypal app", "", "https://longzheng.github.io/mypal-ionic/")            
   }
 
   private validatePassDuration(control: FormControl) {

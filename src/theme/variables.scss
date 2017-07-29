@@ -1,25 +1,18 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/v2/theming/
 $font-path: "../assets/fonts";
-
 @import "ionic.globals";
-
-
 // Shared Variables
 // --------------------------------------------------
 // To customize the look and feel of this app, you can override
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
-
-
 $font-family-ios-base: 'Rubik';
 $font-family-md-base: 'Rubik';
 $font-family-wp-base: 'Rubik';
-
 $background-color: #ececec;
 $text-input-placeholder-color: #c4c4c4;
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -27,49 +20,10 @@ $text-input-placeholder-color: #c4c4c4;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-
-$colors: (
-  primary: (     
-    base: #C4DB2D,
-    contrast: #323740
-  ),
-  brand-inverse: (
-    base: #ffffff,
-    contrast: #6A8700,
-  ),
-  brand-lightest: (
-    base: #D8E296,
-    contrast: #323740
-  ),
-  brand-light: (
-    base: #CFE257,
-    contrast: #323740
-  ),
-  brand-dark:   (
-    base: #9CAF24,
-    contrast: #ffffff
-  ),
-  brand-darkest: (
-    base: #6A8700,
-    contrast: #ffffff
-  ),
-  danger:       #f53d3d,
-  light:        #ebebeb,
-  light-blue:   #b9bec5,
-  gray:       #a0a0a0,
-  dark:         (
-    base: #656A73,
-    contrast: #ebebeb
-  ),
-  darker:       #3F4550,
-  black:      #323740,
-);
-
-
+$colors: ( primary: ( base: #C4DB2D, contrast: #323740), brand-inverse: ( base: #ffffff, contrast: #6A8700, ), brand-lightest: ( base: #D8E296, contrast: #323740), brand-light: ( base: #CFE257, contrast: #323740), brand-dark : ( base: #9CAF24, contrast: #ffffff), brand-darkest: ( base: #6A8700, contrast: #ffffff), success : #6bbd02, danger : #f53d3d, light : #ebebeb, light-blue : #b9bec5, gray : #a0a0a0, dark : ( base: #656A73, contrast: #ebebeb), darker : #3F4550, black : #323740, );
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-
 $toolbar-ios-border-color: transparent;
 $tabs-ios-tab-color-active: color($colors, darker, base);
 $tabs-ios-tab-color-inactive: color($colors, light-blue, base);
@@ -78,75 +32,65 @@ $alert-ios-button-main-font-weight: 600;
 $loading-ios-content-font-weight: 500;
 $popover-ios-width: 300px;
 $popover-ios-background: white;
-
-
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 $alert-md-button-text-color: color($colors, brand-dark, base);
 $popover-md-width: 300px;
 $popover-md-background: white;
-
-
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
-
-
-
 // App Theme
 // --------------------------------------------------
 // Ionic apps can have different themes applied, which can
 // then be future customized. This import comes last
 // so that the above variables are used and Ionic's
 // default are overridden.
-
 @import "ionic.theme.default";
-
-
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/v2/ionicons/
-
 @import "ionic.ionicons";
-
-
 // Fonts
 // --------------------------------------------------
-
 @import "roboto";
 @import "noto-sans";
 
 /* Rubik font */
+
 @font-face {
-  font-family: 'Rubik';
-  font-style: normal;
-  font-weight: normal;
-  src: url('../assets/fonts/Rubik-Regular.ttf') format('truetype');
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../assets/fonts/Rubik-Regular.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: 'Rubik';
-  font-style: normal;
-  font-weight: 300;
-  src: url('../assets/fonts/Rubik-Light.ttf') format('truetype');
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../assets/fonts/Rubik-Light.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: 'Rubik';
-  font-style: normal;
-  font-weight: 600;
-  src: url('../assets/fonts/Rubik-Medium.ttf') format('truetype');
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../assets/fonts/Rubik-Medium.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: 'Rubik';
-  font-style: normal;
-  font-weight: 700;
-  src: url('../assets/fonts/Rubik-Bold.ttf') format('truetype');
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../assets/fonts/Rubik-Bold.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: 'Rubik';
-  font-style: normal;
-  font-weight: 900;
-  src: url('../assets/fonts/Rubik-Black.ttf') format('truetype');
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../assets/fonts/Rubik-Black.ttf') format('truetype');
 }

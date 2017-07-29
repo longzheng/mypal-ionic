@@ -76,7 +76,6 @@ page-topup {
                 }
             }
         }
-
         .topup-pay-reminder {
             .topup-pay-reminder-type {
                 &.select-md {
@@ -86,8 +85,19 @@ page-topup {
         }
     }
     ion-content.success {
-        ion-icon {
-            animation: tada 1s;
+        .heading {
+            color: color($colors, success, base);
+            text-align: center;
+            ion-icon {
+                animation: tada 1s;
+                font-size: 4em;
+                vertical-align: middle;
+            }
+            h2 {
+                display: inline;
+                margin: 0 0 0 0.5em;
+                vertical-align: middle;
+            }
         }
         .topup-receipt {
             ion-item {
