@@ -20,7 +20,22 @@ $text-input-placeholder-color: #c4c4c4;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-$colors: ( primary: ( base: #C4DB2D, contrast: #323740), brand-inverse: ( base: #ffffff, contrast: #6A8700, ), brand-lightest: ( base: #D8E296, contrast: #323740), brand-light: ( base: #CFE257, contrast: #323740), brand-dark : ( base: #9CAF24, contrast: #ffffff), brand-darkest: ( base: #6A8700, contrast: #ffffff), success : #6bbd02, danger : #f53d3d, light : #ebebeb, light-blue : #b9bec5, gray : #a0a0a0, dark : ( base: #656A73, contrast: #ebebeb), darker : #3F4550, black : #323740, );
+$colors: ( 
+    primary: ( base: #C4DB2D, contrast: #323740), 
+    brand-inverse: ( base: #ffffff, contrast: #6A8700, ), 
+    brand-lightest: ( base: #D8E296, contrast: #323740), 
+    brand-light: ( base: #CFE257, contrast: #323740), 
+    brand-dark : ( base: #9CAF24, contrast: #ffffff), 
+    brand-darkest: ( base: #6A8700, contrast: #ffffff), 
+    success : #6bbd02,
+    danger : #f53d3d, 
+    light : #ebebeb, 
+    light-blue : #b9bec5, 
+    gray : #a0a0a0, 
+    dark : ( base: #656A73, contrast: #ebebeb), 
+    darker : #3F4550, 
+    black : #323740, 
+);
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here

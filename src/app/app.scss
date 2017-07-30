@@ -125,6 +125,9 @@ ion-icon {
     &[class*="mypal-info"] {
         mask-image: url(../assets/img/info.svg);
     }
+    &[class*="mypal-myki"] {
+        mask-image: url(../assets/img/myki.svg);
+    }
 }
 
 // restyling the app tabbar

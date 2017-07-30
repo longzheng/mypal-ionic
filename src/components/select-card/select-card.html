@@ -1,26 +1,34 @@
-<div tappable class="menu-card" [ngClass]="{'active': isActiveCard(card.id)}" *ngFor="let card of activeCards(); trackBy: trackCard"
-    (click)="selectCard(card)">
-    <div class="card-inner">
-        <div class="info">
-            <div class="number">{{card.idFormatted()}}</div>
-            <div class="nickname">{{cardNickname(card)}}</div>
-        </div>
-        <div class="balance">
-            <div class="money">
-                <ion-icon name="mypal-money"></ion-icon> {{card.moneyBalance | currency:'USD':true}}</div>
-            <div class="pass" [ngClass]="{'inactive': !card.passActive}">
-                <ion-icon name="mypal-pass"></ion-icon> {{card.passActiveFriendlyTextShort()}}</div>
+<div *ngIf="activeCards()">
+    <div class="heading">Active cards</div>
+    <div tappable class="menu-card" [ngClass]="{'active': isActiveCard(card.id)}" *ngFor="let card of activeCards(); trackBy: trackCard" (click)="selectCard(card)">
+        <div class="card-inner">
+            <div class="card-icon">
+                <ion-icon name="mypal-myki"></ion-icon>
+            </div>
+            <div class="info">
+                <div class="number">•••• {{card.idFormatted().slice(-6)}}</div>
+                <div class="nickname" *ngIf="cardNickname(card)">{{cardNickname(card)}}</div>
+            </div>
+            <div class="balance">
+                <div class="money">
+                    <ion-icon name="mypal-money" *ngIf="card.passActive"></ion-icon> {{card.moneyBalance | currency:'USD':true}}</div>
+                <div class="pass" *ngIf="card.passActive">
+                    <ion-icon name="mypal-pass"></ion-icon> {{card.passActiveFriendlyTextShort()}}</div>
+            </div>
         </div>
     </div>
 </div>
-
-<div tappable class="menu-card replaced" [ngClass]="{'active': isActiveCard(card.id)}" *ngFor="let card of inactiveCards(); trackBy: trackCard"
-    (click)="selectCard(card)">
-    <div class="card-inner">
-        <div class="info">
-            <div class="number">{{card.idFormatted()}}</div>
+<div *ngIf="inactiveCards()">
+    <div class="heading">Inactive cards</div>
+    <div tappable class="menu-card replaced" [ngClass]="{'active': isActiveCard(card.id)}" *ngFor="let card of inactiveCards(); trackBy: trackCard" (click)="selectCard(card)">
+        <div class="card-inner">
+            <div class="card-icon">
+                <ion-icon name="mypal-myki"></ion-icon>
+            </div>
+            <div class="info">
+                <div class="number">•••• {{card.idFormatted().slice(-6)}}</div>
+            </div>
         </div>
-        <div class="replaced">Replaced</div>
     </div>
 </div>
 

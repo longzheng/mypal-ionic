@@ -5,53 +5,83 @@ select-card {
     .note {
         color: color($colors, gray, base);
         margin: $content-padding;
-    } // cards
+    }
+    .heading {
+        padding: $content-padding;
+        padding-top: $content-padding * 1.5;
+        color: color($colors, gray, base);
+        border-bottom: 1px solid lighten(color($colors, dark, base), 7%);
+    }
+    // cards
     .menu-card {
         padding: $content-padding;
-        height: 80px;
-        border-bottom: 1px solid lighten(color($colors, dark, base), 5%);
-        color: white;
+        height: 70px;
+        background: lighten(color($colors, dark, base), 2%);
+        border-bottom: 1px solid lighten(color($colors, dark, base), 7%);
+        color: color($colors, light-blue, base);
         text-transform: none;
-        &.active {
-            background: darken(color($colors, dark, base), 10%);
-        }
         &.replaced {
-            color: color($colors, gray, base);
+            height: 50px;
+            .card-icon {
+                opacity: 0.3;
+            }
+        }
+        &.active {
+            color: white;
+            background: lighten(color($colors, dark, base), 7%);
+            .card-icon {
+                background: color($colors, black, base) !important;
+                color: color($colors, primary, base) !important;
+                opacity: 1;
+            }
         }
         .card-inner {
             width: 100%;
             height: 100%;
             position: relative;
             display: flex;
+            .card-icon {
+                margin-right: 0.8em;
+                align-self: center;
+                width: 34px;
+                height: 24px;
+                background: color($colors, light-blue, base);
+                color: color($colors, darker, base);
+                border-radius: 4px;
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                ion-icon {
+                    font-size: 1.65em;
+                    align-self: center;
+                }
+            }
             .balance {
                 text-align: right;
+                align-self: center;
                 color: color($colors, light-blue, base);
                 ion-icon {
                     vertical-align: middle;
                     margin-left: 0.3em;
                     float: right;
+                    margin-top: -0.05em;
                 }
-                .money {
-                    margin-bottom: 0.7em;
-                }
+                .money {}
                 .pass {
-                    &.inactive {
-                        opacity: 0.2;
-                    }
+                    margin-top: 0.6em;
                 }
             }
-            .replaced {}
             .info {
                 flex: 1 0;
-                font-size: 13px;
                 min-width: 0;
                 padding-right: 1em;
+                align-self: center;
                 .number {
-                    font-weight: 600;
+                    font-size: 1.2em;
                 }
                 .nickname {
-                    margin-top: 0.7em;
-                    font-size: 15px;
+                    margin-top: 0.4em;
+                    opacity: 0.6;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
