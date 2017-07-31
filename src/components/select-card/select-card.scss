@@ -15,7 +15,7 @@ select-card {
     // cards
     .menu-card {
         padding: $content-padding;
-        height: 70px;
+        height: 62px;
         background: lighten(color($colors, dark, base), 2%);
         border-bottom: 1px solid lighten(color($colors, dark, base), 7%);
         color: color($colors, light-blue, base);
@@ -68,7 +68,7 @@ select-card {
                 }
                 .money {}
                 .pass {
-                    margin-top: 0.6em;
+                    margin-top: 0.3em;
                 }
             }
             .info {
@@ -80,7 +80,7 @@ select-card {
                     font-size: 1.2em;
                 }
                 .nickname {
-                    margin-top: 0.4em;
+                    margin-top: 0.1em;
                     opacity: 0.6;
                     white-space: nowrap;
                     overflow: hidden;
