@@ -37,7 +37,8 @@ page-history {
                     }
                     &:first-of-type {
                         .card {
-                            border-radius: $card-radius $card-radius 0 0;
+                            border-top-left-radius: $card-radius;
+                            border-top-right-radius: $card-radius;
                         }
                     }
                     &:last-of-type {
@@ -45,7 +46,8 @@ page-history {
                             display: none;
                         }
                         .card {
-                            border-radius: 0 0 $card-radius $card-radius;
+                            border-bottom-left-radius: $card-radius;
+                            border-bottom-right-radius: $card-radius;
                         }
                     }
                 }
