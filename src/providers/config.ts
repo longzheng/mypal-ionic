@@ -42,6 +42,8 @@ export class ConfigProvider {
   // remove stored username/password
   loginForget() {
     this.storage.remove(this.CONFIG_LOGIN)
+    // also forget saved credit card
+    this.creditCardForget();
   }
 
   // save username/password
