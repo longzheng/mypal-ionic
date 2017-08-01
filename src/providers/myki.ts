@@ -454,8 +454,10 @@ export class MykiProvider {
                   trans.debit = debit != "" ? parseFloat(debit) : null
 
                   // balance
-                  let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("-", "").replace("$", "")
-                  trans.moneyBalance = moneyBalance != "" ? parseFloat(moneyBalance) : null
+                  let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("$", "")
+                  
+                  // check if a blank entry which is "-"
+                  trans.moneyBalance = moneyBalance != "-" ? parseFloat(moneyBalance) : null
                 } catch (e) {
                   // log the transaction that failed
                   console.error('error parsing transaction')
