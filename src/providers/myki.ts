@@ -454,7 +454,7 @@ export class MykiProvider {
                   trans.debit = debit != "" ? parseFloat(debit) : null
 
                   // balance
-                  let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("-", "").replace("$", "")
+                  let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("$", "")
                   trans.moneyBalance = moneyBalance != "" ? parseFloat(moneyBalance) : null
                 } catch (e) {
                   // log the transaction that failed
@@ -728,7 +728,7 @@ export class MykiProvider {
               if (data.url !== `${this.apiRoot}Registered/TopUp/TopUpConfirmation.aspx`)
                 return reject()
 
-              // HUGE SUCCESS 
+              // HUGE SUCCESS
               //                           ,:/+/-
               //             /M/              .,-=;//;-
               //        .:/= ;MH/,    ,=/+%$XH@MM#@:
@@ -1029,7 +1029,7 @@ export class MykiProvider {
   }
 
   private mockTopupOrder(options: Myki.TopupOptions): Myki.TopupOrder {
-    // update myki order 
+    // update myki order
     options.reminderEmail = 'john@doe.com'
     options.reminderMobile = '0412345678'
 
