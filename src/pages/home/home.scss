@@ -20,9 +20,6 @@ page-home {
             border-top: none !important; // override so pull to refresh has no border
         }
     }
-    .home-content {
-        animation: 0.3s homeContentLoaded ease-out;
-    }
     .replaced {
         background: color($colors, danger, base);
         color: white;
@@ -112,16 +109,5 @@ page-home {
     }
     .loading {
         padding: 3em 0 !important;
-    }
-}
-
-@keyframes homeContentLoaded {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    100% {
-        opacity: 1;
     }
 }
