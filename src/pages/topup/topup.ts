@@ -93,7 +93,7 @@ export class TopupPage {
         Validators.required
       ]],
       reminderEmail: ['', [
-        Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$') // generic email validation
+        Validators.pattern(/^[a-z0-9_]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$/ig) // generic email validation
       ]],
       reminderMobile: [''],
     }, {
