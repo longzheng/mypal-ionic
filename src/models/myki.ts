@@ -92,6 +92,8 @@ export namespace Myki {
                         return 1;
                     } else if ((a.type === TransactionType.TopUpMoney || a.type === TransactionType.TopUpPass) && b.type === TransactionType.TouchOn) {
                         return 1;
+                    } else if (a.type === TransactionType.TouchOff && (b.type === TransactionType.TopUpMoney || b.type === TransactionType.TopUpPass)) {
+                        return 1;
                     } else {
                         return -1;
                     }
