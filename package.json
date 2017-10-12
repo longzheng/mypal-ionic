@@ -1,132 +1,132 @@
 {
-    "name": "ionic-hello-world",
-    "author": "Ionic Framework",
-    "homepage": "http://ionicframework.com/",
-    "private": true,
-    "scripts": {
-        "clean": "ionic-app-scripts clean",
-        "build": "ionic-app-scripts build",
-        "ionic:build": "ionic-app-scripts build",
-        "ionic:serve": "ionic-app-scripts serve"
+  "name": "ionic-hello-world",
+  "author": "Ionic Framework",
+  "homepage": "http://ionicframework.com/",
+  "private": true,
+  "scripts": {
+    "clean": "ionic-app-scripts clean",
+    "build": "ionic-app-scripts build",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve"
+  },
+  "dependencies": {
+    "@angular/common": "^4.4.3",
+    "@angular/compiler": "^4.4.3",
+    "@angular/compiler-cli": "^4.4.3",
+    "@angular/core": "^4.4.3",
+    "@angular/forms": "^4.4.3",
+    "@angular/http": "^4.4.3",
+    "@angular/platform-browser": "^4.4.3",
+    "@angular/platform-browser-dynamic": "^4.4.3",
+    "@ionic-native/app-version": "^4.1.0",
+    "@ionic-native/calendar": "^4.1.0",
+    "@ionic-native/core": "^4.1.0",
+    "@ionic-native/firebase": "^4.1.0",
+    "@ionic-native/google-maps": "^4.1.0",
+    "@ionic-native/header-color": "^4.1.0",
+    "@ionic-native/secure-storage": "^4.1.0",
+    "@ionic-native/social-sharing": "^4.1.0",
+    "@ionic-native/splash-screen": "^4.1.0",
+    "@ionic-native/status-bar": "^4.1.0",
+    "@ionic/storage": "2.0.1",
+    "angular2-moment": "^1.3.3",
+    "com.googlemaps.ios": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
+    "cordova-android": "^6.2.3",
+    "cordova-ios": "4.5.1",
+    "cordova-plugin-app-version": "^0.1.9",
+    "cordova-plugin-calendar": "^4.6.0",
+    "cordova-plugin-compat": "^1.1.0",
+    "cordova-plugin-device": "^1.1.6",
+    "cordova-plugin-firebase": "^0.1.22",
+    "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
+    "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
+    "cordova-plugin-headercolor": "^1.0.0",
+    "cordova-plugin-inappbrowser": "^1.7.1",
+    "cordova-plugin-secure-storage": "^2.6.8",
+    "cordova-plugin-splashscreen": "^4.0.3",
+    "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
+    "cordova-plugin-whitelist": "^1.3.2",
+    "cordova-plugin-x-socialsharing": "^5.1.8",
+    "es6-promise-plugin": "^4.1.0",
+    "intl": "^1.2.5",
+    "ionic-angular": "^3.7.1",
+    "ionic-plugin-keyboard": "^2.2.1",
+    "ionicons": "3.0.0",
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1",
+    "raven-js": "^3.17.0",
+    "rxjs": "5.4.0",
+    "sw-toolbox": "3.6.0",
+    "zone.js": "^0.8.18"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "ionic": "3.13.0",
+    "typescript": "2.3.4"
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-whitelist",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-device",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-inappbrowser",
+    "ionic-plugin-keyboard",
+    "cordova-plugin-firebase",
+    "cordova-plugin-compat",
+    {
+      "locator": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
+      "id": "cordova-plugin-calendar"
     },
-    "dependencies": {
-        "@angular/common": "4.1.3",
-        "@angular/compiler": "4.1.3",
-        "@angular/compiler-cli": "4.1.3",
-        "@angular/core": "4.1.3",
-        "@angular/forms": "4.1.3",
-        "@angular/http": "4.1.3",
-        "@angular/platform-browser": "4.1.3",
-        "@angular/platform-browser-dynamic": "4.1.3",
-        "@ionic-native/app-version": "^4.1.0",
-        "@ionic-native/calendar": "^4.1.0",
-        "@ionic-native/core": "^4.1.0",
-        "@ionic-native/firebase": "^4.1.0",
-        "@ionic-native/google-maps": "^4.1.0",
-        "@ionic-native/header-color": "^4.1.0",
-        "@ionic-native/secure-storage": "^4.1.0",
-        "@ionic-native/social-sharing": "^4.1.0",
-        "@ionic-native/splash-screen": "^4.1.0",
-        "@ionic-native/status-bar": "^4.1.0",
-        "@ionic/storage": "2.0.1",
-        "angular2-moment": "^1.3.3",
-        "com.googlemaps.ios": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
-        "cordova-android": "^6.2.3",
-        "cordova-ios": "^4.4.0",
-        "cordova-plugin-app-version": "^0.1.9",
-        "cordova-plugin-calendar": "^4.6.0",
-        "cordova-plugin-compat": "^1.1.0",
-        "cordova-plugin-device": "^1.1.6",
-        "cordova-plugin-firebase": "^0.1.22",
-        "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
-        "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
-        "cordova-plugin-headercolor": "^1.0.0",
-        "cordova-plugin-inappbrowser": "^1.7.1",
-        "cordova-plugin-secure-storage": "^2.6.8",
-        "cordova-plugin-splashscreen": "^4.0.3",
-        "cordova-plugin-statusbar": "^2.2.3",
-        "cordova-plugin-whitelist": "^1.3.2",
-        "cordova-plugin-x-socialsharing": "^5.1.8",
-        "es6-promise-plugin": "^4.1.0",
-        "intl": "^1.2.5",
-        "ionic-angular": "^3.7.1",
-        "ionic-plugin-keyboard": "^2.2.1",
-        "ionicons": "3.0.0",
-        "jquery": "^3.2.1",
-        "moment": "^2.18.1",
-        "raven-js": "^3.17.0",
-        "rxjs": "5.4.0",
-        "sw-toolbox": "3.6.0",
-        "zone.js": "^0.8.18"
-    },
-    "devDependencies": {
-        "@ionic/app-scripts": "^3.0.0",
-        "gulp": "^3.9.1",
-        "gulp-sass": "^3.1.0",
-        "ionic": "3.13.0",
-        "typescript": "2.3.4"
-    },
-    "cordovaPlugins": [
-        "cordova-plugin-whitelist",
-        "cordova-plugin-statusbar",
-        "cordova-plugin-device",
-        "cordova-plugin-splashscreen",
-        "cordova-plugin-inappbrowser",
-        "ionic-plugin-keyboard",
-        "cordova-plugin-firebase",
-        "cordova-plugin-compat",
-        {
-            "locator": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
-            "id": "cordova-plugin-calendar"
-        },
-        "cordova-plugin-headercolor",
-        "cordova-plugin-app-version",
-        "cordova-plugin-googlemaps",
-        {
-            "locator": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
-            "id": "com.googlemaps.ios"
-        }
-    ],
-    "cordovaPlatforms": [
-        {
-            "platform": "ios",
-            "version": "",
-            "locator": "ios"
-        },
-        {
-            "platform": "android",
-            "version": "",
-            "locator": "android"
-        }
-    ],
-    "description": "mypal-ionic: An Ionic project",
-    "cordova": {
-        "platforms": [
-            "android",
-            "ios"
-        ],
-        "plugins": {
-            "cordova-plugin-device": {},
-            "cordova-plugin-firebase": {},
-            "cordova-plugin-headercolor": {},
-            "cordova-plugin-inappbrowser": {},
-            "cordova-plugin-splashscreen": {},
-            "cordova-plugin-statusbar": {},
-            "cordova-plugin-whitelist": {},
-            "ionic-plugin-keyboard": {},
-            "cordova-plugin-secure-storage": {},
-            "cordova-plugin-calendar": {
-                "CALENDAR_USAGE_DESCRIPTION": "This app uses your calendar to remind you of your myki pass and card expiry"
-            },
-            "cordova-plugin-x-socialsharing": {},
-            "com.googlemaps.ios": {},
-            "cordova-plugin-googlemaps": {
-                "API_KEY_FOR_ANDROID": "API_KEY_FOR_ANDROID",
-                "API_KEY_FOR_IOS": "API_KEY_FOR_IOS",
-                "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
-                "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Show your location on the map"
-            },
-            "cordova-plugin-app-version": {}
-        }
+    "cordova-plugin-headercolor",
+    "cordova-plugin-app-version",
+    "cordova-plugin-googlemaps",
+    {
+      "locator": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
+      "id": "com.googlemaps.ios"
     }
+  ],
+  "cordovaPlatforms": [
+    {
+      "platform": "ios",
+      "version": "",
+      "locator": "ios"
+    },
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
+    }
+  ],
+  "description": "mypal-ionic: An Ionic project",
+  "cordova": {
+    "platforms": [
+      "android",
+      "ios"
+    ],
+    "plugins": {
+      "cordova-plugin-device": {},
+      "cordova-plugin-firebase": {},
+      "cordova-plugin-headercolor": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-whitelist": {},
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-secure-storage": {},
+      "cordova-plugin-calendar": {
+        "CALENDAR_USAGE_DESCRIPTION": "This app uses your calendar to remind you of your myki pass and card expiry"
+      },
+      "cordova-plugin-x-socialsharing": {},
+      "com.googlemaps.ios": {},
+      "cordova-plugin-googlemaps": {
+        "API_KEY_FOR_ANDROID": "API_KEY_FOR_ANDROID",
+        "API_KEY_FOR_IOS": "API_KEY_FOR_IOS",
+        "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
+        "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Show your location on the map"
+      },
+      "cordova-plugin-app-version": {},
+      "cordova-plugin-statusbar": {}
+    }
+  }
 }
