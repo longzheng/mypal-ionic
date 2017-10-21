@@ -347,7 +347,10 @@ export class MykiProvider {
                   card.passInactive = passInactive
                 }
 
-                card.lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A").toDate();
+                let lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A")
+                if (lastTransactionDate.isValid()){
+                  card.lastTransactionDate = lastTransactionDate.toDate();
+                }
 
                 card.autoTopup = cardTable.find("tr:nth-child(11) td:nth-child(2) li#ctl00_uxContentPlaceHolder_ModifyAutoload").length > 0;
               } catch (e) {
@@ -1012,7 +1015,6 @@ export class MykiProvider {
         card.loaded = true
         card.type = "Concession"
         card.moneyTopupInProgress = 0
-        card.lastTransactionDate = new Date("2016-01-01T16:12:02.000Z")
         break;
       default:
         throw new Error('Invalid card')
