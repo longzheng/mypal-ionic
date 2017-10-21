@@ -78,12 +78,13 @@ export class MyApp {
                 }
 
                 // login
-                this.mykiProvider.loginGetAccount(result[0], result[1]).then()
-                  .catch(() => {
+                this.mykiProvider.loginGetAccount(result[0], result[1])
+                  .then()
+                  .catch(error => {
                     // show error
                     let alert = this.alertCtrl.create({
-                      title: 'Saved login invalid',
-                      subTitle: 'Could not log in with your saved login details. Please re-enter your username and password.',
+                      title: 'Cannot log in',
+                      subTitle: 'Could not log in with your saved login details. Please check your internet connection and account details.',
                       buttons: ['OK'],
                       enableBackdropDismiss: false
                     })
