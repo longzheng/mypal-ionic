@@ -72,6 +72,30 @@ export class LoginComponent {
           alert.present()
         }
 
+        if (error === 'locked') {
+          // account locked error
+          let alert = this.alertCtrl.create({
+            title: 'Account locked',
+            subTitle: 'Your account has been disabled due to too many incorrect password attempts.',
+            enableBackdropDismiss: false,
+            buttons: [
+              {
+                text: 'Unlock account',
+                handler: () => {
+                  window.open('https://www.mymyki.com.au/NTSWebPortal/common/Auxillary/UnlockUser.aspx', '_system');
+                }
+              },
+              {
+                text: 'OK',
+                role: 'cancel',
+                handler: () => {
+                }
+              }
+            ]
+          })
+          alert.present()
+        }
+
         if (error === 'login') {
           // login error
           let alert = this.alertCtrl.create({

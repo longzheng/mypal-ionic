@@ -101,10 +101,26 @@ export class MykiProvider {
           // post form fields
           this.httpPostFormAsp(loginUrl, body).then(
             data => {
+              // scrape webpage
+              let scraperJquery = this.jQueryHTML(data)
+
               // verify if we are actually logged in
               // successful login redirects us to the "Login-Services.aspx" page
-              if (data.url !== `${this.apiRoot}Registered/MyMykiAccount.aspx?menu=My%20myki%20account`)
-                return reject('login')
+              if (data.url !== `${this.apiRoot}Registered/MyMykiAccount.aspx?menu=My%20myki%20account`){
+                // scrape error
+                let error = scraperJquery.find('#uxservererror').text().trim()
+
+                // different errors
+                switch(error) {
+                  case 'Invalid Username/Password.':
+                    return reject('login')
+                  case 'Your account has been locked out.':
+                    return reject('locked')
+                  default:
+                    return reject('login')
+                }
+                
+              }
 
               console.log("logged in to account")
               this.loggedIn = true;
@@ -112,9 +128,6 @@ export class MykiProvider {
               // store the last username/password
               this.username = username;
               this.password = password;
-
-              // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
 
               // scrape account holder
               try {
