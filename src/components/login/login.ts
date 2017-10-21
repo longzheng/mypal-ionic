@@ -23,17 +23,6 @@ export class LoginComponent {
     public loadingCtrl: LoadingController,
     public firebase: Firebase,
   ) {
-    this.init();
-  }
-
-  init() {
-    // Get saved login if we have it
-    this.configProvider.loginGet().then(
-      result => {
-        this.username = result[0];
-        this.password = result[1];
-      }
-    )
   }
 
   loggingIn() {
