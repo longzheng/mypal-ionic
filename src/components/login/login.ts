@@ -34,22 +34,6 @@ export class LoginComponent {
         this.password = result[1];
       }
     )
-    
-    // handle login username ENTER behavior
-    $("input[name=username]").on('keydown', (e) => {
-      if (e.which == 13) {
-        // focus to password
-        $("input[name=password]").focus()
-      }
-    })
-
-    // handle login password ENTER behavior
-    $("input[name=password]").on('keydown', (e) => {
-      if (e.which == 13) {
-        // submit log in
-        this.logIn()
-      }
-    })
   }
 
   loggingIn() {
@@ -156,6 +140,18 @@ export class LoginComponent {
 
     // open myki register page
     window.open('https://www.mymyki.com.au/NTSWebPortal/Common/register/SetupWebAccess.aspx?menu=Set%20up%20web%20access', '_system');
+  }
+
+  // handle login username ENTER behavior
+  usernameEnter() {
+    // focus to password
+    $("input[name=password]").focus()
+  }
+
+  // handle login password ENTER behavior
+  passwordEnter() {
+    // submit log in
+    this.logIn()
   }
 
 }

@@ -20,10 +20,10 @@
     <div class="form">
         <ul class="card-list">
             <ion-item no-lines>
-                <ion-input type="text" [(ngModel)]="username" name="username" placeholder="myki username" autocapitalize="none"></ion-input>
+                <ion-input type="text" [(ngModel)]="username" (keydown.enter)="usernameEnter()" name="username" placeholder="myki username" autocapitalize="none"></ion-input>
             </ion-item>
             <ion-item no-lines>
-                <ion-input type="password" [(ngModel)]="password" name="password" placeholder="myki password"></ion-input>
+                <ion-input type="password" [(ngModel)]="password" (keydown.enter)="passwordEnter()" name="password" placeholder="myki password"></ion-input>
             </ion-item>
         </ul>
         <button ion-button block large color="brand" (click)="logIn()">Log in</button>
