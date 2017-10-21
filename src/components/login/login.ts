@@ -23,9 +23,18 @@ export class LoginComponent {
     public loadingCtrl: LoadingController,
     public firebase: Firebase,
   ) {
+    this.init();
   }
 
-  ionViewDidLoad() {
+  init() {
+    // Get saved login if we have it
+    this.configProvider.loginGet().then(
+      result => {
+        this.username = result[0];
+        this.password = result[1];
+      }
+    )
+    
     // handle login username ENTER behavior
     $("input[name=username]").on('keydown', (e) => {
       if (e.which == 13) {
