@@ -159,6 +159,9 @@ export namespace Myki {
                 case 'Compensation':
                     this.type = TransactionType.Compensation;
                     break;
+                case 'Registration Fee':
+                    this.type = TransactionType.RegistrationFee;
+                    break;
                 default:
                     throw new Error('Invalid transaction type "' + type + '"')
             }
@@ -196,6 +199,8 @@ export namespace Myki {
                     return "Myki money purchase";
                 case TransactionType.Compensation:
                     return "Compensation";
+                case TransactionType.RegistrationFee:
+                    return "Registration fee";
                 default:
                     return '';
             }
@@ -301,7 +306,8 @@ export namespace Myki {
         MoneyDebit,
         FareProductSale,
         MoneyPurchase,
-        Compensation
+        Compensation,
+        RegistrationFee
     }
 
     export enum TransactionService {

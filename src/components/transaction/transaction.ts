@@ -66,6 +66,7 @@ export class TransactionComponent {
       case Myki.TransactionType.CancelTopUpMoney:
       case Myki.TransactionType.CancelTopUpPass:
       case Myki.TransactionType.RefundPass:
+      case Myki.TransactionType.RegistrationFee:
         return true;
       default:
         return false;
