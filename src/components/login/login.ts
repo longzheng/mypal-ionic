@@ -72,6 +72,24 @@ export class LoginComponent {
         this.firebase.logEvent("login", {})
       },
       error => {
+        if (error === 'network'){
+          // network error
+          let alert = this.alertCtrl.create({
+            title: 'Internet error',
+            subTitle: 'Check you have a working mobile or WiFi connection.',
+            enableBackdropDismiss: false,
+            buttons: [
+              {
+                text: 'OK',
+                role: 'cancel',
+                handler: () => {
+                }
+              }
+            ]
+          })
+          alert.present()
+        }
+
         if (error === 'login') {
           // login error
           let alert = this.alertCtrl.create({

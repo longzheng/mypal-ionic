@@ -104,7 +104,7 @@ export class MykiProvider {
               // verify if we are actually logged in
               // successful login redirects us to the "Login-Services.aspx" page
               if (data.url !== `${this.apiRoot}Registered/MyMykiAccount.aspx?menu=My%20myki%20account`)
-                return reject()
+                return reject('login')
 
               console.log("logged in to account")
               this.loggedIn = true;
@@ -133,7 +133,7 @@ export class MykiProvider {
         },
         error => {
           this.loggingIn = false
-          return reject()
+          return reject('network')
         })
     })
   }
@@ -153,7 +153,7 @@ export class MykiProvider {
             }
           )
         }, error => {
-          return reject('login')
+          return reject(error)
         })
     })
   }
