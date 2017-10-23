@@ -256,7 +256,9 @@ export class MykiProvider {
                   // create or update card
                   let card = this.findOrInsertCardById(cardId)
 
-                  card.status = Myki.CardStatus.Replaced;
+                  // Set card status
+                  card.setStatus(cardJquery.find("td:nth-child(3)").text().trim());
+
                   card.holder = cardJquery.find("td:nth-child(2)").text().trim();
                 } catch (e) {
                   console.error('error parsing inactive card')

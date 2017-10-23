@@ -70,6 +70,14 @@ export class HomePage {
     return this.card().status === Myki.CardStatus.Blocked
   }
 
+  refundedCard() {
+    return this.card().status === Myki.CardStatus.Refunded
+  }
+
+  disabledCard() {
+    return this.card().status !== Myki.CardStatus.Active
+  }
+
   cardNickname() {
     return this.configProvider.cardNicknameGet(this.card().id)
   }

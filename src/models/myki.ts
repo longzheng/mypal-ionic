@@ -100,6 +100,20 @@ export namespace Myki {
                 }
             })
         }
+
+        setStatus(status: string) {
+            switch (status) {
+                case 'Replaced':
+                    this.status = CardStatus.Replaced;
+                    break;
+                case 'Refunded':
+                    this.status = CardStatus.Refunded;
+                    break;
+                case 'Blocked':
+                    this.status = CardStatus.Blocked;
+                    break;
+            }
+        }
     }
 
     export class Transaction {
@@ -288,7 +302,8 @@ export namespace Myki {
     export enum CardStatus {
         Active,
         Replaced,
-        Blocked
+        Blocked,
+        Refunded
     }
 
     export enum TransactionType {

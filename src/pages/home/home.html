@@ -34,12 +34,16 @@
         </div>
 
         <div class="home-content" [hidden]="!card().loaded">
-            <div class="card replaced" [hidden]="!replacedCard()">
+            <div class="card replaced" *ngIf="replacedCard()">
                 <div class="card-inner">Card replaced</div>
             </div>
 
-            <div class="card replaced" [hidden]="!blockedCard()">
+            <div class="card replaced" *ngIf="blockedCard()">
                 <div class="card-inner">Card blocked</div>
+            </div>
+
+            <div class="card replaced" *ngIf="refundedCard()">
+                <div class="card-inner">Card refunded</div>
             </div>
 
             <div class="card balance money">
@@ -58,7 +62,7 @@
                         <div class="inprogress" [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} will be added at next touch on</div>
                     </div>
                     <div [hidden]="isIos()">
-                        <button ion-button icon-left block (click)="topupMoney()" [disabled]="replacedCard() || blockedCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
+                        <button ion-button icon-left block (click)="topupMoney()" [disabled]="disabledCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>
                     </div>
                 </div>
             </div>
@@ -75,7 +79,7 @@
                         <div [hidden]="!card().passInactive">{{card().passInactive}}</div>
                     </div>
                     <div class="buttons" [hidden]="isIos()">
-                        <button class="topup" ion-button icon-left block (click)="topupPass()" [disabled]="replacedCard() || blockedCard() || card().passInactive"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
+                        <button class="topup" ion-button icon-left block (click)="topupPass()" [disabled]="disabledCard() || card().passInactive"><ion-icon name="md-add-circle"></ion-icon> Top up pass</button>
                         <button class="reminder" ion-button icon-only color="dark" (click)="addPassReminder()" *ngIf="card().passActive"><ion-icon name="md-alarm"></ion-icon></button>
                     </div>
                     <div class="buttons" [hidden]="!isIos()">

@@ -42,11 +42,11 @@ export class SelectCardComponent {
   }
 
   activeCards() {
-    return this.mykiProvider.mykiAccount.cards.filter(x => x.status !== Myki.CardStatus.Replaced)
+    return this.mykiProvider.mykiAccount.cards.filter(x => x.status === Myki.CardStatus.Active)
   }
 
   inactiveCards() {
-    return this.mykiProvider.mykiAccount.cards.filter(x => x.status === Myki.CardStatus.Replaced)
+    return this.mykiProvider.mykiAccount.cards.filter(x => x.status !== Myki.CardStatus.Active)
   }
 
   trackCard(index, card: Myki.Card) {
