@@ -55,6 +55,7 @@
         <icon height="29" src="resources/ios/icon/icon-small.png" width="29" />
         <icon height="58" src="resources/ios/icon/icon-small@2x.png" width="58" />
         <icon height="87" src="resources/ios/icon/icon-small@3x.png" width="87" />
+        <icon height="1024" src="resources/ios/icon/icon-1024.png" width="1024" />
     </platform>
     <preference name="target-device" value="handset" />
     <preference name="webviewbounce" value="false" />
