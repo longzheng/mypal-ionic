@@ -1,4 +1,3 @@
-![](https://cloud.githubusercontent.com/assets/484912/22861758/f6491d18-f174-11e6-9bec-f6b7e1aaca43.png)
 # mypal-ionic
 Mobile app to see Myki account details for iOS & Android
 
