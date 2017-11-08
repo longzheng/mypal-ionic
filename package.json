@@ -64,7 +64,7 @@
     "@ionic/app-scripts": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
-    "ionic": "3.14.0",
+    "ionic": "3.17.0",
     "typescript": "2.3.4"
   },
   "cordovaPlugins": [
@@ -127,8 +127,8 @@
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Show your location on the map"
       },
       "cordova-plugin-app-version": {},
-      "cordova-plugin-statusbar": {},
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-statusbar": {}
     }
   }
 }
