@@ -56,6 +56,9 @@
         <icon height="58" src="resources/ios/icon/icon-small@2x.png" width="58" />
         <icon height="87" src="resources/ios/icon/icon-small@3x.png" width="87" />
         <icon height="1024" src="resources/ios/icon/icon-1024.png" width="1024" />
+        <config-file parent="NSContactsUsageDescription" target="*-Info.plist">
+            <string>This app uses your contacts to display your calendar</string>
+        </config-file>
     </platform>
     <preference name="target-device" value="handset" />
     <preference name="webviewbounce" value="false" />
