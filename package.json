@@ -30,7 +30,6 @@
     "@ionic-native/status-bar": "^4.1.0",
     "@ionic/storage": "2.0.1",
     "angular2-moment": "^1.3.3",
-    "com.googlemaps.ios": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
     "cordova-android": "^6.2.3",
     "cordova-ios": "4.5.1",
     "cordova-plugin-app-version": "^0.1.9",
@@ -38,7 +37,7 @@
     "cordova-plugin-compat": "^1.1.0",
     "cordova-plugin-device": "^1.1.6",
     "cordova-plugin-firebase": "^0.1.22",
-    "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
+    "cordova-plugin-googlemaps": "^2.1.1",
     "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
     "cordova-plugin-headercolor": "^1.0.0",
     "cordova-plugin-inappbrowser": "^1.7.1",
@@ -119,16 +118,15 @@
         "CALENDAR_USAGE_DESCRIPTION": "This app uses your calendar to remind you of your myki pass and card expiry"
       },
       "cordova-plugin-x-socialsharing": {},
-      "com.googlemaps.ios": {},
+      "cordova-plugin-app-version": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-statusbar": {},
       "cordova-plugin-googlemaps": {
         "API_KEY_FOR_ANDROID": "API_KEY_FOR_ANDROID",
         "API_KEY_FOR_IOS": "API_KEY_FOR_IOS",
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
-        "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Show your location on the map"
-      },
-      "cordova-plugin-app-version": {},
-      "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-statusbar": {}
+        "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
+      }
     }
   }
 }
