@@ -139,13 +139,11 @@ section.hero {
         section.hero .screenshots div.iphone {
           top: -3em;
           left: 0;
-          opacity: 0;
-          animation: anim-iphone 2s ease-in-out forwards; }
+          transform: rotateZ(-8deg); }
         section.hero .screenshots div.android {
           bottom: -3em;
           right: 0;
-          opacity: 0;
-          animation: anim-android 2s ease-in-out forwards;
+          transform: rotateZ(7deg);
           z-index: 1; } }
       section.hero .screenshots div img {
         height: 100%; }
@@ -175,27 +173,3 @@ section.legal {
   background: #ECEFF2; }
   section.legal ul li {
     margin: 0.3em 0 1em; }
-
-@keyframes anim-iphone {
-  0% {
-    transform: translateY(-5%) rotateZ(-5deg);
-    opacity: 0;
-    -webkit-filter: drop-shadow(0 60px 40px transparent); }
-  50% {
-    opacity: 1; }
-  100% {
-    transform: translateY(0) rotateZ(-8deg);
-    opacity: 1;
-    -webkit-filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.15)); } }
-
-@keyframes anim-android {
-  0% {
-    transform: translateY(-5%) rotateZ(3deg);
-    opacity: 0;
-    -webkit-filter: drop-shadow(0 20px 40px transparent); }
-  50% {
-    opacity: 1; }
-  100% {
-    transform: translateY(0) rotateZ(7deg);
-    opacity: 1;
-    -webkit-filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.4)); } }
