@@ -5,10 +5,11 @@ page-topup-map {
         left: 50%;
         transform: translate(-50%, -50%);
         padding: 1em;
-        background: rgba(0, 0, 0, 0.6);
+        background: rgba(0, 0, 0, 0.4);
         border-radius: 10px;
         color: white;
         text-align: center;
+        pointer-events: none;
         ion-spinner {
             margin-bottom: 0.5em;
             * {
