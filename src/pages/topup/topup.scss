@@ -58,17 +58,15 @@ page-topup {
         animation: slideLeft 0.3s ease-out;
         .topup-summary {
             margin: 0 0 1em 0;
-            background: color($colors, darker, base);
+            background: #dadada;
             strong {
                 font-weight: 600;
             }
             ion-item {
-                color: color($colors, light, base);
                 &+ion-item {
-                    border-top: 1px solid lighten(color($colors, darker, base), 10%) !important;
+                    border-top: 1px solid #ccc !important;
                 }
                 div[item-left] {
-                    color: color($colors, light-blue, base);
                 }
                 div[item-right] {
                     text-align: right;
