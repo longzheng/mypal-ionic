@@ -133,9 +133,8 @@ ion-icon {
 // restyling the app tabbar
 ion-tabs {
     .tabbar {
-        border-top: none !important;
-        background: white;
-        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02); // restyling icon
+        border-top: 1px solid #ddd !important;
+        background: #ffffff;
         $tab-icon-size: 26px;
         ion-icon {
             min-width: $tab-icon-size !important;
@@ -145,7 +144,8 @@ ion-tabs {
         }
         .tab-button-text {
             margin-top: 2px;
-            margin-bottom: 0px;
+            margin-bottom: -2px;
+            font-size: 11px;
         }
     }
 }
