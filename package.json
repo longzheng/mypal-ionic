@@ -37,7 +37,7 @@
     "cordova-plugin-compat": "^1.1.0",
     "cordova-plugin-device": "^1.1.6",
     "cordova-plugin-firebase": "^0.1.22",
-    "cordova-plugin-googlemaps": "^2.1.1",
+    "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
     "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
     "cordova-plugin-headercolor": "^1.0.0",
     "cordova-plugin-inappbrowser": "^1.7.1",
@@ -63,7 +63,7 @@
     "@ionic/app-scripts": "^3.1.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
-    "ionic": "3.17.0",
+    "ionic": "3.18.0",
     "typescript": "2.3.4"
   },
   "cordovaPlugins": [
