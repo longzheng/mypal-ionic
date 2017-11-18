@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.longzheng.mypalionic" version="1.0.43" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.longzheng.mypalionic" version="1.0.44" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MyPal</name>
     <description>Manage myki on the go</description>
     <author email="long.zheng@gmail.com" href="https://github.com/longzheng/mypal-ionic">Long Zheng</author>
