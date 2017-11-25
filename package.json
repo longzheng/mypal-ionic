@@ -31,7 +31,7 @@
     "@ionic/storage": "2.0.1",
     "angular2-moment": "^1.3.3",
     "cordova-android": "^6.2.3",
-    "cordova-ios": "4.5.1",
+    "cordova-ios": "4.5.4",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-calendar": "^4.6.0",
     "cordova-plugin-compat": "^1.1.0",
@@ -63,7 +63,7 @@
     "@ionic/app-scripts": "^3.1.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
-    "ionic": "3.18.0",
+    "ionic": "3.19.0",
     "typescript": "2.3.4"
   },
   "cordovaPlugins": [

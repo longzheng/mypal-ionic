@@ -81,7 +81,7 @@
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <preference name="CordovaWebViewEngine" value="CDVUIWebViewEngine" />
     <engine name="android" spec="^6.2.3" />
-    <engine name="ios" spec="4.5.1" />
+    <engine name="ios" spec="4.5.4" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
     <plugin name="cordova-plugin-firebase" spec="^0.1.22" />
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
