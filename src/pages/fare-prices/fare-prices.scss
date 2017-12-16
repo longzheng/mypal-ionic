@@ -6,9 +6,11 @@ page-fare-prices {
         width: auto;
         margin: 1em 1em 0.5em;
     }
-    table {
-        width: auto;
+    .table-wrapper {
         margin: 0 1em;
+    }
+    table {
+        width: 100%;
         font-size: 1.1em;
         th,
         td {
@@ -29,7 +31,7 @@ page-fare-prices {
             }
         }
         .type {
-            width: 35%;
+            width: 6.5em;
             color: color($colors, dark, base);
         }
         .zone {
