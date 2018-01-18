@@ -21,46 +21,46 @@
         <tr>
           <td class="type">2 hour</td>
           <td class="zone">
-            <span *ngIf="is2018()">
+            <span *ngIf="is2019()">
               <span *ngIf="isFull()">$4.30</span>
               <span *ngIf="isConcession()">$2.15</span>
             </span>
-            <span *ngIf="!is2018()">
-              <span *ngIf="isFull()">$4.10</span>
-              <span *ngIf="isConcession()">$2.05</span>
+            <span *ngIf="!is2019()">
+              <span *ngIf="isFull()">$4.30</span>
+              <span *ngIf="isConcession()">$2.15</span>
             </span>
           </td>
           <td class="zone">
-            <span *ngIf="is2018()">
+            <span *ngIf="is2019()">
               <span *ngIf="isFull()">$2.94</span>
               <span *ngIf="isConcession()">$1.47</span>
             </span>
-            <span *ngIf="!is2018()">
-              <span *ngIf="isFull()">$2.80</span>
-              <span *ngIf="isConcession()">$1.40</span>
+            <span *ngIf="!is2019()">
+              <span *ngIf="isFull()">$2.94</span>
+              <span *ngIf="isConcession()">$1.47</span>
             </span>
           </td>
         </tr>
         <tr>
           <td class="type">Daily</td>
           <td class="zone">
-            <span *ngIf="is2018()">
+            <span *ngIf="is2019()">
               <span *ngIf="isFull()">$8.60</span>
               <span *ngIf="isConcession()">$4.30</span>
             </span>
-            <span *ngIf="!is2018()">
-              <span *ngIf="isFull()">$8.20</span>
-              <span *ngIf="isConcession()">$4.10</span>
+            <span *ngIf="!is2019()">
+              <span *ngIf="isFull()">$8.60</span>
+              <span *ngIf="isConcession()">$4.30</span>
             </span>
           </td>
           <td class="zone">
-            <span *ngIf="is2018()">
+            <span *ngIf="is2019()">
               <span *ngIf="isFull()">$5.88</span>
               <span *ngIf="isConcession()">$2.94</span>
             </span>
-            <span *ngIf="!is2018()">
-              <span *ngIf="isFull()">$5.60</span>
-              <span *ngIf="isConcession()">$2.80</span>
+            <span *ngIf="!is2019()">
+              <span *ngIf="isFull()">$5.88</span>
+              <span *ngIf="isConcession()">$2.94</span>
             </span>
           </td>
         </tr>
@@ -69,8 +69,14 @@
             <br>public holiday
             <br> daily cap</td>
           <td class="zone center" colspan="2">
-            <span *ngIf="isFull()">$6.00</span>
-            <span *ngIf="isConcession()">$3.00</span>
+              <span *ngIf="is2019()">
+                <span *ngIf="isFull()">$6.30</span>
+                <span *ngIf="isConcession()">$3.15</span>
+              </span>
+                <span *ngIf="!is2019()">
+                <span *ngIf="isFull()">$6.30</span>
+                <span *ngIf="isConcession()">$3.15</span>
+              </span>
           </td>
         </tr>
       </tbody>
@@ -85,7 +91,7 @@
       <br>
       <br>
       <strong>Seniors daily cap</strong>
-      <br> Seniors cap $4.10 for unlimited travel in Zones 1 &amp; 2. Seniors also travel free on Saturdays and Sundays for trips
+      <br> Seniors cap $4.30 for unlimited travel in Zones 1 &amp; 2. Seniors also travel free on Saturdays and Sundays for trips
       entirely within one or two consecutive zones (including Zone 1+2) and on regional town bus services.
     </span>
     <br>
