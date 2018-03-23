@@ -258,6 +258,9 @@ export namespace Myki {
                 case 'Call Center':
                     this.service = TransactionService.CallCenter;
                     break;
+                case 'IUSE':
+                    this.service = TransactionService.IUSE;
+                    break;
                 case '-':
                 case '':
                     this.service = null;
@@ -293,6 +296,8 @@ export namespace Myki {
                     return 'Others';
                 case TransactionService.CallCenter:
                     return 'Call centre';
+                case TransactionService.IUSE:
+                    return 'iUSEpass';
                 default:
                     return '';
             }
@@ -338,7 +343,8 @@ export namespace Myki {
         BPay,
         TOT,
         Others,
-        CallCenter
+        CallCenter,
+        IUSE
     }
 
     export enum TopupType {
