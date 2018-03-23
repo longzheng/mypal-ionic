@@ -24,6 +24,7 @@
     "@ionic-native/firebase": "^4.1.0",
     "@ionic-native/google-maps": "^4.1.0",
     "@ionic-native/header-color": "^4.1.0",
+    "@ionic-native/keyboard": "^4.6.0",
     "@ionic-native/secure-storage": "^4.1.0",
     "@ionic-native/social-sharing": "^4.1.0",
     "@ionic-native/splash-screen": "^4.1.0",
