@@ -957,8 +957,8 @@ export class MykiProvider {
       })
   }
 
-  private mockHttpDelay(func) {
-    return new Promise((resolve) => {
+  private mockHttpDelay<T>(func) {
+    return new Promise<T>((resolve) => {
       setTimeout(() => {
         return resolve(func())
       }, 1000)
