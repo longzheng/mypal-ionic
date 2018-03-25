@@ -384,8 +384,9 @@ export class TopupPage {
           // time to give up and send user back to the home screen
           loading.dismiss() // dismiss loading throbber
           let alert = this.alertCtrl.create({
-            title: 'Error processing payment',
-            subTitle: 'An error occured while topping up. Try again.',
+            title: 'Error topping up',
+            subTitle: 'An error occured while submitting your top up.',
+            message: 'myki/PTV may be having server issues. Try again later.',
             buttons: ['OK'],
             enableBackdropDismiss: false,
           })
@@ -396,8 +397,9 @@ export class TopupPage {
           loading.dismiss()
           // show error
           let alert = this.alertCtrl.create({
-            title: 'Error processing payment',
-            subTitle: 'Check your credit card details. Your credit card my have been declined by myki. Declined transactions may be deducted from your bank account temporarily, check with your bank.',
+            title: 'Error topping up',
+            subTitle: 'Your credit card may have been declined by myki/PTV',
+            message: 'Verify your credit card details.<br><br>myki/PTV does not seem to accept international credit cards or debit cards to top up online, you have to use a machine.<br><br>Declined transactions may be deducted from your bank account temporarily and are usually automatically refunded within 5 business days.',
             buttons: ['OK'],
             enableBackdropDismiss: false,
           })
