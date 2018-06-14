@@ -92,11 +92,10 @@ export class TopupPage {
       reminderType: ['', [
         Validators.required
       ]],
-      reminderEmail: ['', [
-        Validators.email // generic email validation
-      ]],
+      reminderEmail: [''],
       reminderMobile: [''],
     }, {
+        // group validators
         validator: this.validateReminder()
       })
   }
@@ -504,13 +503,19 @@ export class TopupPage {
   }
 
   private validateReminder() {
-    return (group: FormGroup): any => {
+    return (group: FormGroup) => {
       let reminderType = group.controls['reminderType'].value
       let reminderEmail = group.controls['reminderEmail'].value
       let reminderMobile = group.controls['reminderMobile'].value
 
-      if (reminderType === Myki.TopupReminderType.Email && !reminderEmail)
-        return { emailRequired: true }
+      // If reminder is email
+      if (reminderType === Myki.TopupReminderType.Email)
+        if (!reminderEmail)
+          // If not filled, return required error
+          return { emailRequired: true }
+        else
+          // If filled, validate email
+          return Validators.email(group.controls['reminderEmail'])
 
       if (reminderType === Myki.TopupReminderType.Mobile && !reminderMobile)
         return { mobileRequired: true }
