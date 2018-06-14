@@ -217,7 +217,7 @@
             <div class="error" *ngIf="formTopupPayReminder.touched">
                 <div *ngIf="formTopupPayReminder.hasError('emailRequired')">
                     <ion-icon name="ios-alert-outline"></ion-icon> Email address required.</div>
-                <div *ngIf="formTopupPayReminder.controls.reminderEmail.errors?.pattern">
+                <div *ngIf="formTopupPayReminder.controls.reminderEmail.errors?.email">
                     <ion-icon name="ios-alert-outline"></ion-icon> Valid email address required.</div>
                 <div *ngIf="formTopupPayReminder.hasError('mobileRequired')">
                     <ion-icon name="ios-alert-outline"></ion-icon> Mobile phone number required.</div>
