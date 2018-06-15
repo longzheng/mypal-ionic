@@ -88,6 +88,11 @@ export class TopupPage {
         validator: this.validateCreditCard()
       })
 
+      /*
+      Disabled because myki is so fucked no matter what receipt option you choose or what email you enter, it will always the receipt to the account email
+      Who cares about free choice right?
+      */
+      /*
     this.formTopupPayReminder = formBuilder.group({
       reminderType: ['', [
         Validators.required
@@ -98,6 +103,7 @@ export class TopupPage {
         // group validators
         validator: this.validateReminder()
       })
+      */
   }
 
   ionViewDidLoad() {
@@ -316,7 +322,9 @@ export class TopupPage {
   }
 
   public canPay() {
-    return (this.formTopupPayCC.valid && this.formTopupPayReminder.valid)
+    return (this.formTopupPayCC.valid 
+      //&& this.formTopupPayReminder.valid
+    )
   }
 
   public pay() {

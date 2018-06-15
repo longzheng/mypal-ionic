@@ -190,11 +190,16 @@
                 </ion-item>
             </ul>
 
-            <div class="note" *ngIf="!canSaveCreditCard" style="margin-bottom:1em">
+            <div class="note" *ngIf="!canSaveCreditCard">
                 You cannot save your credit card details because you do not have screen lock enabled.
             </div>
         </div>
 
+        <!--
+        Disabled because myki is so fucked no matter what receipt option you choose or what email you enter, it will always the receipt to the account email
+        Who cares about free choice right?
+        -->
+        <!--
         <form [formGroup]="formTopupPayReminder">
             <ul class="card-list topup-pay-reminder">
                 <ion-item no-lines>
@@ -223,6 +228,18 @@
                     <ion-icon name="ios-alert-outline"></ion-icon> Mobile phone number required.</div>
             </div>
         </form>
+        -->
+
+        <ul class="card-list">
+            <ion-item no-lines>
+                <div item-left>Receipt email</div>
+                <div item-right>{{topupOptions.reminderEmail}}</div>
+            </ion-item>
+        </ul>
+
+        <div class="note" style="margin-bottom:1em">
+            Due to the buggy af myki website, it will always send the receipt to your myki account's email address. To change the email address, log in to the myki website.
+        </div>
 
         <button ion-button block (click)="pay()" large [disabled]="!canPay()">Pay</button>
 
