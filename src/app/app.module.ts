@@ -37,7 +37,6 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { AppVersion } from '@ionic-native/app-version';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { Keyboard } from '@ionic-native/keyboard';
 
 let pages = [
   MyApp,
@@ -65,7 +64,7 @@ export function entryComponents() {
 @NgModule({
   declarations: declarations(),
   imports: [
-     BrowserModule,
+    BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
     MomentModule,
@@ -90,7 +89,6 @@ export function entryComponents() {
     AppVersion,
     SecureStorage,
     SocialSharing,
-    Keyboard
   ]
 })
 export class AppModule { }

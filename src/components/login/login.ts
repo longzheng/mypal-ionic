@@ -4,7 +4,6 @@ import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { Firebase } from '@ionic-native/firebase';
 import * as $ from "jquery";
-import { Keyboard } from '@ionic-native/keyboard';
 
 @Component({
   selector: 'login',
@@ -23,7 +22,6 @@ export class LoginComponent {
     public configProvider: ConfigProvider,
     public loadingCtrl: LoadingController,
     public firebase: Firebase,
-    private keyboard: Keyboard
   ) {
   }
 
@@ -37,7 +35,7 @@ export class LoginComponent {
 
   logIn() {
     // close keyboard
-    this.keyboard.close()
+    (<any>window).Keyboard.hide()
 
     // check if username and password filled
     if (!this.username || !this.password) {
