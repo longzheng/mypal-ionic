@@ -43,7 +43,8 @@ export class TopupMapPage {
     this.map = this.googleMaps.create(element, {
       'controls': {
         'compass': true,
-        'myLocationButton': true
+        'myLocation': true,
+        'myLocationButton': true,
       },
       'gestures': {
         'tilt': false,
