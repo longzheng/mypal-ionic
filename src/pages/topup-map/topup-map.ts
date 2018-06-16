@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
-import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, MarkerOptions } from '@ionic-native/google-maps';
+import { GoogleMaps, GoogleMap, GoogleMapOptions, LatLng, MarkerOptions } from '@ionic-native/google-maps';
 import { Firebase } from '@ionic-native/firebase';
 
 @Component({
@@ -10,13 +10,7 @@ import { Firebase } from '@ionic-native/firebase';
 })
 export class TopupMapPage {
 
-  loading: boolean = false;
-  map: GoogleMap
-  mapLicense: string
-  mapError: boolean = false;
-  locationsError: boolean = false;
-  locations: Array<MarkerOptions> = [];
-  locationsLoaded: number = 0
+  map: GoogleMap;
 
   constructor(
     public navCtrl: NavController,
@@ -24,6 +18,8 @@ export class TopupMapPage {
     private googleMaps: GoogleMaps,
     private http: Http,
     private firebase: Firebase,
+    public loadingCtrl: LoadingController,
+    public alertCtrl: AlertController
   ) { }
 
   ionViewDidLoad() {
@@ -40,7 +36,7 @@ export class TopupMapPage {
     // create a new map by passing HTMLElement
     let element: HTMLElement = document.getElementById('map');
 
-    this.map = this.googleMaps.create(element, {
+    let options: GoogleMapOptions = {
       'controls': {
         'compass': true,
         'myLocation': true,
@@ -56,33 +52,35 @@ export class TopupMapPage {
         },
         zoom: 17
       }
+    };
+
+    this.map = this.googleMaps.create(element, options);
+
+    // center on current location
+    // wait a second for things to initialize a bit
+    setTimeout(() => {
+      this.map.getMyLocation().then(
+        location => {
+          this.map.moveCamera({
+            'target': location.latLng,
+            'zoom': 17
+          })
+        }, error => {
+          // no op
+        });
+    }, 1000)
+
+    // start loading
+    const loader = this.loadingCtrl.create({
+      content: "Loading...",
     });
 
-    // listen to MAP_READY event
-    // You must wait for this event to fire before adding something to the map or modifying it in anyway
-    this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+    loader.present();
 
-      // center on current location
-      // wait a second for things to initialize a bit
-      setTimeout(() => {
-        this.map.getMyLocation().then(
-          location => {
-            this.map.moveCamera({
-              'target': location.latLng,
-              'zoom': 17
-            })
-          }, error => {
-            // no op
-          });
-      }, 1000)
-
-      // start loading
-      this.loading = true
-
-      // load myki top up locations
-      this.http.get("https://www.ptv.vic.gov.au/tickets/myki/ef1d0f60a/xml-list")
-        .map(response => response.text())
-        .subscribe(
+    // load myki top up locations
+    this.http.get("https://www.ptv.vic.gov.au/tickets/myki/ef1d0f60a/xml-list")
+      .map(response => response.text())
+      .subscribe(
         data => {
           if (data) {
             let parser = new DOMParser();
@@ -90,8 +88,12 @@ export class TopupMapPage {
             let locations = xmlData.getElementsByTagName("d");
 
             if (locations.length === 0) {
-              this.locationsError = true
-              this.loading = false
+              loader.dismiss();
+              this.alertCtrl.create({
+                title: "Top up outlets not available",
+                message: "The myki top up outlets data from Public Transport Victoria is empty",
+                buttons: ['OK']
+              }).present();
               return
             }
 
@@ -110,35 +112,19 @@ export class TopupMapPage {
                 snippet: locationNote + '. \n' + locationAddress
               };
               // add marker to list to be added
-              this.locations.push(markerOptions);
+              this.map.addMarker(markerOptions);
             }
 
-            this.addMarker(0);
+            loader.dismiss();
           }
         }, error => {
-          // no op
+          loader.dismiss();
+          this.alertCtrl.create({
+            title: "Top up outlets not available",
+            message: "Could not load myki top up outlets data from Public Transport Victoria",
+            buttons: ['OK']
+          }).present();
         });
-    });
-  }
-
-  // We're adding thousands of markers
-  // iOS seems to have a problem if location service is disabled then adding markers will freeze the whole app
-  // We throttle adding markers one by one in a timeout (without delay) seems to work
-  addMarker(i) {
-    setTimeout(() => {
-      // add marker to map
-      this.map.addMarker(this.locations[i]);
-      // update progress in %
-      this.locationsLoaded = Math.ceil(i / this.locations.length * 100)
-      i++;
-      if (i < this.locations.length) {
-        // if still markers to add
-        this.addMarker(i);
-      } else {
-        // hide loading
-        this.loading = false
-      }
-    }, 0)
   }
 
   private markerTypeToString(type: string) {
