@@ -80,15 +80,11 @@
     </feature>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <preference name="CordovaWebViewEngine" value="CDVUIWebViewEngine" />
-    <engine name="android" spec="^6.2.3" />
-    <engine name="ios" spec="4.5.4" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
-    <plugin name="cordova-plugin-firebase" spec="^0.1.22" />
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
-    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-secure-storage" spec="^2.6.8" />
     <plugin name="cordova-plugin-calendar" spec="^4.6.0">
         <variable name="CALENDAR_USAGE_DESCRIPTION" value="This app uses your calendar to remind you of your myki pass and card expiry" />
@@ -103,4 +99,8 @@
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="Trace your location on the map" />
     </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.3.0" />
+    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
+    <plugin name="cordova-plugin-compat" spec="^1.2.0" />
+    <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="^7.1.0" />
 </widget>

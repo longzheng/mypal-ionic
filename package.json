@@ -31,17 +31,18 @@
     "@ionic-native/status-bar": "^4.1.0",
     "@ionic/storage": "2.0.1",
     "angular2-moment": "^1.8.0",
-    "cordova-android": "^6.2.3",
+    "cordova-android": "^7.1.0",
     "cordova-ios": "4.5.4",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-calendar": "^4.6.0",
-    "cordova-plugin-compat": "^1.1.0",
+    "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.6",
-    "cordova-plugin-firebase": "^0.1.22",
+    "cordova-plugin-firebase": "^1.0.5",
     "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
     "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
     "cordova-plugin-headercolor": "^1.0.0",
     "cordova-plugin-inappbrowser": "^1.7.1",
+    "cordova-plugin-ionic-keyboard": "^2.1.2",
     "cordova-plugin-ionic-webview": "^1.1.15",
     "cordova-plugin-secure-storage": "^2.6.8",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -51,7 +52,6 @@
     "es6-promise-plugin": "^4.2.2",
     "intl": "^1.2.5",
     "ionic-angular": "^3.9.2",
-    "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
     "jquery": "^3.3.1",
     "moment": "^2.21.0",
@@ -103,17 +103,15 @@
   "description": "mypal-ionic: An Ionic project",
   "cordova": {
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ],
     "plugins": {
       "cordova-plugin-device": {},
-      "cordova-plugin-firebase": {},
       "cordova-plugin-headercolor": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-whitelist": {},
-      "ionic-plugin-keyboard": {},
       "cordova-plugin-secure-storage": {},
       "cordova-plugin-calendar": {
         "CALENDAR_USAGE_DESCRIPTION": "This app uses your calendar to remind you of your myki pass and card expiry"
@@ -127,7 +125,9 @@
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
       },
-      "cordova-plugin-statusbar": {}
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-compat": {}
     }
   }
 }

@@ -20,7 +20,7 @@ module.exports = function(context) {
         'android.permission.WRITE_EXTERNAL_STORAGE'
     ];
 
-    var androidManifestPath = path.join('platforms', 'android', 'AndroidManifest.xml');
+    var androidManifestPath = path.join('platforms', 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
 
     xmlFileToJs(androidManifestPath, function (err, androidManifest) {
         if (err) throw (err);
