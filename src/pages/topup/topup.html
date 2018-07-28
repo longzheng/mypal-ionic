@@ -72,7 +72,7 @@
                     Pass will expire on <span style="font-weight:600">{{topupPassExpiryDate() | amDateFormat:'dddd, D MMMM'}}</span> if activated today.
                 </div>
                 <div class="note">
-                    Pass available in either 7 days or between 28-365 days. You will need a positive myki money balance to activate a myki pass.
+                    Pass available in either 7 days or between 28-365 days. You will need a <span style="font-weight:600">positive myki money balance to activate a myki pass</span>.
                     <a href="https://www.ptv.vic.gov.au/tickets/myki/top-up-a-myki/myki-pass/">Learn more about myki pass</a>.
                 </div>
                 <div class="card pass-zones">
@@ -106,7 +106,9 @@
         </div>
         <button type="submit" ion-button block large (click)="order()" [disabled]="!canOrder()">Next</button>
         <div class="note" style="margin-top: 2em">
-            Top ups online may take <span style="font-weight:600">up to 90 minutes to process</span>. If you plan to travel sooner, top up at a myki machine, myki retail shop or ticket office.
+            <span *ngIf="isTopupMoney()">Myki money top ups online may take <span style="font-weight:600">up to 90 minutes to process</span>.</span>
+            <span *ngIf="isTopupPass()">Myki pass top ups online may take <span style="font-weight:600">around 24 hours to process</span>.</span>
+             If you plan to travel sooner, top up at a myki machine, myki retail shop or ticket office.
         </div>
     </div>
 </ion-content>

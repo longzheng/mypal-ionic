@@ -379,6 +379,18 @@ export class TopupPage {
           // let's just do it anyway
           this.configProvider.creditCardForget();
         }
+
+        // if top up is a myki pass and balance is low, give a warning
+        if (this.topupOptions.topupType === Myki.TopupType.Pass)
+            {
+              let alert = this.alertCtrl.create({
+                title: 'Myki pass might take up to 24 hours to activate',
+                message: 'Myki appears to be slow to process online pass top ups, sometimes up to 24 hours.<br><br>Reminder to activate your myki pass, you need a positive myki money balance.',
+                buttons: ['OK'],
+                enableBackdropDismiss: false,
+              })
+              alert.present()
+            }
       },
       error => {
         // error with payment
