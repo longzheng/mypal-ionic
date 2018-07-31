@@ -20,9 +20,15 @@ export class ConfigProvider {
     public storage: Storage,
     public secureStorage: SecureStorage
   ) {
-    this.cardNicknameLoad().then(
+    this.cardNicknamesLoad().then(
       nicknames => {
-        this.cardNicknames = nicknames
+        try{
+          this.cardNicknames = JSON.parse(nicknames)
+        }catch(e){
+          //no op
+        }
+      }, error => {
+        // no op
       });
   }
 
@@ -87,16 +93,14 @@ export class ConfigProvider {
     })
   }
 
-  // load card nickname to storage
-  cardNicknameLoad() {
+  // load card nicknames from storage
+  cardNicknamesLoad(): Promise<string> {
     return new Promise((resolve, reject) => {
       this.storage.get(this.CONFIG_NICKNAMES).then(
         nicknames => {
-          // if nicknames is not an array, return empty array
           if (!nicknames)
-            return resolve([])
+            return reject()
 
-          // return the nickname for this card in the array
           resolve(nicknames)
         })
     })
@@ -114,7 +118,7 @@ export class ConfigProvider {
     this.cardNicknames[cardId] = nickname
 
     // store
-    this.storage.set(this.CONFIG_NICKNAMES, this.cardNicknames)
+    this.storage.set(this.CONFIG_NICKNAMES, JSON.stringify(this.cardNicknames))
   }
 
   // do we have secure storage?
