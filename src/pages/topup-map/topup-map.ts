@@ -54,7 +54,7 @@ export class TopupMapPage {
       }
     };
 
-    this.map = this.googleMaps.create(element, options);
+    this.map = GoogleMaps.create(element, options);
 
     // center on current location
     // wait a second for things to initialize a bit
