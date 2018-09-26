@@ -27,18 +27,15 @@ page-home {
     }
     .card.balance {
         position: relative;
-        .balance-icon {
-            position: absolute;
-            top: $content-padding;
-            right: $content-padding;
-            ion-icon {
-                font-size: 6em;
-                background: linear-gradient(#eef0f4, #f3f4f7);
-            }
-        }
         .card-inner {
             flex: 1 0;
             position: relative;
+            .title {
+                ion-icon {
+                    position: relative;
+                    top: 0.2em;
+                }
+            }
             .balance-hero {
                 font-size: 2.3em;
                 font-weight: 600;
