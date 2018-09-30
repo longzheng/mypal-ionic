@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
-import { Http } from '@angular/http';
 import { GoogleMaps, GoogleMap, GoogleMapOptions, LatLng, MarkerOptions } from '@ionic-native/google-maps';
 import { Firebase } from '@ionic-native/firebase';
+import { HTTP } from '@ionic-native/http';
 
 @Component({
   selector: 'page-topup-map',
@@ -16,7 +16,7 @@ export class TopupMapPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private googleMaps: GoogleMaps,
-    private http: Http,
+    private http: HTTP,
     private firebase: Firebase,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
@@ -78,13 +78,12 @@ export class TopupMapPage {
     loader.present();
 
     // load myki top up locations
-    this.http.get("https://www.ptv.vic.gov.au/tickets/myki/ef1d0f60a/xml-list")
-      .map(response => response.text())
-      .subscribe(
+    this.http.get("https://www.ptv.vic.gov.au/tickets/myki/ef1d0f60a/xml-list", {}, {})
+      .then(
         data => {
           if (data) {
             let parser = new DOMParser();
-            let xmlData = parser.parseFromString(data.trim(), "application/xml");
+            let xmlData = parser.parseFromString(data.data.trim(), "application/xml");
             let locations = xmlData.getElementsByTagName("d");
 
             if (locations.length === 0) {
@@ -117,7 +116,7 @@ export class TopupMapPage {
 
             loader.dismiss();
           }
-        }, error => {
+        }).catch(error => {
           loader.dismiss();
           this.alertCtrl.create({
             title: "Top up outlets not available",
