@@ -76,10 +76,10 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <preference name="orientation" value="portrait" />
+    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <feature name="CDVWKWebViewEngine">
         <param name="ios-package" value="CDVWKWebViewEngine" />
     </feature>
-    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
@@ -105,9 +105,9 @@
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="This app wants to get your location always, even this app runs in background." />
     </plugin>
     <plugin name="cordova-plugin-ignore-lint-translation" spec="0.0.1" />
-    <engine name="ios" spec="4.5.4" />
-    <engine name="android" spec="^7.1.0" />
     <plugin name="cordova-sqlite-storage" spec="^2.3.3" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.15" />
-    <plugin name="cordova-plugin-advanced-http" spec="~1.6.1" />
+    <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="^7.1.0" />
+    <plugin name="cordova-plugin-advanced-http" spec="^2.0.1" />
 </widget>
