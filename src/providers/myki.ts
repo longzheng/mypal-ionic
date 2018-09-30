@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
 import { ConfigProvider } from './config';
 import 'rxjs/add/operator/map';
 import { Myki } from '../models/myki';
@@ -7,6 +6,7 @@ import { CustomURLEncoder } from '../models/customUrlEncoder';
 import * as $ from "jquery";
 import * as moment from 'moment';
 import Raven from 'raven-js';
+import { HTTP, HTTPResponse } from '@ionic-native/http';
 
 @Injectable()
 export class MykiProvider {
@@ -31,9 +31,12 @@ export class MykiProvider {
   loggedIn: boolean = false;
 
   constructor(
-    public http: Http,
+    public http: HTTP,
     public configProvider: ConfigProvider
   ) {
+    // set HTTP data serializer to form
+    this.http.setDataSerializer("urlencoded");
+    this.http.disableRedirect(true);
   }
 
   setActiveCard(id: string) {
@@ -93,16 +96,16 @@ export class MykiProvider {
       this.httpGetAsp(loginUrl).then(
         data => {
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('ctl00$uxContentPlaceHolder$uxUsername', username)
-          body.set('ctl00$uxContentPlaceHolder$uxPassword', password)
-          body.set('ctl00$uxContentPlaceHolder$uxLogin', 'Login')
+          const body = {};
+          body['ctl00$uxContentPlaceHolder$uxUsername'] = username;
+          body['ctl00$uxContentPlaceHolder$uxPassword'] = password;
+          body['ctl00$uxContentPlaceHolder$uxLogin'] = 'Login';
 
           // post form fields
           this.httpPostFormAsp(loginUrl, body).then(
             data => {
               // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
+              let scraperJquery = this.jQueryHTML(data.data)
 
               // verify if we are actually logged in
               // successful login redirects us to the "Login-Services.aspx" page
@@ -209,7 +212,7 @@ export class MykiProvider {
               console.log('loaded account details')
 
               // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
+              let scraperJquery = this.jQueryHTML(data.data)
 
               // scrape active cards
               let activeCards = scraperJquery.find("#tabs-1 table tr").not(":first")
@@ -326,7 +329,7 @@ export class MykiProvider {
 
               try {
                 // scrape webpage
-                let scraperJquery = this.jQueryHTML(data)
+                let scraperJquery = this.jQueryHTML(data.data)
                 let cardTable = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardDetailsPnl table");
 
                 card.holder = cardTable.find("tr:nth-child(1) td:nth-child(2)").text().trim();
@@ -426,7 +429,7 @@ export class MykiProvider {
               card.transactions = [];
 
               // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
+              let scraperJquery = this.jQueryHTML(data.data)
 
               let historyTable = scraperJquery.find("table#ctl00_uxContentPlaceHolder_uxMykiTxnHistory");
 
@@ -559,7 +562,7 @@ export class MykiProvider {
 
                   // sanity check we've got the right card
                   // scrape webpage
-                  let scraperJquery = this.jQueryHTML(data)
+                  let scraperJquery = this.jQueryHTML(data.data)
                   let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardnumber").text();
                   if (cardId !== this.activeCard().id)
                     return reject()
@@ -634,7 +637,7 @@ export class MykiProvider {
 
           // sanity check we've got the right card
           // scrape webpage
-          let scraperJquery = this.jQueryHTML(data)
+          let scraperJquery = this.jQueryHTML(data.data)
           let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_pnlCardDetails fieldset:nth-of-type(1) p:nth-of-type(1)").text().replace('myki card number', '').trim()
           if (cardId !== this.activeCard().id)
             return reject()
@@ -718,7 +721,7 @@ export class MykiProvider {
 
           // sanity check we've got the right card
           // scrape webpage
-          let scraperJquery = this.jQueryHTML(data)
+          let scraperJquery = this.jQueryHTML(data.data)
           let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_pnlCardDetails fieldset:nth-of-type(1) p:nth-of-type(1)").text().replace('myki card number', '').trim()
           if (cardId !== this.activeCard().id)
             return reject()
@@ -772,7 +775,7 @@ export class MykiProvider {
               // we've successfully topped up
 
               // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
+              let scraperJquery = this.jQueryHTML(data.data)
               let transactionReference = scraperJquery.find("#content  fieldset:nth-of-type(1) p:nth-of-type(2) b").text().trim()
 
               // if we purchased myki money, store how much we have on order
@@ -792,7 +795,7 @@ export class MykiProvider {
     })
   }
 
-  private httpGetAspWithRetry(url: string): Promise<Response> {
+  private httpGetAspWithRetry(url: string): Promise<HTTPResponse> {
     return new Promise((resolve, reject) => {
       // first try http get
       this.httpGetAsp(url).then(
@@ -827,13 +830,13 @@ export class MykiProvider {
     })
   }
 
-  private httpGetAsp(url: string): Promise<Response> {
-    // set up request options
-    const options = new RequestOptions()
-    options.withCredentials = true // set/send cookies
+  private httpGetAsp(url: string): Promise<HTTPResponse> {
+    // // set up request options
+    // const options = new RequestOptions()
+    // options.withCredentials = true // set/send cookies
 
     return new Promise((resolve, reject) => {
-      this.http.get(url, options).subscribe(
+      this.http.get(url, {}, {}).then(
         data => {
           // if the page we landed on is not the page we requested
           if (data.url !== url) {
@@ -842,7 +845,7 @@ export class MykiProvider {
           }
 
           // update the page state
-          this.storePageState(data);
+          this.storePageState(data.data);
 
           return resolve(data);
         },
@@ -853,30 +856,26 @@ export class MykiProvider {
     })
   }
 
-  private httpPostFormAsp(url: string, body?: URLSearchParams): Promise<Response> {
-    // set up request headers
-    let headers = new Headers()
-    headers.append('Content-Type', 'application/x-www-form-urlencoded') // we're going to submit form data
-
-    // set up request options
-    const options = new RequestOptions()
-    options.withCredentials = true // set/send cookies
-    options.headers = headers
+  private httpPostFormAsp(url: string, body?: Object): Promise<HTTPResponse> {
+    // // set up request options
+    // const options = new RequestOptions()
+    // options.withCredentials = true // set/send cookies
+    // options.headers = headers
 
     // set up POST body
-    const postBody = new URLSearchParams('', new CustomURLEncoder())
-    postBody.set('__VIEWSTATE', this.lastViewState)
-    postBody.set('__EVENTVALIDATION', this.lastEventValidation)
+    let data = {};
+    data['__VIEWSTATE'] = this.lastViewState;
+    data['__EVENTVALIDATION'] = this.lastEventValidation;
     // if we have any supplied body param, add it to our POST body
     if (body != null) {
-      postBody.setAll(body)
+      Object.assign(data, body)
     }
 
     return new Promise((resolve, reject) => {
-      this.http.post(url, postBody.toString(), options).subscribe(
+      this.http.post(url, data, {}).then(
         data => {
           // update the page state
-          this.storePageState(data);
+          this.storePageState(data.data);
 
           return resolve(data);
         },
@@ -901,14 +900,14 @@ export class MykiProvider {
     return params
   }
 
-  private jQueryHTML(data: any): JQuery {
+  private jQueryHTML(html: string): JQuery {
     let scraper = (<any>document).implementation.createHTMLDocument()
-    scraper.body.innerHTML = data._body
+    scraper.body.innerHTML = html
     return $(scraper.body.children)
   }
 
-  private storePageState(data: any) {
-    let scraperJquery = this.jQueryHTML(data)
+  private storePageState(html: string) {
+    let scraperJquery = this.jQueryHTML(html)
     let viewState = scraperJquery.find('#__VIEWSTATE').val()
     let eventValidation = scraperJquery.find('#__EVENTVALIDATION').val()
 
