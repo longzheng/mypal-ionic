@@ -37,6 +37,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { AppVersion } from '@ionic-native/app-version';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { HTTP } from '@ionic-native/http';
 
 let pages = [
   MyApp,
@@ -89,6 +90,7 @@ export function entryComponents() {
     AppVersion,
     SecureStorage,
     SocialSharing,
+    HTTP
   ]
 })
 export class AppModule { }

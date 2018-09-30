@@ -24,6 +24,7 @@
     "@ionic-native/firebase": "^4.1.0",
     "@ionic-native/google-maps": "^4.8.2",
     "@ionic-native/header-color": "^4.1.0",
+    "@ionic-native/http": "^4.15.0",
     "@ionic-native/keyboard": "^4.6.0",
     "@ionic-native/secure-storage": "^4.1.0",
     "@ionic-native/social-sharing": "^4.1.0",
@@ -133,7 +134,8 @@
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
       },
       "cordova-plugin-ignore-lint-translation": {},
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-advanced-http": {}
     }
   }
 }

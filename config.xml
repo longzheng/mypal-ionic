@@ -109,4 +109,5 @@
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="^7.1.0" />
     <plugin name="cordova-sqlite-storage" spec="^2.3.3" />
+    <plugin name="cordova-plugin-advanced-http" spec="~1.6.1" />
 </widget>
