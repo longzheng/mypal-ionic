@@ -7,6 +7,7 @@ import * as $ from "jquery";
 import * as moment from 'moment';
 import Raven from 'raven-js';
 import { HTTP, HTTPResponse } from '@ionic-native/http';
+import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class MykiProvider {
@@ -32,11 +33,16 @@ export class MykiProvider {
 
   constructor(
     public http: HTTP,
-    public configProvider: ConfigProvider
+    public configProvider: ConfigProvider,
+    public platform: Platform
   ) {
-    // set HTTP data serializer to form
-    this.http.setDataSerializer("urlencoded");
-    this.http.disableRedirect(true);
+    // wait for platform to be ready
+    platform.ready().then(() => {
+      // set HTTP data serializer to form
+      this.http.setDataSerializer("urlencoded");
+      // disable redirect handler
+      this.http.disableRedirect(true);
+    });
   }
 
   setActiveCard(id: string) {
