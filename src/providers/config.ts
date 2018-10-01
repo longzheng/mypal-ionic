@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage';
 import { CreditCard } from '../models/creditCard';
+import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class ConfigProvider {
@@ -18,18 +19,22 @@ export class ConfigProvider {
 
   constructor(
     public storage: Storage,
-    public secureStorage: SecureStorage
+    public secureStorage: SecureStorage,
+    public platform: Platform
   ) {
-    this.cardNicknamesLoad().then(
-      nicknames => {
-        try{
-          this.cardNicknames = JSON.parse(nicknames)
-        }catch(e){
-          //no op
-        }
-      }, error => {
-        // no op
-      });
+    // wait for platform to be ready
+    platform.ready().then(() => {
+      this.cardNicknamesLoad().then(
+        nicknames => {
+          try{
+            this.cardNicknames = JSON.parse(nicknames)
+          }catch(e){
+            //no op
+          }
+        }, error => {
+          // no op
+        });
+    });
   }
 
   // get the stored username/password
