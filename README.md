@@ -3,7 +3,7 @@ Mobile app to see Myki account details for iOS & Android
 
 ## Download links
 - [Google Play](https://play.google.com/store/apps/details?id=com.longzheng.mypalionic)
-- App Store (Apple refuses to approve the app, email long.zheng@gmail.com for TestFlight beta)
+- App Store (Apple refuses to approve the app, so [join TestFlight beta](https://testflight.apple.com/join/Jj3B6vQ8))
 
 ## Background
 
