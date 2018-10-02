@@ -2,7 +2,7 @@ page-intro {
     background: color($colors, primary, base) !important;
     ion-slides {
         .swiper-pagination-bullets {
-            bottom: 70px !important;
+            bottom: 90px !important;
             .swiper-pagination-bullet-active {
                 background: white !important;
             }
@@ -17,7 +17,6 @@ page-intro {
                 font-weight: 600;
             }
             p {
-                font-size: 13px;
                 margin: 0 auto;
                 max-width: 270px;
             }
@@ -45,8 +44,8 @@ page-intro {
             width: 100%;
         }
         .terms {
-            color: color($colors, brand-light, base);
-            font-size: 9px;
+            color: rgba(0,0,0,0.3);
+            font-size: 11px;
             text-align: center;
             padding: $content-padding;
             margin: 0 auto;
