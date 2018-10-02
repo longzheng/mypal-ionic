@@ -35,7 +35,11 @@ export class LoginComponent {
 
   logIn() {
     // close keyboard
-    (<any>window).Keyboard.hide()
+    try{
+      (<any>window).Keyboard.hide()
+    }
+    catch(e){
+    }
 
     // check if username and password filled
     if (!this.username || !this.password) {
