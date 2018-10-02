@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ConfigProvider } from './config';
 import 'rxjs/add/operator/map';
 import { Myki } from '../models/myki';
-import { CustomURLEncoder } from '../models/customUrlEncoder';
 import * as $ from "jquery";
 import * as moment from 'moment';
 import Raven from 'raven-js';
@@ -13,7 +12,8 @@ import { Platform } from 'ionic-angular';
 export class MykiProvider {
 
   // APi root for all requests
-  apiRoot = "https://www.mymyki.com.au/NTSWebPortal/"
+  apiDomain = "https://www.mymyki.com.au"
+  apiRoot = `${this.apiDomain}/NTSWebPortal/`
   errorUrl = `${this.apiRoot}ErrorPage.aspx`
 
   // holders for ASP.NET page state properties
@@ -83,6 +83,9 @@ export class MykiProvider {
   login(username: string, password: string): Promise<Response> {
     console.log('logging in')
 
+    // clear any existing cookies
+    this.http.clearCookies();
+
     this.loggingIn = true
 
     // determine if we're in mock demo models
@@ -115,12 +118,12 @@ export class MykiProvider {
 
               // verify if we are actually logged in
               // successful login redirects us to the "Login-Services.aspx" page
-              if (data.url !== `${this.apiRoot}Registered/MyMykiAccount.aspx?menu=My%20myki%20account`){
+              if (data.url !== `${this.apiRoot}Registered/MyMykiAccount.aspx?menu=My%20myki%20account`) {
                 // scrape error
                 let error = scraperJquery.find('#uxservererror').text().trim()
 
                 // different errors
-                switch(error) {
+                switch (error) {
                   case 'Invalid Username/Password.':
                     return reject('login')
                   case 'Your account has been locked out.':
@@ -128,7 +131,7 @@ export class MykiProvider {
                   default:
                     return reject('login')
                 }
-                
+
               }
 
               console.log("logged in to account")
@@ -151,7 +154,7 @@ export class MykiProvider {
             error => {
               return reject();
             }
-          ).then(() => {this.loggingIn = false})
+          ).then(() => { this.loggingIn = false })
         },
         error => {
           this.loggingIn = false
@@ -209,8 +212,8 @@ export class MykiProvider {
           }
 
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('ctl00$uxContentPlaceHolder$uxTimer', '')
+          const body = {}
+          body['ctl00$uxContentPlaceHolder$uxTimer'] = ''
 
           // post form fields
           this.httpPostFormAsp(accountUrl, body).then(
@@ -324,9 +327,9 @@ export class MykiProvider {
           }
 
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('ctl00$uxContentPlaceHolder$uxCardList', card.id)
-          body.set('ctl00$uxContentPlaceHolder$uxGo', 'Go')
+          const body = {}
+          body['ctl00$uxContentPlaceHolder$uxCardList'] = card.id
+          body['ctl00$uxContentPlaceHolder$uxGo'] = 'Go'
 
           // post form fields
           this.httpPostFormAsp(cardUrl, body).then(
@@ -359,7 +362,7 @@ export class MykiProvider {
                 }
 
                 let lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A")
-                if (lastTransactionDate.isValid()){
+                if (lastTransactionDate.isValid()) {
                   card.lastTransactionDate = lastTransactionDate.toDate();
                 }
 
@@ -415,16 +418,16 @@ export class MykiProvider {
           }
 
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('ctl00$uxContentPlaceHolder$uxCardList', card.id)
-          body.set('ctl00$uxContentPlaceHolder$uxPageSize', '40')
-          body.set('ctl00$uxContentPlaceHolder$uxFromDay', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxFromMonth', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxFromYear', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxToDay', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxToMonth', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxToYear', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxSelectNewCard', 'Go')
+          const body = {}
+          body['ctl00$uxContentPlaceHolder$uxCardList'] = card.id
+          body['ctl00$uxContentPlaceHolder$uxPageSize'] = '40'
+          body['ctl00$uxContentPlaceHolder$uxFromDay'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxFromMonth'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxFromYear'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxToDay'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxToMonth'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxToYear'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxSelectNewCard'] = 'Go'
 
           // post form fields
           this.httpPostFormAsp(historyUrl, body).then(
@@ -482,7 +485,7 @@ export class MykiProvider {
 
                   // balance
                   let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("$", "")
-                  
+
                   // check if a blank entry which is "-"
                   trans.moneyBalance = moneyBalance != "-" ? parseFloat(moneyBalance) : null
                 } catch (e) {
@@ -542,10 +545,10 @@ export class MykiProvider {
 
           // we need to first do a AJAX call to get the "list" of cards before we can select one
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('__EVENTTARGET', 'ctl00$uxContentPlaceHolder$uxTimer')
-          body.set('ctl00$uxContentPlaceHolder$uxTopup', topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
-          body.set('__EVENTARGUMENT', '')
+          const body = {}
+          body['__EVENTTARGET'] = 'ctl00$uxContentPlaceHolder$uxTimer';
+          body['ctl00$uxContentPlaceHolder$uxTopup'] = topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass';
+          body['__EVENTARGUMENT'] = ''
 
           // post form fields
           this.httpPostFormAsp(topupUrl, body).then(
@@ -555,12 +558,12 @@ export class MykiProvider {
 
               // select our desired card
               // set up form fields
-              const body = new URLSearchParams()
-              body.set('ctl00$uxContentPlaceHolder$uxCardlist', this.activeCard().id)
-              body.set('ctl00$uxContentPlaceHolder$uxTopup', topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
-              body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
-              body.set('__EVENTTARGET', '')
-              body.set('__EVENTARGUMENT', '')
+              const body = {}
+              body['ctl00$uxContentPlaceHolder$uxCardlist'] = this.activeCard().id
+              body['ctl00$uxContentPlaceHolder$uxTopup'] = topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass'
+              body['ctl00$uxContentPlaceHolder$uxSubmit'] = 'Next'
+              body['__EVENTTARGET'] = ''
+              body['__EVENTARGUMENT'] = ''
 
               // post form fields
               this.httpPostFormAsp(topupUrl, body).then(
@@ -611,30 +614,30 @@ export class MykiProvider {
     return new Promise((resolve, reject) => {
 
       // set up form fields
-      const body = new URLSearchParams()
+      const body = {}
 
       if (options.topupType === Myki.TopupType.Money) {
-        body.set('ctl00$uxContentPlaceHolder$uxSelectedamount', '')
-        body.set('ctl00$uxContentPlaceHolder$uxMaxtoopupAmount', '')
-        body.set('ctl00$uxContentPlaceHolder$uxAmounts', 'Other amount')
-        body.set('ctl00$uxContentPlaceHolder$uxAmountlist', parseInt(<any>options.moneyAmount).toString()) // the amount we're actually topping up
-        body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
+        body['ctl00$uxContentPlaceHolder$uxSelectedamount'] = ''
+        body['ctl00$uxContentPlaceHolder$uxMaxtoopupAmount'] = ''
+        body['ctl00$uxContentPlaceHolder$uxAmounts'] = 'Other amount'
+        body['ctl00$uxContentPlaceHolder$uxAmountlist'] = parseInt(<any>options.moneyAmount).toString() // the amount we're actually topping up
+        body['ctl00$uxContentPlaceHolder$uxSubmit'] = 'Next'
       }
 
       if (options.topupType === Myki.TopupType.Pass) {
-        body.set('ctl00$uxContentPlaceHolder$uxMaxtoopupAmount', '250') // myki expects this value
-        body.set('ctl00$uxContentPlaceHolder$uxSelectedamount', '')
-        body.set('ctl00$uxContentPlaceHolder$uxdays', parseInt(<any>options.passDuration).toString()) // the pass duration we're topping up
-        body.set('ctl00$uxContentPlaceHolder$uxDurationtype', '2') // duration is in days (not weeks)
-        body.set('ctl00$uxContentPlaceHolder$uxNumberOfDays', '1043')
-        body.set('ctl00$uxContentPlaceHolder$uxExpiryDays', '')
-        body.set('ctl00$uxContentPlaceHolder$uxMinDays', '0')
-        body.set('ctl00$uxContentPlaceHolder$uxMaxDays', '0')
-        body.set('ctl00$uxContentPlaceHolder$uxZonelist', (options.zoneFrom + 1).toString()) // myki site wants zone with a N+1 index
-        body.set('ctl00$uxContentPlaceHolder$uxZonesTo', (options.zoneTo + 1).toString()) // myki site wants zone with a N+1 index
-        body.set('ctl00$uxContentPlaceHolder$uxAmounts', '')
-        body.set('ctl00$uxContentPlaceHolder$uxAmountlist', '')
-        body.set('ctl00$uxContentPlaceHolder$uxNext', 'Next')
+        body['ctl00$uxContentPlaceHolder$uxMaxtoopupAmount'] = '250' // myki expects this value
+        body['ctl00$uxContentPlaceHolder$uxSelectedamount'] = ''
+        body['ctl00$uxContentPlaceHolder$uxdays'] = parseInt(<any>options.passDuration).toString() // the pass duration we're topping up
+        body['ctl00$uxContentPlaceHolder$uxDurationtype'] = '2' // duration is in days (not weeks)
+        body['ctl00$uxContentPlaceHolder$uxNumberOfDays'] = '1043'
+        body['ctl00$uxContentPlaceHolder$uxExpiryDays'] = ''
+        body['ctl00$uxContentPlaceHolder$uxMinDays'] = '0'
+        body['ctl00$uxContentPlaceHolder$uxMaxDays'] = '0'
+        body['ctl00$uxContentPlaceHolder$uxZonelist'] = (options.zoneFrom + 1).toString() // myki site wants zone with a N+1 index
+        body['ctl00$uxContentPlaceHolder$uxZonesTo'] = (options.zoneTo + 1).toString() // myki site wants zone with a N+1 index
+        body['ctl00$uxContentPlaceHolder$uxAmounts'] = ''
+        body['ctl00$uxContentPlaceHolder$uxAmountlist'] = ''
+        body['ctl00$uxContentPlaceHolder$uxNext'] = 'Next'
       }
 
       // post form fields
@@ -694,7 +697,7 @@ export class MykiProvider {
     return new Promise((resolve, reject) => {
 
       // set up form fields
-      const body = new URLSearchParams()
+      const body = {}
 
       let reminderTypeString = ''
       switch (options.reminderType) {
@@ -709,17 +712,17 @@ export class MykiProvider {
           break;
       }
 
-      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber1', options.ccNumberNoSpaces().substr(0, 4))
-      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber2', options.ccNumberNoSpaces().substr(4, 4))
-      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber3', options.ccNumberNoSpaces().substr(8, 4))
-      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber4', options.ccNumberNoSpaces().substr(12, 4))
-      body.set('ctl00$uxContentPlaceHolder$uxMonthList', options.ccExpiryMonth())
-      body.set('ctl00$uxContentPlaceHolder$uxYearList', options.ccExpiryYear())
-      body.set('ctl00$uxContentPlaceHolder$uxSecurityCode', options.creditCard.ccCVC)
-      body.set('ctl00$uxContentPlaceHolder$reimnder', reminderTypeString)
-      body.set('ctl00$uxContentPlaceHolder$uxreminderemail', options.reminderEmail)
-      body.set('ctl00$uxContentPlaceHolder$uxreminderMobile', options.reminderMobile)
-      body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
+      body['ctl00$uxContentPlaceHolder$uxCreditCardNumber1'] = options.ccNumberNoSpaces().substr(0, 4)
+      body['ctl00$uxContentPlaceHolder$uxCreditCardNumber2'] = options.ccNumberNoSpaces().substr(4, 4)
+      body['ctl00$uxContentPlaceHolder$uxCreditCardNumber3'] = options.ccNumberNoSpaces().substr(8, 4)
+      body['ctl00$uxContentPlaceHolder$uxCreditCardNumber4'] = options.ccNumberNoSpaces().substr(12, 4)
+      body['ctl00$uxContentPlaceHolder$uxMonthList'] = options.ccExpiryMonth()
+      body['ctl00$uxContentPlaceHolder$uxYearList'] = options.ccExpiryYear()
+      body['ctl00$uxContentPlaceHolder$uxSecurityCode'] = options.creditCard.ccCVC
+      body['ctl00$uxContentPlaceHolder$reimnder'] = reminderTypeString
+      body['ctl00$uxContentPlaceHolder$uxreminderemail'] = options.reminderEmail
+      body['ctl00$uxContentPlaceHolder$uxreminderMobile'] = options.reminderMobile
+      body['ctl00$uxContentPlaceHolder$uxSubmit'] = 'Next'
 
       // post form fields
       this.httpPostFormAsp(topupUrl, body).then(
@@ -741,14 +744,14 @@ export class MykiProvider {
           topupConfirmUrl += `?cn=${options.cnToken}`
 
           // set up form fields
-          const body = new URLSearchParams()
+          const body = {}
 
-          body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Submit')
-          body.set('ctl00$uxContentPlaceHolder$hdnsubmitMsg', 'Your payment is being processed. Please do not resubmit payment, close this window or click the Back button on your browser.')
-          body.set('ctl00$uxHeader$uxSearchTextBox', '')
-          body.set('ctl00$uxHeader$hidFontSize', '')
-          body.set('ctl00$uxContentPlaceHolder$hdnCardNo', '')
-          body.set('ctl00$uxContentPlaceHolder$hdnselectedDate', '')
+          body['ctl00$uxContentPlaceHolder$uxSubmit'] = 'Submit'
+          body['ctl00$uxContentPlaceHolder$hdnsubmitMsg'] = 'Your payment is being processed. Please do not resubmit payment, close this window or click the Back button on your browser.'
+          body['ctl00$uxHeader$uxSearchTextBox'] = ''
+          body['ctl00$uxHeader$hidFontSize'] = ''
+          body['ctl00$uxContentPlaceHolder$hdnCardNo'] = ''
+          body['ctl00$uxContentPlaceHolder$hdnselectedDate'] = ''
 
           // post form fields
           this.httpPostFormAsp(topupConfirmUrl, body).then(
@@ -854,11 +857,9 @@ export class MykiProvider {
           this.storePageState(data.data);
 
           return resolve(data);
-        },
-        error => {
+        }).catch(error => {
           return reject(error);
-        }
-      )
+        })
     })
   }
 
@@ -884,11 +885,22 @@ export class MykiProvider {
           this.storePageState(data.data);
 
           return resolve(data);
-        },
-        error => {
-          return reject(error);
-        }
-      )
+        }).catch(
+          error => {
+            // if response is a redirect
+            if (error.status > 300 && error.status < 400) {
+              let redirectUrl = `${this.apiDomain}${encodeURI(error.headers['location'])}`
+              this.httpGetAsp(redirectUrl).then(
+                data => {
+                  return resolve(data);
+                }, error => {
+                  return reject(error);
+                });
+            } else {
+              return reject(error);
+            }
+          }
+        )
     })
   }
 
