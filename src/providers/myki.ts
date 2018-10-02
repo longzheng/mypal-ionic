@@ -38,6 +38,8 @@ export class MykiProvider {
   ) {
     // wait for platform to be ready
     platform.ready().then(() => {
+      // customize the user-agent to spoof a generic iphone safari
+      this.http.setHeader("*", "User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/ 604.1.21 (KHTML, like Gecko) Version/ 12.0 Mobile/17A6278a Safari/602.1.26")
       // set HTTP data serializer to form
       this.http.setDataSerializer("urlencoded");
       // disable redirect handler
