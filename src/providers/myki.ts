@@ -578,8 +578,8 @@ export class MykiProvider {
 
                   // extract "cn" token from URL, we need this later
                   let cnToken = (<any>this.parseUrlQuery(data.url)).cn
-                  // store "cn" token in topup options
-                  topupOptions.cnToken = cnToken
+                  // store "cn" token in topup options (with encoding so it doesn't need to re-encoded)
+                  topupOptions.cnToken = encodeURIComponent(cnToken)
 
                   return resolve()
                 },
@@ -889,7 +889,15 @@ export class MykiProvider {
           error => {
             // if response is a redirect
             if (error.status > 300 && error.status < 400) {
-              let redirectUrl = `${this.apiDomain}${encodeURI(error.headers['location'])}`
+              // get redirect path
+              let redirectPath: string = error.headers['location'];
+
+              // fix up some redirect URL with spaces (it should have been urlencoded, but it's not)
+              redirectPath = redirectPath.replace(/\s/g, '%20');
+
+              // prepend the domain name
+              let redirectUrl = `${this.apiDomain}${redirectPath}`
+
               this.httpGetAsp(redirectUrl).then(
                 data => {
                   return resolve(data);
