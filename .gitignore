@@ -45,3 +45,4 @@ google-services.json
 # Cordova build
 build.json
 android.keystore
+sentry.properties

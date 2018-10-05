@@ -61,8 +61,8 @@
     "jquery": "^3.3.1",
     "minimist": "^1.2.0",
     "moment": "^2.21.0",
-    "raven-js": "^3.24.0",
     "rxjs": "5.4.0",
+    "sentry-cordova": "^0.12.3",
     "sw-toolbox": "3.6.0",
     "xml2js": "^0.4.19",
     "zone.js": "^0.8.20"
@@ -137,7 +137,11 @@
       },
       "cordova-plugin-ignore-lint-translation": {},
       "cordova-sqlite-storage": {},
-      "cordova-plugin-advanced-http": {}
+      "cordova-plugin-advanced-http": {},
+      "sentry-cordova": {}
     }
+  },
+  "config": {
+    "ionic_generate_source_map": "true"
   }
 }
