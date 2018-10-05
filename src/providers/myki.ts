@@ -859,8 +859,18 @@ export class MykiProvider {
           this.storePageState(data.data);
 
           return resolve(data);
-        }).catch(error => {
-          return reject(error);
+        }, (error: HTTPResponse) => {
+          // if response is a redirect
+          if (error.status > 300 && error.status < 400) {
+            this.handlRedirectResponse(error).then(
+              result => {
+                return resolve(result);
+              }, error => {
+                return reject(error);
+              });
+          } else {
+            return reject(error);
+          }
         })
     })
   }
@@ -887,31 +897,38 @@ export class MykiProvider {
           this.storePageState(data.data);
 
           return resolve(data);
-        }).catch(
-          error => {
-            // if response is a redirect
-            if (error.status > 300 && error.status < 400) {
-              // get redirect path
-              let redirectPath: string = error.headers['location'];
-
-              // fix up some redirect URL with spaces (it should have been urlencoded, but it's not)
-              redirectPath = redirectPath.replace(/\s/g, '%20');
-
-              // prepend the domain name
-              let redirectUrl = `${this.apiDomain}${redirectPath}`
-
-              this.httpGetAsp(redirectUrl).then(
-                data => {
-                  return resolve(data);
-                }, error => {
-                  return reject(error);
-                });
-            } else {
-              return reject(error);
-            }
+        }, (error: HTTPResponse) => {
+          // if response is a redirect
+          if (error.status > 300 && error.status < 400) {
+            this.handlRedirectResponse(error).then(
+              result => {
+                return resolve(result);
+              }, error => {
+                return reject(error);
+              });
+          } else {
+            return reject(error);
           }
-        )
+        }
+      )
     })
+  }
+
+  /**
+   * Handle a redirect response manually
+   * Due to buggy cookie handling behaviour when auto-redirect is enabled https://github.com/silkimen/cordova-plugin-advanced-http/issues/148
+   */
+  private handlRedirectResponse(http: HTTPResponse) {
+    // get redirect path
+    let redirectPath: string = http.headers['location'];
+
+    // fix up some redirect URL with spaces (it should have been urlencoded, but it's not)
+    redirectPath = redirectPath.replace(/\s/g, '%20');
+
+    // prepend the domain name
+    let redirectUrl = `${this.apiDomain}${redirectPath}`
+
+    return this.httpGetAsp(redirectUrl);
   }
 
   // parse URL querystrings
