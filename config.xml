@@ -109,6 +109,6 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.15" />
     <plugin name="sentry-cordova" spec="^0.12.3" />
     <engine name="ios" spec="4.5.4" />
-    <engine name="android" spec="^7.1.0" />
     <plugin name="cordova-plugin-advanced-http" spec="^2.0.1" />
+    <engine name="android" spec="latest" />
 </widget>
