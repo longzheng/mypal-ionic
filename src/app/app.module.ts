@@ -25,7 +25,7 @@ import { TransactionComponent } from '../components/transaction/transaction';
 // Custom providers
 import { MykiProvider } from '../providers/myki';
 import { ConfigProvider } from '../providers/config';
-import { SentryErrorHandler } from '../providers/sentry-error';
+import { SentryIonicErrorHandler } from '../providers/sentry-error';
 
 // Ionic native
 import { StatusBar } from '@ionic-native/status-bar';
@@ -75,7 +75,7 @@ export function entryComponents() {
   bootstrap: [IonicApp],
   entryComponents: entryComponents(),
   providers: [
-    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    { provide: ErrorHandler, useClass: SentryIonicErrorHandler },
     CurrencyPipe,
     // Custom providers
     MykiProvider,

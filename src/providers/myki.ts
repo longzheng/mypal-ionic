@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 import { Myki } from '../models/myki';
 import * as $ from "jquery";
 import * as moment from 'moment';
-import Raven from 'raven-js';
+import * as Sentry from 'sentry-cordova';
 import { HTTP, HTTPResponse } from '@ionic-native/http';
 import { Platform } from 'ionic-angular';
 
@@ -494,7 +494,7 @@ export class MykiProvider {
                   // log the transaction that failed
                   console.error('error parsing transaction')
                   console.log((<any>elem).outerHTML);
-                  Raven.captureException(e); // don't throw again, we just want to do it silently
+                  Sentry.captureException(e); // don't throw again, we just want to do it silently
                 }
 
                 card.transactions.push(trans)
