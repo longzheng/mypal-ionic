@@ -23,7 +23,7 @@
                 <div class="cost" *ngIf="isTopup() || isMoneyTransaction() || isInfo()">
                     <span *ngIf="isCompensation() && transaction.description">{{transaction.description}}</span>
                     <span *ngIf="(isInfo() || isTopup()) && transaction.serviceToString()">{{transaction.serviceToString()}}</span>
-                    <span *ngIf="isMoneyTransaction()">-{{transaction.debit | currency:'USD':true}} (Balance: {{transaction.moneyBalance | currency:'USD':true}})</span>
+                    <span *ngIf="isMoneyTransaction()">-{{transaction.debit | currency:'USD'}} (Balance: {{transaction.moneyBalance | currency:'USD'}})</span>
                 </div>
             </div>
         </div>

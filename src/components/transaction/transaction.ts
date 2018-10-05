@@ -133,7 +133,7 @@ export class TransactionComponent {
   transactionDescription(): string {
     // card purchase
     if (this.isCardPurchase()) {
-      let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
+      let credit = this.currencyPipe.transform(this.transaction.credit, "USD")
       return credit
     }
 
@@ -142,23 +142,23 @@ export class TransactionComponent {
     // money purchase
     // cancel top up money
     if (this.isMoneyDebit() || this.isMoneyPurchase() || this.isCancelTopUp()) {
-      let debit = this.currencyPipe.transform(this.transaction.debit, "USD", true)
-      let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
+      let debit = this.currencyPipe.transform(this.transaction.debit, "USD")
+      let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD")
       return `-${debit} (Balance ${balance})`
     }
 
     // compensation
     if (this.isCompensation()) {
-      let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
-      let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
+      let credit = this.currencyPipe.transform(this.transaction.credit, "USD")
+      let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD")
       return `+${credit} (Balance ${balance})`
     }
 
     // credit
     // myki money top up or reimbursement
     if (this.isTopupMoney() || this.isReimbursement()) {
-      let credit = this.currencyPipe.transform(this.transaction.credit, "USD", true)
-      let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD", true)
+      let credit = this.currencyPipe.transform(this.transaction.credit, "USD")
+      let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD")
       return `+${credit} (Balance ${balance})`
     }
 
