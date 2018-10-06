@@ -841,12 +841,13 @@ export class MykiProvider {
     })
   }
 
-  private httpGetAsp(url: string): Promise<HTTPResponse> {
+  private httpGetAsp(url: string, originalUrl?: string): Promise<HTTPResponse> {
     return new Promise((resolve, reject) => {
       this.http.get(url, {}, {}).then(
         data => {
           // if the page we landed on is not the page we requested
-          if (data.url !== url) {
+          // because of redirects, the original URL might be different to the URL we requested in a subsequent request
+          if (data.url !== (originalUrl || url)) {
             console.error('error HTTP GET page (redirected to another URL)')
             return reject("session")
           }
@@ -858,7 +859,7 @@ export class MykiProvider {
         }, (error: HTTPResponse) => {
           // if response is a redirect
           if (error.status > 300 && error.status < 400) {
-            this.handlRedirectResponse(error).then(
+            this.handlRedirectResponse(error, url).then(
               result => {
                 return resolve(result);
               }, error => {
@@ -909,7 +910,7 @@ export class MykiProvider {
    * Handle a redirect response manually
    * Due to buggy cookie handling behaviour when auto-redirect is enabled https://github.com/silkimen/cordova-plugin-advanced-http/issues/148
    */
-  private handlRedirectResponse(http: HTTPResponse) {
+  private handlRedirectResponse(http: HTTPResponse, originalUrl?: string) {
     // get redirect path
     let redirectPath: string = http.headers['location'];
 
@@ -919,7 +920,7 @@ export class MykiProvider {
     // prepend the domain name
     let redirectUrl = `${this.apiDomain}${redirectPath}`
 
-    return this.httpGetAsp(redirectUrl);
+    return this.httpGetAsp(redirectUrl, originalUrl);
   }
 
   // parse URL querystrings
