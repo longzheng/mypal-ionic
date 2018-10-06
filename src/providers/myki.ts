@@ -842,10 +842,6 @@ export class MykiProvider {
   }
 
   private httpGetAsp(url: string): Promise<HTTPResponse> {
-    // // set up request options
-    // const options = new RequestOptions()
-    // options.withCredentials = true // set/send cookies
-
     return new Promise((resolve, reject) => {
       this.http.get(url, {}, {}).then(
         data => {
@@ -876,11 +872,6 @@ export class MykiProvider {
   }
 
   private httpPostFormAsp(url: string, body?: Object): Promise<HTTPResponse> {
-    // // set up request options
-    // const options = new RequestOptions()
-    // options.withCredentials = true // set/send cookies
-    // options.headers = headers
-
     // set up POST body
     let data = {};
     data['__VIEWSTATE'] = this.lastViewState;
