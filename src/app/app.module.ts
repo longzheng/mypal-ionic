@@ -1,5 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -25,7 +25,7 @@ import { TransactionComponent } from '../components/transaction/transaction';
 // Custom providers
 import { MykiProvider } from '../providers/myki';
 import { ConfigProvider } from '../providers/config';
-import { SentryErrorHandler } from '../providers/sentry-error';
+import { SentryIonicErrorHandler } from '../providers/sentry-error';
 
 // Ionic native
 import { StatusBar } from '@ionic-native/status-bar';
@@ -37,6 +37,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { AppVersion } from '@ionic-native/app-version';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { HTTP } from '@ionic-native/http';
 
 let pages = [
   MyApp,
@@ -65,7 +66,7 @@ export function entryComponents() {
   declarations: declarations(),
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     MomentModule,
     // Ionic Storage
@@ -74,7 +75,7 @@ export function entryComponents() {
   bootstrap: [IonicApp],
   entryComponents: entryComponents(),
   providers: [
-    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    { provide: ErrorHandler, useClass: SentryIonicErrorHandler },
     CurrencyPipe,
     // Custom providers
     MykiProvider,
@@ -89,6 +90,7 @@ export function entryComponents() {
     AppVersion,
     SecureStorage,
     SocialSharing,
+    HTTP
   ]
 })
 export class AppModule { }

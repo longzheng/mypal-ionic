@@ -9,7 +9,7 @@ import { ConfigProvider } from '../providers/config';
 import { TabsPage } from '../pages/tabs/tabs';
 import { IntroPage } from '../pages/intro/intro';
 import { LaunchRoadblockPage } from '../pages/launch-roadblock/launch-roadblock';
-import Raven from 'raven-js';
+import * as Sentry from 'sentry-cordova';
 
 @Component({
   templateUrl: 'app.html'
@@ -45,7 +45,7 @@ export class MyApp {
       // Set release version from app version
       if ((<any>window).cordova !== undefined) {
         this.appVersion.getVersionNumber().then(result => {
-          Raven.setRelease(result)
+          Sentry.setRelease(result)
         })
       }
 

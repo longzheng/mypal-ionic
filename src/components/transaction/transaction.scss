@@ -36,14 +36,25 @@ transaction {
                 color: white;
                 position: relative;
                 text-align: center;
-                &.touchon {
-                    background: #7ED321;
+                &.train {
+                    background: #008DD0;
                 }
-                &.touchoff {
-                    background: #FF943C;
+                &.tram {
+                    background: #71BF44;
+                }
+                &.vline {
+                    background: #7F3F98;
+                }
+                &.bus {
+                    background: #F68B1E;
                 }
                 &.topup {
-                    background: #3CBCFF;
+                    background: color($colors, black, base);
+                    color: color($colors, primary, base);
+                }
+                &.info {
+                    background: color($colors, black, base);
+                    color: color($colors, gray, base);
                 }
                 ion-icon {
                     margin: 6px;
@@ -84,8 +95,13 @@ transaction {
                     }
                 }
                 .cost {
-                    color: color($colors, brand-dark, base);
                     margin-top: 0.5em;
+                    .credit {
+                        color: color($colors, success, base);
+                    }
+                    .debit {
+                        color: color($colors, danger, base);
+                    }
                 }
             }
         }

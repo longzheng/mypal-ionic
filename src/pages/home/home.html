@@ -49,14 +49,14 @@
             <div class="card balance money">
                 <div class="card-inner">
                     <p class="title"><ion-icon name="mypal-money"></ion-icon> Myki money</p>
-                    <h2 class="balance-hero">{{card().moneyBalance | currency:'USD':true}}
+                    <h2 class="balance-hero">{{card().moneyBalance | currency:'USD'}}
                         <div class="autotopup" [hidden]="!card().autoTopup">
                             <ion-icon name="md-refresh"></ion-icon> Auto top up
                         </div>
                     </h2>
                     <div class="info">
-                        <div class="apppurchased" [hidden]="!card().moneyTopUpAppPurchased">{{card().moneyTopUpAppPurchased | currency:'USD':true}} top up processing</div>
-                        <div class="inprogress" [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD':true}} will be added at next touch on</div>
+                        <div class="apppurchased" [hidden]="!card().moneyTopUpAppPurchased">{{card().moneyTopUpAppPurchased | currency:'USD'}} top up processing</div>
+                        <div class="inprogress" [hidden]="!card().moneyTopupInProgress">{{card().moneyTopupInProgress | currency:'USD'}} will be added at next touch on</div>
                     </div>
                     <div [hidden]="isIos()">
                         <button ion-button icon-left block (click)="topupMoney()" [disabled]="disabledCard()"><ion-icon name="md-add-circle"></ion-icon> Top up money</button>

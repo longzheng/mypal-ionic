@@ -11,7 +11,7 @@
             </div>
             <div class="balance">
                 <div class="money">
-                    <ion-icon name="mypal-money" *ngIf="card.passActive"></ion-icon> {{card.moneyBalance | currency:'USD':true}}</div>
+                    <ion-icon name="mypal-money" *ngIf="card.passActive"></ion-icon> {{card.moneyBalance | currency:'USD'}}</div>
                 <div class="pass" *ngIf="card.passActive">
                     <ion-icon name="mypal-pass"></ion-icon> {{card.passActiveFriendlyTextShort()}}</div>
             </div>

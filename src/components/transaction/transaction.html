@@ -2,7 +2,14 @@
     <div class="card-inner">
         <div class="content">
             <div class="connector" *ngIf="isTouchOn() || isTouchOff()" [ngClass]="{'touchon': isTouchOn(), 'touchoff': isTouchOff(), 'nexttouchon': isNextTouchOn()}"></div>
-            <div class="icon" [ngClass]="{'touchon': isTouchOn(), 'touchoff': isTouchOff(), 'topup': isTopup()}">
+            <div class="icon" [ngClass]="{
+                'train': !isTopup() && isServiceTrain(), 
+                'bus': !isTopup() && isServiceBus(), 
+                'tram': !isTopup() && isServiceTram(),
+                'vline': !isTopup() && isServiceVLine(),
+                'topup': isTopup(),
+                'info': isInfo()
+                }">
                 <ion-icon name="mypal-train" *ngIf="!isTopup() && isServiceTrain()"></ion-icon>
                 <ion-icon name="mypal-bus" *ngIf="!isTopup() && isServiceBus()"></ion-icon>
                 <ion-icon name="mypal-tram" *ngIf="!isTopup() && isServiceTram()"></ion-icon>
@@ -13,7 +20,7 @@
             </div>
             <div class="detail">
                 <div class="meta">
-                    <div class="type">{{transaction.typeToString()}}</div>
+                    <div class="type">{{transactionType()}}</div>
                     <div class="date">{{transactionDate()}}</div>
                 </div>
                 <div class="action">
@@ -21,9 +28,8 @@
                     <div class="zone" *ngIf="isTransport()">Zone {{transaction.zone}}</div>
                 </div>
                 <div class="cost" *ngIf="isTopup() || isMoneyTransaction() || isInfo()">
-                    <span *ngIf="isCompensation() && transaction.description">{{transaction.description}}</span>
-                    <span *ngIf="(isInfo() || isTopup()) && transaction.serviceToString()">{{transaction.serviceToString()}}</span>
-                    <span *ngIf="isMoneyTransaction()">-{{transaction.debit | currency:'USD':true}} (Balance: {{transaction.moneyBalance | currency:'USD':true}})</span>
+                    <span class="credit" *ngIf="creditTransactionCost()">{{creditTransactionCost()}}</span>
+                    <span class="debit" *ngIf="debitTransactionCost()">{{debitTransactionCost()}}</span>
                 </div>
             </div>
         </div>

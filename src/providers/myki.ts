@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
 import { ConfigProvider } from './config';
 import 'rxjs/add/operator/map';
 import { Myki } from '../models/myki';
-import { CustomURLEncoder } from '../models/customUrlEncoder';
 import * as $ from "jquery";
 import * as moment from 'moment';
-import Raven from 'raven-js';
+import * as Sentry from 'sentry-cordova';
+import { HTTP, HTTPResponse } from '@ionic-native/http';
+import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class MykiProvider {
 
   // APi root for all requests
-  apiRoot = "https://www.mymyki.com.au/NTSWebPortal/"
+  apiDomain = "https://www.mymyki.com.au"
+  apiRoot = `${this.apiDomain}/NTSWebPortal/`
   errorUrl = `${this.apiRoot}ErrorPage.aspx`
 
   // holders for ASP.NET page state properties
@@ -31,9 +32,19 @@ export class MykiProvider {
   loggedIn: boolean = false;
 
   constructor(
-    public http: Http,
-    public configProvider: ConfigProvider
+    public http: HTTP,
+    public configProvider: ConfigProvider,
+    public platform: Platform
   ) {
+    // wait for platform to be ready
+    platform.ready().then(() => {
+      // customize the user-agent to spoof a generic iphone safari
+      this.http.setHeader("*", "User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/ 604.1.21 (KHTML, like Gecko) Version/ 12.0 Mobile/17A6278a Safari/602.1.26")
+      // set HTTP data serializer to form
+      this.http.setDataSerializer("urlencoded");
+      // disable redirect handler
+      this.http.disableRedirect(true);
+    });
   }
 
   setActiveCard(id: string) {
@@ -74,6 +85,9 @@ export class MykiProvider {
   login(username: string, password: string): Promise<Response> {
     console.log('logging in')
 
+    // clear any existing cookies
+    this.http.clearCookies();
+
     this.loggingIn = true
 
     // determine if we're in mock demo models
@@ -93,25 +107,25 @@ export class MykiProvider {
       this.httpGetAsp(loginUrl).then(
         data => {
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('ctl00$uxContentPlaceHolder$uxUsername', username)
-          body.set('ctl00$uxContentPlaceHolder$uxPassword', password)
-          body.set('ctl00$uxContentPlaceHolder$uxLogin', 'Login')
+          const body = {};
+          body['ctl00$uxContentPlaceHolder$uxUsername'] = username;
+          body['ctl00$uxContentPlaceHolder$uxPassword'] = password;
+          body['ctl00$uxContentPlaceHolder$uxLogin'] = 'Login';
 
           // post form fields
           this.httpPostFormAsp(loginUrl, body).then(
             data => {
               // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
+              let scraperJquery = this.jQueryHTML(data.data)
 
               // verify if we are actually logged in
               // successful login redirects us to the "Login-Services.aspx" page
-              if (data.url !== `${this.apiRoot}Registered/MyMykiAccount.aspx?menu=My%20myki%20account`){
+              if (data.url !== `${this.apiRoot}Registered/MyMykiAccount.aspx?menu=My%20myki%20account`) {
                 // scrape error
                 let error = scraperJquery.find('#uxservererror').text().trim()
 
                 // different errors
-                switch(error) {
+                switch (error) {
                   case 'Invalid Username/Password.':
                     return reject('login')
                   case 'Your account has been locked out.':
@@ -119,7 +133,7 @@ export class MykiProvider {
                   default:
                     return reject('login')
                 }
-                
+
               }
 
               console.log("logged in to account")
@@ -142,7 +156,7 @@ export class MykiProvider {
             error => {
               return reject();
             }
-          ).then(() => {this.loggingIn = false})
+          ).then(() => { this.loggingIn = false })
         },
         error => {
           this.loggingIn = false
@@ -200,8 +214,8 @@ export class MykiProvider {
           }
 
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('ctl00$uxContentPlaceHolder$uxTimer', '')
+          const body = {}
+          body['ctl00$uxContentPlaceHolder$uxTimer'] = ''
 
           // post form fields
           this.httpPostFormAsp(accountUrl, body).then(
@@ -209,7 +223,7 @@ export class MykiProvider {
               console.log('loaded account details')
 
               // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
+              let scraperJquery = this.jQueryHTML(data.data)
 
               // scrape active cards
               let activeCards = scraperJquery.find("#tabs-1 table tr").not(":first")
@@ -315,9 +329,9 @@ export class MykiProvider {
           }
 
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('ctl00$uxContentPlaceHolder$uxCardList', card.id)
-          body.set('ctl00$uxContentPlaceHolder$uxGo', 'Go')
+          const body = {}
+          body['ctl00$uxContentPlaceHolder$uxCardList'] = card.id
+          body['ctl00$uxContentPlaceHolder$uxGo'] = 'Go'
 
           // post form fields
           this.httpPostFormAsp(cardUrl, body).then(
@@ -326,7 +340,7 @@ export class MykiProvider {
 
               try {
                 // scrape webpage
-                let scraperJquery = this.jQueryHTML(data)
+                let scraperJquery = this.jQueryHTML(data.data)
                 let cardTable = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardDetailsPnl table");
 
                 card.holder = cardTable.find("tr:nth-child(1) td:nth-child(2)").text().trim();
@@ -350,7 +364,7 @@ export class MykiProvider {
                 }
 
                 let lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A")
-                if (lastTransactionDate.isValid()){
+                if (lastTransactionDate.isValid()) {
                   card.lastTransactionDate = lastTransactionDate.toDate();
                 }
 
@@ -406,16 +420,16 @@ export class MykiProvider {
           }
 
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('ctl00$uxContentPlaceHolder$uxCardList', card.id)
-          body.set('ctl00$uxContentPlaceHolder$uxPageSize', '40')
-          body.set('ctl00$uxContentPlaceHolder$uxFromDay', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxFromMonth', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxFromYear', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxToDay', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxToMonth', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxToYear', '0')
-          body.set('ctl00$uxContentPlaceHolder$uxSelectNewCard', 'Go')
+          const body = {}
+          body['ctl00$uxContentPlaceHolder$uxCardList'] = card.id
+          body['ctl00$uxContentPlaceHolder$uxPageSize'] = '40'
+          body['ctl00$uxContentPlaceHolder$uxFromDay'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxFromMonth'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxFromYear'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxToDay'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxToMonth'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxToYear'] = '0'
+          body['ctl00$uxContentPlaceHolder$uxSelectNewCard'] = 'Go'
 
           // post form fields
           this.httpPostFormAsp(historyUrl, body).then(
@@ -426,7 +440,7 @@ export class MykiProvider {
               card.transactions = [];
 
               // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
+              let scraperJquery = this.jQueryHTML(data.data)
 
               let historyTable = scraperJquery.find("table#ctl00_uxContentPlaceHolder_uxMykiTxnHistory");
 
@@ -473,14 +487,14 @@ export class MykiProvider {
 
                   // balance
                   let moneyBalance = transJquery.find("td:nth-child(9)").text().trim().replace("$", "")
-                  
+
                   // check if a blank entry which is "-"
                   trans.moneyBalance = moneyBalance != "-" ? parseFloat(moneyBalance) : null
                 } catch (e) {
                   // log the transaction that failed
                   console.error('error parsing transaction')
                   console.log((<any>elem).outerHTML);
-                  Raven.captureException(e); // don't throw again, we just want to do it silently
+                  Sentry.captureException(e); // don't throw again, we just want to do it silently
                 }
 
                 card.transactions.push(trans)
@@ -533,10 +547,10 @@ export class MykiProvider {
 
           // we need to first do a AJAX call to get the "list" of cards before we can select one
           // set up form fields
-          const body = new URLSearchParams()
-          body.set('__EVENTTARGET', 'ctl00$uxContentPlaceHolder$uxTimer')
-          body.set('ctl00$uxContentPlaceHolder$uxTopup', topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
-          body.set('__EVENTARGUMENT', '')
+          const body = {}
+          body['__EVENTTARGET'] = 'ctl00$uxContentPlaceHolder$uxTimer';
+          body['ctl00$uxContentPlaceHolder$uxTopup'] = topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass';
+          body['__EVENTARGUMENT'] = ''
 
           // post form fields
           this.httpPostFormAsp(topupUrl, body).then(
@@ -546,12 +560,12 @@ export class MykiProvider {
 
               // select our desired card
               // set up form fields
-              const body = new URLSearchParams()
-              body.set('ctl00$uxContentPlaceHolder$uxCardlist', this.activeCard().id)
-              body.set('ctl00$uxContentPlaceHolder$uxTopup', topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass')
-              body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
-              body.set('__EVENTTARGET', '')
-              body.set('__EVENTARGUMENT', '')
+              const body = {}
+              body['ctl00$uxContentPlaceHolder$uxCardlist'] = this.activeCard().id
+              body['ctl00$uxContentPlaceHolder$uxTopup'] = topupOptions.topupType === Myki.TopupType.Money ? 'uxTopUpMoney' : 'uxTopUpPass'
+              body['ctl00$uxContentPlaceHolder$uxSubmit'] = 'Next'
+              body['__EVENTTARGET'] = ''
+              body['__EVENTARGUMENT'] = ''
 
               // post form fields
               this.httpPostFormAsp(topupUrl, body).then(
@@ -559,15 +573,15 @@ export class MykiProvider {
 
                   // sanity check we've got the right card
                   // scrape webpage
-                  let scraperJquery = this.jQueryHTML(data)
+                  let scraperJquery = this.jQueryHTML(data.data)
                   let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_uxCardnumber").text();
                   if (cardId !== this.activeCard().id)
                     return reject()
 
                   // extract "cn" token from URL, we need this later
                   let cnToken = (<any>this.parseUrlQuery(data.url)).cn
-                  // store "cn" token in topup options
-                  topupOptions.cnToken = cnToken
+                  // store "cn" token in topup options (with encoding so it doesn't need to re-encoded)
+                  topupOptions.cnToken = encodeURIComponent(cnToken)
 
                   return resolve()
                 },
@@ -602,30 +616,30 @@ export class MykiProvider {
     return new Promise((resolve, reject) => {
 
       // set up form fields
-      const body = new URLSearchParams()
+      const body = {}
 
       if (options.topupType === Myki.TopupType.Money) {
-        body.set('ctl00$uxContentPlaceHolder$uxSelectedamount', '')
-        body.set('ctl00$uxContentPlaceHolder$uxMaxtoopupAmount', '')
-        body.set('ctl00$uxContentPlaceHolder$uxAmounts', 'Other amount')
-        body.set('ctl00$uxContentPlaceHolder$uxAmountlist', parseInt(<any>options.moneyAmount).toString()) // the amount we're actually topping up
-        body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
+        body['ctl00$uxContentPlaceHolder$uxSelectedamount'] = ''
+        body['ctl00$uxContentPlaceHolder$uxMaxtoopupAmount'] = ''
+        body['ctl00$uxContentPlaceHolder$uxAmounts'] = 'Other amount'
+        body['ctl00$uxContentPlaceHolder$uxAmountlist'] = parseInt(<any>options.moneyAmount).toString() // the amount we're actually topping up
+        body['ctl00$uxContentPlaceHolder$uxSubmit'] = 'Next'
       }
 
       if (options.topupType === Myki.TopupType.Pass) {
-        body.set('ctl00$uxContentPlaceHolder$uxMaxtoopupAmount', '250') // myki expects this value
-        body.set('ctl00$uxContentPlaceHolder$uxSelectedamount', '')
-        body.set('ctl00$uxContentPlaceHolder$uxdays', parseInt(<any>options.passDuration).toString()) // the pass duration we're topping up
-        body.set('ctl00$uxContentPlaceHolder$uxDurationtype', '2') // duration is in days (not weeks)
-        body.set('ctl00$uxContentPlaceHolder$uxNumberOfDays', '1043')
-        body.set('ctl00$uxContentPlaceHolder$uxExpiryDays', '')
-        body.set('ctl00$uxContentPlaceHolder$uxMinDays', '0')
-        body.set('ctl00$uxContentPlaceHolder$uxMaxDays', '0')
-        body.set('ctl00$uxContentPlaceHolder$uxZonelist', (options.zoneFrom + 1).toString()) // myki site wants zone with a N+1 index
-        body.set('ctl00$uxContentPlaceHolder$uxZonesTo', (options.zoneTo + 1).toString()) // myki site wants zone with a N+1 index
-        body.set('ctl00$uxContentPlaceHolder$uxAmounts', '')
-        body.set('ctl00$uxContentPlaceHolder$uxAmountlist', '')
-        body.set('ctl00$uxContentPlaceHolder$uxNext', 'Next')
+        body['ctl00$uxContentPlaceHolder$uxMaxtoopupAmount'] = '250' // myki expects this value
+        body['ctl00$uxContentPlaceHolder$uxSelectedamount'] = ''
+        body['ctl00$uxContentPlaceHolder$uxdays'] = parseInt(<any>options.passDuration).toString() // the pass duration we're topping up
+        body['ctl00$uxContentPlaceHolder$uxDurationtype'] = '2' // duration is in days (not weeks)
+        body['ctl00$uxContentPlaceHolder$uxNumberOfDays'] = '1043'
+        body['ctl00$uxContentPlaceHolder$uxExpiryDays'] = ''
+        body['ctl00$uxContentPlaceHolder$uxMinDays'] = '0'
+        body['ctl00$uxContentPlaceHolder$uxMaxDays'] = '0'
+        body['ctl00$uxContentPlaceHolder$uxZonelist'] = (options.zoneFrom + 1).toString() // myki site wants zone with a N+1 index
+        body['ctl00$uxContentPlaceHolder$uxZonesTo'] = (options.zoneTo + 1).toString() // myki site wants zone with a N+1 index
+        body['ctl00$uxContentPlaceHolder$uxAmounts'] = ''
+        body['ctl00$uxContentPlaceHolder$uxAmountlist'] = ''
+        body['ctl00$uxContentPlaceHolder$uxNext'] = 'Next'
       }
 
       // post form fields
@@ -634,7 +648,7 @@ export class MykiProvider {
 
           // sanity check we've got the right card
           // scrape webpage
-          let scraperJquery = this.jQueryHTML(data)
+          let scraperJquery = this.jQueryHTML(data.data)
           let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_pnlCardDetails fieldset:nth-of-type(1) p:nth-of-type(1)").text().replace('myki card number', '').trim()
           if (cardId !== this.activeCard().id)
             return reject()
@@ -685,7 +699,7 @@ export class MykiProvider {
     return new Promise((resolve, reject) => {
 
       // set up form fields
-      const body = new URLSearchParams()
+      const body = {}
 
       let reminderTypeString = ''
       switch (options.reminderType) {
@@ -700,17 +714,17 @@ export class MykiProvider {
           break;
       }
 
-      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber1', options.ccNumberNoSpaces().substr(0, 4))
-      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber2', options.ccNumberNoSpaces().substr(4, 4))
-      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber3', options.ccNumberNoSpaces().substr(8, 4))
-      body.set('ctl00$uxContentPlaceHolder$uxCreditCardNumber4', options.ccNumberNoSpaces().substr(12, 4))
-      body.set('ctl00$uxContentPlaceHolder$uxMonthList', options.ccExpiryMonth())
-      body.set('ctl00$uxContentPlaceHolder$uxYearList', options.ccExpiryYear())
-      body.set('ctl00$uxContentPlaceHolder$uxSecurityCode', options.creditCard.ccCVC)
-      body.set('ctl00$uxContentPlaceHolder$reimnder', reminderTypeString)
-      body.set('ctl00$uxContentPlaceHolder$uxreminderemail', options.reminderEmail)
-      body.set('ctl00$uxContentPlaceHolder$uxreminderMobile', options.reminderMobile)
-      body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Next')
+      body['ctl00$uxContentPlaceHolder$uxCreditCardNumber1'] = options.ccNumberNoSpaces().substr(0, 4)
+      body['ctl00$uxContentPlaceHolder$uxCreditCardNumber2'] = options.ccNumberNoSpaces().substr(4, 4)
+      body['ctl00$uxContentPlaceHolder$uxCreditCardNumber3'] = options.ccNumberNoSpaces().substr(8, 4)
+      body['ctl00$uxContentPlaceHolder$uxCreditCardNumber4'] = options.ccNumberNoSpaces().substr(12, 4)
+      body['ctl00$uxContentPlaceHolder$uxMonthList'] = options.ccExpiryMonth()
+      body['ctl00$uxContentPlaceHolder$uxYearList'] = options.ccExpiryYear()
+      body['ctl00$uxContentPlaceHolder$uxSecurityCode'] = options.creditCard.ccCVC
+      body['ctl00$uxContentPlaceHolder$reimnder'] = reminderTypeString
+      body['ctl00$uxContentPlaceHolder$uxreminderemail'] = options.reminderEmail
+      body['ctl00$uxContentPlaceHolder$uxreminderMobile'] = options.reminderMobile
+      body['ctl00$uxContentPlaceHolder$uxSubmit'] = 'Next'
 
       // post form fields
       this.httpPostFormAsp(topupUrl, body).then(
@@ -718,7 +732,7 @@ export class MykiProvider {
 
           // sanity check we've got the right card
           // scrape webpage
-          let scraperJquery = this.jQueryHTML(data)
+          let scraperJquery = this.jQueryHTML(data.data)
           let cardId = scraperJquery.find("#ctl00_uxContentPlaceHolder_pnlCardDetails fieldset:nth-of-type(1) p:nth-of-type(1)").text().replace('myki card number', '').trim()
           if (cardId !== this.activeCard().id)
             return reject()
@@ -732,14 +746,14 @@ export class MykiProvider {
           topupConfirmUrl += `?cn=${options.cnToken}`
 
           // set up form fields
-          const body = new URLSearchParams()
+          const body = {}
 
-          body.set('ctl00$uxContentPlaceHolder$uxSubmit', 'Submit')
-          body.set('ctl00$uxContentPlaceHolder$hdnsubmitMsg', 'Your payment is being processed. Please do not resubmit payment, close this window or click the Back button on your browser.')
-          body.set('ctl00$uxHeader$uxSearchTextBox', '')
-          body.set('ctl00$uxHeader$hidFontSize', '')
-          body.set('ctl00$uxContentPlaceHolder$hdnCardNo', '')
-          body.set('ctl00$uxContentPlaceHolder$hdnselectedDate', '')
+          body['ctl00$uxContentPlaceHolder$uxSubmit'] = 'Submit'
+          body['ctl00$uxContentPlaceHolder$hdnsubmitMsg'] = 'Your payment is being processed. Please do not resubmit payment, close this window or click the Back button on your browser.'
+          body['ctl00$uxHeader$uxSearchTextBox'] = ''
+          body['ctl00$uxHeader$hidFontSize'] = ''
+          body['ctl00$uxContentPlaceHolder$hdnCardNo'] = ''
+          body['ctl00$uxContentPlaceHolder$hdnselectedDate'] = ''
 
           // post form fields
           this.httpPostFormAsp(topupConfirmUrl, body).then(
@@ -772,7 +786,7 @@ export class MykiProvider {
               // we've successfully topped up
 
               // scrape webpage
-              let scraperJquery = this.jQueryHTML(data)
+              let scraperJquery = this.jQueryHTML(data.data)
               let transactionReference = scraperJquery.find("#content  fieldset:nth-of-type(1) p:nth-of-type(2) b").text().trim()
 
               // if we purchased myki money, store how much we have on order
@@ -792,7 +806,7 @@ export class MykiProvider {
     })
   }
 
-  private httpGetAspWithRetry(url: string): Promise<Response> {
+  private httpGetAspWithRetry(url: string): Promise<HTTPResponse> {
     return new Promise((resolve, reject) => {
       // first try http get
       this.httpGetAsp(url).then(
@@ -827,13 +841,13 @@ export class MykiProvider {
     })
   }
 
-  private httpGetAsp(url: string): Promise<Response> {
-    // set up request options
-    const options = new RequestOptions()
-    options.withCredentials = true // set/send cookies
+  private httpGetAsp(url: string): Promise<HTTPResponse> {
+    // // set up request options
+    // const options = new RequestOptions()
+    // options.withCredentials = true // set/send cookies
 
     return new Promise((resolve, reject) => {
-      this.http.get(url, options).subscribe(
+      this.http.get(url, {}, {}).then(
         data => {
           // if the page we landed on is not the page we requested
           if (data.url !== url) {
@@ -842,49 +856,79 @@ export class MykiProvider {
           }
 
           // update the page state
-          this.storePageState(data);
+          this.storePageState(data.data);
 
           return resolve(data);
-        },
-        error => {
-          return reject(error);
+        }, (error: HTTPResponse) => {
+          // if response is a redirect
+          if (error.status > 300 && error.status < 400) {
+            this.handlRedirectResponse(error).then(
+              result => {
+                return resolve(result);
+              }, error => {
+                return reject(error);
+              });
+          } else {
+            return reject(error);
+          }
+        })
+    })
+  }
+
+  private httpPostFormAsp(url: string, body?: Object): Promise<HTTPResponse> {
+    // // set up request options
+    // const options = new RequestOptions()
+    // options.withCredentials = true // set/send cookies
+    // options.headers = headers
+
+    // set up POST body
+    let data = {};
+    data['__VIEWSTATE'] = this.lastViewState;
+    data['__EVENTVALIDATION'] = this.lastEventValidation;
+    // if we have any supplied body param, add it to our POST body
+    if (body != null) {
+      Object.assign(data, body)
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http.post(url, data, {}).then(
+        data => {
+          // update the page state
+          this.storePageState(data.data);
+
+          return resolve(data);
+        }, (error: HTTPResponse) => {
+          // if response is a redirect
+          if (error.status > 300 && error.status < 400) {
+            this.handlRedirectResponse(error).then(
+              result => {
+                return resolve(result);
+              }, error => {
+                return reject(error);
+              });
+          } else {
+            return reject(error);
+          }
         }
       )
     })
   }
 
-  private httpPostFormAsp(url: string, body?: URLSearchParams): Promise<Response> {
-    // set up request headers
-    let headers = new Headers()
-    headers.append('Content-Type', 'application/x-www-form-urlencoded') // we're going to submit form data
+  /**
+   * Handle a redirect response manually
+   * Due to buggy cookie handling behaviour when auto-redirect is enabled https://github.com/silkimen/cordova-plugin-advanced-http/issues/148
+   */
+  private handlRedirectResponse(http: HTTPResponse) {
+    // get redirect path
+    let redirectPath: string = http.headers['location'];
 
-    // set up request options
-    const options = new RequestOptions()
-    options.withCredentials = true // set/send cookies
-    options.headers = headers
+    // fix up some redirect URL with spaces (it should have been urlencoded, but it's not)
+    redirectPath = redirectPath.replace(/\s/g, '%20');
 
-    // set up POST body
-    const postBody = new URLSearchParams('', new CustomURLEncoder())
-    postBody.set('__VIEWSTATE', this.lastViewState)
-    postBody.set('__EVENTVALIDATION', this.lastEventValidation)
-    // if we have any supplied body param, add it to our POST body
-    if (body != null) {
-      postBody.setAll(body)
-    }
+    // prepend the domain name
+    let redirectUrl = `${this.apiDomain}${redirectPath}`
 
-    return new Promise((resolve, reject) => {
-      this.http.post(url, postBody.toString(), options).subscribe(
-        data => {
-          // update the page state
-          this.storePageState(data);
-
-          return resolve(data);
-        },
-        error => {
-          return reject(error);
-        }
-      )
-    })
+    return this.httpGetAsp(redirectUrl);
   }
 
   // parse URL querystrings
@@ -901,14 +945,14 @@ export class MykiProvider {
     return params
   }
 
-  private jQueryHTML(data: any): JQuery {
+  private jQueryHTML(html: string): JQuery {
     let scraper = (<any>document).implementation.createHTMLDocument()
-    scraper.body.innerHTML = data._body
+    scraper.body.innerHTML = html
     return $(scraper.body.children)
   }
 
-  private storePageState(data: any) {
-    let scraperJquery = this.jQueryHTML(data)
+  private storePageState(html: string) {
+    let scraperJquery = this.jQueryHTML(html)
     let viewState = scraperJquery.find('#__VIEWSTATE').val()
     let eventValidation = scraperJquery.find('#__EVENTVALIDATION').val()
 
