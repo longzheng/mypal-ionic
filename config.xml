@@ -107,8 +107,8 @@
     <plugin name="cordova-plugin-ignore-lint-translation" spec="0.0.1" />
     <plugin name="cordova-sqlite-storage" spec="^2.3.3" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.15" />
-    <plugin name="sentry-cordova" spec="^0.12.3" />
     <plugin name="cordova-plugin-advanced-http" spec="^2.0.1" />
+    <plugin name="sentry-cordova" spec="^0.12.3" />
     <engine name="android" spec="7.1.1" />
     <engine name="ios" spec="4.5.5" />
 </widget>
