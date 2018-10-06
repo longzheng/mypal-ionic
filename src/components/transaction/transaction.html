@@ -20,7 +20,7 @@
             </div>
             <div class="detail">
                 <div class="meta">
-                    <div class="type">{{transaction.typeToString()}}</div>
+                    <div class="type">{{transactionType()}}</div>
                     <div class="date">{{transactionDate()}}</div>
                 </div>
                 <div class="action">
@@ -28,9 +28,8 @@
                     <div class="zone" *ngIf="isTransport()">Zone {{transaction.zone}}</div>
                 </div>
                 <div class="cost" *ngIf="isTopup() || isMoneyTransaction() || isInfo()">
-                    <span *ngIf="isCompensation() && transaction.description">{{transaction.description}}</span>
-                    <span *ngIf="(isInfo() || isTopup()) && transaction.serviceToString()">{{transaction.serviceToString()}}</span>
-                    <span *ngIf="isMoneyTransaction()">-{{transaction.debit | currency:'USD'}} (Balance: {{transaction.moneyBalance | currency:'USD'}})</span>
+                    <span class="credit" *ngIf="creditTransactionCost()">{{creditTransactionCost()}}</span>
+                    <span class="debit" *ngIf="debitTransactionCost()">{{debitTransactionCost()}}</span>
                 </div>
             </div>
         </div>

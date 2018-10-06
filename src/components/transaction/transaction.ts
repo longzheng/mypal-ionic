@@ -126,25 +126,32 @@ export class TransactionComponent {
   }
 
   isCancelTopUp(): boolean {
-    return this.transaction.type === Myki.TransactionType.CancelTopUpMoney || 
-            this.transaction.type === Myki.TransactionType.CancelTopUpPass
+    return this.transaction.type === Myki.TransactionType.CancelTopUpMoney ||
+      this.transaction.type === Myki.TransactionType.CancelTopUpPass
   }
 
-  transactionDescription(): string {
-    // card purchase
-    if (this.isCardPurchase()) {
-      let credit = this.currencyPipe.transform(this.transaction.credit, "USD")
-      return credit
-    }
+  transactionType(): string {
+    return this.transaction.typeToString();
+  }
 
+  debitTransactionCost(): string {
     // debit
     // money debit
     // money purchase
     // cancel top up money
-    if (this.isMoneyDebit() || this.isMoneyPurchase() || this.isCancelTopUp()) {
+    // myki money fare
+    if (this.isMoneyDebit() || this.isMoneyPurchase() || this.isCancelTopUp() || this.isMoneyTransaction()) {
       let debit = this.currencyPipe.transform(this.transaction.debit, "USD")
       let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD")
       return `-${debit} (Balance ${balance})`
+    }
+  }
+
+  creditTransactionCost(): string {
+    // card purchase
+    if (this.isCardPurchase()) {
+      let credit = this.currencyPipe.transform(this.transaction.credit, "USD")
+      return credit
     }
 
     // compensation
@@ -161,6 +168,12 @@ export class TransactionComponent {
       let balance = this.currencyPipe.transform(this.transaction.moneyBalance, "USD")
       return `+${credit} (Balance ${balance})`
     }
+  }
+
+  transactionDescription(): string {
+    // if info or top up, return the friendly service string
+    if ((this.isInfo() || this.isTopup()) && this.transaction.serviceToString() && this.transaction.description === '-' )
+      return this.transaction.serviceToString();
 
     // standard touch on/touch off
     return this.transaction.description

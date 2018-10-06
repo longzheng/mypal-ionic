@@ -95,8 +95,13 @@ transaction {
                     }
                 }
                 .cost {
-                    color: color($colors, brand-dark, base);
                     margin-top: 0.5em;
+                    .credit {
+                        color: color($colors, success, base);
+                    }
+                    .debit {
+                        color: color($colors, danger, base);
+                    }
                 }
             }
         }
