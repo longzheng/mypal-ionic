@@ -859,7 +859,7 @@ export class MykiProvider {
         }, (error: HTTPResponse) => {
           // if response is a redirect
           if (error.status > 300 && error.status < 400) {
-            this.handlRedirectResponse(error, url).then(
+            this.handlRedirectResponse(error, originalUrl || url).then(
               result => {
                 return resolve(result);
               }, error => {
