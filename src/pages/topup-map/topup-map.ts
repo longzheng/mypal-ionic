@@ -149,7 +149,7 @@ export class TopupMapPage {
       case '10':
         return "Buy pre-loaded myki cards only"
       default:
-        throw new Error("Invalid top up marker type: " + type)
+        return "Myki retail output"
     }
   }
 
