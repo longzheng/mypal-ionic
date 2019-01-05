@@ -386,6 +386,7 @@ export class MykiProvider {
             },
             error => {
               console.error('error loading card details (POST)')
+              console.log(error)
               return reject();
             }
           )
@@ -510,6 +511,7 @@ export class MykiProvider {
             },
             error => {
               console.error('error loading card history (POST)')
+              console.log(error)
               return reject();
             }
           )
