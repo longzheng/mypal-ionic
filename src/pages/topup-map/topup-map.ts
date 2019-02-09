@@ -90,15 +90,14 @@ export class TopupMapPage {
               let markerOptions: MarkerOptions = {
                 position: new LatLng(location.outlet_latitude, location.outlet_longitude),
                 title: location.outlet_business,
-                snippet: `${location.outlet_name}, ${location.outlet_suburb}, ${location.outlet_postcode}
-                \r\nMonday: ${location.outlet_business_hour_mon !== null ? location.outlet_business_hour_mon : "N/A"}
-                \r\nTuesday: ${location.outlet_business_hour_tue !== null ? location.outlet_business_hour_tue : "N/A"}
-                \r\nWednesday: ${location.outlet_business_hour_wed !== null ? location.outlet_business_hour_wed : "N/A"}
-                \r\nThursday: ${location.outlet_business_hour_thur !== null ? location.outlet_business_hour_thur : "N/A"}
-                \r\nFriday: ${location.outlet_business_hour_fri !== null ? location.outlet_business_hour_fri : "N/A"}
-                \r\nSaturday: ${location.outlet_business_hour_sat !== null ? location.outlet_business_hour_sat : "N/A"}
-                \r\nSunday: ${location.outlet_business_hour_sun !== null ? location.outlet_business_hour_sun : "N/A"}
-                `
+                snippet: `${location.outlet_name}, ${location.outlet_suburb}, ${location.outlet_postcode}`+
+                `\r\nMonday: ${location.outlet_business_hour_mon !== null ? location.outlet_business_hour_mon : "N/A"}`+
+                `\r\nTuesday: ${location.outlet_business_hour_tue !== null ? location.outlet_business_hour_tue : "N/A"}`+
+                `\r\nWednesday: ${location.outlet_business_hour_wed !== null ? location.outlet_business_hour_wed : "N/A"}`+
+                `\r\nThursday: ${location.outlet_business_hour_thur !== null ? location.outlet_business_hour_thur : "N/A"}`+
+                `\r\nFriday: ${location.outlet_business_hour_fri !== null ? location.outlet_business_hour_fri : "N/A"}`+
+                `\r\nSaturday: ${location.outlet_business_hour_sat !== null ? location.outlet_business_hour_sat : "N/A"}`+
+                `\r\nSunday: ${location.outlet_business_hour_sun !== null ? location.outlet_business_hour_sun : "N/A"}`
               };
               // add marker to list to be added
               this.map.addMarker(markerOptions);
@@ -109,7 +108,7 @@ export class TopupMapPage {
           loader.dismiss();
           this.alertCtrl.create({
             title: "Top up outlets not available",
-            message: "Could not load myki top up outlets data from Public Transport Victoria",
+            message: "Could not load myki top up outlets data",
             buttons: ['OK']
           }).present();
         });
