@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapOptions, LatLng, MarkerOptions } from '@ionic-native/google-maps';
 import { Firebase } from '@ionic-native/firebase';
-import { HTTP } from '@ionic-native/http';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'page-topup-map',
@@ -16,7 +17,7 @@ export class TopupMapPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private googleMaps: GoogleMaps,
-    private http: HTTP,
+    private http: HttpClient,
     private firebase: Firebase,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
@@ -78,45 +79,33 @@ export class TopupMapPage {
     loader.present();
 
     // load myki top up locations
-    this.http.get("https://www.ptv.vic.gov.au/tickets/myki/ef1d0f60a/xml-list", {}, {})
-      .then(
-        data => {
-          if (data) {
-            let parser = new DOMParser();
-            let xmlData = parser.parseFromString(data.data.trim(), "application/xml");
-            let locations = xmlData.getElementsByTagName("d");
-
-            if (locations.length === 0) {
-              loader.dismiss();
-              this.alertCtrl.create({
-                title: "Top up outlets not available",
-                message: "The myki top up outlets data from Public Transport Victoria is empty",
-                buttons: ['OK']
-              }).present();
-              return
-            }
-
+    this.http.get("assets/js/ptv-myki-outlets.json")
+      .subscribe(
+        (locations: any) => {
             // process all markers
             for (var i = 0; i < locations.length; i++) {
               let location = locations[i];
-              let locationName = location.getElementsByTagName("N")[0].textContent
-              let locationAddress = location.getElementsByTagName("A1")[0].textContent
-              let locationNote = this.markerTypeToString(location.getElementsByTagName("F")[0].textContent)
-              let locationLat = parseFloat(location.getElementsByTagName("Lt")[0].textContent)
-              let locationLng = parseFloat(location.getElementsByTagName("Lg")[0].textContent)
+
               // create new marker
               let markerOptions: MarkerOptions = {
-                position: new LatLng(locationLat, locationLng),
-                title: locationName,
-                snippet: locationNote + '. \n' + locationAddress
+                position: new LatLng(location.outlet_latitude, location.outlet_longitude),
+                title: location.outlet_business,
+                snippet: `${location.outlet_name}, ${location.outlet_suburb}, ${location.outlet_postcode}
+                \r\nMonday: ${location.outlet_business_hour_mon !== null ? location.outlet_business_hour_mon : "N/A"}
+                \r\nTuesday: ${location.outlet_business_hour_tue !== null ? location.outlet_business_hour_tue : "N/A"}
+                \r\nWednesday: ${location.outlet_business_hour_wed !== null ? location.outlet_business_hour_wed : "N/A"}
+                \r\nThursday: ${location.outlet_business_hour_thur !== null ? location.outlet_business_hour_thur : "N/A"}
+                \r\nFriday: ${location.outlet_business_hour_fri !== null ? location.outlet_business_hour_fri : "N/A"}
+                \r\nSaturday: ${location.outlet_business_hour_sat !== null ? location.outlet_business_hour_sat : "N/A"}
+                \r\nSunday: ${location.outlet_business_hour_sun !== null ? location.outlet_business_hour_sun : "N/A"}
+                `
               };
               // add marker to list to be added
               this.map.addMarker(markerOptions);
             }
-
             loader.dismiss();
           }
-        }).catch(error => {
+        , error => {
           loader.dismiss();
           this.alertCtrl.create({
             title: "Top up outlets not available",
