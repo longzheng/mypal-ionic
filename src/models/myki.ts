@@ -238,6 +238,7 @@ export namespace Myki {
                     this.service = TransactionService.AutoTopUp;
                     break;
                 case 'Website':
+                case 'PTVWebsite':
                     this.service = TransactionService.Website;
                     break;
                 case 'TopCo':
