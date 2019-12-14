@@ -12,8 +12,8 @@ module.exports = function(context) {
     var fs = require('fs');
     var path = require('path');
     var xml2js = require('xml2js');
-    var Q = context.requireCordovaModule('q');
-    var deferral = new Q.defer();
+    var q = require('q');
+    var deferral = new q.defer();
 
     // unwanted permissions here
     var unwantedPermissions = [
