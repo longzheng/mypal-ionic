@@ -48,7 +48,7 @@
     "cordova-plugin-inappbrowser": "^1.7.1",
     "cordova-plugin-ionic-keyboard": "^2.1.2",
     "cordova-plugin-ionic-webview": "^1.1.15",
-    "cordova-plugin-secure-storage": "^2.6.8",
+    "cordova-plugin-secure-storage-echo": "^5.0.1",
     "cordova-plugin-splashscreen": "^4.0.3",
     "cordova-plugin-statusbar": "^2.3.0",
     "cordova-plugin-whitelist": "^1.3.2",
@@ -138,6 +138,7 @@
       "cordova-sqlite-storage": {},
       "cordova-plugin-advanced-http": {},
       "sentry-cordova": {}
+      "cordova-plugin-secure-storage-echo": {},
     }
   },
   "config": {
