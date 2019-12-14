@@ -109,7 +109,8 @@
   "description": "mypal-ionic: An Ionic project",
   "cordova": {
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ],
     "plugins": {
       "cordova-plugin-device": {},
