@@ -32,8 +32,8 @@
     "@ionic-native/status-bar": "^4.1.0",
     "@ionic/storage": "2.1.3",
     "angular2-moment": "^1.8.0",
-    "cordova-android": "7.1.1",
-    "cordova-ios": "^5.0.1",
+    "cordova-android": "^8.1.0",
+    "cordova-ios": "^5.1.1",
     "cordova-plugin-advanced-http": "^2.0.1",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-calendar": "^4.6.0",
@@ -41,8 +41,7 @@
     "cordova-plugin-device": "^1.1.6",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-firebase": "^2.0.4",
-    "cordova-plugin-googlemaps": "^2.3.6",
-    "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git#2.7.0",
+    "cordova-plugin-googlemaps": "^2.6.2",
     "cordova-plugin-headercolor": "^1.0.0",
     "cordova-plugin-ignore-lint-translation": "0.0.1",
     "cordova-plugin-inappbrowser": "^1.7.1",
@@ -61,6 +60,7 @@
     "jquery": "^3.3.1",
     "minimist": "^1.2.0",
     "moment": "^2.21.0",
+    "q": "^1.5.1",
     "rxjs": "5.5.2",
     "sentry-cordova": "^0.16.2",
     "sw-toolbox": "3.6.0",
@@ -109,8 +109,7 @@
   "description": "mypal-ionic: An Ionic project",
   "cordova": {
     "platforms": [
-      "android",
-      "ios"
+      "android"
     ],
     "plugins": {
       "cordova-plugin-device": {},
@@ -118,7 +117,6 @@
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-secure-storage": {},
       "cordova-plugin-calendar": {
         "CALENDAR_USAGE_DESCRIPTION": "This app uses your calendar to remind you of your myki pass and card expiry"
       },
@@ -128,17 +126,15 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-compat": {},
       "cordova-plugin-x-socialsharing": {},
-      "cordova-plugin-googlemaps": {
-        "API_KEY_FOR_ANDROID": "API_KEY_FOR_ANDROID",
-        "API_KEY_FOR_IOS": "API_KEY_FOR_ANDROID",
-        "LOCATION_WHEN_IN_USE_DESCRIPTION": "This app wants to get your location while this app runs only.",
-        "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
-      },
       "cordova-plugin-ignore-lint-translation": {},
       "cordova-sqlite-storage": {},
       "cordova-plugin-advanced-http": {},
-      "sentry-cordova": {}
+      "sentry-cordova": {},
       "cordova-plugin-secure-storage-echo": {},
+      "cordova-plugin-googlemaps": {
+        "PLAY_SERVICES_VERSION": "15.0.1",
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
     }
   },
   "config": {
