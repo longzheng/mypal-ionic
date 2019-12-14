@@ -3,14 +3,14 @@
         <div class="content">
             <div class="connector" *ngIf="isTouchOn() || isTouchOff()" [ngClass]="{'touchon': isTouchOn(), 'touchoff': isTouchOff(), 'nexttouchon': isNextTouchOn()}"></div>
             <div class="icon" [ngClass]="{
-                'train': !isTopup() && isServiceTrain(), 
+                'train': !isTopup() && !isInfo() && isServiceTrain(), 
                 'bus': !isTopup() && isServiceBus(), 
                 'tram': !isTopup() && isServiceTram(),
                 'vline': !isTopup() && isServiceVLine(),
                 'topup': isTopup(),
                 'info': isInfo()
                 }">
-                <ion-icon name="mypal-train" *ngIf="!isTopup() && isServiceTrain()"></ion-icon>
+                <ion-icon name="mypal-train" *ngIf="!isTopup() && !isInfo() && isServiceTrain()"></ion-icon>
                 <ion-icon name="mypal-bus" *ngIf="!isTopup() && isServiceBus()"></ion-icon>
                 <ion-icon name="mypal-tram" *ngIf="!isTopup() && isServiceTram()"></ion-icon>
                 <ion-icon name="mypal-vline" *ngIf="!isTopup() && isServiceVLine()"></ion-icon>
