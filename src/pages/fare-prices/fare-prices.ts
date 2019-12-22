@@ -49,8 +49,8 @@ export class FarePricesPage {
     return this.fareType === "concession";
   }
 
-  public is2019() {
-    return new Date().getFullYear() >= 2019;
+  public is2020() {
+    return new Date().getFullYear() >= 2020;
   }
 
 }
