@@ -6,7 +6,6 @@ import { Myki } from '../../models/myki';
 import { FarePricesPage } from '../fare-prices/fare-prices';
 import { Calendar } from '@ionic-native/calendar';
 import { TopupPage } from '../topup/topup';
-import { Firebase } from '@ionic-native/firebase';
 import moment from 'moment';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
@@ -26,7 +25,6 @@ export class HomePage {
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
     public platform: Platform,
-    public firebase: Firebase,
     public calendar: Calendar,
     public alertCtrl: AlertController,
     public popoverCtrl: PopoverController,
@@ -136,7 +134,7 @@ export class HomePage {
 
   addPassReminder() {
     // log event
-    this.firebase.logEvent("select_content", {
+    (<any>window).FirebasePlugin.logEvent("select_content", {
       "content_type": "calendar pass expiry",
       "item_id": "calendar_pass"
     })
@@ -155,7 +153,7 @@ export class HomePage {
 
   addExpiryReminder() {
     // log event
-    this.firebase.logEvent("select_content", {
+    (<any>window).FirebasePlugin.logEvent("select_content", {
       "content_type": "calendar card expiry",
       "item_id": "calendar_card"
     })

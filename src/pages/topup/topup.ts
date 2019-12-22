@@ -6,7 +6,6 @@ import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
 import { FarePricesPage } from '../fare-prices/fare-prices';
 import * as $ from "jquery";
-import { Firebase } from '@ionic-native/firebase';
 import '../../libs/jquery.payment.js';
 import moment from 'moment';
 import { CreditCard } from '../../models/creditCard';
@@ -42,7 +41,6 @@ export class TopupPage {
     public formBuilder: FormBuilder,
     public actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController,
-    public firebase: Firebase,
     public popoverCtrl: PopoverController,
     public socialSharing: SocialSharing
   ) {
@@ -147,7 +145,7 @@ export class TopupPage {
     this.mykiProvider.topupCardLoad(this.topupOptions).then(
       result => {
         // log event
-        this.firebase.logEvent("begin_checkout", {})
+        (<any>window).FirebasePlugin.logEvent("begin_checkout", {})
 
         this.loadingTopUp = false
       }, error => {
@@ -281,11 +279,11 @@ export class TopupPage {
     // submit the order
     this.mykiProvider.topupCardOrder(this.topupOptions).then(
       result => {
-        this.loadingPay = false     // remove loading
-        this.topupOrder = result    // store the top up order we get back
+        this.loadingPay = false;     // remove loading
+        this.topupOrder = result;    // store the top up order we get back
 
         // log event
-        this.firebase.logEvent("add_to_cart", {
+        (<any>window).FirebasePlugin.logEvent("add_to_cart", {
           "item_category": this.topupOptions.topupType.toString(),
           "item_id": `topup-${this.topupOptions.topupType}`,
           "item_name": this.topupOrder.description,
@@ -360,7 +358,7 @@ export class TopupPage {
     this.mykiProvider.topupCardPay(this.topupOptions).then(
       result => {
         // log event
-        this.firebase.logEvent("ecommerce_purchase", {
+        (<any>window).FirebasePlugin.logEvent("ecommerce_purchase", {
           "currency": "AUD",
           "value": this.topupOrder.amount
         })

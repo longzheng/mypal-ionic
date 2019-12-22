@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapOptions, LatLng, MarkerOptions } from '@ionic-native/google-maps';
-import { Firebase } from '@ionic-native/firebase';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 
@@ -18,14 +17,13 @@ export class TopupMapPage {
     public navParams: NavParams,
     private googleMaps: GoogleMaps,
     private http: HttpClient,
-    private firebase: Firebase,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
   ) { }
 
   ionViewDidLoad() {
     // log event
-    this.firebase.logEvent("select_content", {
+    (<any>window).FirebasePlugin.logEvent("select_content", {
       "content_type": "view topup map page",
       "item_id": "page_topup_map"
     })

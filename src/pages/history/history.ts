@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MykiProvider } from '../../providers/myki';
 import { NavController, ToastController } from 'ionic-angular';
-import { Firebase } from '@ionic-native/firebase';
 
 @Component({
   selector: 'page-history',
@@ -13,14 +12,13 @@ export class HistoryPage {
     public navCtrl: NavController,
     public mykiProvider: MykiProvider,
     public toastCtrl: ToastController,
-    private firebase: Firebase,
   ) {
 
   }
 
   ionViewDidLoad() {
     // log event
-    this.firebase.logEvent("select_content", {
+    (<any>window).FirebasePlugin.logEvent("select_content", {
       "content_type": "view history page",
       "item_id": "page_history"
     })

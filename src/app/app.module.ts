@@ -32,7 +32,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HeaderColor } from '@ionic-native/header-color';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Calendar } from '@ionic-native/calendar';
-import { Firebase } from '@ionic-native/firebase';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { AppVersion } from '@ionic-native/app-version';
 import { SecureStorage } from '@ionic-native/secure-storage';
@@ -85,7 +84,6 @@ export function entryComponents() {
     HeaderColor,
     SplashScreen,
     Calendar,
-    Firebase,
     GoogleMaps,
     AppVersion,
     SecureStorage,

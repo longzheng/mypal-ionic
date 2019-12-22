@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { MykiProvider } from '../../providers/myki';
 import { ConfigProvider } from '../../providers/config';
-import { Firebase } from '@ionic-native/firebase';
 import * as $ from "jquery";
 
 @Component({
@@ -21,7 +20,6 @@ export class LoginComponent {
     public mykiProvider: MykiProvider,
     public configProvider: ConfigProvider,
     public loadingCtrl: LoadingController,
-    public firebase: Firebase,
   ) {
   }
 
@@ -55,10 +53,10 @@ export class LoginComponent {
     this.mykiProvider.loginGetAccount(this.username, this.password).then(
       success => {
         // save login
-        this.configProvider.loginSave(this.username, this.password)
+        this.configProvider.loginSave(this.username, this.password);
 
         // log event
-        this.firebase.logEvent("login", {})
+        (<any>window).FirebasePlugin.logEvent("login", {})
       },
       error => {
         if (error === 'network'){
@@ -156,7 +154,7 @@ export class LoginComponent {
 
   register() {
     // log event
-    this.firebase.logEvent("sign_up", {})
+    (<any>window).FirebasePlugin.logEvent("sign_up", {})
 
     // open myki register page
     window.open('https://www.mymyki.com.au/NTSWebPortal/Common/register/SetupWebAccess.aspx?menu=Set%20up%20web%20access', '_system');
