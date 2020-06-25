@@ -61,6 +61,7 @@
             <string>This app uses your contacts to display your calendar</string>
         </config-file>
     </platform>
+    <preference name="WKWebViewOnly" value="true" />
     <preference name="target-device" value="handset" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
