@@ -36,24 +36,6 @@
         "outlet_notes": null
     },
     {
-        "outlet_distance": 109.276939,
-        "outlet_slid_spid": "6723",
-        "outlet_name": "Level 5, Suite 5, 276 Flinders Street",
-        "outlet_business": "Victorian Railways Institute",
-        "outlet_latitude": -37.81795,
-        "outlet_longitude": 144.966049,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3000,
-        "outlet_business_hour_mon": "9.00AM - 5:00PM",
-        "outlet_business_hour_tue": "9.00AM - 5:00PM",
-        "outlet_business_hour_wed": "9.00AM - 5:00PM",
-        "outlet_business_hour_thur": "9.00AM - 5:00PM",
-        "outlet_business_hour_fri": "9.00AM - 5:00PM",
-        "outlet_business_hour_sat": "CLOSED",
-        "outlet_business_hour_sun": "CLOSED",
-        "outlet_notes": null
-    },
-    {
         "outlet_distance": 116.646446,
         "outlet_slid_spid": "64404",
         "outlet_name": "Degraves St Platform 1",
@@ -375,24 +357,6 @@
         "outlet_business_hour_fri": "7.30AM - 6.30PM",
         "outlet_business_hour_sat": "9.30AM - 5.30PM",
         "outlet_business_hour_sun": "CLOSED",
-        "outlet_notes": null
-    },
-    {
-        "outlet_distance": 353.958771,
-        "outlet_slid_spid": "6681",
-        "outlet_name": "4/100 Queen Street",
-        "outlet_business": "ANZ Staff Club Queen St",
-        "outlet_latitude": -37.8163,
-        "outlet_longitude": 144.961716,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3000,
-        "outlet_business_hour_mon": "",
-        "outlet_business_hour_tue": "",
-        "outlet_business_hour_wed": "",
-        "outlet_business_hour_thur": "",
-        "outlet_business_hour_fri": "",
-        "outlet_business_hour_sat": "",
-        "outlet_business_hour_sun": "",
         "outlet_notes": null
     },
     {
@@ -756,24 +720,6 @@
         "outlet_notes": null
     },
     {
-        "outlet_distance": 649.515,
-        "outlet_slid_spid": "6366",
-        "outlet_name": "526 Bourke Street (Kiosk on Corner William and Bourke Streets)",
-        "outlet_business": "Newswu Kiosk",
-        "outlet_latitude": -37.81541,
-        "outlet_longitude": 144.958435,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3000,
-        "outlet_business_hour_mon": "6.30AM - 6.30PM",
-        "outlet_business_hour_tue": "6.30AM - 6.30PM",
-        "outlet_business_hour_wed": "6.30AM - 6.30PM",
-        "outlet_business_hour_thur": "6.30AM - 6.30PM",
-        "outlet_business_hour_fri": "6.30AM - 6.30PM",
-        "outlet_business_hour_sat": "CLOSED",
-        "outlet_business_hour_sun": "CLOSED",
-        "outlet_notes": null
-    },
-    {
         "outlet_distance": 657.924866,
         "outlet_slid_spid": "31013",
         "outlet_name": "Collins and Russell - Exhibition",
@@ -1098,24 +1044,6 @@
         "outlet_notes": null
     },
     {
-        "outlet_distance": 856.723,
-        "outlet_slid_spid": "6722",
-        "outlet_name": "327 Elizabeth Street",
-        "outlet_business": "Melbourne Convenience Store",
-        "outlet_latitude": -37.81108,
-        "outlet_longitude": 144.9614,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3000,
-        "outlet_business_hour_mon": "8.30AM - 10.30PM",
-        "outlet_business_hour_tue": "8.30AM - 10.30PM",
-        "outlet_business_hour_wed": "8.30AM - 10.30PM",
-        "outlet_business_hour_thur": "8.30AM - 10.30PM",
-        "outlet_business_hour_fri": "8.30AM - 12.30AM",
-        "outlet_business_hour_sat": "9.00AM - 12.30AM",
-        "outlet_business_hour_sun": "10.00AM - 10.00PM",
-        "outlet_notes": null
-    },
-    {
         "outlet_distance": 870.0987,
         "outlet_slid_spid": "6606",
         "outlet_name": "Shop 9, 600 Collins Street",
@@ -1404,24 +1332,6 @@
         "outlet_notes": null
     },
     {
-        "outlet_distance": 933.460144,
-        "outlet_slid_spid": "6669",
-        "outlet_name": "8 Whiteman Street",
-        "outlet_business": "Crown Staff Club",
-        "outlet_latitude": -37.82478,
-        "outlet_longitude": 144.958176,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3006,
-        "outlet_business_hour_mon": "10:30AM - 8:15PM",
-        "outlet_business_hour_tue": "10:30AM - 8:15PM",
-        "outlet_business_hour_wed": "10:30AM - 8:15PM",
-        "outlet_business_hour_thur": "10:30AM - 8:15PM",
-        "outlet_business_hour_fri": "10:30AM - 8:15PM",
-        "outlet_business_hour_sat": "10:30AM - 8:15PM",
-        "outlet_business_hour_sun": "CLOSED",
-        "outlet_notes": null
-    },
-    {
         "outlet_distance": 938.532654,
         "outlet_slid_spid": "19689",
         "outlet_name": "Melbourne Central Station Swanston and La Trobe Streets",
@@ -1620,24 +1530,6 @@
         "outlet_notes": null
     },
     {
-        "outlet_distance": 999.463867,
-        "outlet_slid_spid": "6714",
-        "outlet_name": "Level 3, 225 Bourke Street",
-        "outlet_business": "Travellers Aid Australia",
-        "outlet_latitude": -37.81837,
-        "outlet_longitude": 144.9535,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3000,
-        "outlet_business_hour_mon": "7.00AM - 10.00PM",
-        "outlet_business_hour_tue": "7.00AM - 10.00PM",
-        "outlet_business_hour_wed": "7.00AM - 10.00PM",
-        "outlet_business_hour_thur": "7.00AM - 10.00PM",
-        "outlet_business_hour_fri": "7.00AM - 10.00PM",
-        "outlet_business_hour_sat": "7.00AM - 10.00PM",
-        "outlet_business_hour_sun": "7.00AM - 10.00PM",
-        "outlet_notes": null
-    },
-    {
         "outlet_distance": 1011.9751,
         "outlet_slid_spid": "31007",
         "outlet_name": "Bourke and Spring Streets",
@@ -1779,6 +1671,24 @@
         "outlet_business_hour_fri": "24 Hours",
         "outlet_business_hour_sat": "24 Hours",
         "outlet_business_hour_sun": "24 Hours",
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 1092.04187,
+        "outlet_slid_spid": "6819",
+        "outlet_name": "42-44, 48 Clarendon St",
+        "outlet_business": "Clarendon St IGA X-Press Plus Liquor",
+        "outlet_latitude": -37.82585,
+        "outlet_longitude": 144.956985,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3006,
+        "outlet_business_hour_mon": "7.00AM - 12.00AM",
+        "outlet_business_hour_tue": "7.00AM - 12.00AM",
+        "outlet_business_hour_wed": "7.00AM - 12.00AM",
+        "outlet_business_hour_thur": "7.00AM - 12.00AM",
+        "outlet_business_hour_fri": "7.00AM - 12.00AM",
+        "outlet_business_hour_sat": "7.00AM - 12.00AM",
+        "outlet_business_hour_sun": "7.00AM - 12.00AM",
         "outlet_notes": null
     },
     {
@@ -2142,6 +2052,24 @@
         "outlet_notes": null
     },
     {
+        "outlet_distance": 1630.759,
+        "outlet_slid_spid": "6830",
+        "outlet_name": "322 Victoria Street",
+        "outlet_business": "Simply Express Convenience Store",
+        "outlet_latitude": -37.80562,
+        "outlet_longitude": 144.955521,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3051,
+        "outlet_business_hour_mon": "8.30AM - 7.30PM",
+        "outlet_business_hour_tue": "8.30AM - 7.30PM",
+        "outlet_business_hour_wed": "8.30AM - 7.30PM",
+        "outlet_business_hour_thur": "8.30AM - 7.30PM",
+        "outlet_business_hour_fri": "8.30AM - 7.30PM",
+        "outlet_business_hour_sat": "8.30AM - 6.30PM",
+        "outlet_business_hour_sun": "8.30AM - 6.30PM",
+        "outlet_notes": null
+    },
+    {
         "outlet_distance": 1649.78845,
         "outlet_slid_spid": "18053",
         "outlet_name": "Etihad Stadium at Bourke Street Harbour Esplanade and Bourke St",
@@ -2175,24 +2103,6 @@
         "outlet_business_hour_fri": "7.00AM - 11.00PM",
         "outlet_business_hour_sat": "8.00AM - 11.00PM",
         "outlet_business_hour_sun": "8.00AM - 11.00PM",
-        "outlet_notes": null
-    },
-    {
-        "outlet_distance": 1684.38342,
-        "outlet_slid_spid": "6666",
-        "outlet_name": "ANZ Centre, Level 4, 833 Collins Street",
-        "outlet_business": "ANZ Staff Club Australia Inc.",
-        "outlet_latitude": -37.82154,
-        "outlet_longitude": 144.946167,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3008,
-        "outlet_business_hour_mon": "7.00AM - 11.00PM",
-        "outlet_business_hour_tue": "7.00AM - 11.00PM",
-        "outlet_business_hour_wed": "7.00AM - 11.00PM",
-        "outlet_business_hour_thur": "7.00AM - 11.00PM",
-        "outlet_business_hour_fri": "7.00AM - 11.00PM",
-        "outlet_business_hour_sat": "7.00AM - 11.00PM",
-        "outlet_business_hour_sun": "7.00AM - 11.00PM",
         "outlet_notes": null
     },
     {
@@ -2679,24 +2589,6 @@
         "outlet_business_hour_fri": "24 Hours",
         "outlet_business_hour_sat": "24 Hours",
         "outlet_business_hour_sun": "24 Hours",
-        "outlet_notes": null
-    },
-    {
-        "outlet_distance": 2227.62622,
-        "outlet_slid_spid": "6105",
-        "outlet_name": "2A Bridge Road",
-        "outlet_business": "Richmond Jolimont Convenience Store",
-        "outlet_latitude": -37.81775,
-        "outlet_longitude": 144.9902,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3121,
-        "outlet_business_hour_mon": "7.00AM - 10.00PM",
-        "outlet_business_hour_tue": "7.00AM - 10.00PM",
-        "outlet_business_hour_wed": "7.00AM - 10.00PM",
-        "outlet_business_hour_thur": "7.00AM - 10.00PM",
-        "outlet_business_hour_fri": "7.00AM - 10.00PM",
-        "outlet_business_hour_sat": "8.00AM - 10.00PM",
-        "outlet_business_hour_sun": "8.00AM - 10.00PM",
         "outlet_notes": null
     },
     {
@@ -5706,24 +5598,6 @@
         "outlet_notes": null
     },
     {
-        "outlet_distance": 6654.30127,
-        "outlet_slid_spid": "6566",
-        "outlet_name": "15 Spencer Street",
-        "outlet_business": "Croxton Milk Bar",
-        "outlet_latitude": -37.76394,
-        "outlet_longitude": 144.99646,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3070,
-        "outlet_business_hour_mon": "7.00AM - 9.30PM",
-        "outlet_business_hour_tue": "7.00AM - 9.30PM",
-        "outlet_business_hour_wed": "7.00AM - 9.30PM",
-        "outlet_business_hour_thur": "7.00AM - 9.30PM",
-        "outlet_business_hour_fri": "7.00AM - 9.30PM",
-        "outlet_business_hour_sat": "8.00AM - 9.30PM",
-        "outlet_business_hour_sun": "8.00AM - 9.30PM",
-        "outlet_notes": null
-    },
-    {
         "outlet_distance": 6660.173,
         "outlet_slid_spid": "20015",
         "outlet_name": "Beaconsfield Pde Stott Street",
@@ -5829,6 +5703,24 @@
         "outlet_business_hour_fri": "24 Hours",
         "outlet_business_hour_sat": "24 Hours",
         "outlet_business_hour_sun": "24 Hours",
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 6775.29639,
+        "outlet_slid_spid": "6842",
+        "outlet_name": "124-126 Maribyrnong Road",
+        "outlet_business": "IGA Xpress Moonee Ponds",
+        "outlet_latitude": -37.77153,
+        "outlet_longitude": 144.915512,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3039,
+        "outlet_business_hour_mon": "07:30am - 10.30pm",
+        "outlet_business_hour_tue": "07:30am - 10.30pm",
+        "outlet_business_hour_wed": "07:30am - 10.30pm",
+        "outlet_business_hour_thur": "07:30am - 10.30pm",
+        "outlet_business_hour_fri": "07:30am - 10.30pm",
+        "outlet_business_hour_sat": "07:30am - 10.30pm",
+        "outlet_business_hour_sun": "08:00am - 10.30pm",
         "outlet_notes": null
     },
     {
@@ -5955,6 +5847,24 @@
         "outlet_business_hour_fri": "8.00AM - 5.00PM",
         "outlet_business_hour_sat": "8.30AM - 12.00PM",
         "outlet_business_hour_sun": "CLOSED",
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 7065.503,
+        "outlet_slid_spid": "6653",
+        "outlet_name": "289 Auburn Road",
+        "outlet_business": "Auburn South Newsagency",
+        "outlet_latitude": -37.83036,
+        "outlet_longitude": 145.043777,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3123,
+        "outlet_business_hour_mon": "7:00AM - 6:00PM",
+        "outlet_business_hour_tue": "7:00AM - 6:30PM",
+        "outlet_business_hour_wed": "7:00AM - 6:00PM",
+        "outlet_business_hour_thur": "7:00AM - 6:00PM",
+        "outlet_business_hour_fri": "7:00AM - 6:00PM",
+        "outlet_business_hour_sat": "7:00AM - 6:00PM",
+        "outlet_business_hour_sun": "7:00AM - 10:00PM",
         "outlet_notes": null
     },
     {
@@ -6534,24 +6444,6 @@
         "outlet_notes": null
     },
     {
-        "outlet_distance": 7803.17432,
-        "outlet_slid_spid": "6123",
-        "outlet_name": "51 Hawthorn Road",
-        "outlet_business": "Gong Milk Bar",
-        "outlet_latitude": -37.86951,
-        "outlet_longitude": 145.025482,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3161,
-        "outlet_business_hour_mon": "7.30AM - 9.30PM",
-        "outlet_business_hour_tue": "7.30AM - 9.30PM",
-        "outlet_business_hour_wed": "7.30AM - 9.30PM",
-        "outlet_business_hour_thur": "7.30AM - 9.30PM",
-        "outlet_business_hour_fri": "7.30AM - 9.30PM",
-        "outlet_business_hour_sat": "8.00AM - 9.30PM",
-        "outlet_business_hour_sun": "8.00AM - 9.30PM",
-        "outlet_notes": null
-    },
-    {
         "outlet_distance": 7835.053,
         "outlet_slid_spid": "2040",
         "outlet_name": "876 Mount Alexander Road (Corner Buckley Street)",
@@ -6693,24 +6585,6 @@
         "outlet_business_hour_fri": null,
         "outlet_business_hour_sat": null,
         "outlet_business_hour_sun": null,
-        "outlet_notes": null
-    },
-    {
-        "outlet_distance": 8048.213,
-        "outlet_slid_spid": "6513",
-        "outlet_name": "1446 Malvern Road",
-        "outlet_business": "Malvern Road Milk Bar",
-        "outlet_latitude": -37.85371,
-        "outlet_longitude": 145.0447,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3146,
-        "outlet_business_hour_mon": "7.00AM - 9.00PM",
-        "outlet_business_hour_tue": "7.00AM - 9.00PM",
-        "outlet_business_hour_wed": "7.00AM - 9.00PM",
-        "outlet_business_hour_thur": "7.00AM - 9.00PM",
-        "outlet_business_hour_fri": "7.00AM - 9.00PM",
-        "outlet_business_hour_sat": "7.00AM - 9.00PM",
-        "outlet_business_hour_sun": "8.00AM - 9.00PM",
         "outlet_notes": null
     },
     {
@@ -6927,6 +6801,24 @@
         "outlet_business_hour_fri": "7.30AM - 7.00PM",
         "outlet_business_hour_sat": "8.00AM - 6.00PM",
         "outlet_business_hour_sun": "8.00AM - 5.30PM",
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 8273.754,
+        "outlet_slid_spid": "6823",
+        "outlet_name": "404 Station Street",
+        "outlet_business": "IGA Friendly Grocer Thornbury",
+        "outlet_latitude": -37.75875,
+        "outlet_longitude": 145.02124,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3071,
+        "outlet_business_hour_mon": "7.30AM - 10.00PM",
+        "outlet_business_hour_tue": "7.30AM - 10.00PM",
+        "outlet_business_hour_wed": "7.30AM - 10.00PM",
+        "outlet_business_hour_thur": "7.30AM - 10.00PM",
+        "outlet_business_hour_fri": "7.30AM - 10.00PM",
+        "outlet_business_hour_sat": "7.30AM - 10.00PM",
+        "outlet_business_hour_sun": "8.00AM - 10.00PM",
         "outlet_notes": null
     },
     {
@@ -7647,6 +7539,24 @@
         "outlet_business_hour_fri": null,
         "outlet_business_hour_sat": null,
         "outlet_business_hour_sun": null,
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 9444.108,
+        "outlet_slid_spid": "6613 TEMP",
+        "outlet_name": "93 Gaffney Street",
+        "outlet_business": "Batman Post and Tatts",
+        "outlet_latitude": -37.73353,
+        "outlet_longitude": 144.959259,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3058,
+        "outlet_business_hour_mon": "7:00AM - 6:00PM",
+        "outlet_business_hour_tue": "7:00AM - 6:00PM",
+        "outlet_business_hour_wed": "7:00AM - 6:00PM",
+        "outlet_business_hour_thur": "7:00AM - 6:00PM",
+        "outlet_business_hour_fri": "7:00AM - 6:00PM",
+        "outlet_business_hour_sat": "7:00AM - 6:00PM",
+        "outlet_business_hour_sun": "CLOSED",
         "outlet_notes": null
     },
     {
@@ -8910,6 +8820,24 @@
         "outlet_notes": null
     },
     {
+        "outlet_distance": 11787.8926,
+        "outlet_slid_spid": "6586",
+        "outlet_name": "Summerhill Shopping Centre, Shop 11, 850 Plenty Road",
+        "outlet_business": "Summerhill Village Post & Lotto",
+        "outlet_latitude": -37.72501,
+        "outlet_longitude": 145.0284,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3073,
+        "outlet_business_hour_mon": "8:00AM - 6:00PM",
+        "outlet_business_hour_tue": "8:00AM - 6:00PM",
+        "outlet_business_hour_wed": "8:00AM - 6:00PM",
+        "outlet_business_hour_thur": "8:00AM - 6:00PM",
+        "outlet_business_hour_fri": "8:00AM - 6:00PM",
+        "outlet_business_hour_sat": "9:00AM - 6:00PM",
+        "outlet_business_hour_sun": "CLOSED",
+        "outlet_notes": null
+    },
+    {
         "outlet_distance": 11790.4648,
         "outlet_slid_spid": "19895",
         "outlet_name": "Union Road Bedford Avenue",
@@ -9033,6 +8961,24 @@
         "outlet_business_hour_fri": "6.00AM - 6.00PM",
         "outlet_business_hour_sat": "6.00AM - 7.00PM",
         "outlet_business_hour_sun": "6.00AM - 12.30PM",
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 11953.75,
+        "outlet_slid_spid": "6841",
+        "outlet_name": "Shop 11/30 English Street",
+        "outlet_business": "Fresh News Agency",
+        "outlet_latitude": -37.72587,
+        "outlet_longitude": 144.8956,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3041,
+        "outlet_business_hour_mon": "8.00AM - 6.00PM",
+        "outlet_business_hour_tue": "8.00AM - 6.00PM",
+        "outlet_business_hour_wed": "8.00AM - 6.00PM",
+        "outlet_business_hour_thur": "8.00AM - 6.00PM",
+        "outlet_business_hour_fri": "8.00AM - 6.00PM",
+        "outlet_business_hour_sat": "8.00AM - 6.00PM",
+        "outlet_business_hour_sun": "Closed",
         "outlet_notes": null
     },
     {
@@ -9879,6 +9825,24 @@
         "outlet_business_hour_fri": null,
         "outlet_business_hour_sat": null,
         "outlet_business_hour_sun": null,
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 14220.8066,
+        "outlet_slid_spid": "6148 TEMP",
+        "outlet_name": "12 Harrington Square",
+        "outlet_business": "Altona West Newsagency",
+        "outlet_latitude": -37.86412,
+        "outlet_longitude": 144.813843,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3018,
+        "outlet_business_hour_mon": "7.00AM - 6.00PM",
+        "outlet_business_hour_tue": "7.00AM - 6.00PM",
+        "outlet_business_hour_wed": "7.00AM - 6.00PM",
+        "outlet_business_hour_thur": "7.00AM - 6.00PM",
+        "outlet_business_hour_fri": "7.00AM - 6.00PM",
+        "outlet_business_hour_sat": "7.00AM - 6.00PM",
+        "outlet_business_hour_sun": "7.00AM - 9.00AM",
         "outlet_notes": null
     },
     {
@@ -10851,24 +10815,6 @@
         "outlet_business_hour_fri": null,
         "outlet_business_hour_sat": null,
         "outlet_business_hour_sun": null,
-        "outlet_notes": null
-    },
-    {
-        "outlet_distance": 16717.373,
-        "outlet_slid_spid": "6445",
-        "outlet_name": "Shop G 37A, Burwood One Shopping Centre, 172 Burwood Highway",
-        "outlet_business": "Burwood One Lotto & Tobacco Station",
-        "outlet_latitude": -37.85361,
-        "outlet_longitude": 145.149734,
-        "outlet_suburb": "Burwood East",
-        "outlet_postcode": 3151,
-        "outlet_business_hour_mon": "9:00AM to 6:00PM",
-        "outlet_business_hour_tue": "9:00AM to 6:00PM",
-        "outlet_business_hour_wed": "9:00AM to 6:00PM",
-        "outlet_business_hour_thur": "9:00AM to 7:00PM",
-        "outlet_business_hour_fri": "9:00AM to 7:00PM",
-        "outlet_business_hour_sat": "9:00AM to 7:00PM",
-        "outlet_business_hour_sun": "11:00AM to 4:00PM",
         "outlet_notes": null
     },
     {
@@ -11988,24 +11934,6 @@
         "outlet_notes": null
     },
     {
-        "outlet_distance": 19658.2637,
-        "outlet_slid_spid": "6604",
-        "outlet_name": "2 South Concourse",
-        "outlet_business": "Beaumaris Authorised Newsagency",
-        "outlet_latitude": -37.98648,
-        "outlet_longitude": 145.0332,
-        "outlet_suburb": "Victoria",
-        "outlet_postcode": 3193,
-        "outlet_business_hour_mon": "6:45AM - 6:00PM",
-        "outlet_business_hour_tue": "6:45AM - 6:00PM",
-        "outlet_business_hour_wed": "6:45AM - 6:00PM",
-        "outlet_business_hour_thur": "6:45AM - 6:00PM",
-        "outlet_business_hour_fri": "6:45AM - 6:00PM",
-        "outlet_business_hour_sat": "6:45AM - 6:00PM",
-        "outlet_business_hour_sun": "8:00AM - 2:00PM",
-        "outlet_notes": null
-    },
-    {
         "outlet_distance": 19766.1484,
         "outlet_slid_spid": "1989",
         "outlet_name": "602 Ferntree Gully Road (Corner Springvale Road)",
@@ -12417,6 +12345,24 @@
         "outlet_business_hour_fri": "8.00AM - 8.30PM",
         "outlet_business_hour_sat": "8.00AM - 7.00PM",
         "outlet_business_hour_sun": "10.00AM - 5.00PM",
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 21714.36,
+        "outlet_slid_spid": "TEMP",
+        "outlet_name": "Kiosk 5, CS Square 29-35 Lake street",
+        "outlet_business": "Caroline Springs Lotteries",
+        "outlet_latitude": -37.7325859,
+        "outlet_longitude": 144.7431,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3023,
+        "outlet_business_hour_mon": "08:30am-06:00pm",
+        "outlet_business_hour_tue": "08:30am-06:00pm",
+        "outlet_business_hour_wed": "08:30am-06:00pm",
+        "outlet_business_hour_thur": "08:30am-07:30pm",
+        "outlet_business_hour_fri": "08:30am-07:30pm",
+        "outlet_business_hour_sat": "08:30am-07:00pm",
+        "outlet_business_hour_sun": "CLOSED",
         "outlet_notes": null
     },
     {
@@ -13356,6 +13302,24 @@
         "outlet_notes": null
     },
     {
+        "outlet_distance": 25230.89,
+        "outlet_slid_spid": "TEMP",
+        "outlet_name": "84 Railway Avenue",
+        "outlet_business": "Pauls Supa IGA",
+        "outlet_latitude": -37.8119,
+        "outlet_longitude": 145.25174,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3135,
+        "outlet_business_hour_mon": "7.30AM - 8.00PM",
+        "outlet_business_hour_tue": "7.30AM - 8.00PM",
+        "outlet_business_hour_wed": "7.30AM - 8.00PM",
+        "outlet_business_hour_thur": "7.30AM - 8.00PM",
+        "outlet_business_hour_fri": "7.30AM - 8.00PM",
+        "outlet_business_hour_sat": "7.30AM - 8.00PM",
+        "outlet_business_hour_sun": "8.00AM - 7.00PM",
+        "outlet_notes": null
+    },
+    {
         "outlet_distance": 25246.4,
         "outlet_slid_spid": "6591",
         "outlet_name": "18, 70 Warringa Crescent",
@@ -13770,6 +13734,24 @@
         "outlet_notes": null
     },
     {
+        "outlet_distance": 27791.4453,
+        "outlet_slid_spid": "6824",
+        "outlet_name": "Shop 6, 150 Kelletts Road",
+        "outlet_business": "IGA Rowville Lakes",
+        "outlet_latitude": -37.91405,
+        "outlet_longitude": 145.257,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3178,
+        "outlet_business_hour_mon": "6.00AM - 9.00PM",
+        "outlet_business_hour_tue": "6.00AM - 9.00PM",
+        "outlet_business_hour_wed": "6.00AM - 9.00PM",
+        "outlet_business_hour_thur": "6.00AM - 9.00PM",
+        "outlet_business_hour_fri": "6.00AM - 9.00PM",
+        "outlet_business_hour_sat": "6.00AM - 9.00PM",
+        "outlet_business_hour_sun": "6.00AM - 9.00PM",
+        "outlet_notes": null
+    },
+    {
         "outlet_distance": 27876.9063,
         "outlet_slid_spid": "19878",
         "outlet_name": "Toorak Avenue Wicklow Avenue",
@@ -14091,6 +14073,24 @@
         "outlet_business_hour_fri": "8.00AM - 9.00PM",
         "outlet_business_hour_sat": "8.00AM - 9.00PM",
         "outlet_business_hour_sun": "9.00AM - 8.00PM",
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 29465.3457,
+        "outlet_slid_spid": "6836",
+        "outlet_name": "Shop 8, 95 Hazel Glen Drive",
+        "outlet_business": "Laurimar News and Lotto",
+        "outlet_latitude": -37.58678,
+        "outlet_longitude": 145.127274,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3754,
+        "outlet_business_hour_mon": "07:00AM - 6:00PM",
+        "outlet_business_hour_tue": "07:00AM - 7:00PM",
+        "outlet_business_hour_wed": "07:00AM - 6:00PM",
+        "outlet_business_hour_thur": "07:00AM - 7:00PM",
+        "outlet_business_hour_fri": "07:00AM - 6:00PM",
+        "outlet_business_hour_sat": "07:00AM - 7:00PM",
+        "outlet_business_hour_sun": "CLOSED",
         "outlet_notes": null
     },
     {
@@ -14598,6 +14598,24 @@
         "outlet_notes": null
     },
     {
+        "outlet_distance": 33498.0078,
+        "outlet_slid_spid": "6831",
+        "outlet_name": "98-122 O'Shanassy Street",
+        "outlet_business": "Morgans IGA Supermarket",
+        "outlet_latitude": -37.58209,
+        "outlet_longitude": 144.72905,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3429,
+        "outlet_business_hour_mon": "7.00AM - 9.00PM",
+        "outlet_business_hour_tue": "7.00AM - 9.00PM",
+        "outlet_business_hour_wed": "7.00AM - 9.00PM",
+        "outlet_business_hour_thur": "7.00AM - 9.00PM",
+        "outlet_business_hour_fri": "7.00AM - 9.00PM",
+        "outlet_business_hour_sat": "7.00AM - 9.00PM",
+        "outlet_business_hour_sun": "7.00AM - 9.00PM",
+        "outlet_notes": null
+    },
+    {
         "outlet_distance": 33573.6445,
         "outlet_slid_spid": "19846",
         "outlet_name": "Darling Avenue Burwood Highway",
@@ -14667,6 +14685,24 @@
         "outlet_business_hour_fri": "24 Hours",
         "outlet_business_hour_sat": "24 Hours",
         "outlet_business_hour_sun": "24 Hours",
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 34301.332,
+        "outlet_slid_spid": "6838",
+        "outlet_name": "Lilydale Market Place Shopping Centre, Shop 25, 33 Hutchinson Street",
+        "outlet_business": "Lilydale Market Lotto and News",
+        "outlet_latitude": -37.76039,
+        "outlet_longitude": 145.347946,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3152,
+        "outlet_business_hour_mon": "7:30AM - 6:30PM",
+        "outlet_business_hour_tue": "7:30AM - 6:30PM",
+        "outlet_business_hour_wed": "7:30AM - 6:30PM",
+        "outlet_business_hour_thur": "7:30AM - 6:30PM",
+        "outlet_business_hour_fri": "7:30AM - 6:30PM",
+        "outlet_business_hour_sat": "7:30AM - 6:30PM",
+        "outlet_business_hour_sun": "CLOSED",
         "outlet_notes": null
     },
     {
@@ -15444,6 +15480,24 @@
         "outlet_notes": null
     },
     {
+        "outlet_distance": 41320,
+        "outlet_slid_spid": "TEMP",
+        "outlet_name": "980 - 1061 Cranbourne - Frankston Road",
+        "outlet_business": "7-Eleven Cranbourne Amstel",
+        "outlet_latitude": -38.109787,
+        "outlet_longitude": 145.256516,
+        "outlet_suburb": "Cranbourne",
+        "outlet_postcode": 3977,
+        "outlet_business_hour_mon": "24 Hours",
+        "outlet_business_hour_tue": "24 Hours",
+        "outlet_business_hour_wed": "24 Hours",
+        "outlet_business_hour_thur": "24 Hours",
+        "outlet_business_hour_fri": "24 Hours",
+        "outlet_business_hour_sat": "24 Hours",
+        "outlet_business_hour_sun": "24 Hours",
+        "outlet_notes": null
+    },
+    {
         "outlet_distance": 41579.29,
         "outlet_slid_spid": "19883",
         "outlet_name": "Enterprise Avenue",
@@ -16020,6 +16074,24 @@
         "outlet_notes": null
     },
     {
+        "outlet_distance": 50253.8477,
+        "outlet_slid_spid": "6829",
+        "outlet_name": "Shop 15, 9 Village Way",
+        "outlet_business": "Village Way Cafe",
+        "outlet_latitude": -38.07269,
+        "outlet_longitude": 145.437943,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3810,
+        "outlet_business_hour_mon": "7.00AM - 4.00PM",
+        "outlet_business_hour_tue": "7.00AM - 4.00PM",
+        "outlet_business_hour_wed": "7.00AM - 4.00PM",
+        "outlet_business_hour_thur": "7.00AM - 4.00PM",
+        "outlet_business_hour_fri": "7.00AM - 4.00PM",
+        "outlet_business_hour_sat": "8.00AM - 4.00PM",
+        "outlet_business_hour_sun": "8.00AM - 4.00PM",
+        "outlet_notes": null
+    },
+    {
         "outlet_distance": 51334.24,
         "outlet_slid_spid": "40537",
         "outlet_name": "Station Road",
@@ -16089,6 +16161,24 @@
         "outlet_business_hour_fri": null,
         "outlet_business_hour_sat": null,
         "outlet_business_hour_sun": null,
+        "outlet_notes": null
+    },
+    {
+        "outlet_distance": 53133.6,
+        "outlet_slid_spid": "6839",
+        "outlet_name": "1537-1539 Franskton Flinders Road",
+        "outlet_business": "Tyabb IGA Express",
+        "outlet_latitude": -38.26151,
+        "outlet_longitude": 145.190155,
+        "outlet_suburb": "Victoria",
+        "outlet_postcode": 3913,
+        "outlet_business_hour_mon": "8:00am - 8:00pm",
+        "outlet_business_hour_tue": "8:00am - 8:00pm",
+        "outlet_business_hour_wed": "8:00am - 8:00pm",
+        "outlet_business_hour_thur": "8:00am - 8:00pm",
+        "outlet_business_hour_fri": "8:00am - 8:00pm",
+        "outlet_business_hour_sat": "8:00am - 8:00pm",
+        "outlet_business_hour_sun": "9:00am - 8:00pm",
         "outlet_notes": null
     },
     {
