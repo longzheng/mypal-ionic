@@ -45,7 +45,6 @@
     "cordova-plugin-googlemaps": "^2.6.2",
     "cordova-plugin-headercolor": "^1.0.0",
     "cordova-plugin-ignore-lint-translation": "0.0.1",
-    "cordova-plugin-inappbrowser": "^1.7.1",
     "cordova-plugin-ionic-keyboard": "^2.1.2",
     "cordova-plugin-ionic-webview": "^1.1.15",
     "cordova-plugin-secure-storage-echo": "^5.0.1",
@@ -115,7 +114,6 @@
     "plugins": {
       "cordova-plugin-device": {},
       "cordova-plugin-headercolor": {},
-      "cordova-plugin-inappbrowser": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-calendar": {
