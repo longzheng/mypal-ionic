@@ -21,6 +21,7 @@ export namespace Myki {
         holder: string;
         id: string;
         type: string;
+        cardType: string;
         expiry: Date;
         status: CardStatus;
         moneyBalance: number;

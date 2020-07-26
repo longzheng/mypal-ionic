@@ -111,6 +111,11 @@
                     <div item-right>{{card().type}}</div>
                 </ion-item>
 
+                <ion-item no-lines>
+                    <div item-left>Card type</div>
+                    <div item-right>{{card().cardType}}</div>
+                </ion-item>
+
                 <ion-item no-lines (click)="addExpiryReminder()">
                     <div item-left>Expiry</div>
                     <div item-right>{{card().expiry | amDateFormat:'LL'}}</div>

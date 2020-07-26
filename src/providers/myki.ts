@@ -345,30 +345,31 @@ export class MykiProvider {
 
                 card.holder = cardTable.find("tr:nth-child(1) td:nth-child(2)").text().trim();
                 card.type = cardTable.find("tr:nth-child(2) td:nth-child(2)").text().trim();
-                card.expiry = moment(cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim(), "D MMM YYYY").toDate();
-                card.status = Myki.CardStatus[cardTable.find("tr:nth-child(4) td:nth-child(2)").text().trim()];
-                card.moneyBalance = parseFloat(cardTable.find("tr:nth-child(5) td:nth-child(2)").text().trim().replace("$", ""));
-                card.moneyTopupInProgress = parseFloat(cardTable.find("tr:nth-child(6) td:nth-child(2)").text().trim().replace("$", ""));
-                card.moneyTotalBalance = parseFloat(cardTable.find("tr:nth-child(7) td:nth-child(2)").text().trim().replace("$", ""));
+                card.cardType = cardTable.find("tr:nth-child(3) td:nth-child(2)").text().trim();
+                card.expiry = moment(cardTable.find("tr:nth-child(4) td:nth-child(2)").text().trim(), "D MMM YYYY").toDate();
+                card.status = Myki.CardStatus[cardTable.find("tr:nth-child(5) td:nth-child(2)").text().trim()];
+                card.moneyBalance = parseFloat(cardTable.find("tr:nth-child(6) td:nth-child(2)").text().trim().replace("$", ""));
+                card.moneyTopupInProgress = parseFloat(cardTable.find("tr:nth-child(7) td:nth-child(2)").text().trim().replace("$", ""));
+                card.moneyTotalBalance = parseFloat(cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim().replace("$", ""));
 
                 // process pass
-                let passActive = cardTable.find("tr:nth-child(8) td:nth-child(2)").text().trim();
+                let passActive = cardTable.find("tr:nth-child(9) td:nth-child(2)").text().trim();
                 if (passActive !== '' && passActive !== '-') {
                   card.passActive = passActive
                   card.passActiveExpiry = moment(passActive.split('Valid to ')[1], "D MMM YYYY").toDate()
                 }
 
-                let passInactive = cardTable.find("tr:nth-child(9) td:nth-child(2)").text().trim();
+                let passInactive = cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim();
                 if (passInactive !== '' && passInactive !== '-') {
                   card.passInactive = passInactive
                 }
 
-                let lastTransactionDate = moment(cardTable.find("tr:nth-child(10) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A")
+                let lastTransactionDate = moment(cardTable.find("tr:nth-child(11) td:nth-child(2)").text().trim(), "D MMM YYYY hh:mm:ss A")
                 if (lastTransactionDate.isValid()) {
                   card.lastTransactionDate = lastTransactionDate.toDate();
                 }
 
-                card.autoTopup = cardTable.find("tr:nth-child(11) td:nth-child(2) li#ctl00_uxContentPlaceHolder_ModifyAutoload").length > 0;
+                card.autoTopup = cardTable.find("tr:nth-child(12) td:nth-child(2) li#ctl00_uxContentPlaceHolder_ModifyAutoload").length > 0;
               } catch (e) {
                 console.error('error parsing card details')
                 console.log(data)
