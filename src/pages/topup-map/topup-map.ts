@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { GoogleMaps, GoogleMap, GoogleMapOptions, LatLng, MarkerOptions } from '@ionic-native/google-maps';
-import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -15,7 +14,6 @@ export class TopupMapPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private googleMaps: GoogleMaps,
     private http: HttpClient,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
