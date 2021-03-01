@@ -56,7 +56,7 @@
     "intl": "^1.2.5",
     "ionic-angular": "^3.9.2",
     "ionicons": "3.0.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "minimist": "^1.2.0",
     "moment": "^2.21.0",
     "q": "^1.5.1",
